@@ -12,7 +12,7 @@
 	<atom:link href="/tag/hosting/feed/" rel="self" type="application/rss+xml" />
 	<link>/</link>
 	<description></description>
-	<lastBuildDate>Sun, 26 Mar 2023 02:37:34 +0000</lastBuildDate>
+	<lastBuildDate>Sun, 26 Mar 2023 15:26:43 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -25,7 +25,7 @@
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sat, 25 Mar 2023 23:26:42 +0000</pubDate>
-				<category><![CDATA[notes]]></category>
+				<category><![CDATA[blog]]></category>
 		<category><![CDATA[Apache]]></category>
 		<category><![CDATA[Docker]]></category>
 		<category><![CDATA[Hosting]]></category>
@@ -204,7 +204,7 @@ extension=curl</code></pre>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Fri, 03 Feb 2023 20:19:00 +0000</pubDate>
-				<category><![CDATA[notes]]></category>
+				<category><![CDATA[blog]]></category>
 		<category><![CDATA[Apache]]></category>
 		<category><![CDATA[Docker]]></category>
 		<category><![CDATA[Hosting]]></category>
@@ -381,7 +381,7 @@ http://example2.mydomain/</code></pre>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Fri, 03 Feb 2023 17:14:00 +0000</pubDate>
-				<category><![CDATA[notes]]></category>
+				<category><![CDATA[blog]]></category>
 		<category><![CDATA[Apache]]></category>
 		<category><![CDATA[Docker]]></category>
 		<category><![CDATA[Hosting]]></category>
@@ -513,7 +513,7 @@ mysql -h 192.168.1.101 -u wordpress_user -p</code></pre>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Fri, 03 Feb 2023 16:52:00 +0000</pubDate>
-				<category><![CDATA[notes]]></category>
+				<category><![CDATA[blog]]></category>
 		<category><![CDATA[Docker]]></category>
 		<category><![CDATA[Hosting]]></category>
 		<category><![CDATA[Linux]]></category>
@@ -582,8 +582,8 @@ docker run -dit --name WEB_SERVER --network docker_dev_net --ip 192.168.1.103 --
 		<link>/self-host-nextcloud/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Sat, 18 Sep 2021 06:43:43 +0000</pubDate>
-				<category><![CDATA[notes]]></category>
+		<pubDate>Sat, 18 Sep 2021 11:43:43 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
 		<category><![CDATA[Apache]]></category>
 		<category><![CDATA[Docker]]></category>
 		<category><![CDATA[Hosting]]></category>
@@ -803,7 +803,7 @@ SHOW DATABASES;</code></pre>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Thu, 16 Sep 2021 12:25:36 +0000</pubDate>
-				<category><![CDATA[notes]]></category>
+				<category><![CDATA[blog]]></category>
 		<category><![CDATA[Docker]]></category>
 		<category><![CDATA[Hosting]]></category>
 		<category><![CDATA[Linux]]></category>

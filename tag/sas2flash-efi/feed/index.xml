@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>SAS2FLASH.EFI &#8211; howdy</title>
+	<atom:link href="/tag/sas2flash-efi/feed/" rel="self" type="application/rss+xml" />
+	<link>/</link>
+	<description></description>
+	<lastBuildDate>Sun, 26 Mar 2023 16:29:31 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.1.1</generator>
+	<item>
+		<title>Flash LSI SAS Adapters to HBA IT MODE</title>
+		<link>/flash-lsi-sas-adapters-to-hba-it-mode/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Fri, 10 Mar 2023 17:00:00 +0000</pubDate>
+				<category><![CDATA[notes]]></category>
+		<category><![CDATA[Firmware]]></category>
+		<category><![CDATA[HBA]]></category>
+		<category><![CDATA[LSI HBA Adapters]]></category>
+		<category><![CDATA[MegaCLI]]></category>
+		<category><![CDATA[MegaRec]]></category>
+		<category><![CDATA[NAS]]></category>
+		<category><![CDATA[SAS2FLASH.EFI]]></category>
+		<category><![CDATA[SAS2FLSH]]></category>
+		<category><![CDATA[Storage]]></category>
+		<category><![CDATA[TrueNAS]]></category>
+		<guid isPermaLink="false">/?p=2205</guid>
+
+					<description><![CDATA[Flash LSI SAS Adapters to IT MODE.]]></description>
+										<content:encoded><![CDATA[
+<p>This documentation is still being actively updated.</p>
+
+
+
+<pre class="wp-block-code"><code>megrec -adplist
+
+megarec -readsbr X file_name.sbr
+megarec -readspd X file_name.spd
+
+megacli -adpallinfo -aALL &gt; allinfo.txt
+
+megarec -writesbr X sbrempty.bin
+
+megarec -cleanflash X
+
+
+
+sas2flash.efi -h
+
+sas2flash.efi -listallboards
+sas2flash.efi -listall
+
+sas2flash.efi -c X -o -f 2118IT.BIN
+sas2flash.efi -c X -o -sasadd 500605xxxxxxxxxx
+
+sas2flash.efi -listall
+
+sas2flash.efi -c X -list</code></pre>
+
+
+
+<h2>MegaREC Command Usage:</h2>
+
+
+
+<pre class="wp-block-code"><code>MegaRAID HWR Contoller Recovery tool. Version 01.02-007 August 03, 2011
+Copyright (c) 2006-2010 LSI Corp.
+Supports 1078 controller and its Successors.
+
+Usage:
+MegaRec -help                  : Display the list of options
+MegaRec -adpList               : Display identified MR controller(s)
+MegaRec -corruptInfo           : Display corruption information of controller
+MegaRec -m0flash &lt;n> &lt;image>   : Flash controller
+                               : where &lt;n> is the controller index
+                               : and &lt;image> is the image file to flash
+MegaRec -cleanflash &lt;n> &lt;image>: Erase Flash. Programs if image is Provided.
+                               : where &lt;n> is the controller index
+                               : and &lt;image> is the image file to flash
+MegaRec -readspd &lt;n> &lt;image>   : Read controller SPD to specified file
+                               : where &lt;n> is the controller index
+                               : and &lt;image> is the specified file name
+MegaRec -writespd &lt;n> &lt;image>  : Write controller SPD from specified file
+                               : where &lt;n> is the controller index
+                               : and &lt;image> is the specified file name
+MegaRec -readsbr &lt;n> &lt;image> &#91;&lt;byteCount>] : Read controller SBR to specified 
+                               : file where &lt;n> is the controller index,
+                               : &lt;byteCount> is the number of bytes of SBR 
+                               : to be read and is optional to specify
+                               : and &lt;image> is the specified file name
+MegaRec -writesbr &lt;n> &lt;image>  : Write controller SBR from specified file
+                               : where &lt;n> is the controller index
+                               : and &lt;image> is the specified file name
+MegaRec -m0flash &lt;n> &lt;image> &lt;-i2o/-fusion>     : Flash controller in I2O/FUSION mode
+MegaRec -cleanflash &lt;n> &lt;image> &lt;-i2o/-fusion>  : Erase Flash. Programs if image is Provided in I2O/FUSION mode.
+MegaRec -readspd &lt;n> &lt;image> &lt;-i2o/-fusion>     : Read controller SPD to specified file in I2O/FUSION mode
+MegaRec -writespd &lt;n> &lt;image> &lt;-i2o/-fusion>    : Write controller SPD from specified file in I2O/FUSION mode
+MegaRec -readsbr &lt;n> &lt;image> &#91;&lt;byteCount>] &lt;-i2o/-fusion> : Read controller SBR to specified file in I2O/FUSION mode
+MegaRec -writesbr &lt;n> &lt;image> &lt;-i2o/-fusion>    : Write controller SBR from specified file in I2O/FUSION mode
+</code></pre>
+]]></content:encoded>
+					
+		
+		
+			</item>
+	</channel>
+</rss>

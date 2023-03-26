@@ -12,12 +12,1048 @@
 	<atom:link href="/category/blog/feed/" rel="self" type="application/rss+xml" />
 	<link>/</link>
 	<description></description>
-	<lastBuildDate>Sun, 26 Mar 2023 02:37:34 +0000</lastBuildDate>
+	<lastBuildDate>Sun, 26 Mar 2023 16:52:31 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
 	<sy:updateFrequency>
 	1	</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=6.1.1</generator>
-</channel>
+	<item>
+		<title>Invalid Time error and Unable to Change Time Zone</title>
+		<link>/invalid-time-error-and-unable-to-change-time-zone/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sun, 26 Mar 2023 16:52:31 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[System Administration]]></category>
+		<category><![CDATA[Windows Systems Administration]]></category>
+		<guid isPermaLink="false">/?p=2217</guid>
+
+					<description><![CDATA[Fix the Invalid Time error and the Time Zone setting greyed out issue on Windows.]]></description>
+										<content:encoded><![CDATA[
+<p>If your applications are encountering an Invalid Time error, check the following settings:</p>
+
+
+
+<pre class="wp-block-preformatted">Control Panel - Date and Time - Internet Time - Change Settings ... - Synchronize with an Internet time server - Set server to: time.nist.gov</pre>
+
+
+
+<p>For some reason the <code>time.windows.com</code> occasionally has issues with certain programs.</p>
+
+
+
+<p>If your <code>Time zone</code> setting is greyed out in Windows Settings, use <a href="https://learn.microsoft.com/en-us/troubleshoot/windows-client/shell-experience/cannot-set-timezone-automatically">this guide</a> to fix it:</p>
+
+
+
+<pre class="wp-block-code"><code>1. Change the Set time zone automatically setting and set the data value of the registry entry
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\tzautoupdate\Start
+as follows:
+
+3	Enable Set time zone automatically
+4	Disable Set time zone automatically
+
+2. Change the location setting and set the value of the registry entry
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location\Value
+as follows:
+
+Allow	On
+Deny	Off</code></pre>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Troubleshooting Apache Web Server and Name-based Virtual Hosting</title>
+		<link>/troubleshooting-apache-web-server-and-name-based-virtual-hosting/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sat, 25 Mar 2023 23:26:42 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Apache]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[Linux]]></category>
+		<category><![CDATA[Self-Hosting]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+		<category><![CDATA[Web Hosting]]></category>
+		<guid isPermaLink="false">/?p=2185</guid>
+
+					<description><![CDATA[This troubleshooting note wraps up the Name-based Virtual Hosting Series.]]></description>
+										<content:encoded><![CDATA[
+<p>During the process of setting up name-based virtual hosting with Apache, I ran into a few issues with the WordPress container, this post documents the steps taken to address them.</p>
+
+
+
+<h2>Background:</h2>
+
+
+
+<p>I use the locally hosted WordPress site to write documentation and blog posts and then use Simply Static to convert and get it ready for GitHub Pages. During the process I ran into the following issues:</p>
+
+
+
+<ul>
+<li>WordPress Site Health check has three critical issues:
+<ul>
+<li>The required module, gd, is not installed, or has been disabled.</li>
+
+
+
+<li>The REST API encountered an error.</li>
+
+
+
+<li>Your site could not complete a loopback request.</li>
+</ul>
+</li>
+
+
+
+<li><em>Updating failed. The response is not a valid JSON response.</em> when creating and updating posts.</li>
+
+
+
+<li>Simply Static&#8217;s failed diagnostics:
+<ul>
+<li>Checking if WordPress can make requests to itself from YOUR_IP  FAIL</li>
+
+
+
+<li>Checking for cURL support  FAIL</li>
+</ul>
+</li>
+</ul>
+
+
+
+<h2>Issue 1: Updating failed. The response is not a valid JSON response.</h2>
+
+
+
+<p>I get this error only after I&#8217;ve set the <strong>Permalinks</strong> setting to anything else other than the default <strong>Plain</strong> setting. When <strong>Permalinks</strong> is not set to <strong>Plain</strong>, the URLs need to be rewritten, and that&#8217;s when this error will occur. In my case, it turned out to be that I forgot to add the &lt;Directory> tag in the virtual host configuration file. As you can see in <a href="/configure-apache-web-server-and-name-based-virtual-hosting-with-ubuntu/">this post</a>, my configuration file looks like this:</p>
+
+
+
+<pre class="wp-block-code"><code>&lt;VirtualHost *:80>
+    ServerAdmin webmaster@example1.mydomain
+    ServerName example1.mydomain
+    DocumentRoot /var/www/html/example1.mydomain
+    DirectoryIndex index.php
+    ErrorLog ${APACHE_LOG_DIR}/example1.mydomain_error.log
+    CustomLog ${APACHE_LOG_DIR}/example1.mydomain_access.log combined
+&lt;/VirtualHost></code></pre>
+
+
+
+<p>But the correct configs for rewrite to work need to look like this:</p>
+
+
+
+<pre class="wp-block-code"><code>&lt;VirtualHost *:80>
+    ServerAdmin webmaster@example1.mydomain
+    ServerName example1.mydomain
+    DocumentRoot /var/www/html/example1.mydomain
+
+        &lt;Directory /var/www/html/example1.mydomain>
+                Options Indexes FollowSymLinks
+                AllowOverride All
+                Require all granted
+                DirectoryIndex index.php
+        &lt;/Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/example1.mydomain_error.log
+    CustomLog ${APACHE_LOG_DIR}/example1.mydomain_access.log combined
+&lt;/VirtualHost></code></pre>
+
+
+
+<p>Without the <strong>&lt;Directory></strong> element, the <strong>.htaccess</strong> file is unable to override the rewrite rules.</p>
+
+
+
+<h2>Issue 2: WordPress Site Health Critical Issues</h2>
+
+
+
+<p><strong>The required module, gd, is not installed, or has been disabled.</strong></p>
+
+
+
+<pre class="wp-block-code"><code># Install the php8.1-gd module
+apt-get install php8.1-gd -y</code></pre>
+
+
+
+<p><strong>The REST API encountered an error.</strong></p>
+
+
+
+<pre class="wp-block-code"><code>The REST API is one way that WordPress and other applications communicate with the server. For example, the block editor screen relies on the REST API to display and save your posts and pages.
+
+When testing the REST API, an error was encountered:
+
+REST API Endpoint: http://example1.mydomain/wp-json/wp/v2/types/post?context=edit
+REST API Response: (http_request_failed) cURL error 6: Could not resolve host: example1.mydomain</code></pre>
+
+
+
+<p><strong>Your site could not complete a loopback request.</strong></p>
+
+
+
+<pre class="wp-block-code"><code>Loopback requests are used to run scheduled events, and are also used by the built-in editors for themes and plugins to verify code stability.
+
+The loopback request to your site failed, this means features relying on them are not currently working as expected.
+Error: cURL error 6: Could not resolve host: example1.mydomain (http_request_failed)</code></pre>
+
+
+
+<p>Edit the <strong>/etc/hosts</strong> file:</p>
+
+
+
+<pre class="wp-block-code"><code>nano /etc/hosts
+
+# Add a new line: IP hostname. e.g. 192.168.0.4 website1.example.com</code></pre>
+
+
+
+<p>Additionally, you might need to install the curl package:</p>
+
+
+
+<pre class="wp-block-code"><code>apt-get install php8.1-curl -y
+
+# Verify curl version:
+curl --version
+
+# Verify curl is enabled in php.ini
+nano /etc/php/8.1/apache2/php.ini
+
+# Uncomment this line:
+extension=curl</code></pre>
+
+
+
+<p>Adding this entry in <strong>/etc/hosts</strong> file also resolves Simply Static&#8217;s <em>&#8220;Checking if WordPress can make requests to itself from your_IP&#8221;</em> FAIL issue.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Configure Apache Web Server and Name-based Virtual Hosting with Ubuntu</title>
+		<link>/configure-apache-web-server-and-name-based-virtual-hosting-with-ubuntu/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Fri, 03 Feb 2023 20:19:00 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Apache]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[Self-Hosting]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+		<guid isPermaLink="false">/?p=18</guid>
+
+					<description><![CDATA[This is the fourth installment of the Name-based Virtual Hosting Series.]]></description>
+										<content:encoded><![CDATA[
+<p>This is the final installment of my dev environment setup which documents the process of setting up Apache web server and name-based virtual hosting. My setup has CIFS/Samba volume <em>my_smb_vol</em> and an ipvlan network <em>docker_dev_net</em>.</p>
+
+
+
+<h2>Spin up a Ubuntu Docker container:</h2>
+
+
+
+<pre class="wp-block-code"><code>docker run -dit --name WEB_SERVER --network docker_dev_net --ip 192.168.1.103 --mount source=my_smb_vol,destination=/SharedVolume ubuntu
+
+# -p 443:443 -p 80:80 -p 22:22
+# Port exposure is optional because the containers will be part of the same network that my other machines are in.</code></pre>
+
+
+
+<p>Install necessary packages:</p>
+
+
+
+<pre class="wp-block-code"><code># Install network utilities for troubleshooting:
+apt-get install iputils-ping -y
+apt-get install iproute2 -y
+apt-get install traceroute -y
+
+# Install SSH:
+apt-get install openssh-client -y
+apt-get install openssh-server -y
+
+# Install sudo and other utilities:
+apt-get install sudo -y
+apt-get install nano -y
+
+# Install apache, php, and php-mysql:
+apt-get install apache2 -y
+apt-get install php8.1 -y
+apt-get install php-mysql -y
+apt-get install libapache2-mod-php -y</code></pre>
+
+
+
+<p>Verify services are running and start the them if not:</p>
+
+
+
+<pre class="wp-block-code"><code># ssh and apache2 service status
+service ssh status
+service apache2 status
+
+# start the services:
+service ssh start
+service apache2 start</code></pre>
+
+
+
+<p>Hostname and name server (optional):</p>
+
+
+
+<pre class="wp-block-code"><code># Depending on your setup, you might need to specify the --hostname when creating your container:
+
+--hostname=your_hostname
+
+# Technically after specifying --ip and --hostname , you shouldn't need to edit /etc/resolv.conf anymore. To verify:
+
+cat /etc/resolv.conf</code></pre>
+
+
+
+<p>Verify php version:</p>
+
+
+
+<pre class="wp-block-code"><code># Create a info.php file under the /var/www/html directory with the following content:
+
+&lt;?php phpinfo();?&gt;</code></pre>
+
+
+
+<p>Now that you should be able to visit the Apache server&#8217;s default landing page and the info.php page to verify that the Apache server is running and view your php version.</p>
+
+
+
+<h2>Set up name-based virtual hosting:</h2>
+
+
+
+<pre class="wp-block-code"><code># The example websites I'm using are: example.mydomain, example1.mydomain, example2.mydomain.
+
+# Create directories:
+# example.mydomain will reside under /var/www/html as the "main" website.
+
+mkdir /var/www/html/example1.mydomain
+mkdir /var/www/html/example2.mydomain
+
+# Change ownership of the directories. I simply changed the entire html directory and its subdirectories' ownership to www-data for my convenience.
+
+chown -R www-data:www-data /var/www/html
+
+# Create Virtual Host configuration files for your sites.
+touch /etc/apache2/sites-available/example.mydomain.conf
+touch /etc/apache2/sites-available/example1.mydomain.conf
+touch /etc/apache2/sites-available/example2.mydomain.conf
+
+# Use nano to add the corresponding content to your site config files. Edit the ServerName and DocumentRoot as needed to point to the your domains and directories:
+
+# example.mydomain.conf or use the 000-default.conf:
+&lt;VirtualHost *:80&gt;
+    ServerAdmin webmaster@example.mydomain
+    ServerName example.mydomain
+    DocumentRoot /var/www/html
+    DirectoryIndex index.html
+    ErrorLog ${APACHE_LOG_DIR}/example.mydomain_error.log
+    CustomLog ${APACHE_LOG_DIR}/example.mydomain_access.log combined
+&lt;/VirtualHost&gt;
+
+# example1.mydomain.conf:
+&lt;VirtualHost *:80&gt;
+    ServerAdmin webmaster@example1.mydomain
+    ServerName example1.mydomain
+    DocumentRoot /var/www/html/example1.mydomain
+    DirectoryIndex index.php
+    ErrorLog ${APACHE_LOG_DIR}/example1.mydomain_error.log
+    CustomLog ${APACHE_LOG_DIR}/example1.mydomain_access.log combined
+&lt;/VirtualHost&gt;
+
+# Enable the configuration files for the sites:
+a2ensite example1.mydomain
+a2ensite example2.mydomain
+
+# Restart apache2 service and verify that apache2 is running:
+service apache2 reload
+service apache2 status
+
+# Of course, you will need to add your own index.html or index.php files under the sites' directories.</code></pre>
+
+
+
+<p>Configure your router or DNS server records:</p>
+
+
+
+<pre class="wp-block-code"><code># I'm using my Cisco router as an example:
+
+ip host example.mydomain 192.168.1.103
+ip host example1.mydomain 192.168.1.103
+ip host example2.mydomain 192.168.1.103</code></pre>
+
+
+
+<p>Now that you should be able to visit the sites by going to:</p>
+
+
+
+<pre class="wp-block-code"><code>http:&#47;&#47;example.mydomain
+http://example1.mydomain/
+http://example2.mydomain/</code></pre>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Configure Docker MySQL Server</title>
+		<link>/setting-up-mysql-server/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Fri, 03 Feb 2023 17:14:00 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Apache]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[MySQL]]></category>
+		<category><![CDATA[Self-Hosting]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+		<guid isPermaLink="false">https://www.alexchen.net/?p=2124</guid>
+
+					<description><![CDATA[This is the third installment of the Name-based Virtual Hosting Series.]]></description>
+										<content:encoded><![CDATA[
+<p>Background:</p>
+
+
+
+<p>I set up this MySQL server using the <strong><a rel="noreferrer noopener" href="https://hub.docker.com/r/ubuntu/mysql" target="_blank">ubuntu/mysql</a></strong> Docker image and it&#8217;s part of my dev environment setup. My setup has <a href="/docker-volumes-and-smb-share/">CIFS/Samba volume</a> <em>my_smb_vol</em> and an <a href="/ubuntu-server-docker-host-and-docker-networking/">ipvlan network</a> <em>docker_dev_net</em>.</p>
+
+
+
+<p>Steps:</p>
+
+
+
+<p>Create a ubuntu/mysql container:</p>
+
+
+
+<pre class="wp-block-code"><code>docker run -dit --name MySQL_DEV --network docker_dev_net --ip 192.168.1.101 --mount source=my_smb_vol,destination=/SharedVolume -p 3306:3306 -p 22:22 -e MYSQL_ROOT_PASSWORD=password ubuntu/mysql</code></pre>
+
+
+
+<p>Create users and databases:</p>
+
+
+
+<pre class="wp-block-code"><code># Connect to mysql instance:
+mysql -u root -p
+
+# Show databases:
+SHOW DATABASES;
+
+# Describe a table:
+USE mysql;
+DESC user;
+
+# Show all the users:
+SELECT user, host FROM mysql.user;
+
+# Create databases:
+CREATE DATABASE my_wordpress_db;
+
+# Create users:
+CREATE USER 'wordpress_user'@'192.168.1.103' IDENTIFIED BY 'password';
+
+# Explanation here: 192.168.1.103 is my other Ubuntu Apache web server container. If you are creating a local user use the following command:
+CREATE USER 'wordpress_user'@'localhost' IDENTIFIED BY 'password';
+
+# Grant privileges to the user:
+GRANT ALL ON my_wordpress_db.* TO 'wordpress_user'@'192.168.1.103' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+
+# Verify privileges:
+SHOW GRANTS FOR 'wordpress_user'@'192.168.1.103';</code></pre>
+
+
+
+<p>Allow remote connection to this mysql instance:</p>
+
+
+
+<pre class="wp-block-code"><code># You will have to modify one of the .cnf files to allow remote connection to your mysql instance, if you list the files under /etc/mysql/, you'll find the following files and directories listed:
+
+ls -al /etc/mysql/
+
+conf.d
+my.cnf
+my.cnf.fallback
+
+# See the content of my.cnf:
+cat /etc/mysql/my.cnf
+
+# On the last two lines of the output, you should see:
+# Custom config should go here
+!includedir /etc/mysql/conf.d/
+
+# List files under the conf.d directory:
+ls -al /etc/mysql/conf.d/
+
+docker.cnf
+mysql.cnf
+mysqldump.cnf
+
+# The mysql.cnf is what you're going to edit:
+nano /etc/mysql/conf.d/mysql.cnf
+
+# By default, your mysql.cnf file should only contain one line: &#91;mysql]. Add a new line below it so it looks like the following:
+
+&#91;mysql]
+bind-address = 0.0.0.0</code></pre>
+
+
+
+<p>Test connection to the mysql instance from the remote machine/container using the newly created <em>wordpress_user</em> user.</p>
+
+
+
+<pre class="wp-block-code"><code># I'm performing these steps on the Ubuntu Apache web server, 192.168.1.103:
+# Install the mysql-client package if it's not been installed.
+
+apt-get install mysql-client
+
+# Connect to the mysql instance at 192.168.1.101:
+mysql -h 192.168.1.101 -u wordpress_user -p</code></pre>
+
+
+
+<p>Conclusion:</p>
+
+
+
+<p>One thing that&#8217;s not configured in this post is the DNS resolution, which will be covered in the <a href="https://www.alexchen.net/blog/setting-up-apache-web-server-and-name-based-virtual-hosting-with-ubuntu/">post</a> documenting the Apache web server setup and also how to set up name-based virtual hosting.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Docker volumes and SMB share</title>
+		<link>/docker-volumes-and-smb-share/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Fri, 03 Feb 2023 16:52:00 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[Linux]]></category>
+		<category><![CDATA[Self-Hosting]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+		<guid isPermaLink="false">https://www.alexchen.net/?p=2122</guid>
+
+					<description><![CDATA[This is the second installment of the Name-based Virtual Hosting Series.]]></description>
+										<content:encoded><![CDATA[
+<p>I&#8217;m recently setting up a dev environment with different Docker containers running Ubuntu and database services and there are certain things I need them to persist and be shared between the containers, the host, and my other computers (mostly Windows) on the network. Since my home lab setup is a Windows house, SMB shares seem to be the most convenient solution.</p>
+
+
+
+<p>Create a <a href="https://docs.docker.com/storage/volumes/#create-cifssamba-volumes" target="_blank" rel="noreferrer noopener">Docker CIFS/Samba volume</a>:</p>
+
+
+
+<pre class="wp-block-code"><code># Of course, you need to create a network share first, mine is: \\main_server\DockerShare, and have a user &amp; password ready to access the share.
+
+docker volume create --driver local --opt type=cifs --opt device=//main_server/DockerShare --opt o=addr=main_server,username=your_username,password=your_password,file_mode=0777,dir_mode=0777 --name my_smb_vol</code></pre>
+
+
+
+<p>After the volume is created, you can start a container and mount the volume to it:</p>
+
+
+
+<pre class="wp-block-code"><code># List all volumes
+
+docker volume ls
+
+# Start the WEB_SERVER container with the volume just created
+
+docker run -dit --name WEB_SERVER --network docker_dev_net --ip 192.168.1.103 --mount source=my_smb_vol,destination=/SharedVolume -p 443:443 -p 80:80 -p 22:22 ubuntu</code></pre>
+
+
+
+<p></p>
+
+
+
+<p></p>
+
+
+
+<p></p>
+
+
+
+<p></p>
+
+
+
+<p></p>
+
+
+
+<p></p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Ubuntu Server Docker Host and Docker Networking</title>
+		<link>/ubuntu-server-docker-host-and-docker-networking/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Fri, 03 Feb 2023 04:19:00 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Apache]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Linux]]></category>
+		<category><![CDATA[Self-Hosting]]></category>
+		<category><![CDATA[Web Hosting]]></category>
+		<guid isPermaLink="false">https://www.alexchen.net/?p=2115</guid>
+
+					<description><![CDATA[This is the first installment of the Name-based Virtual Hosting Series.]]></description>
+										<content:encoded><![CDATA[
+<p>Since I started with my new job late last year I have been dealing quite bit with Docker, the majority of the applications at work are hosted and developed in a Docker environment, and even for personal projects Docker has made hosting and development much easier compared to using traditional VMs. But recently I came across a rather inconvenient issue with Docker Desktop for Windows when it comes to networking.</p>
+
+
+
+<p>The background is that my home lab&#8217;s network is well organized and controlled by IPs, access-lists, etc., via Cisco switches and routers, I needed my Docker host and dev containers to have static IP addresses and be within a specific IP range and add custom DNS records to my router to point to them. The Docker networking part is fairly straightforward, but what&#8217;s inconvenient is how Docker Desktop for Windows and WSL2 handle their networking part behind the scene. WSL2 gets its own vEthernet adapter with an IP in the 172.0.0.0 range and the containers get placed in a different 172.0.0.0 network segment and assigned with dynamic IPs and depending on how the Hyper-V and WSL2 backend handles the routing and switching, it&#8217;s rather difficult (if not impossible) to easily assign static IPs to the containers within the same IP segment as the host machine and make them part of the same subnet for easy access. After a couple of hours fiddling around with different solutions I basically gave up on it as it&#8217;s really not worth the time and efforts doing so, I opted to have a dedicated Hyper-V VM running Ubuntu Server as the Docker host on my home server.</p>
+
+
+
+<p>Since it&#8217;s Ubuntu Server, the networking part becomes very straightforward:</p>
+
+
+
+<p>The Docker host VM has its own static IP, e.g. 192.168.1.100/24. (The IP is assigned to interface <strong>eth0</strong> in Ubuntu.)</p>
+
+
+
+<pre class="wp-block-code"><code>ip address show eth0</code></pre>
+
+
+
+<p>Create an <strong><a href="https://docs.docker.com/network/ipvlan/" target="_blank" rel="noreferrer noopener">ipvlan</a></strong> network of the same subnet:</p>
+
+
+
+<pre class="wp-block-code"><code>docker network create --driver ipvlan --subnet=192.168.1.0/24 --gateway=192.168.1.1 -o ipvlan_mode=l2 -o parent=eth0 docker_dev_net</code></pre>
+
+
+
+<p>And then we can create containers using this network and assign static IPs to them:</p>
+
+
+
+<pre class="wp-block-code"><code># I'm using the ubuntu/mysql Docker Image here as an example.
+# The port 22 here is for being able to SSH into this container from my main windows computer.
+
+docker run -dit --name MySQL_DEV --network docker_dev_net --ip 192.168.1.101 -p 3306:3306 -p 22:22 -e MYSQL_ROOT_PASSWORD=password ubuntu/mysql
+
+# Make sure you add the corresponding DNS entries to your DNS server or router. e.g., on my Cisco router:
+
+ip host MySQL_DEV.mydomain 192.168.1.101</code></pre>
+
+
+
+<p>After the containers are running, test the connection with PowerShell:</p>
+
+
+
+<pre class="wp-block-code"><code>Test-NetConnection -ComputerName MySQL_DEV.mydomain -Port 3306</code></pre>
+
+
+
+<p>To conclude, it&#8217;s much easier to create Docker networks and containers and tap them into your existing network infrastructure in this way, without having to mess with Docker Desktop for Windows and WSL2. The final results are that I started three containers running MySQL, PostgreSQL, and Ubuntu, respectively. (The Ubuntu container will serve as an Apache web server hosting my websites.)</p>
+
+
+
+<pre class="wp-block-code"><code>docker run -dit --name WEB_SERVER --network docker_dev_net --ip 192.168.1.103 -p 443:443 -p 80:80 -p 22:22 ubuntu
+
+docker run -dit --name MySQL_DEV --network docker_dev_net --ip 192.168.1.101 -p 3306:3306 -p 22:22 -e MYSQL_ROOT_PASSWORD=password ubuntu/mysql
+
+docker run -dit --name PostgreSQL_DEV --network docker_dev_net --ip 192.168.1.102 -p 5432:5432 -p 22:22 -e POSTGRES_PASSWORD=password postgres</code></pre>
+
+
+
+<p></p>
+
+
+
+<p></p>
+
+
+
+<p></p>
+
+
+
+<p></p>
+
+
+
+<p></p>
+
+
+
+<p></p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Self-host Nextcloud</title>
+		<link>/self-host-nextcloud/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sat, 18 Sep 2021 11:43:43 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Apache]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[Linux]]></category>
+		<category><![CDATA[Nextcloud]]></category>
+		<category><![CDATA[Self-Hosting]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+		<category><![CDATA[Web Hosting]]></category>
+		<guid isPermaLink="false">https://www.alexchen.net/?p=1597</guid>
+
+					<description><![CDATA[Take back control of your privacy with self-hosted Nextcloud.]]></description>
+										<content:encoded><![CDATA[
+<p><em>I used to trust Google more when they were under the leadership of Larry Page and Sergey Brin and held up their &#8220;Don&#8217;t Do Evil&#8221; motto, and I used to admire them more when they had the balls to stand up against China&#8217;s censorship. But nowadays Google has become more of a censorship giant itself by implementing the radical left&#8217;s communist political agenda, and its ever increasing intrusion to our privacy is just too concerning. Luckily, there are plenty open source alternatives.</em></p>
+
+
+
+<h2>Installation:</h2>
+
+
+
+<p><strong>Environment:</strong> Windows Server 2019 + Hyper-V</p>
+
+
+
+<p><strong>Linux version:</strong> Ubuntu 20.04 LTS</p>
+
+
+
+<p><strong>LAMP Stack:</strong> PHP8.0, MariaDB, Apache</p>
+
+
+
+<p>My main reference sources are from <a rel="noreferrer noopener" href="https://docs.nextcloud.com/server/latest/admin_manual/installation/example_ubuntu.html" data-type="URL" data-id="https://docs.nextcloud.com/server/latest/admin_manual/installation/example_ubuntu.html" target="_blank">this article</a> and <a rel="noreferrer noopener" href="https://www.itzgeek.com/how-tos/linux/debian/how-to-install-apache-mariadb-php-lamp-stack-on-debian-11.html" data-type="URL" data-id="https://www.itzgeek.com/how-tos/linux/debian/how-to-install-apache-mariadb-php-lamp-stack-on-debian-11.html" target="_blank">this article</a>, however, some commands are slightly modified to fit my needs.</p>
+
+
+
+<pre class="wp-block-code"><code># Become root
+sudo -i
+
+# Install Apache
+apt-get update -y
+apt-get install -y apache2 apache2-utils
+systemctl status apache2
+# After installation, visit http://localhost/ to verify that Apache is running.
+
+# Install MariaDB
+apt-get install -y mariadb-server mariadb-client
+systemctl status mariadb
+mysql_secure_installation
+
+# Install PHP8.0 (the default PHP version might be PHP7.4, I completely skipped what was in the original article and went with PHP8.0)
+apt-get install software-properties-common -y
+add-apt-repository ppa:ondrej/php
+apt-get update -y
+apt-get install php8.0 libapache2-mod-php8.0 -y
+systemctl restart apache2
+
+apt-get update -y
+apt-get install php8.0-fpm libapache2-mod-fcgid -y
+a2enmod proxy_fcgi setenvif
+a2enconf php8.0-fpm
+systemctl restart apache2
+
+# Install other modules for Nextcloud
+apt-get install -y php8.0-gd php8.0-mysql php8.0-curl php8.0-mbstring php8.0-intl
+apt-get install -y php8.0-gmp php8.0-bcmath php-imagick php8.0-xml php8.0-zip
+
+
+# Create MySQL database
+sudo /etc/init.d/mysql start
+mysql -u root -p
+
+CREATE USER 'username'@'localhost' IDENTIFIED BY 'password';
+
+# In the next query, you'll need to remove all the dashes because WordPress's code block editor has problems with the the charset portion of the query by giving a "Publishing failed. The response is not a valid JSON response." error.
+
+CREATE DATABASE IF NOT EXISTS nextcloud CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+
+GRANT ALL PRIVILEGES ON nextcloud.* TO 'username'@'localhost';
+FLUSH PRIVILEGES;
+
+quit;</code></pre>
+
+
+
+<p>Download Nextcloud server package from <a rel="noreferrer noopener" href="https://nextcloud.com/install/" target="_blank" data-type="URL" data-id="https://nextcloud.com/install/">here</a>.</p>
+
+
+
+<pre class="wp-block-code"><code># My Downloads folder path is /home/*username*/Downloads, and the current version Nextcloud build I use is nextcloud-22.1.1.zip .
+cd /home/*username*/Downloads
+unzip nextcloud-22.1.1.zip
+
+# Copy to Apache document root
+cp -r nextcloud /var/www/html</code></pre>
+
+
+
+<p>Next, configure the Apache web server. <a rel="noreferrer noopener" href="https://docs.nextcloud.com/server/latest/admin_manual/installation/source_installation.html#apache-configuration-label" data-type="URL" data-id="https://docs.nextcloud.com/server/latest/admin_manual/installation/source_installation.html#apache-configuration-label" target="_blank">Reference article</a>.</p>
+
+
+
+<pre class="wp-block-code"><code># Use your favorite text editor in Linux to create the nextcloud.conf file under /etc/apache2/sites-available/nextcloud.conf .
+
+# I used directory based installation, so I added the following in nextcloud.conf
+
+Alias /nextcloud "/var/www/html/nextcloud/"
+
+&lt;Directory /var/www/html/nextcloud/>
+  Require all granted
+  AllowOverride All
+  Options FollowSymLinks MultiViews
+
+  &lt;IfModule mod_dav.c>
+    Dav off
+  &lt;/IfModule>
+&lt;/Directory>
+
+
+# Enable modules and sites
+a2ensite nextcloud.conf
+a2enmod rewrite
+a2enmod headers
+a2enmod env
+a2enmod dir
+a2enmod mime
+a2enmod setenvif
+systemctl reload apache2
+
+
+# Enable SSL
+a2enmod ssl
+a2ensite default-ssl
+systemctl reload apache2
+
+# Change directory permission
+chown -R www-data:www-data /var/www/html/nextcloud/</code></pre>
+
+
+
+<p>Now, Nextcloud should be working, the next few steps are very straightforward through Nextcloud&#8217;s setup page.</p>
+
+
+
+<h2>Post-setup configs and troubleshooting:</h2>
+
+
+
+<ol>
+<li>Add Trusted Domain in Nextcloud&#8217;s config files. <a rel="noreferrer noopener" href="https://help.nextcloud.com/t/howto-add-a-new-trusted-domain/26" data-type="URL" data-id="https://help.nextcloud.com/t/howto-add-a-new-trusted-domain/26" target="_blank">Ref.</a></li>
+
+
+
+<li>Increase PHP memory_limit.</li>
+
+
+
+<li>View phpinfo.</li>
+</ol>
+
+
+
+<pre class="wp-block-code"><code># 1. In your nextcloud directory, /var/www/html/nextcloud/config , find the config.php file and edit the line with 'trusted_domain'. Assuming you'll access your nextcloud using 'localhost', '192.168.0.2', and 'my_nextcloud' , write the trusted_domain like below.
+
+  'trusted_domains' =&gt;
+  array (
+    0 =&gt; 'localhost',
+    1 =&gt; '192.168.0.29',
+    2 =&gt; 'my_nextcloud',
+  ),
+
+# 2. Change line memory_limit to a desired value in both /etc/php/8.0/fpm/php.ini and /etc/php/8.0/apache2/php.ini , e.g. memory_limit=512M, and then restart the services.
+
+service php8.0-fpm restart
+service apache2 restart
+
+# 3. Create a info.php file in document root to verify php info.
+
+cd /var/www/html/
+touch info.php
+
+# Add the following to info.php using your favorite text editor.
+
+&lt;?php phpinfo(); ?&gt;
+
+# Visit info.php in a browser to view phpinfo.</code></pre>
+
+
+
+<p>Useful MariaDB/MySQL commands:</p>
+
+
+
+<pre class="wp-block-code"><code># Find out usernames, databases, ports
+mysql -u root -p
+SELECT User FROM mysql.user;
+SHOW GLOBAL VARIABLES IKE 'PORT';
+SHOW DATABASES;</code></pre>
+
+
+
+<p>Disable (to not enforce) 2FA in Nextcloud:</p>
+
+
+
+<pre class="wp-block-code"><code># In file /var/www/html/nextcloud/config/config.php, change the following.
+
+‘twofactor_enforced’ =&gt; ‘false’</code></pre>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>nginx, net-tools, and cifs-utils</title>
+		<link>/nginx-net-tools-and-cifs-utils/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Thu, 16 Sep 2021 12:25:36 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[Linux]]></category>
+		<category><![CDATA[Self-Hosting]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+		<category><![CDATA[Web Hosting]]></category>
+		<guid isPermaLink="false">https://www.alexchen.net/?p=1651</guid>
+
+					<description><![CDATA[Install nginx, net-tools, and cifs-utils on Ubuntu Server. Mount shared folders in Ubuntu Server 20.04.]]></description>
+										<content:encoded><![CDATA[
+<p>During the course of setting up Nextcloud and Standard Notes, I needed to use some tools for troubleshooting along the way, here is the documentation for future refresher.</p>
+
+
+
+<p>Nginx installation and common paths.</p>
+
+
+
+<pre class="wp-block-code"><code>apt update -y
+apt install nginx -y
+
+# /etc/nginx/sites-available
+# /etc/nginx/sites-enabled
+
+unlink /etc/nginx/sites-enabled/default
+
+ln -s /etc/nginx/sites-available/YourConfigFile /etc/nginx/sites-enabled/YourConfigFile</code></pre>
+
+
+
+<p>Mount network shares in Ubuntu Server.</p>
+
+
+
+<pre class="wp-block-code"><code># I needed to share files between my Windows servers and Ubuntu servers. The shared folders were created and managed on Windows Server 2019.
+
+apt update -y
+apt install cifs-utils -y
+
+mkdir /mnt/my-folder
+
+mount -t cifs //server-name/share-name /mnt/my-folder -o username=username,password=password,domain=domain
+
+# use mount command to see all mount points</code></pre>
+
+
+
+<p>net-tools for ifconfig.</p>
+
+
+
+<pre class="wp-block-code"><code>apt update -y
+apt install net-tools -y</code></pre>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>White Screen Issue When Presenting in Skype for Business</title>
+		<link>/white-screen-when-presenting-in-skype-for-business/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Thu, 02 Jul 2020 07:23:00 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Skype]]></category>
+		<category><![CDATA[System Administration]]></category>
+		<guid isPermaLink="false">http://www.alexchen.net/?p=839</guid>
+
+					<description><![CDATA[Skype for Business user unable to see what others were presenting in a Skype meeting. The "Stage" area showed blank white screen when other participants "Present Programs …".]]></description>
+										<content:encoded><![CDATA[
+<p>Recently a Skype for Business user was unable to see what others were presenting during a Skype meeting. The user&#8217;s &#8220;Stage&#8221; area showed blank white screen when other participants &#8220;Present Programs …&#8221;.</p>
+
+
+
+<p>The fix is easy &#8211; deleting a registry folder that&#8217;s related to ActiveX control.</p>
+
+
+
+<ol>
+<li>Open regedit and navigate to HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Internet Explorer\ActiveX Compatibility</li>
+
+
+
+<li>Delete the folder: {00000000-0000-0000-000000000000}</li>
+
+
+
+<li>Restart Skype for Business.</li>
+</ol>
+
+
+
+<p>Reference: <a href="http://communicationsknowledge.blogspot.com/2015/11/getting-blank-screen-when-trying-to.html">http://communicationsknowledge.blogspot.com/2015/11/getting-blank-screen-when-trying-to.html</a></p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+	</channel>
 </rss>
