@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Skype &#8211; howdy</title>
+	<atom:link href="/tag/skype/feed/" rel="self" type="application/rss+xml" />
+	<link>/</link>
+	<description></description>
+	<lastBuildDate>Sun, 26 Mar 2023 01:56:55 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.1.1</generator>
+	<item>
+		<title>White Screen Issue When Presenting in Skype for Business</title>
+		<link>/white-screen-when-presenting-in-skype-for-business/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Thu, 02 Jul 2020 02:23:00 +0000</pubDate>
+				<category><![CDATA[notes]]></category>
+		<category><![CDATA[Skype]]></category>
+		<category><![CDATA[System Administration]]></category>
+		<guid isPermaLink="false">http://www.alexchen.net/?p=839</guid>
+
+					<description><![CDATA[Skype for Business user unable to see what others were presenting in a Skype meeting. The "Stage" area showed blank white screen when other participants "Present Programs …".]]></description>
+										<content:encoded><![CDATA[
+<p>Recently a Skype for Business user was unable to see what others were presenting during a Skype meeting. The user&#8217;s &#8220;Stage&#8221; area showed blank white screen when other participants &#8220;Present Programs …&#8221;.</p>
+
+
+
+<p>The fix is easy &#8211; deleting a registry folder that&#8217;s related to ActiveX control.</p>
+
+
+
+<ol>
+<li>Open regedit and navigate to HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Internet Explorer\ActiveX Compatibility</li>
+
+
+
+<li>Delete the folder: {00000000-0000-0000-000000000000}</li>
+
+
+
+<li>Restart Skype for Business.</li>
+</ol>
+
+
+
+<p>Reference: <a href="http://communicationsknowledge.blogspot.com/2015/11/getting-blank-screen-when-trying-to.html">http://communicationsknowledge.blogspot.com/2015/11/getting-blank-screen-when-trying-to.html</a></p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+	</channel>
+</rss>

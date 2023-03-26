@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="profile" href="https://gmpg.org/xfn/11">
 
-	<title>Configure Docker MySQL Server &#8211; howdy</title>
+	<title>Self-host Nextcloud &#8211; howdy</title>
 <meta name="robots" content="noindex, nofollow">
 <link rel="alternate" type="application/rss+xml" title="howdy &raquo; Feed" href="/feed/">
 <link rel="alternate" type="application/rss+xml" title="howdy &raquo; Comments Feed" href="/comments/feed/">
@@ -34,14 +34,14 @@ img.emoji {
 .wp-block-pullquote{font-size: 1.5em;line-height: 1.6;}</style>
 <link rel="stylesheet" id="wp_notes-style-css" href="/wp-content/themes/wp-notes/assets/css/main.css?ver=1.0.1" media="all">
 <link rel="https://api.w.org/" href="/wp-json/">
-<link rel="alternate" type="application/json" href="/wp-json/wp/v2/posts/2124">
+<link rel="alternate" type="application/json" href="/wp-json/wp/v2/posts/1597">
 <link rel="EditURI" type="application/rsd+xml" title="RSD" href="/xmlrpc.php?rsd">
 <link rel="wlwmanifest" type="application/wlwmanifest+xml" href="/wp-includes/wlwmanifest.xml">
 <meta name="generator" content="WordPress 6.1.1">
-<link rel="canonical" href="/setting-up-mysql-server/">
-<link rel="shortlink" href="/?p=2124">
-<link rel="alternate" type="application/json+oembed" href="/wp-json/oembed/1.0/embed?url=http%3A%2F%2F%2Fsetting-up-mysql-server%2F">
-<link rel="alternate" type="text/xml+oembed" href="/wp-json/oembed/1.0/embed?url=http%3A%2F%2F%2Fsetting-up-mysql-server%2F#038;format=xml">
+<link rel="canonical" href="/self-host-nextcloud/">
+<link rel="shortlink" href="/?p=1597">
+<link rel="alternate" type="application/json+oembed" href="/wp-json/oembed/1.0/embed?url=http%3A%2F%2F%2Fself-host-nextcloud%2F">
+<link rel="alternate" type="text/xml+oembed" href="/wp-json/oembed/1.0/embed?url=http%3A%2F%2F%2Fself-host-nextcloud%2F#038;format=xml">
         <style>:root {	
 	            --wp_notes-branding-color: #EC7160;
 	            --wp_notes-branding-accent-color: #DA5745;
@@ -132,7 +132,7 @@ code {
 }</style>
 </head>
 
-<body class="post-template-default single single-post postid-2124 single-format-standard custom-background">
+<body class="post-template-default single single-post postid-1597 single-format-standard custom-background">
 <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;"><defs><filter id="wp-duotone-dark-grayscale"><fecolormatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></fecolormatrix><fecomponenttransfer color-interpolation-filters="sRGB"><fefuncr type="table" tablevalues="0 0.49803921568627"></fefuncr><fefuncg type="table" tablevalues="0 0.49803921568627"></fefuncg><fefuncb type="table" tablevalues="0 0.49803921568627"></fefuncb><fefunca type="table" tablevalues="1 1"></fefunca></fecomponenttransfer><fecomposite in2="SourceGraphic" operator="in"></fecomposite></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;"><defs><filter id="wp-duotone-grayscale"><fecolormatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></fecolormatrix><fecomponenttransfer color-interpolation-filters="sRGB"><fefuncr type="table" tablevalues="0 1"></fefuncr><fefuncg type="table" tablevalues="0 1"></fefuncg><fefuncb type="table" tablevalues="0 1"></fefuncb><fefunca type="table" tablevalues="1 1"></fefunca></fecomponenttransfer><fecomposite in2="SourceGraphic" operator="in"></fecomposite></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;"><defs><filter id="wp-duotone-purple-yellow"><fecolormatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></fecolormatrix><fecomponenttransfer color-interpolation-filters="sRGB"><fefuncr type="table" tablevalues="0.54901960784314 0.98823529411765"></fefuncr><fefuncg type="table" tablevalues="0 1"></fefuncg><fefuncb type="table" tablevalues="0.71764705882353 0.25490196078431"></fefuncb><fefunca type="table" tablevalues="1 1"></fefunca></fecomponenttransfer><fecomposite in2="SourceGraphic" operator="in"></fecomposite></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;"><defs><filter id="wp-duotone-blue-red"><fecolormatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></fecolormatrix><fecomponenttransfer color-interpolation-filters="sRGB"><fefuncr type="table" tablevalues="0 1"></fefuncr><fefuncg type="table" tablevalues="0 0.27843137254902"></fefuncg><fefuncb type="table" tablevalues="0.5921568627451 0.27843137254902"></fefuncb><fefunca type="table" tablevalues="1 1"></fefunca></fecomponenttransfer><fecomposite in2="SourceGraphic" operator="in"></fecomposite></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;"><defs><filter id="wp-duotone-midnight"><fecolormatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></fecolormatrix><fecomponenttransfer color-interpolation-filters="sRGB"><fefuncr type="table" tablevalues="0 0"></fefuncr><fefuncg type="table" tablevalues="0 0.64705882352941"></fefuncg><fefuncb type="table" tablevalues="0 1"></fefuncb><fefunca type="table" tablevalues="1 1"></fefunca></fecomponenttransfer><fecomposite in2="SourceGraphic" operator="in"></fecomposite></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;"><defs><filter id="wp-duotone-magenta-yellow"><fecolormatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></fecolormatrix><fecomponenttransfer color-interpolation-filters="sRGB"><fefuncr type="table" tablevalues="0.78039215686275 1"></fefuncr><fefuncg type="table" tablevalues="0 0.94901960784314"></fefuncg><fefuncb type="table" tablevalues="0.35294117647059 0.47058823529412"></fefuncb><fefunca type="table" tablevalues="1 1"></fefunca></fecomponenttransfer><fecomposite in2="SourceGraphic" operator="in"></fecomposite></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;"><defs><filter id="wp-duotone-purple-green"><fecolormatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></fecolormatrix><fecomponenttransfer color-interpolation-filters="sRGB"><fefuncr type="table" tablevalues="0.65098039215686 0.40392156862745"></fefuncr><fefuncg type="table" tablevalues="0 1"></fefuncg><fefuncb type="table" tablevalues="0.44705882352941 0.4"></fefuncb><fefunca type="table" tablevalues="1 1"></fefunca></fecomponenttransfer><fecomposite in2="SourceGraphic" operator="in"></fecomposite></filter></defs></svg><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;"><defs><filter id="wp-duotone-blue-orange"><fecolormatrix color-interpolation-filters="sRGB" type="matrix" values=" .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 .299 .587 .114 0 0 "></fecolormatrix><fecomponenttransfer color-interpolation-filters="sRGB"><fefuncr type="table" tablevalues="0.098039215686275 1"></fefuncr><fefuncg type="table" tablevalues="0 0.66274509803922"></fefuncg><fefuncb type="table" tablevalues="0.84705882352941 0.41960784313725"></fefuncb><fefunca type="table" tablevalues="1 1"></fefunca></fecomponenttransfer><fecomposite in2="SourceGraphic" operator="in"></fecomposite></filter></defs></svg><div id="page" class="o-grid-noGutter c-site js-site">
     <a class="skip-link screen-reader-text" href="#primary">Skip to content</a>
 
@@ -222,7 +222,7 @@ code {
 <!-- .entry-meta -->
                     </footer>
 				            </article><!-- #post-18 -->
-			            <article id="post-2124" class="c-post c-post--archive is-selected-post post-2124 post type-post status-publish format-standard hentry category-notes tag-apache tag-docker tag-hosting tag-mysql tag-self-hosting tag-ubuntu">
+			            <article id="post-2124" class="c-post c-post--archive post-2124 post type-post status-publish format-standard hentry category-notes tag-apache tag-docker tag-hosting tag-mysql tag-self-hosting tag-ubuntu">
                 <a href="/setting-up-mysql-server/" class="c-post__link" aria-label="Configure Docker MySQL Server"></a>
                 <header class="c-post__header">
 					<h3 class="c-post__title h3">Configure Docker MySQL Server                </h3></header><!-- .entry-header -->
@@ -261,7 +261,7 @@ code {
 <!-- .entry-meta -->
                     </footer>
 				            </article><!-- #post-2115 -->
-			            <article id="post-1597" class="c-post c-post--archive post-1597 post type-post status-publish format-standard hentry category-notes tag-apache tag-docker tag-hosting tag-linux tag-nextcloud tag-self-hosting tag-ubuntu tag-web-hosting">
+			            <article id="post-1597" class="c-post c-post--archive is-selected-post post-1597 post type-post status-publish format-standard hentry category-notes tag-apache tag-docker tag-hosting tag-linux tag-nextcloud tag-self-hosting tag-ubuntu tag-web-hosting">
                 <a href="/self-host-nextcloud/" class="c-post__link" aria-label="Self-host Nextcloud"></a>
                 <header class="c-post__header">
 					<h3 class="c-post__title h3">Self-host Nextcloud                </h3></header><!-- .entry-header -->
@@ -304,139 +304,226 @@ code {
 
     <main id="primary" class="c-main js-main">
     <div class="c-main__wrapper">
-		    <article id="post-2124" class="c-post c-post--single post-2124 post type-post status-publish format-standard hentry category-notes tag-apache tag-docker tag-hosting tag-mysql tag-self-hosting tag-ubuntu">
+		    <article id="post-1597" class="c-post c-post--single post-1597 post type-post status-publish format-standard hentry category-notes tag-apache tag-docker tag-hosting tag-linux tag-nextcloud tag-self-hosting tag-ubuntu tag-web-hosting">
         <header class="c-post__header">
-			<h1 class="c-post__title">Configure Docker MySQL Server</h1>                <div class="c-post__meta">
-					<span class="c-post__date__published"><time class="c-post__date entry-date" datetime="2023-02-03T11:14:00-06:00">2023-02-03</time></span>                </div>
+			<h1 class="c-post__title">Self-host Nextcloud</h1>                <div class="c-post__meta">
+					<span class="c-post__date__published"><time class="c-post__date entry-date" datetime="2021-09-18T06:43:43-05:00">2021-09-18</time></span>                </div>
 <!-- .entry-meta -->
 			        </header><!-- .entry-header -->
 
 		
         <div class="c-post__content s-post-content entry-content">
 			
-<p>Background:</p>
+<p><em>I used to trust Google more when they were under the leadership of Larry Page and Sergey Brin and held up their &#8220;Don&#8217;t Do Evil&#8221; motto, and I used to admire them more when they had the balls to stand up against China&#8217;s censorship. But nowadays Google has become more of a censorship giant itself by implementing the radical left&#8217;s communist political agenda, and its ever increasing intrusion to our privacy is just too concerning. Luckily, there are plenty open source alternatives.</em></p>
 
 
 
-<p>I set up this MySQL server using the <strong><a rel="noreferrer noopener" href="https://hub.docker.com/r/ubuntu/mysql" target="_blank">ubuntu/mysql</a></strong> Docker image and it&#8217;s part of my dev environment setup. My setup has <a href="/docker-volumes-and-smb-share/">CIFS/Samba volume</a> <em>my_smb_vol</em> and an <a href="/ubuntu-server-docker-host-and-docker-networking/">ipvlan network</a> <em>docker_dev_net</em>.</p>
+<h2>Installation:</h2>
 
 
 
-<p>Steps:</p>
+<p><strong>Environment:</strong> Windows Server 2019 + Hyper-V</p>
 
 
 
-<p>Create a ubuntu/mysql container:</p>
+<p><strong>Linux version:</strong> Ubuntu 20.04 LTS</p>
 
 
 
-<pre class="wp-block-code"><code>docker run -dit --name MySQL_DEV --network docker_dev_net --ip 192.168.1.101 --mount source=my_smb_vol,destination=/SharedVolume -p 3306:3306 -p 22:22 -e MYSQL_ROOT_PASSWORD=password ubuntu/mysql</code></pre>
+<p><strong>LAMP Stack:</strong> PHP8.0, MariaDB, Apache</p>
 
 
 
-<p>Create users and databases:</p>
+<p>My main reference sources are from <a rel="noreferrer noopener" href="https://docs.nextcloud.com/server/latest/admin_manual/installation/example_ubuntu.html" data-type="URL" data-id="https://docs.nextcloud.com/server/latest/admin_manual/installation/example_ubuntu.html" target="_blank">this article</a> and <a rel="noreferrer noopener" href="https://www.itzgeek.com/how-tos/linux/debian/how-to-install-apache-mariadb-php-lamp-stack-on-debian-11.html" data-type="URL" data-id="https://www.itzgeek.com/how-tos/linux/debian/how-to-install-apache-mariadb-php-lamp-stack-on-debian-11.html" target="_blank">this article</a>, however, some commands are slightly modified to fit my needs.</p>
 
 
 
-<pre class="wp-block-code"><code># Connect to mysql instance:
+<pre class="wp-block-code"><code># Become root
+sudo -i
+
+# Install Apache
+apt-get update -y
+apt-get install -y apache2 apache2-utils
+systemctl status apache2
+# After installation, visit http://localhost/ to verify that Apache is running.
+
+# Install MariaDB
+apt-get install -y mariadb-server mariadb-client
+systemctl status mariadb
+mysql_secure_installation
+
+# Install PHP8.0 (the default PHP version might be PHP7.4, I completely skipped what was in the original article and went with PHP8.0)
+apt-get install software-properties-common -y
+add-apt-repository ppa:ondrej/php
+apt-get update -y
+apt-get install php8.0 libapache2-mod-php8.0 -y
+systemctl restart apache2
+
+apt-get update -y
+apt-get install php8.0-fpm libapache2-mod-fcgid -y
+a2enmod proxy_fcgi setenvif
+a2enconf php8.0-fpm
+systemctl restart apache2
+
+# Install other modules for Nextcloud
+apt-get install -y php8.0-gd php8.0-mysql php8.0-curl php8.0-mbstring php8.0-intl
+apt-get install -y php8.0-gmp php8.0-bcmath php-imagick php8.0-xml php8.0-zip
+
+
+# Create MySQL database
+sudo /etc/init.d/mysql start
 mysql -u root -p
 
-# Show databases:
-SHOW DATABASES;
+CREATE USER 'username'@'localhost' IDENTIFIED BY 'password';
 
-# Describe a table:
-USE mysql;
-DESC user;
+# In the next query, you'll need to remove all the dashes because WordPress's code block editor has problems with the the charset portion of the query by giving a "Publishing failed. The response is not a valid JSON response." error.
 
-# Show all the users:
-SELECT user, host FROM mysql.user;
+CREATE DATABASE IF NOT EXISTS nextcloud CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 
-# Create databases:
-CREATE DATABASE my_wordpress_db;
-
-# Create users:
-CREATE USER 'wordpress_user'@'192.168.1.103' IDENTIFIED BY 'password';
-
-# Explanation here: 192.168.1.103 is my other Ubuntu Apache web server container. If you are creating a local user use the following command:
-CREATE USER 'wordpress_user'@'localhost' IDENTIFIED BY 'password';
-
-# Grant privileges to the user:
-GRANT ALL ON my_wordpress_db.* TO 'wordpress_user'@'192.168.1.103' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON nextcloud.* TO 'username'@'localhost';
 FLUSH PRIVILEGES;
 
-# Verify privileges:
-SHOW GRANTS FOR 'wordpress_user'@'192.168.1.103';</code></pre>
+quit;</code></pre>
 
 
 
-<p>Allow remote connection to this mysql instance:</p>
+<p>Download Nextcloud server package from <a rel="noreferrer noopener" href="https://nextcloud.com/install/" target="_blank" data-type="URL" data-id="https://nextcloud.com/install/">here</a>.</p>
 
 
 
-<pre class="wp-block-code"><code># You will have to modify one of the .cnf files to allow remote connection to your mysql instance, if you list the files under /etc/mysql/, you'll find the following files and directories listed:
+<pre class="wp-block-code"><code># My Downloads folder path is /home/*username*/Downloads, and the current version Nextcloud build I use is nextcloud-22.1.1.zip .
+cd /home/*username*/Downloads
+unzip nextcloud-22.1.1.zip
 
-ls -al /etc/mysql/
-
-conf.d
-my.cnf
-my.cnf.fallback
-
-# See the content of my.cnf:
-cat /etc/mysql/my.cnf
-
-# On the last two lines of the output, you should see:
-# Custom config should go here
-!includedir /etc/mysql/conf.d/
-
-# List files under the conf.d directory:
-ls -al /etc/mysql/conf.d/
-
-docker.cnf
-mysql.cnf
-mysqldump.cnf
-
-# The mysql.cnf is what you're going to edit:
-nano /etc/mysql/conf.d/mysql.cnf
-
-# By default, your mysql.cnf file should only contain one line: &#91;mysql]. Add a new line below it so it looks like the following:
-
-&#91;mysql]
-bind-address = 0.0.0.0</code></pre>
+# Copy to Apache document root
+cp -r nextcloud /var/www/html</code></pre>
 
 
 
-<p>Test connection to the mysql instance from the remote machine/container using the newly created <em>wordpress_user</em> user.</p>
+<p>Next, configure the Apache web server. <a rel="noreferrer noopener" href="https://docs.nextcloud.com/server/latest/admin_manual/installation/source_installation.html#apache-configuration-label" data-type="URL" data-id="https://docs.nextcloud.com/server/latest/admin_manual/installation/source_installation.html#apache-configuration-label" target="_blank">Reference article</a>.</p>
 
 
 
-<pre class="wp-block-code"><code># I'm performing these steps on the Ubuntu Apache web server, 192.168.1.103:
-# Install the mysql-client package if it's not been installed.
+<pre class="wp-block-code"><code># Use your favorite text editor in Linux to create the nextcloud.conf file under /etc/apache2/sites-available/nextcloud.conf .
 
-apt-get install mysql-client
+# I used directory based installation, so I added the following in nextcloud.conf
 
-# Connect to the mysql instance at 192.168.1.101:
-mysql -h 192.168.1.101 -u wordpress_user -p</code></pre>
+Alias /nextcloud "/var/www/html/nextcloud/"
+
+&lt;Directory /var/www/html/nextcloud/>
+  Require all granted
+  AllowOverride All
+  Options FollowSymLinks MultiViews
+
+  &lt;IfModule mod_dav.c>
+    Dav off
+  &lt;/IfModule>
+&lt;/Directory>
+
+
+# Enable modules and sites
+a2ensite nextcloud.conf
+a2enmod rewrite
+a2enmod headers
+a2enmod env
+a2enmod dir
+a2enmod mime
+a2enmod setenvif
+systemctl reload apache2
+
+
+# Enable SSL
+a2enmod ssl
+a2ensite default-ssl
+systemctl reload apache2
+
+# Change directory permission
+chown -R www-data:www-data /var/www/html/nextcloud/</code></pre>
 
 
 
-<p>Conclusion:</p>
+<p>Now, Nextcloud should be working, the next few steps are very straightforward through Nextcloud&#8217;s setup page.</p>
 
 
 
-<p>One thing that&#8217;s not configured in this post is the DNS resolution, which will be covered in the <a href="https://www.alexchen.net/blog/setting-up-apache-web-server-and-name-based-virtual-hosting-with-ubuntu/">post</a> documenting the Apache web server setup and also how to set up name-based virtual hosting.</p>
+<h2>Post-setup configs and troubleshooting:</h2>
+
+
+
+<ol>
+<li>Add Trusted Domain in Nextcloud&#8217;s config files. <a rel="noreferrer noopener" href="https://help.nextcloud.com/t/howto-add-a-new-trusted-domain/26" data-type="URL" data-id="https://help.nextcloud.com/t/howto-add-a-new-trusted-domain/26" target="_blank">Ref.</a>
+</li>
+
+
+
+<li>Increase PHP memory_limit.</li>
+
+
+
+<li>View phpinfo.</li>
+</ol>
+
+
+
+<pre class="wp-block-code"><code># 1. In your nextcloud directory, /var/www/html/nextcloud/config , find the config.php file and edit the line with 'trusted_domain'. Assuming you'll access your nextcloud using 'localhost', '192.168.0.2', and 'my_nextcloud' , write the trusted_domain like below.
+
+  'trusted_domains' =&gt;
+  array (
+    0 =&gt; 'localhost',
+    1 =&gt; '192.168.0.29',
+    2 =&gt; 'my_nextcloud',
+  ),
+
+# 2. Change line memory_limit to a desired value in both /etc/php/8.0/fpm/php.ini and /etc/php/8.0/apache2/php.ini , e.g. memory_limit=512M, and then restart the services.
+
+service php8.0-fpm restart
+service apache2 restart
+
+# 3. Create a info.php file in document root to verify php info.
+
+cd /var/www/html/
+touch info.php
+
+# Add the following to info.php using your favorite text editor.
+
+&lt;?php phpinfo(); ?&gt;
+
+# Visit info.php in a browser to view phpinfo.</code></pre>
+
+
+
+<p>Useful MariaDB/MySQL commands:</p>
+
+
+
+<pre class="wp-block-code"><code># Find out usernames, databases, ports
+mysql -u root -p
+SELECT User FROM mysql.user;
+SHOW GLOBAL VARIABLES IKE 'PORT';
+SHOW DATABASES;</code></pre>
+
+
+
+<p>Disable (to not enforce) 2FA in Nextcloud:</p>
+
+
+
+<pre class="wp-block-code"><code># In file /var/www/html/nextcloud/config/config.php, change the following.
+
+‘twofactor_enforced’ =&gt; ‘false’</code></pre>
         </div>
 <!-- .entry-content -->
 
         <footer class="c-post__footer">
-			<span class="c-post__tags">Tags: <a href="/tag/apache/" rel="tag">Apache</a>, <a href="/tag/docker/" rel="tag">Docker</a>, <a href="/tag/hosting/" rel="tag">Hosting</a>, <a href="/tag/mysql/" rel="tag">MySQL</a>, <a href="/tag/self-hosting/" rel="tag">Self-Hosting</a>, <a href="/tag/ubuntu/" rel="tag">Ubuntu</a></span>        </footer><!-- .entry-footer -->
-    </article><!-- #post-2124 -->
+			<span class="c-post__tags">Tags: <a href="/tag/apache/" rel="tag">Apache</a>, <a href="/tag/docker/" rel="tag">Docker</a>, <a href="/tag/hosting/" rel="tag">Hosting</a>, <a href="/tag/linux/" rel="tag">Linux</a>, <a href="/tag/nextcloud/" rel="tag">Nextcloud</a>, <a href="/tag/self-hosting/" rel="tag">Self-Hosting</a>, <a href="/tag/ubuntu/" rel="tag">Ubuntu</a>, <a href="/tag/web-hosting/" rel="tag">Web Hosting</a></span>        </footer><!-- .entry-footer -->
+    </article><!-- #post-1597 -->
 	            <div class="c-pagination c-pagination--post-navigation">
 				
 	<nav class="navigation post-navigation" aria-label="Posts">
 		<h2 class="screen-reader-text">Post navigation</h2>
 		<div class="nav-links">
-<div class="nav-previous"><a href="/docker-volumes-and-smb-share/" rel="prev"><span class="nav-subtitle">Previous:</span> <span class="nav-title">Docker volumes and SMB share</span></a></div>
-<div class="nav-next"><a href="/configure-apache-web-server-and-name-based-virtual-hosting-with-ubuntu/" rel="next"><span class="nav-subtitle">Next:</span> <span class="nav-title">Configure Apache Web Server and Name-based Virtual Hosting with Ubuntu</span></a></div>
+<div class="nav-previous"><a href="/nginx-net-tools-and-cifs-utils/" rel="prev"><span class="nav-subtitle">Previous:</span> <span class="nav-title">nginx, net-tools, and cifs-utils</span></a></div>
+<div class="nav-next"><a href="/ubuntu-server-docker-host-and-docker-networking/" rel="next"><span class="nav-subtitle">Next:</span> <span class="nav-title">Ubuntu Server Docker Host and Docker Networking</span></a></div>
 </div>
 	</nav>            </div>
 			    </div>

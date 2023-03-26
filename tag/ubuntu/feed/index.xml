@@ -12,7 +12,7 @@
 	<atom:link href="/tag/ubuntu/feed/" rel="self" type="application/rss+xml" />
 	<link>/</link>
 	<description></description>
-	<lastBuildDate>Sat, 25 Mar 2023 22:40:16 +0000</lastBuildDate>
+	<lastBuildDate>Sun, 26 Mar 2023 02:37:34 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -20,6 +20,185 @@
 	1	</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=6.1.1</generator>
 	<item>
+		<title>Troubleshooting Apache Web Server and Name-based Virtual Hosting</title>
+		<link>/troubleshooting-apache-web-server-and-name-based-virtual-hosting/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sat, 25 Mar 2023 23:26:42 +0000</pubDate>
+				<category><![CDATA[notes]]></category>
+		<category><![CDATA[Apache]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[Linux]]></category>
+		<category><![CDATA[Self-Hosting]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+		<category><![CDATA[Web Hosting]]></category>
+		<guid isPermaLink="false">/?p=2185</guid>
+
+					<description><![CDATA[This troubleshooting note wraps up the Name-based Virtual Hosting Series.]]></description>
+										<content:encoded><![CDATA[
+<p>During the process of setting up name-based virtual hosting with Apache, I ran into a few issues with the WordPress container, this post documents the steps taken to address them.</p>
+
+
+
+<h2>Background:</h2>
+
+
+
+<p>I use the locally hosted WordPress site to write documentation and blog posts and then use Simply Static to convert and get it ready for GitHub Pages. During the process I ran into the following issues:</p>
+
+
+
+<ul>
+<li>WordPress Site Health check has three critical issues:
+<ul>
+<li>The required module, gd, is not installed, or has been disabled.</li>
+
+
+
+<li>The REST API encountered an error.</li>
+
+
+
+<li>Your site could not complete a loopback request.</li>
+</ul>
+</li>
+
+
+
+<li><em>Updating failed. The response is not a valid JSON response.</em> when creating and updating posts.</li>
+
+
+
+<li>Simply Static&#8217;s failed diagnostics:
+<ul>
+<li>Checking if WordPress can make requests to itself from YOUR_IP  FAIL</li>
+
+
+
+<li>Checking for cURL support  FAIL</li>
+</ul>
+</li>
+</ul>
+
+
+
+<h2>Issue 1: Updating failed. The response is not a valid JSON response.</h2>
+
+
+
+<p>I get this error only after I&#8217;ve set the <strong>Permalinks</strong> setting to anything else other than the default <strong>Plain</strong> setting. When <strong>Permalinks</strong> is not set to <strong>Plain</strong>, the URLs need to be rewritten, and that&#8217;s when this error will occur. In my case, it turned out to be that I forgot to add the &lt;Directory> tag in the virtual host configuration file. As you can see in <a href="/configure-apache-web-server-and-name-based-virtual-hosting-with-ubuntu/">this post</a>, my configuration file looks like this:</p>
+
+
+
+<pre class="wp-block-code"><code>&lt;VirtualHost *:80>
+    ServerAdmin webmaster@example1.mydomain
+    ServerName example1.mydomain
+    DocumentRoot /var/www/html/example1.mydomain
+    DirectoryIndex index.php
+    ErrorLog ${APACHE_LOG_DIR}/example1.mydomain_error.log
+    CustomLog ${APACHE_LOG_DIR}/example1.mydomain_access.log combined
+&lt;/VirtualHost></code></pre>
+
+
+
+<p>But the correct configs for rewrite to work need to look like this:</p>
+
+
+
+<pre class="wp-block-code"><code>&lt;VirtualHost *:80>
+    ServerAdmin webmaster@example1.mydomain
+    ServerName example1.mydomain
+    DocumentRoot /var/www/html/example1.mydomain
+
+        &lt;Directory /var/www/html/example1.mydomain>
+                Options Indexes FollowSymLinks
+                AllowOverride All
+                Require all granted
+                DirectoryIndex index.php
+        &lt;/Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/example1.mydomain_error.log
+    CustomLog ${APACHE_LOG_DIR}/example1.mydomain_access.log combined
+&lt;/VirtualHost></code></pre>
+
+
+
+<p>Without the <strong>&lt;Directory></strong> element, the <strong>.htaccess</strong> file is unable to override the rewrite rules.</p>
+
+
+
+<h2>Issue 2: WordPress Site Health Critical Issues</h2>
+
+
+
+<p><strong>The required module, gd, is not installed, or has been disabled.</strong></p>
+
+
+
+<pre class="wp-block-code"><code># Install the php8.1-gd module
+apt-get install php8.1-gd -y</code></pre>
+
+
+
+<p><strong>The REST API encountered an error.</strong></p>
+
+
+
+<pre class="wp-block-code"><code>The REST API is one way that WordPress and other applications communicate with the server. For example, the block editor screen relies on the REST API to display and save your posts and pages.
+
+When testing the REST API, an error was encountered:
+
+REST API Endpoint: http://example1.mydomain/wp-json/wp/v2/types/post?context=edit
+REST API Response: (http_request_failed) cURL error 6: Could not resolve host: example1.mydomain</code></pre>
+
+
+
+<p><strong>Your site could not complete a loopback request.</strong></p>
+
+
+
+<pre class="wp-block-code"><code>Loopback requests are used to run scheduled events, and are also used by the built-in editors for themes and plugins to verify code stability.
+
+The loopback request to your site failed, this means features relying on them are not currently working as expected.
+Error: cURL error 6: Could not resolve host: example1.mydomain (http_request_failed)</code></pre>
+
+
+
+<p>Edit the <strong>/etc/hosts</strong> file:</p>
+
+
+
+<pre class="wp-block-code"><code>nano /etc/hosts
+
+# Add a new line: IP hostname. e.g. 192.168.0.4 website1.example.com</code></pre>
+
+
+
+<p>Additionally, you might need to install the curl package:</p>
+
+
+
+<pre class="wp-block-code"><code>apt-get install php8.1-curl -y
+
+# Verify curl version:
+curl --version
+
+# Verify curl is enabled in php.ini
+nano /etc/php/8.1/apache2/php.ini
+
+# Uncomment this line:
+extension=curl</code></pre>
+
+
+
+<p>Adding this entry in <strong>/etc/hosts</strong> file also resolves Simply Static&#8217;s <em>&#8220;Checking if WordPress can make requests to itself from your_IP&#8221;</em> FAIL issue.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>Configure Apache Web Server and Name-based Virtual Hosting with Ubuntu</title>
 		<link>/configure-apache-web-server-and-name-based-virtual-hosting-with-ubuntu/</link>
 		
@@ -29,6 +208,7 @@
 		<category><![CDATA[Apache]]></category>
 		<category><![CDATA[Docker]]></category>
 		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[Self-Hosting]]></category>
 		<category><![CDATA[Ubuntu]]></category>
 		<guid isPermaLink="false">/?p=18</guid>
 
@@ -206,6 +386,7 @@ http://example2.mydomain/</code></pre>
 		<category><![CDATA[Docker]]></category>
 		<category><![CDATA[Hosting]]></category>
 		<category><![CDATA[MySQL]]></category>
+		<category><![CDATA[Self-Hosting]]></category>
 		<category><![CDATA[Ubuntu]]></category>
 		<guid isPermaLink="false">https://www.alexchen.net/?p=2124</guid>
 
@@ -336,6 +517,7 @@ mysql -h 192.168.1.101 -u wordpress_user -p</code></pre>
 		<category><![CDATA[Docker]]></category>
 		<category><![CDATA[Hosting]]></category>
 		<category><![CDATA[Linux]]></category>
+		<category><![CDATA[Self-Hosting]]></category>
 		<category><![CDATA[Ubuntu]]></category>
 		<guid isPermaLink="false">https://www.alexchen.net/?p=2122</guid>
 
@@ -390,6 +572,291 @@ docker run -dit --name WEB_SERVER --network docker_dev_net --ip 192.168.1.103 --
 
 
 <p></p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Self-host Nextcloud</title>
+		<link>/self-host-nextcloud/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sat, 18 Sep 2021 06:43:43 +0000</pubDate>
+				<category><![CDATA[notes]]></category>
+		<category><![CDATA[Apache]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[Linux]]></category>
+		<category><![CDATA[Nextcloud]]></category>
+		<category><![CDATA[Self-Hosting]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+		<category><![CDATA[Web Hosting]]></category>
+		<guid isPermaLink="false">https://www.alexchen.net/?p=1597</guid>
+
+					<description><![CDATA[Take back control of your privacy with self-hosted Nextcloud.]]></description>
+										<content:encoded><![CDATA[
+<p><em>I used to trust Google more when they were under the leadership of Larry Page and Sergey Brin and held up their &#8220;Don&#8217;t Do Evil&#8221; motto, and I used to admire them more when they had the balls to stand up against China&#8217;s censorship. But nowadays Google has become more of a censorship giant itself by implementing the radical left&#8217;s communist political agenda, and its ever increasing intrusion to our privacy is just too concerning. Luckily, there are plenty open source alternatives.</em></p>
+
+
+
+<h2>Installation:</h2>
+
+
+
+<p><strong>Environment:</strong> Windows Server 2019 + Hyper-V</p>
+
+
+
+<p><strong>Linux version:</strong> Ubuntu 20.04 LTS</p>
+
+
+
+<p><strong>LAMP Stack:</strong> PHP8.0, MariaDB, Apache</p>
+
+
+
+<p>My main reference sources are from <a rel="noreferrer noopener" href="https://docs.nextcloud.com/server/latest/admin_manual/installation/example_ubuntu.html" data-type="URL" data-id="https://docs.nextcloud.com/server/latest/admin_manual/installation/example_ubuntu.html" target="_blank">this article</a> and <a rel="noreferrer noopener" href="https://www.itzgeek.com/how-tos/linux/debian/how-to-install-apache-mariadb-php-lamp-stack-on-debian-11.html" data-type="URL" data-id="https://www.itzgeek.com/how-tos/linux/debian/how-to-install-apache-mariadb-php-lamp-stack-on-debian-11.html" target="_blank">this article</a>, however, some commands are slightly modified to fit my needs.</p>
+
+
+
+<pre class="wp-block-code"><code># Become root
+sudo -i
+
+# Install Apache
+apt-get update -y
+apt-get install -y apache2 apache2-utils
+systemctl status apache2
+# After installation, visit http://localhost/ to verify that Apache is running.
+
+# Install MariaDB
+apt-get install -y mariadb-server mariadb-client
+systemctl status mariadb
+mysql_secure_installation
+
+# Install PHP8.0 (the default PHP version might be PHP7.4, I completely skipped what was in the original article and went with PHP8.0)
+apt-get install software-properties-common -y
+add-apt-repository ppa:ondrej/php
+apt-get update -y
+apt-get install php8.0 libapache2-mod-php8.0 -y
+systemctl restart apache2
+
+apt-get update -y
+apt-get install php8.0-fpm libapache2-mod-fcgid -y
+a2enmod proxy_fcgi setenvif
+a2enconf php8.0-fpm
+systemctl restart apache2
+
+# Install other modules for Nextcloud
+apt-get install -y php8.0-gd php8.0-mysql php8.0-curl php8.0-mbstring php8.0-intl
+apt-get install -y php8.0-gmp php8.0-bcmath php-imagick php8.0-xml php8.0-zip
+
+
+# Create MySQL database
+sudo /etc/init.d/mysql start
+mysql -u root -p
+
+CREATE USER 'username'@'localhost' IDENTIFIED BY 'password';
+
+# In the next query, you'll need to remove all the dashes because WordPress's code block editor has problems with the the charset portion of the query by giving a "Publishing failed. The response is not a valid JSON response." error.
+
+CREATE DATABASE IF NOT EXISTS nextcloud CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+
+GRANT ALL PRIVILEGES ON nextcloud.* TO 'username'@'localhost';
+FLUSH PRIVILEGES;
+
+quit;</code></pre>
+
+
+
+<p>Download Nextcloud server package from <a rel="noreferrer noopener" href="https://nextcloud.com/install/" target="_blank" data-type="URL" data-id="https://nextcloud.com/install/">here</a>.</p>
+
+
+
+<pre class="wp-block-code"><code># My Downloads folder path is /home/*username*/Downloads, and the current version Nextcloud build I use is nextcloud-22.1.1.zip .
+cd /home/*username*/Downloads
+unzip nextcloud-22.1.1.zip
+
+# Copy to Apache document root
+cp -r nextcloud /var/www/html</code></pre>
+
+
+
+<p>Next, configure the Apache web server. <a rel="noreferrer noopener" href="https://docs.nextcloud.com/server/latest/admin_manual/installation/source_installation.html#apache-configuration-label" data-type="URL" data-id="https://docs.nextcloud.com/server/latest/admin_manual/installation/source_installation.html#apache-configuration-label" target="_blank">Reference article</a>.</p>
+
+
+
+<pre class="wp-block-code"><code># Use your favorite text editor in Linux to create the nextcloud.conf file under /etc/apache2/sites-available/nextcloud.conf .
+
+# I used directory based installation, so I added the following in nextcloud.conf
+
+Alias /nextcloud "/var/www/html/nextcloud/"
+
+&lt;Directory /var/www/html/nextcloud/>
+  Require all granted
+  AllowOverride All
+  Options FollowSymLinks MultiViews
+
+  &lt;IfModule mod_dav.c>
+    Dav off
+  &lt;/IfModule>
+&lt;/Directory>
+
+
+# Enable modules and sites
+a2ensite nextcloud.conf
+a2enmod rewrite
+a2enmod headers
+a2enmod env
+a2enmod dir
+a2enmod mime
+a2enmod setenvif
+systemctl reload apache2
+
+
+# Enable SSL
+a2enmod ssl
+a2ensite default-ssl
+systemctl reload apache2
+
+# Change directory permission
+chown -R www-data:www-data /var/www/html/nextcloud/</code></pre>
+
+
+
+<p>Now, Nextcloud should be working, the next few steps are very straightforward through Nextcloud&#8217;s setup page.</p>
+
+
+
+<h2>Post-setup configs and troubleshooting:</h2>
+
+
+
+<ol>
+<li>Add Trusted Domain in Nextcloud&#8217;s config files. <a rel="noreferrer noopener" href="https://help.nextcloud.com/t/howto-add-a-new-trusted-domain/26" data-type="URL" data-id="https://help.nextcloud.com/t/howto-add-a-new-trusted-domain/26" target="_blank">Ref.</a></li>
+
+
+
+<li>Increase PHP memory_limit.</li>
+
+
+
+<li>View phpinfo.</li>
+</ol>
+
+
+
+<pre class="wp-block-code"><code># 1. In your nextcloud directory, /var/www/html/nextcloud/config , find the config.php file and edit the line with 'trusted_domain'. Assuming you'll access your nextcloud using 'localhost', '192.168.0.2', and 'my_nextcloud' , write the trusted_domain like below.
+
+  'trusted_domains' =&gt;
+  array (
+    0 =&gt; 'localhost',
+    1 =&gt; '192.168.0.29',
+    2 =&gt; 'my_nextcloud',
+  ),
+
+# 2. Change line memory_limit to a desired value in both /etc/php/8.0/fpm/php.ini and /etc/php/8.0/apache2/php.ini , e.g. memory_limit=512M, and then restart the services.
+
+service php8.0-fpm restart
+service apache2 restart
+
+# 3. Create a info.php file in document root to verify php info.
+
+cd /var/www/html/
+touch info.php
+
+# Add the following to info.php using your favorite text editor.
+
+&lt;?php phpinfo(); ?&gt;
+
+# Visit info.php in a browser to view phpinfo.</code></pre>
+
+
+
+<p>Useful MariaDB/MySQL commands:</p>
+
+
+
+<pre class="wp-block-code"><code># Find out usernames, databases, ports
+mysql -u root -p
+SELECT User FROM mysql.user;
+SHOW GLOBAL VARIABLES IKE 'PORT';
+SHOW DATABASES;</code></pre>
+
+
+
+<p>Disable (to not enforce) 2FA in Nextcloud:</p>
+
+
+
+<pre class="wp-block-code"><code># In file /var/www/html/nextcloud/config/config.php, change the following.
+
+‘twofactor_enforced’ =&gt; ‘false’</code></pre>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>nginx, net-tools, and cifs-utils</title>
+		<link>/nginx-net-tools-and-cifs-utils/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Thu, 16 Sep 2021 12:25:36 +0000</pubDate>
+				<category><![CDATA[notes]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[Linux]]></category>
+		<category><![CDATA[Self-Hosting]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+		<category><![CDATA[Web Hosting]]></category>
+		<guid isPermaLink="false">https://www.alexchen.net/?p=1651</guid>
+
+					<description><![CDATA[Install nginx, net-tools, and cifs-utils on Ubuntu Server. Mount shared folders in Ubuntu Server 20.04.]]></description>
+										<content:encoded><![CDATA[
+<p>During the course of setting up Nextcloud and Standard Notes, I needed to use some tools for troubleshooting along the way, here is the documentation for future refresher.</p>
+
+
+
+<p>Nginx installation and common paths.</p>
+
+
+
+<pre class="wp-block-code"><code>apt update -y
+apt install nginx -y
+
+# /etc/nginx/sites-available
+# /etc/nginx/sites-enabled
+
+unlink /etc/nginx/sites-enabled/default
+
+ln -s /etc/nginx/sites-available/YourConfigFile /etc/nginx/sites-enabled/YourConfigFile</code></pre>
+
+
+
+<p>Mount network shares in Ubuntu Server.</p>
+
+
+
+<pre class="wp-block-code"><code># I needed to share files between my Windows servers and Ubuntu servers. The shared folders were created and managed on Windows Server 2019.
+
+apt update -y
+apt install cifs-utils -y
+
+mkdir /mnt/my-folder
+
+mount -t cifs //server-name/share-name /mnt/my-folder -o username=username,password=password,domain=domain
+
+# use mount command to see all mount points</code></pre>
+
+
+
+<p>net-tools for ifconfig.</p>
+
+
+
+<pre class="wp-block-code"><code>apt update -y
+apt install net-tools -y</code></pre>
 ]]></content:encoded>
 					
 		
