@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>blog &#8211; howdy</title>
+	<atom:link href="/category/blog/feed/" rel="self" type="application/rss+xml" />
+	<link>/</link>
+	<description></description>
+	<lastBuildDate>Sat, 25 Mar 2023 22:10:25 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.1.1</generator>
+	<item>
+		<title>Ubuntu Server Docker Host and Docker Networking</title>
+		<link>/ubuntu-server-docker-host-and-docker-networking/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Fri, 03 Feb 2023 04:19:00 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Apache]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Linux]]></category>
+		<category><![CDATA[Web Hosting]]></category>
+		<guid isPermaLink="false">https://www.alexchen.net/?p=2115</guid>
+
+					<description><![CDATA[This is the first installment of the Name-based Virtual Hosting Series.]]></description>
+										<content:encoded><![CDATA[
+<p>Since I started with my new job late last year I have been dealing quite bit with Docker, the majority of the applications at work are hosted and developed in a Docker environment, and even for personal projects Docker has made hosting and development much easier compared to using traditional VMs. But recently I came across a rather inconvenient issue with Docker Desktop for Windows when it comes to networking.</p>
+
+
+
+<p>The background is that my home lab&#8217;s network is well organized and controlled by IPs, access-lists, etc., via Cisco switches and routers, I needed my Docker host and dev containers to have static IP addresses and be within a specific IP range and add custom DNS records to my router to point to them. The Docker networking part is fairly straightforward, but what&#8217;s inconvenient is how Docker Desktop for Windows and WSL2 handle their networking part behind the scene. WSL2 gets its own vEthernet adapter with an IP in the 172.0.0.0 range and the containers get placed in a different 172.0.0.0 network segment and assigned with dynamic IPs and depending on how the Hyper-V and WSL2 backend handles the routing and switching, it&#8217;s rather difficult (if not impossible) to easily assign static IPs to the containers within the same IP segment as the host machine and make them part of the same subnet for easy access. After a couple of hours fiddling around with different solutions I basically gave up on it as it&#8217;s really not worth the time and efforts doing so, I opted to have a dedicated Hyper-V VM running Ubuntu Server as the Docker host on my home server.</p>
+
+
+
+<p>Since it&#8217;s Ubuntu Server, the networking part becomes very straightforward:</p>
+
+
+
+<p>The Docker host VM has its own static IP, e.g. 192.168.1.100/24. (The IP is assigned to interface <strong>eth0</strong> in Ubuntu.)</p>
+
+
+
+<pre class="wp-block-code"><code>ip address show eth0</code></pre>
+
+
+
+<p>Create an <strong><a href="https://docs.docker.com/network/ipvlan/" target="_blank" rel="noreferrer noopener">ipvlan</a></strong> network of the same subnet:</p>
+
+
+
+<pre class="wp-block-code"><code>docker network create --driver ipvlan --subnet=192.168.1.0/24 --gateway=192.168.1.1 -o ipvlan_mode=l2 -o parent=eth0 docker_dev_net</code></pre>
+
+
+
+<p>And then we can create containers using this network and assign static IPs to them:</p>
+
+
+
+<pre class="wp-block-code"><code># I'm using the ubuntu/mysql Docker Image here as an example.
+# The port 22 here is for being able to SSH into this container from my main windows computer.
+
+docker run -dit --name MySQL_DEV --network docker_dev_net --ip 192.168.1.101 -p 3306:3306 -p 22:22 -e MYSQL_ROOT_PASSWORD=password ubuntu/mysql
+
+# Make sure you add the corresponding DNS entries to your DNS server or router. e.g., on my Cisco router:
+
+ip host MySQL_DEV.mydomain 192.168.1.101</code></pre>
+
+
+
+<p>After the containers are running, test the connection with PowerShell:</p>
+
+
+
+<pre class="wp-block-code"><code>Test-NetConnection -ComputerName MySQL_DEV.mydomain -Port 3306</code></pre>
+
+
+
+<p>To conclude, it&#8217;s much easier to create Docker networks and containers and tap them into your existing network infrastructure in this way, without having to mess with Docker Desktop for Windows and WSL2. The final results are that I started three containers running MySQL, PostgreSQL, and Ubuntu, respectively. (The Ubuntu container will serve as an Apache web server hosting my websites.)</p>
+
+
+
+<pre class="wp-block-code"><code>docker run -dit --name WEB_SERVER --network docker_dev_net --ip 192.168.1.103 -p 443:443 -p 80:80 -p 22:22 ubuntu
+
+docker run -dit --name MySQL_DEV --network docker_dev_net --ip 192.168.1.101 -p 3306:3306 -p 22:22 -e MYSQL_ROOT_PASSWORD=password ubuntu/mysql
+
+docker run -dit --name PostgreSQL_DEV --network docker_dev_net --ip 192.168.1.102 -p 5432:5432 -p 22:22 -e POSTGRES_PASSWORD=password postgres</code></pre>
+
+
+
+<p></p>
+
+
+
+<p></p>
+
+
+
+<p></p>
+
+
+
+<p></p>
+
+
+
+<p></p>
+
+
+
+<p></p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+	</channel>
+</rss>

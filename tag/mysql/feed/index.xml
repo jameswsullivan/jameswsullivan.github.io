@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>MySQL &#8211; howdy</title>
+	<atom:link href="/tag/mysql/feed/" rel="self" type="application/rss+xml" />
+	<link>/</link>
+	<description></description>
+	<lastBuildDate>Sat, 25 Mar 2023 22:38:32 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.1.1</generator>
+	<item>
+		<title>Configure Docker MySQL Server</title>
+		<link>/setting-up-mysql-server/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Fri, 03 Feb 2023 17:14:00 +0000</pubDate>
+				<category><![CDATA[notes]]></category>
+		<category><![CDATA[Apache]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[MySQL]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+		<guid isPermaLink="false">https://www.alexchen.net/?p=2124</guid>
+
+					<description><![CDATA[This is the third installment of the Name-based Virtual Hosting Series.]]></description>
+										<content:encoded><![CDATA[
+<p>Background:</p>
+
+
+
+<p>I set up this MySQL server using the <strong><a rel="noreferrer noopener" href="https://hub.docker.com/r/ubuntu/mysql" target="_blank">ubuntu/mysql</a></strong> Docker image and it&#8217;s part of my dev environment setup. My setup has <a href="/docker-volumes-and-smb-share/">CIFS/Samba volume</a> <em>my_smb_vol</em> and an <a href="/ubuntu-server-docker-host-and-docker-networking/">ipvlan network</a> <em>docker_dev_net</em>.</p>
+
+
+
+<p>Steps:</p>
+
+
+
+<p>Create a ubuntu/mysql container:</p>
+
+
+
+<pre class="wp-block-code"><code>docker run -dit --name MySQL_DEV --network docker_dev_net --ip 192.168.1.101 --mount source=my_smb_vol,destination=/SharedVolume -p 3306:3306 -p 22:22 -e MYSQL_ROOT_PASSWORD=password ubuntu/mysql</code></pre>
+
+
+
+<p>Create users and databases:</p>
+
+
+
+<pre class="wp-block-code"><code># Connect to mysql instance:
+mysql -u root -p
+
+# Show databases:
+SHOW DATABASES;
+
+# Describe a table:
+USE mysql;
+DESC user;
+
+# Show all the users:
+SELECT user, host FROM mysql.user;
+
+# Create databases:
+CREATE DATABASE my_wordpress_db;
+
+# Create users:
+CREATE USER 'wordpress_user'@'192.168.1.103' IDENTIFIED BY 'password';
+
+# Explanation here: 192.168.1.103 is my other Ubuntu Apache web server container. If you are creating a local user use the following command:
+CREATE USER 'wordpress_user'@'localhost' IDENTIFIED BY 'password';
+
+# Grant privileges to the user:
+GRANT ALL ON my_wordpress_db.* TO 'wordpress_user'@'192.168.1.103' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+
+# Verify privileges:
+SHOW GRANTS FOR 'wordpress_user'@'192.168.1.103';</code></pre>
+
+
+
+<p>Allow remote connection to this mysql instance:</p>
+
+
+
+<pre class="wp-block-code"><code># You will have to modify one of the .cnf files to allow remote connection to your mysql instance, if you list the files under /etc/mysql/, you'll find the following files and directories listed:
+
+ls -al /etc/mysql/
+
+conf.d
+my.cnf
+my.cnf.fallback
+
+# See the content of my.cnf:
+cat /etc/mysql/my.cnf
+
+# On the last two lines of the output, you should see:
+# Custom config should go here
+!includedir /etc/mysql/conf.d/
+
+# List files under the conf.d directory:
+ls -al /etc/mysql/conf.d/
+
+docker.cnf
+mysql.cnf
+mysqldump.cnf
+
+# The mysql.cnf is what you're going to edit:
+nano /etc/mysql/conf.d/mysql.cnf
+
+# By default, your mysql.cnf file should only contain one line: &#91;mysql]. Add a new line below it so it looks like the following:
+
+&#91;mysql]
+bind-address = 0.0.0.0</code></pre>
+
+
+
+<p>Test connection to the mysql instance from the remote machine/container using the newly created <em>wordpress_user</em> user.</p>
+
+
+
+<pre class="wp-block-code"><code># I'm performing these steps on the Ubuntu Apache web server, 192.168.1.103:
+# Install the mysql-client package if it's not been installed.
+
+apt-get install mysql-client
+
+# Connect to the mysql instance at 192.168.1.101:
+mysql -h 192.168.1.101 -u wordpress_user -p</code></pre>
+
+
+
+<p>Conclusion:</p>
+
+
+
+<p>One thing that&#8217;s not configured in this post is the DNS resolution, which will be covered in the <a href="https://www.alexchen.net/blog/setting-up-apache-web-server-and-name-based-virtual-hosting-with-ubuntu/">post</a> documenting the Apache web server setup and also how to set up name-based virtual hosting.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+	</channel>
+</rss>
