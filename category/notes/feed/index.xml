@@ -12,7 +12,7 @@
 	<atom:link href="/category/notes/feed/" rel="self" type="application/rss+xml" />
 	<link>/</link>
 	<description></description>
-	<lastBuildDate>Sun, 26 Mar 2023 16:36:37 +0000</lastBuildDate>
+	<lastBuildDate>Sun, 26 Mar 2023 19:40:25 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -20,6 +20,43 @@
 	1	</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=6.1.1</generator>
 	<item>
+		<title>Cleanly Remove User Profiles from Windows OS</title>
+		<link>/cleanly-remove-user-profiles-from-windows-os/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sun, 26 Mar 2023 19:40:25 +0000</pubDate>
+				<category><![CDATA[notes]]></category>
+		<category><![CDATA[Desktop Support]]></category>
+		<category><![CDATA[Registry]]></category>
+		<category><![CDATA[System Administration]]></category>
+		<category><![CDATA[Windows Systems Administration]]></category>
+		<guid isPermaLink="false">/?p=2230</guid>
+
+					<description><![CDATA[Cleanly Remove User Profiles from Windows OS]]></description>
+										<content:encoded><![CDATA[
+<ol>
+<li>Delete profile account using <code>lusrmgr.msc</code>.</li>
+
+
+
+<li>Delete profile folder under <code>Users</code>.</li>
+
+
+
+<li>Delete registry keys:</li>
+</ol>
+
+
+
+<pre class="wp-block-code"><code>HKLM\Software\Microsoft\WindowsNT\CurrentVersion\ProfileList
+
+HKLM\Software\Microsoft\WindowsNT\CurrentVersion\ProfileGuid</code></pre>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>DISKPART</title>
 		<link>/diskpart/</link>
 		
@@ -93,8 +130,8 @@ UNIQUEID    - Displays or sets the GUID partition table (GPT) identifier or
 		
 			</item>
 		<item>
-		<title>Creating Storage Pools and Virtual Disks via PowerShell</title>
-		<link>/creating-storage-pools-and-virtual-disks-via-powershell/</link>
+		<title>Create Storage Pools and Virtual Disks via PowerShell</title>
+		<link>/create-storage-pools-and-virtual-disks-via-powershell/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sun, 26 Mar 2023 15:57:56 +0000</pubDate>
@@ -107,13 +144,13 @@ UNIQUEID    - Displays or sets the GUID partition table (GPT) identifier or
 		<category><![CDATA[Windows Systems Administration]]></category>
 		<guid isPermaLink="false">/?p=2203</guid>
 
-					<description><![CDATA[Creating Storage Pools and Virtual Disks via PowerShell when New Virtual Disk Wizard GUI emits error.]]></description>
+					<description><![CDATA[Create Storage Pools and Virtual Disks via PowerShell when New Virtual Disk Wizard GUI emits error.]]></description>
 										<content:encoded><![CDATA[
 <p>If creating New Virtual Disk using the New Virtual Disk Wizard GUI emits this error:</p>
 
 
 
-<pre class="wp-block-preformatted">Failed to create virtual disk - Not Supported
+<pre class="wp-block-code"><code>Failed to create virtual disk - Not Supported
 
 Extended information:
 The storage pool does not have sufficient eligible resources for the creation of the specified virtual disk.
@@ -122,7 +159,7 @@ Recommended Actions:
 - Choose a combination of FaultDomainAwareness and NumberOfDataCopies (or PhysicalDiskRedundancy) supported by the storage pool.
 - Choose a value for NumberOfColumns that is less than or equal to the number of physical disks in the storage fault domain selected for the virtual disk.
 
-Activity ID:</pre>
+Activity ID:</code></pre>
 
 
 

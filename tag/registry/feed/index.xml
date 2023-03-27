@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Registry &#8211; howdy</title>
+	<atom:link href="/tag/registry/feed/" rel="self" type="application/rss+xml" />
+	<link>/</link>
+	<description></description>
+	<lastBuildDate>Sun, 26 Mar 2023 19:40:25 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.1.1</generator>
+	<item>
+		<title>Cleanly Remove User Profiles from Windows OS</title>
+		<link>/cleanly-remove-user-profiles-from-windows-os/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sun, 26 Mar 2023 19:40:25 +0000</pubDate>
+				<category><![CDATA[notes]]></category>
+		<category><![CDATA[Desktop Support]]></category>
+		<category><![CDATA[Registry]]></category>
+		<category><![CDATA[System Administration]]></category>
+		<category><![CDATA[Windows Systems Administration]]></category>
+		<guid isPermaLink="false">/?p=2230</guid>
+
+					<description><![CDATA[Cleanly Remove User Profiles from Windows OS]]></description>
+										<content:encoded><![CDATA[
+<ol>
+<li>Delete profile account using <code>lusrmgr.msc</code>.</li>
+
+
+
+<li>Delete profile folder under <code>Users</code>.</li>
+
+
+
+<li>Delete registry keys:</li>
+</ol>
+
+
+
+<pre class="wp-block-code"><code>HKLM\Software\Microsoft\WindowsNT\CurrentVersion\ProfileList
+
+HKLM\Software\Microsoft\WindowsNT\CurrentVersion\ProfileGuid</code></pre>
+]]></content:encoded>
+					
+		
+		
+			</item>
+	</channel>
+</rss>

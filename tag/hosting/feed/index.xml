@@ -12,7 +12,7 @@
 	<atom:link href="/tag/hosting/feed/" rel="self" type="application/rss+xml" />
 	<link>/</link>
 	<description></description>
-	<lastBuildDate>Sun, 26 Mar 2023 15:26:43 +0000</lastBuildDate>
+	<lastBuildDate>Sun, 26 Mar 2023 17:42:45 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -377,7 +377,7 @@ http://example2.mydomain/</code></pre>
 			</item>
 		<item>
 		<title>Configure Docker MySQL Server</title>
-		<link>/setting-up-mysql-server/</link>
+		<link>/configure-docker-mysql-server/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Fri, 03 Feb 2023 17:14:00 +0000</pubDate>
@@ -494,14 +494,6 @@ apt-get install mysql-client
 
 # Connect to the mysql instance at 192.168.1.101:
 mysql -h 192.168.1.101 -u wordpress_user -p</code></pre>
-
-
-
-<p>Conclusion:</p>
-
-
-
-<p>One thing that&#8217;s not configured in this post is the DNS resolution, which will be covered in the <a href="https://www.alexchen.net/blog/setting-up-apache-web-server-and-name-based-virtual-hosting-with-ubuntu/">post</a> documenting the Apache web server setup and also how to set up name-based virtual hosting.</p>
 ]]></content:encoded>
 					
 		
