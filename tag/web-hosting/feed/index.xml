@@ -18,7 +18,7 @@
 	hourly	</sy:updatePeriod>
 	<sy:updateFrequency>
 	1	</sy:updateFrequency>
-	<generator>https://wordpress.org/?v=6.1.1</generator>
+	<generator>https://wordpress.org/?v=6.2</generator>
 	<item>
 		<title>Troubleshooting Apache Web Server and Name-based Virtual Hosting</title>
 		<link>/troubleshooting-apache-web-server-and-name-based-virtual-hosting/</link>
@@ -41,7 +41,7 @@
 
 
 
-<h2>Background:</h2>
+<h2 class="wp-block-heading">Background:</h2>
 
 
 
@@ -83,7 +83,7 @@
 
 
 
-<h2>Issue 1: Updating failed. The response is not a valid JSON response.</h2>
+<h2 class="wp-block-heading">Issue 1: Updating failed. The response is not a valid JSON response.</h2>
 
 
 
@@ -128,7 +128,7 @@
 
 
 
-<h2>Issue 2: WordPress Site Health Critical Issues</h2>
+<h2 class="wp-block-heading">Issue 2: WordPress Site Health Critical Issues</h2>
 
 
 
@@ -326,7 +326,7 @@ docker run -dit --name PostgreSQL_DEV --network docker_dev_net --ip 192.168.1.10
 
 
 
-<h2>Installation:</h2>
+<h2 class="wp-block-heading">Installation:</h2>
 
 
 
@@ -454,7 +454,7 @@ chown -R www-data:www-data /var/www/html/nextcloud/</code></pre>
 
 
 
-<h2>Post-setup configs and troubleshooting:</h2>
+<h2 class="wp-block-heading">Post-setup configs and troubleshooting:</h2>
 
 
 

@@ -18,7 +18,7 @@
 	hourly	</sy:updatePeriod>
 	<sy:updateFrequency>
 	1	</sy:updateFrequency>
-	<generator>https://wordpress.org/?v=6.1.1</generator>
+	<generator>https://wordpress.org/?v=6.2</generator>
 	<item>
 		<title>Dell N-Series 激活SLIC2.0/模拟BIOS激活系统会烧毁主板么？</title>
 		<link>/dell-n-series-laptop-slic20-bios/</link>
@@ -52,7 +52,7 @@
 
 
 
-<h2>1. Dell N-Series 系列激活SLIC2.0的方法（实践机器为Dell Latitude D830）</h2>
+<h2 class="wp-block-heading">1. Dell N-Series 系列激活SLIC2.0的方法（实践机器为Dell Latitude D830）</h2>
 
 
 
@@ -88,7 +88,7 @@
 
 
 
-<h2>2. “用loader能烧毁主板”的问题</h2>
+<h2 class="wp-block-heading">2. “用loader能烧毁主板”的问题</h2>
 
 
 

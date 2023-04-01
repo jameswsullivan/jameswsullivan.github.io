@@ -12,13 +12,13 @@
 	<atom:link href="/feed/" rel="self" type="application/rss+xml" />
 	<link>/</link>
 	<description></description>
-	<lastBuildDate>Wed, 29 Mar 2023 02:18:34 +0000</lastBuildDate>
+	<lastBuildDate>Wed, 29 Mar 2023 02:44:23 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
 	<sy:updateFrequency>
 	1	</sy:updateFrequency>
-	<generator>https://wordpress.org/?v=6.1.1</generator>
+	<generator>https://wordpress.org/?v=6.2</generator>
 	<item>
 		<title>Docker Commands</title>
 		<link>/docker-commands/</link>
@@ -27,6 +27,7 @@
 		<pubDate>Wed, 29 Mar 2023 02:18:34 +0000</pubDate>
 				<category><![CDATA[notes]]></category>
 		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Software Development]]></category>
 		<guid isPermaLink="false">/?p=2249</guid>
 
 					<description><![CDATA[Docker commands study note.]]></description>
@@ -36,7 +37,7 @@ docker swarm init
 docker service create --name webapp1 --replicas=6 nginx
 docker swarm update --autolock=true
 docker swarm unlock-key
-docker node update --availability drain &lt;NODE>
+docker node update --availability drain &lt;NODE&gt;
 
 docker service ls
 docker swarm visualizer
@@ -60,7 +61,7 @@ docker image history
 
 docker build --squash -f dockerfile_name .
 docker container run -d nginx
-docker container export CONTAINER_NAME > nginx.tar
+docker container export CONTAINER_NAME &gt; nginx.tar
 docker image import nginx.tar
 
 docker save 
@@ -96,7 +97,8 @@ docker run -it --rm --priviledged=true --pid=host ubuntu bash
 docker run -d -p 5000:5000 --restart=always --name registry registry:2
 
 
-docker exec -it MySQL mysql --local-infile=1 -u root -p</code></pre>
+docker exec -it MySQL mysql --local-infile=1 -u root -p
+</code></pre>
 ]]></content:encoded>
 					
 		
@@ -400,7 +402,7 @@ slmgr /dlv</code></pre>
 
 
 
-<h2>Background:</h2>
+<h2 class="wp-block-heading">Background:</h2>
 
 
 
@@ -442,7 +444,7 @@ slmgr /dlv</code></pre>
 
 
 
-<h2>Issue 1: Updating failed. The response is not a valid JSON response.</h2>
+<h2 class="wp-block-heading">Issue 1: Updating failed. The response is not a valid JSON response.</h2>
 
 
 
@@ -487,7 +489,7 @@ slmgr /dlv</code></pre>
 
 
 
-<h2>Issue 2: WordPress Site Health Critical Issues</h2>
+<h2 class="wp-block-heading">Issue 2: WordPress Site Health Critical Issues</h2>
 
 
 
@@ -609,7 +611,7 @@ sas2flash.efi -c X -list</code></pre>
 
 
 
-<h2>MegaREC Command Usage:</h2>
+<h2 class="wp-block-heading">MegaREC Command Usage:</h2>
 
 
 
@@ -673,7 +675,7 @@ MegaRec -writesbr &lt;n> &lt;image> &lt;-i2o/-fusion>    : Write controller SBR 
 
 
 
-<h2>Spin up a Ubuntu Docker container:</h2>
+<h2 class="wp-block-heading">Spin up a Ubuntu Docker container:</h2>
 
 
 
@@ -751,7 +753,7 @@ cat /etc/resolv.conf</code></pre>
 
 
 
-<h2>Set up name-based virtual hosting:</h2>
+<h2 class="wp-block-heading">Set up name-based virtual hosting:</h2>
 
 
 

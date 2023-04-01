@@ -18,7 +18,7 @@
 	hourly	</sy:updatePeriod>
 	<sy:updateFrequency>
 	1	</sy:updateFrequency>
-	<generator>https://wordpress.org/?v=6.1.1</generator>
+	<generator>https://wordpress.org/?v=6.2</generator>
 	<item>
 		<title>Flash LSI SAS Adapters to HBA IT MODE</title>
 		<link>/flash-lsi-sas-adapters-to-hba-it-mode/</link>
@@ -71,7 +71,7 @@ sas2flash.efi -c X -list</code></pre>
 
 
 
-<h2>MegaREC Command Usage:</h2>
+<h2 class="wp-block-heading">MegaREC Command Usage:</h2>
 
 
 

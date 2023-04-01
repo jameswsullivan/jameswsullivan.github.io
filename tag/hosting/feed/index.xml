@@ -12,13 +12,13 @@
 	<atom:link href="/tag/hosting/feed/" rel="self" type="application/rss+xml" />
 	<link>/</link>
 	<description></description>
-	<lastBuildDate>Sun, 26 Mar 2023 17:42:45 +0000</lastBuildDate>
+	<lastBuildDate>Sat, 01 Apr 2023 02:10:35 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
 	<sy:updateFrequency>
 	1	</sy:updateFrequency>
-	<generator>https://wordpress.org/?v=6.1.1</generator>
+	<generator>https://wordpress.org/?v=6.2</generator>
 	<item>
 		<title>Troubleshooting Apache Web Server and Name-based Virtual Hosting</title>
 		<link>/troubleshooting-apache-web-server-and-name-based-virtual-hosting/</link>
@@ -41,7 +41,7 @@
 
 
 
-<h2>Background:</h2>
+<h2 class="wp-block-heading">Background:</h2>
 
 
 
@@ -83,7 +83,7 @@
 
 
 
-<h2>Issue 1: Updating failed. The response is not a valid JSON response.</h2>
+<h2 class="wp-block-heading">Issue 1: Updating failed. The response is not a valid JSON response.</h2>
 
 
 
@@ -128,7 +128,7 @@
 
 
 
-<h2>Issue 2: WordPress Site Health Critical Issues</h2>
+<h2 class="wp-block-heading">Issue 2: WordPress Site Health Critical Issues</h2>
 
 
 
@@ -218,7 +218,7 @@ extension=curl</code></pre>
 
 
 
-<h2>Spin up a Ubuntu Docker container:</h2>
+<h2 class="wp-block-heading">Spin up a Ubuntu Docker container:</h2>
 
 
 
@@ -296,7 +296,7 @@ cat /etc/resolv.conf</code></pre>
 
 
 
-<h2>Set up name-based virtual hosting:</h2>
+<h2 class="wp-block-heading">Set up name-based virtual hosting:</h2>
 
 
 
@@ -570,6 +570,319 @@ docker run -dit --name WEB_SERVER --network docker_dev_net --ip 192.168.1.103 --
 		
 			</item>
 		<item>
+		<title>Set up Docker on Ubuntu Server</title>
+		<link>/set-up-docker-on-ubuntu-server/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Tue, 21 Sep 2021 06:14:07 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[Linux]]></category>
+		<category><![CDATA[Self-Hosting]]></category>
+		<category><![CDATA[Standard Notes]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+		<guid isPermaLink="false">https://www.alexchen.net/?p=1638</guid>
+
+					<description><![CDATA[Setting up Ubuntu Server, SSH, UFW, Nginx, and Docker.]]></description>
+										<content:encoded><![CDATA[
+<h2 class="wp-block-heading">Environment: Windows Server 2019, Hyper-V, Ubuntu Server 20.04.3 LTS.</h2>
+
+
+
+<p>1. After Ubuntu Server is installed on a VM (with a clean and minimum installation without any preloaded packages), set up Docker and OpenSSH.</p>
+
+
+
+<pre class="wp-block-code"><code># Install OpenSSH
+apt upgrade
+apt update
+apt install openssh-server
+
+# Check SSH Status
+systemctl status ssh
+
+# Allow ssh over UFW firewall
+ufw allow ssh</code></pre>
+
+
+
+<p>2. Enable UFW, check status, and configure rules.</p>
+
+
+
+<pre class="wp-block-code"><code># Enable UFW
+ufw enable
+
+# Check status and rules
+ufw status
+
+# Check status and make results numbered
+ufw status numbered
+
+# Disable UFW
+ufw disable
+
+# Block IP
+ufw deny from IP-Address
+
+# Block by subnet
+ufw deny from IP/CIDR
+
+# Block connections on interface
+ufw deny in on eth0 from IP-Address
+
+# Allow commands:
+ufw allow from IP-Address
+ufw allow in on eth0 from IP-Address
+
+# Delete rule
+ufw status numbered
+ufw delete &#91;number]
+
+# Allow by protocol
+ufw allow from IP-Address proto tcp to any port 22
+ufw allow from IP/CIDR proto tcp to any port 22
+ufw allow proto tcp from any to any port 80,443</code></pre>
+
+
+
+<p>3. Disable ipv6 on Ubuntu Server.</p>
+
+
+
+<pre class="wp-block-code"><code># Add
+net.ipv6.conf.all.disable_ipv6=1
+net.ipv6.conf.default.disable_ipv6=1
+net.ipv6.conf.lo.disable_ipv6=1
+# to file /etc/sysctl.conf</code></pre>
+
+
+
+<p>4. Reduce Ubuntu shutdown time.</p>
+
+
+
+<pre class="wp-block-code"><code># Edit /etc/systemd/system.conf and uncomment DefaultTimeoutStopSec=90s and set it to a desired value
+
+DefaultTimeoutStopSec=15s</code></pre>
+
+
+
+<p>5. Install Docker</p>
+
+
+
+<pre class="wp-block-code"><code># Remove existing Docker installations, if any
+apt remove docker docker-engine docker.io containerd runc
+
+# Install using the repository
+apt update
+apt install apt-transport-https ca-certificates curl gnupg lsb-release
+
+# Add Docker's official GPG key
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+
+# Set up stable repository
+echo \
+"deb &#91;arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+$(lsb_release -cs) stable" \
+| sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+# Install Docker engine
+apt update
+apt install docker-ce docker-ce-cli containerd.io
+
+# Verify that Docker Engine is correctly installed
+docker version</code></pre>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Self-signed SSL Certificate, Apache, and Nextcloud</title>
+		<link>/self-signed-ssl-certificate-apache-and-nextcloud/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sun, 19 Sep 2021 20:58:07 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Apache]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[Linux]]></category>
+		<category><![CDATA[Nextcloud]]></category>
+		<category><![CDATA[Self-Hosting]]></category>
+		<category><![CDATA[SSL]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+		<guid isPermaLink="false">https://www.alexchen.net/?p=1622</guid>
+
+					<description><![CDATA[Perfecting SSL configuration on Nextcloud server.]]></description>
+										<content:encoded><![CDATA[
+<p>In my last blog post about bringing up a self-hosted Nextcloud setup, everything went well until it reached the SSL cert and configuration part. The instructions I found were all somehow missing some pieces or doing things a little bit differently than what I had expected, plus my own lack of in-depth understanding of SSL, I finally had my issues resolved with the help of these resources: <a rel="noreferrer noopener" href="https://stackoverflow.com/questions/46349459/chrome-neterr-cert-authority-invalid-error-on-self-signing-certificate-at-loca?rq=1" data-type="URL" data-id="https://stackoverflow.com/questions/46349459/chrome-neterr-cert-authority-invalid-error-on-self-signing-certificate-at-loca?rq=1" target="_blank">article 1</a>, <a rel="noreferrer noopener" href="https://alexanderzeitler.com/articles/Fixing-Chrome-missing_subjectAltName-selfsigned-cert-openssl/" data-type="URL" data-id="https://alexanderzeitler.com/articles/Fixing-Chrome-missing_subjectAltName-selfsigned-cert-openssl/" target="_blank">article 2</a>, <a rel="noreferrer noopener" href="https://superuser.com/questions/1631692/why-is-chrome-not-trusting-imported-self-signed-root-ca" data-type="URL" data-id="https://superuser.com/questions/1631692/why-is-chrome-not-trusting-imported-self-signed-root-ca" target="_blank">article 3</a>, <a rel="noreferrer noopener" href="https://www.youtube.com/watch?v=e8vMTlobW3c" data-type="URL" data-id="https://www.youtube.com/watch?v=e8vMTlobW3c" target="_blank">video</a>.</p>
+
+
+
+<h2 class="wp-block-heading">Issues<strong>:</strong></h2>
+
+
+
+<ul>
+<li>SSL/HTTPS won&#8217;t go into effect even if I&#8217;ve enabled SSL in Apache, generated the certs, and configured the config files.</li>
+
+
+
+<li>HTTPS goes into effect in Firefox but always said &#8220;Not Secure&#8221; or &#8220;Invalid&#8221; cert in Chrome.</li>
+
+
+
+<li>Chrome errors: &#8220;NET::ERR_CERT_AUTHORITY_INVALID&#8221;, &#8220;NET::ERR_CERT_COMMON_NAME_INVALID&#8221;</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading">Solutions:</h2>
+
+
+
+<p>1. Originally, I followed this article to generate my certs, but the cert won&#8217;t get accepted by Chrome even if I&#8217;ve imported it into Trusted Root Certification Authorities store. The certificate generation procedures that worked are:</p>
+
+
+
+<pre class="wp-block-code"><code># Generate a Certificate Authority (CA)
+
+openssl genrsa -des3 -out nextcloudCA.key 2048
+# A password needs to be created after this command is run.
+
+openssl req -x509 -new -nodes -key nextcloudCA.key -sha256 -days 365 -out nextcloudCA.pem
+# A series of information will be asked after this command is run. You can customize your own or just follow whatever is in the &#91;dn] section below.
+
+openssl x509 -outform pem -in nextcloudCA.pem -out nextcloudCA.crt
+# Generate a crt file for future import. The pem file can also be used for import.
+
+# Prepare the v3.ext and config files.
+# cert.csr.cnf file
+&#91;req]
+default_bits = 2048
+prompt = no
+default_md = sha256
+distinguished_name = dn
+
+&#91;dn]
+C=Replace-with-Your-Info
+ST=Replace-with-Your-Info
+L=Replace-with-Your-Info
+O=Replace-with-Your-Info
+OU=Replace-with-Your-Info
+emailAddress=Replace-with-Your-Info
+CN=Replace-with-Your-Info
+
+# v3.ext file
+authorityKeyIdentifier=keyid,issuer
+basicConstraints=CA:FALSE
+keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
+subjectAltName = @alt_names
+
+&#91;alt_names]
+DNS.1 = Replace-with-Your-Info-Or-Delete-Line
+DNS.2 = Replace-with-Your-Info-Or-Delete-Line
+DNS.3 = Replace-with-Your-Info-Or-Delete-Line
+IP.1 = Replace-with-Your-Info-Or-Delete-Line
+IP.2 = Replace-with-Your-Info-Or-Delete-Line
+
+# Generate the domain name cert
+openssl req -new -sha256 -nodes -out nextcloudDNCert.csr -newkey rsa:2048 -keyout nextcloudDNCert.key -config cert.csr.cnf
+
+openssl x509 -req -in nextcloudDNCert.csr -CA nextcloudCA.crt -CAkey nextcloudCA.key -CAcreateserial -out nextcloudDNCert.crt -days 365 -sha256 -extfile v3.ext</code></pre>
+
+
+
+<p>2. Put your cert files (<strong>nextcloudDNCert.crt</strong> and <strong>nextcloudDNCert.key</strong>) in the directories that&#8217;s suitable for your setup, and modify your SSL config file or the nextcloud.conf file to point to the cert files. Sample config files can be downloaded here: <a rel="noreferrer noopener" href="https://github.com/jameswsullivan/blog-file-share/blob/main/sample.nextcloud.conf" target="_blank">sample.nextcloud.conf</a> .</p>
+
+
+
+<pre class="wp-block-code"><code># Under /etc/apache2/sites-available, modify nextcloud.conf .
+
+SSLCertificateFile Your-Cert-File-Path
+SSLCertificateKeyFile Your-Cert-Key-File-Path</code></pre>
+
+
+
+<p>3. Restart Apache service</p>
+
+
+
+<pre class="wp-block-code"><code>service apache2 restart</code></pre>
+
+
+
+<p>4. Import <strong>nextcloudCA.crt</strong> into your Trusted Root Certification Authorities store, clear your browser&#8217;s cookies, restart the browser and access your Nextcloud server again, this time the HTTPS padlock should be solid grey, no &#8220;Not Secure&#8221; and other errors.</p>
+
+
+
+<p>5. Explanation about the &#8220;NET::ERR_CERT_AUTHORITY_INVALID&#8221; and &#8220;NET::ERR_CERT_COMMON_NAME_INVALID&#8221; errors.</p>
+
+
+
+<p>&#8220;NET::ERR_CERT_AUTHORITY_INVALID&#8221; is due to how the certs were generated, when using <a rel="noreferrer noopener" href="https://betterprogramming.pub/how-to-create-trusted-ssl-certificates-for-your-local-development-13fd5aad29c6" data-type="URL" data-id="https://betterprogramming.pub/how-to-create-trusted-ssl-certificates-for-your-local-development-13fd5aad29c6" target="_blank">this method</a> to generate, I always got the error, but after I switched to the method written in #1 and the certs were properly imported, this error was gone.</p>
+
+
+
+<p>&#8220;NET::ERR_CERT_COMMON_NAME_INVALID&#8221; . Assuming you already put in the Common Name (which is your FQDN, e.g. nextcloud.mydomain.com) correctly when generating the certs and it still gave this error, check the @alt_names section above, make sure all the DNS.x and IP.x entries cover all your alt_name variants. Once I added stuff under the alt_names section correctly (for me it&#8217;s &#8220;localhost&#8221;, my server&#8217;s IP, and the &#8220;subdomain&#8221; URL I&#8217;d like to use in my own environment), the error was gone.</p>
+
+
+
+<p>6. Other issues and thoughts that emerged during the troubleshooting process.</p>
+
+
+
+<ol>
+<li>Some mentioned that Chrome versions played a role in accepting self-signed certs. But my issues were resolved without dealing with Chrome versions.</li>
+
+
+
+<li>I&#8217;ve seen posts mentioning the <code>chrome://flags/#allow-insecure-localhost</code> flag, but it didn&#8217;t apply to my scenario.</li>
+
+
+
+<li>Some articles say that self-signed certs won&#8217;t be deemed secure and valid by browsers/OSs/Chrome, which is not true if the certs are generated imported and generated correctly.</li>
+</ol>
+
+
+
+<p>7. Security hardening &#8211; forcing HTTPS, Strict-Transport-Security, and URL redirections. See <a href="https://github.com/jameswsullivan/blog-file-share/blob/main/sample.nextcloud.conf" data-type="URL" data-id="https://drive.google.com/file/d/1QQRGrROpZhrnDc-ET8mDUfj2EjtHzAnK/view?usp=sharing" target="_blank" rel="noreferrer noopener">sample.nextcloud.conf</a> and its comments for details.</p>
+
+
+
+<p>8. Apache&#8217;s SSL config files, which to use?</p>
+
+
+
+<p>Assuming your installation is very similar to mine, you&#8217;d now have 3 files under /etc/apache2/sites-available : 000-default.conf, default-ssl.conf, and nextcloud.conf . </p>
+
+
+
+<ul>
+<li>000-default.conf is a template for you to start with, not a live file to use.</li>
+
+
+
+<li>default-ssl.conf is the default Apache SSL config file.</li>
+
+
+
+<li>nextcloud.conf is the config file for Nextcloud.</li>
+</ul>
+
+
+
+<p>You can choose either to use default-ssl.conf or nextcloud.conf, or a combination of both and use them for different purposes. I disabled default-ssl.conf by renaming it to default-ssl.conf.bak, and left nextcloud.conf active which has all my configs.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>Self-host Nextcloud</title>
 		<link>/self-host-nextcloud/</link>
 		
@@ -592,7 +905,7 @@ docker run -dit --name WEB_SERVER --network docker_dev_net --ip 192.168.1.103 --
 
 
 
-<h2>Installation:</h2>
+<h2 class="wp-block-heading">Installation:</h2>
 
 
 
@@ -720,7 +1033,7 @@ chown -R www-data:www-data /var/www/html/nextcloud/</code></pre>
 
 
 
-<h2>Post-setup configs and troubleshooting:</h2>
+<h2 class="wp-block-heading">Post-setup configs and troubleshooting:</h2>
 
 
 

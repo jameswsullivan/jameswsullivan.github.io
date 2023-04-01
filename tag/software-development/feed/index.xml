@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Software Development &#8211; howdy</title>
+	<atom:link href="/tag/software-development/feed/" rel="self" type="application/rss+xml" />
+	<link>/</link>
+	<description></description>
+	<lastBuildDate>Wed, 29 Mar 2023 02:44:23 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.2</generator>
+	<item>
+		<title>Docker Commands</title>
+		<link>/docker-commands/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Wed, 29 Mar 2023 02:18:34 +0000</pubDate>
+				<category><![CDATA[notes]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Software Development]]></category>
+		<guid isPermaLink="false">/?p=2249</guid>
+
+					<description><![CDATA[Docker commands study note.]]></description>
+										<content:encoded><![CDATA[
+<pre class="wp-block-code"><code># Docker Swarm
+docker swarm init
+docker service create --name webapp1 --replicas=6 nginx
+docker swarm update --autolock=true
+docker swarm unlock-key
+docker node update --availability drain &lt;NODE&gt;
+
+docker service ls
+docker swarm visualizer
+docker inspect
+
+# Docker Stack
+docker stack deploy --compose-file docker-stack.yml NAME_OF_STACK
+docker stack ls
+docker stack ps
+docker stack services NAME_OF_STACK
+docker service update 
+docker service update --publish-add published=8080,target-8080 SERVICE_NAME
+docker service update --mount-add type=volume, source=web-vol,target=/web-vol-dir SERVICE_NAME
+docker service create --mode global --name global-service nginx
+docker node update --label-add LABEL_NAME NODE_NAME
+docker node inspect NODE_NAME
+
+# MISC Commands
+docker image inspect
+docker image history
+
+docker build --squash -f dockerfile_name .
+docker container run -d nginx
+docker container export CONTAINER_NAME &gt; nginx.tar
+docker image import nginx.tar
+
+docker save 
+docker image prune
+docker system prune
+
+docker commit CONTAINER_ID repo:tag
+
+docker attach CONTAINER_NAME
+docker logs CONTAINER_NAME
+docker kill CONTAINER_ID or CONTAINER_NAME
+docker stop CONTAINER_ID or CONTAINER_NAME
+docker run --memory MAXIMUM_ALLOWED_MEMORY
+docker run --cpu-shares
+
+docker run -it -p HOST_PORT_NUMBER:CONTAINER_PORT_NUMBER/PROTOCOL --name CONTAINER_NAME IMAGE_NAME
+
+docker port CONTAINER_NAME
+
+docker rmi IMAGE_NAME:TAG
+docker rmi IMAGE_ID
+
+docker run -it -v PATH_ON_HOST:MOUNT_POINT_IN_CONTAINER IMAGE_NAME bash
+
+docker search IMAGE_NAME
+docker login
+docker tag
+docker push
+
+docker inspect --format '{{.State.Pid}}' CONTAINER_NAME
+docker run -it --rm --priviledged=true --pid=host ubuntu bash
+
+docker run -d -p 5000:5000 --restart=always --name registry registry:2
+
+
+docker exec -it MySQL mysql --local-infile=1 -u root -p
+</code></pre>
+]]></content:encoded>
+					
+		
+		
+			</item>
+	</channel>
+</rss>
