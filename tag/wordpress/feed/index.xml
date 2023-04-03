@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>WordPress &#8211; howdy</title>
+	<atom:link href="/tag/wordpress/feed/" rel="self" type="application/rss+xml" />
+	<link>/</link>
+	<description></description>
+	<lastBuildDate>Mon, 03 Apr 2023 03:26:52 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.2</generator>
+	<item>
+		<title>WordPress Won&#8217;t Send Emails</title>
+		<link>/wordpress-wont-send-emails/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Thu, 25 Jun 2020 06:23:00 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Email]]></category>
+		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[Web Hosting]]></category>
+		<category><![CDATA[WordPress]]></category>
+		<guid isPermaLink="false">http://www.alexchen.net/?p=833</guid>
+
+					<description><![CDATA[Email Routing configuration in cPanel caused WordPress to fail sending emails.]]></description>
+										<content:encoded><![CDATA[
+<p>WordPress not sending emails is not a rare issue and I&#8217;ve come across a lot of articles while troubleshooting mine, but since everyone&#8217;s hosting providers and email setup are a little bit different, I&#8217;m writing this article here to document how I resolved the issue in my particular setup.</p>
+
+
+
+<p>I use namecheap&#8217;s Stellar Plus shared hosting plan, and my email is through Microsoft 365 subscription using my own subdomain mail.alexchen.net .</p>
+
+
+
+<h2 class="wp-block-heading">Issue:</h2>
+
+
+
+<ul>
+<li>My WordPress site suddenly won&#8217;t send emails anymore via its default PHP Mailer. I have no idea what might have triggered it to stop sending.</li>
+
+
+
+<li>I tried the solutions from many posts that I&#8217;ve found which said it would fix the issue, but unfortunately none did. And the majority of the posts recommended that the SMTP method be used, but in my particular situation the PHP Mailer comes a lot more handy than hooking up another email.</li>
+
+
+
+<li>In the cPanel&#8217;s <code>Email Accounts</code> section, I see bounce back emails in my default admin mailbox with subject either being &#8220;<code>rejected by local scanning code</code>&#8220;, or &#8220;<code>Mail delivery failed: returning message to sender</code>&#8221; with a &#8220;<code>No Such User Here</code>&#8221; message in the bounce back, but the destination email was listed correctly.</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading">Solution<strong>:</strong></h2>
+
+
+
+<p>In cPanel, go to <code>Email Routing</code>, select the email domain (in my case it&#8217;s <code>mail.alexchen.net</code>), and change the <code>Configure Email Routing to Remote Mail Exchanger</code> from A<code>utomatically Detect Configuration (recommended)</code>.</p>
+
+
+
+<h2 class="wp-block-heading">Thoughts:</h2>
+
+
+
+<p>I indeed double checked to make sure that my domain&#8217;s <code>Zone Records</code> are all set up correctly on both the namecheap side and the Microsoft 365 side and I&#8217;ve been able to successfully send and receive emails for quite a while, so the email side is likely not the issue. However, I do think that either something changed in the email exchanger system that confused the automatic configuration, or my recent removal and cleanup of old domains/subdomains on the Microsoft 365 side had made some differences that I didn&#8217;t notice.</p>
+
+
+
+<p>Keywords: WordPress PHP Mailer not sending emails; No Such User Here; NameCheap.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+	</channel>
+</rss>

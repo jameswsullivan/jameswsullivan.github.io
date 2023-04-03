@@ -12,7 +12,7 @@
 	<atom:link href="/tag/windows-systems-administration/feed/" rel="self" type="application/rss+xml" />
 	<link>/</link>
 	<description></description>
-	<lastBuildDate>Sat, 01 Apr 2023 02:54:12 +0000</lastBuildDate>
+	<lastBuildDate>Mon, 03 Apr 2023 03:46:04 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -217,6 +217,51 @@ slmgr /ato
 
 # Show current activation status.
 slmgr /dlv</code></pre>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Repair Corrupt System Files in Windows 10</title>
+		<link>/corrupt-windows-10-system-files-repair/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Mon, 21 Mar 2022 02:24:48 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[System Administration]]></category>
+		<category><![CDATA[Windows Systems Administration]]></category>
+		<guid isPermaLink="false">https://www.alexchen.net/?p=2023</guid>
+
+					<description><![CDATA[Repair Windows Explorer crash with SFC /SCANNOW and DISM after Windows Update's reboot caused system file damage.]]></description>
+										<content:encoded><![CDATA[
+<p>The initial file corruption seems to have happened after an automated reboot by Windows Update while some disc scanning operations were still ongoing. The sudden reboot probably damaged some system files that rendered Windows Explorer to crash immediately after opening, and Windows Explorer would also crash immediate when your right click on any drives as well as on the recycle bin.</p>
+
+
+
+<p>The repair process was fairly straightforward using <code>SFC</code> and <code>DISM</code>. However, <code>SFC /SCANNOW</code> was not able to perform the repair at first and gave the <code>Windows Resource Protection could not perform the requested operation.</code> message. This usually points to corrupt files that would require a disk scan. <code>CHKDSK C: /R</code> was issued and system drive was checked and repaired upon next reboot.</p>
+
+
+
+<p>After <code>CHKDSK</code> finished and all disk errors were repaired, <code>SFC /SCANNOW</code> was still not successful due to some files&#8217; <code>hash mismatch</code> (logs can be checked under <code>WINDIR\LOGS\CBS\CBS.log</code>), so I resorted to using <code>DISM /Online /Cleanup-Image /RestoreHealth</code> . However, after issuing this command, it was still unable to perform the repair with another error message <code>The source files could not be found</code>. This means that you&#8217;ll need a healthy Windows installation ISO file to be the source file, usually you can use the <code>Windows Media Creation Tool</code> to create an installation media, but when I performed the repair in <code>Safe Mode</code> , the Media Creation Tool was failing with the error code <strong>0x8007043C &#8211; 0x90018</strong> every time it ran. Eventually I used <a href="https://tb.rg-adguard.net/public.php"><strong>this</strong></a> link to manually download a Windows 10 ISO file. When the ISO file is ready, extract the content into a folder and check under the &#8220;sources&#8221; directory to see whether you have the file <code>install.wim</code> or <code>install.esd</code>, as the following commands will be slight different.</p>
+
+
+
+<pre class="wp-block-code"><code>* Assume my extracted installation files are under E:\Win10\sources\install.wim
+
+DISM /Online /Cleanup-Image /RestoreHealth /Source:wim:E:\Win10\sources\install.wim:6 /LimitAccess
+
+* Use this command instead if your image contains install.esd file
+
+DISM /Online /Cleanup-Image /RestoreHealth /Source:ESD:E:\Win10\sources\install.ESD:6 /LimitAccess
+ 
+* This command eventually did the trick for me and successfully finished the repair. If you need to find out the index number (the index number might be different if you're using a different installation image), the following command can help identify, and then just replace the number 6 in the commands above with the right Windows version of your own.
+
+DISM /get-wiminfo /wimfile:E:\Win10\sources\install.wim</code></pre>
+
+
+
+<p>For more comprehensive instructions, refer to <a href="https://www.windowscentral.com/how-use-dism-command-line-utility-repair-windows-10-image">this</a> article.</p>
 ]]></content:encoded>
 					
 		

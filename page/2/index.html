@@ -101,6 +101,27 @@ li code {
 
 .c-header__search, .js-header-search{
 	display: none;
+}
+
+.gsc-control-cse {
+	padding: 0 !important;
+	margin: 0 0 2em 0 !important;
+}
+
+.gsc-control-cse td {
+	border-style: none;
+	border-color: red;
+}
+
+.gsc-control-cse table {
+	background-color:#f2f2f2;
+	border-style: none;
+}
+
+.gsc-control-cse-en {}
+
+.gsc-search-box {
+	margin: 0 !important;
 }</style>
 		<style id="kirki-inline-styles">html{font-family:DM Sans;font-weight:400;line-height:1.5;}.h1,h1{font-family:DM Sans;font-size:26px;font-weight:400;line-height:1.5;}.h2,h2{font-family:DM Sans;font-size:20px;font-weight:400;line-height:1.5;}.h3,h3{font-family:DM Sans;font-size:16px;font-weight:400;line-height:1.5;}.h4,h4{font-family:DM Sans;font-size:16px;font-weight:400;line-height:1.5;}.h5,h5{font-family:DM Sans;font-size:14px;font-weight:400;line-height:1.5;}.h6,h6{font-family:DM Sans;font-size:13px;font-weight:400;line-height:1.5;}/* latin-ext */
 @font-face {
@@ -109,7 +130,7 @@ li code {
   font-weight: 400;
   font-display: swap;
   src: url(/wp-content/fonts/dm-sans/rP2Hp2ywxg089UriCZ2IGzWEBlwu8Q.woff) format('woff');
-  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  unicode-range: U+0100-02AF, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 /* latin */
 @font-face {
@@ -126,7 +147,7 @@ li code {
   font-weight: 400;
   font-display: swap;
   src: url(/wp-content/fonts/dm-sans/rP2Hp2ywxg089UriCZ2IGzWEBlwu8Q.woff) format('woff');
-  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  unicode-range: U+0100-02AF, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 /* latin */
 @font-face {
@@ -143,7 +164,7 @@ li code {
   font-weight: 400;
   font-display: swap;
   src: url(/wp-content/fonts/dm-sans/rP2Hp2ywxg089UriCZ2IGzWEBlwu8Q.woff) format('woff');
-  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  unicode-range: U+0100-02AF, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 /* latin */
 @font-face {
@@ -217,8 +238,12 @@ li code {
     <main id="primary" class="c-main js-main">
 
     <div class="c-main__header">
+	<script async src="https://cse.google.com/cse.js?cx=62407758ccba64617"></script>
+<div class="gcse-search"></div>
+
 		<h1 class="c-main__title">Archives</h1>    </div>
-    <div class="c-main__wrapper">
+<div class="gcse-search"></div>    
+<div class="c-main__wrapper">
 		    <article id="post-2122" class="c-post c-post--archive c-post--archive-main post-2122 post type-post status-publish format-standard hentry category-blog tag-docker tag-hosting tag-linux tag-self-hosting tag-ubuntu">
         <a href="/docker-volumes-and-smb-share/" class="c-post__link" aria-label="Docker volumes and SMB share"></a>
         <header class="c-post__header">
@@ -247,6 +272,20 @@ li code {
 <!-- .entry-meta -->
             </footer>
 		    </article><!-- #post-2115 -->
+    <article id="post-2023" class="c-post c-post--archive c-post--archive-main post-2023 post type-post status-publish format-standard hentry category-blog tag-system-administration tag-windows-systems-administration">
+        <a href="/corrupt-windows-10-system-files-repair/" class="c-post__link" aria-label="Repair Corrupt System Files in Windows 10"></a>
+        <header class="c-post__header">
+			<h2 class="c-post__title h3">Repair Corrupt System Files in Windows 10</h2>        </header><!-- .entry-header -->
+		            <div class="c-post__content">
+				<p>Repair Windows Explorer crash with SFC /SCANNOW and DISM after Windows Update&#8217;s reboot caused system file damage.</p>
+            </div>
+<!-- .entry-content -->
+				            <footer class="c-post__footer">
+                <div class="c-post__footer__meta">
+					<span class="c-post__date__published"><time class="c-post__date entry-date" datetime="2022-03-21T02:24:48-05:00">2022-03-21</time></span>                </div>
+<!-- .entry-meta -->
+            </footer>
+		    </article><!-- #post-2023 -->
     <article id="post-1638" class="c-post c-post--archive c-post--archive-main post-1638 post type-post status-publish format-standard hentry category-blog tag-docker tag-hosting tag-linux tag-self-hosting tag-standard-notes tag-ubuntu">
         <a href="/set-up-docker-on-ubuntu-server/" class="c-post__link" aria-label="Set up Docker on Ubuntu Server"></a>
         <header class="c-post__header">
@@ -331,20 +370,20 @@ li code {
 <!-- .entry-meta -->
             </footer>
 		    </article><!-- #post-839 -->
-    <article id="post-2219" class="c-post c-post--archive c-post--archive-main post-2219 post type-post status-publish format-standard hentry category-archive tag-dell tag-hardware tag-system-administration tag-windows-systems-administration">
-        <a href="/dell-n-series-laptop-slic20-bios/" class="c-post__link" aria-label="Dell N-Series 激活SLIC2.0/模拟BIOS激活系统会烧毁主板么？"></a>
+    <article id="post-833" class="c-post c-post--archive c-post--archive-main post-833 post type-post status-publish format-standard hentry category-blog tag-email tag-hosting tag-web-hosting tag-wordpress">
+        <a href="/wordpress-wont-send-emails/" class="c-post__link" aria-label="WordPress Won&#8217;t Send Emails"></a>
         <header class="c-post__header">
-			<h2 class="c-post__title h3">Dell N-Series 激活SLIC2.0/模拟BIOS激活系统会烧毁主板么？</h2>        </header><!-- .entry-header -->
+			<h2 class="c-post__title h3">WordPress Won&#8217;t Send Emails</h2>        </header><!-- .entry-header -->
 		            <div class="c-post__content">
-				<p>实测Dell N-Series用SLIC2.0/模拟BIOS激活系统是否会烧毁主板</p>
+				<p>Email Routing configuration in cPanel caused WordPress to fail sending emails.</p>
             </div>
 <!-- .entry-content -->
 				            <footer class="c-post__footer">
                 <div class="c-post__footer__meta">
-					<span class="c-post__date__published"><time class="c-post__date entry-date" datetime="2010-02-25T10:16:00-06:00">2010-02-25</time></span>                </div>
+					<span class="c-post__date__published"><time class="c-post__date entry-date" datetime="2020-06-25T01:23:00-05:00">2020-06-25</time></span>                </div>
 <!-- .entry-meta -->
             </footer>
-		    </article><!-- #post-2219 -->
+		    </article><!-- #post-833 -->
                 <div class="c-pagination s-pagination">
 					
 	<nav class="navigation pagination" aria-label=" ">
@@ -353,6 +392,8 @@ li code {
 <a class="prev page-numbers" href="/"><span class="dashicons dashicons-arrow-left-alt2"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20"><rect x="0" fill="none" width="20" height="20"></rect><g><path d="M14 5l-5 5 5 5-1 2-7-7 7-7z"></path></g></svg></span></a>
 <a class="page-numbers" href="/">1</a>
 <span aria-current="page" class="page-numbers current">2</span>
+<a class="page-numbers" href="/page/3/">3</a>
+<a class="next page-numbers" href="/page/3/"><span class="dashicons dashicons-arrow-right-alt2"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20"><rect x="0" fill="none" width="20" height="20"></rect><g><path d="M6 15l5-5-5-5 1-2 7 7-7 7z"></path></g></svg></span></a>
 </div>
 	</nav>                </div>
 			    </div>
