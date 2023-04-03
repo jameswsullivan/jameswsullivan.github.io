@@ -12,7 +12,7 @@
 	<atom:link href="/tag/video-editing/feed/" rel="self" type="application/rss+xml" />
 	<link>/</link>
 	<description></description>
-	<lastBuildDate>Mon, 03 Apr 2023 04:01:29 +0000</lastBuildDate>
+	<lastBuildDate>Mon, 03 Apr 2023 05:31:15 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -30,7 +30,7 @@
 		<category><![CDATA[Video Editing]]></category>
 		<guid isPermaLink="false">/?p=2267</guid>
 
-					<description><![CDATA[此文系早年博客的备份，仅用于参考学习。This article is an archival copy of my early years&#8217; blog posts. 想必很多希望通过电影和电视剧来练习英语的朋友们都有这样的感受：听原声看中文字幕觉得起不到练习的作用，可是看英文字幕又经常因为语速过快或生词过多而导致不少地方看不懂。那么，最理想的状态莫过于中英文字幕同时出现了。可是现在除了内嵌字幕的压缩视频外（如rmvb），大多数清晰度高的视频都采用外挂字幕，甚至大多数时候还要自己去shooter.cn这样的字幕网站去搜索字幕文件。这样的好处是字幕的版本、语言等选择范围更广了，但对于观看者来说却遇到一个大问题——现今大多数播放器都只能同时加载一种字幕，只允许用户在多个字幕间切换。 看了那么多的电影和美剧，这个问题也着实困扰了我好久，我一直希望能寻得一款能够加载多个字幕的播放器，可是现在主流的播放器：暴风影音、realplayer、Kmplayer、VLC等，无一能轻松实现这个功能（我也听说有人能通过插件来解决此问题，但是我不会，如有搞定的高手请指教）。 前些天再次Google这个问题的时候，偶然发现有人通过编辑字幕文件解决了这个问题。仔细一看，居然是一个在简单不过的方式：将中英文字幕文件的内容合并到一个文件内！我试了一下，完全成功。唉，有时我们沿着一条路探索问题的答案，发现困难重重，殊不知换一个角度着手，答案近在眼前。 不多废话了，我以srt字幕为例说一下方法： 用任意文本编辑器打开srt字幕文件（记事本即可），新建一个文本文件并将中英字幕文件的内容拷贝到新文件中。不需要中英文字幕的内容每行一一对应（因为在播放时只要时间线对应即可，实际行并不用对应），直接粘贴即可，粘贴的先后顺序决定字幕显示时是中文在上还是英文在上。然后将此文件保存为srt格式，在播放视频时加载即可。-_-!!! 但是这种方式有一个小问题，即如果时间线不完全对应，则会出现双字幕不同步的问题。但对于大多数字幕来说，这种方法就足够了。 但如果有人要精益求精，或者需要对更多格式的字幕文件做编辑、校对等工作，我推荐下面这款软件：SrtEdit v.4.1 (点击下载) 这款软件功能强大，可以更好地实现双字幕的合并，并在合并过程当中可以校对时间线。同时它也支持对单一字幕做转码、校对等操作，不仅可以满足一般用户的需要，甚至可以作为专业工具来使用。鉴于我并不精通视频字幕制作方面的知识，我就不在这里多说了，朋友们可以自己下载后钻研。 注：使用它的“双语字幕合成”功能时，虚先打开一种语言的字幕，再选择此功能，打开另一种语言的字幕。 软件截图：]]></description>
+					<description><![CDATA[播放视频时显示双字幕]]></description>
 										<content:encoded><![CDATA[
 <blockquote class="wp-block-quote">
 <p>此文系早年博客的备份，仅用于参考学习。<br>This article is an archival copy of my early years&#8217; blog posts.</p>
