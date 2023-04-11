@@ -12,7 +12,7 @@
 	<atom:link href="/tag/web-hosting/feed/" rel="self" type="application/rss+xml" />
 	<link>/</link>
 	<description></description>
-	<lastBuildDate>Mon, 03 Apr 2023 03:26:52 +0000</lastBuildDate>
+	<lastBuildDate>Tue, 11 Apr 2023 01:24:00 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -20,6 +20,101 @@
 	1	</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=6.2</generator>
 	<item>
+		<title>Self-hosted Nextcloud with Docker</title>
+		<link>/self-hosted-nextcloud-with-docker/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Tue, 11 Apr 2023 01:24:00 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[Nextcloud]]></category>
+		<category><![CDATA[Self-Hosting]]></category>
+		<category><![CDATA[Web Hosting]]></category>
+		<guid isPermaLink="false">/?p=2303</guid>
+
+					<description><![CDATA[Spin up self-hosted Nextcloud with MySQL using Docker.]]></description>
+										<content:encoded><![CDATA[
+<p>My <a href="/self-host-nextcloud/">previous attempt</a> to spin up a self-hosted Nextcloud was directly on a Ubuntu VM, but its virtual disks were not configured in a way that&#8217;s easily expandable as data grows. This time I&#8217;m using Docker and have addressed the issues.</p>
+
+
+
+<h2 class="wp-block-heading">Components:</h2>
+
+
+
+<ul>
+<li>The Docker host is a dedicated Hyper-V VM running Ubuntu Server in Windows Server 2022.</li>
+
+
+
+<li><a href="https://hub.docker.com/_/nextcloud" target="_blank" rel="noreferrer noopener">Nextcloud</a> Docker image.</li>
+
+
+
+<li><a href="https://hub.docker.com/r/ubuntu/mysql" target="_blank" rel="noreferrer noopener">Ubuntu/MySQL</a> Docker image.</li>
+
+
+
+<li>A storage pool consisting of 6 x 500GB 2.5&#8221; HDDs and a virtual disk in Parity mode with 2 disks set as redundant, bringing total capacity to 1.35TB. This virtual disk will be mounted to Nextcloud&#8217;s <code>/var/www/html</code> path to store persistent data.</li>
+
+
+
+<li>An 100GB virtual disk for MySQL persistent data (<code>/var/lib/mysql</code>).</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading">Nextcloud Dockerfile:</h2>
+
+
+
+<pre class="wp-block-code"><code>FROM nextcloud
+
+# Configure PHP parameters via environment variables.
+ENV PHP_MEMORY_LIMIT=4096M
+ENV PHP_UPLOAD_LIMIT=4096M
+
+# Install packages and configure timezone.
+RUN apt-get update -y &amp;&amp; \
+    apt-get upgrade -y &amp;&amp; \
+    apt-get install nano -y &amp;&amp; \
+    apt-get install tzdata -y &amp;&amp; \
+    ln -fs /usr/share/zoneinfo/US/Central /etc/localtime &amp;&amp; \
+    dpkg-reconfigure -f noninteractive tzdata
+
+EXPOSE 80 443</code></pre>
+
+
+
+<h2 class="wp-block-heading">Containers:</h2>
+
+
+
+<pre class="wp-block-code"><code># Build Nextcloud image
+docker image build --tag nextcloud:1.0 --progress plain --no-cache . 2>&amp;1 | tee build.log
+
+# Start Nextcloud container.
+# The drive for Nextcloud's persistent data is mounted to /mnt/nextcloud_data .
+docker run -dit --name MY-NEXTCLOUD-CONTAINER --ip IP-ADDRESS --network DOCKER-NETWORK --restart=unless-stopped --hostname=MY_NEXTCLOUD_CONTAINER_HOSTNAME -v /mnt/nextcloud_data:/var/www/html nextcloud:1.0
+
+# Start a MySQL container for Nextcloud.
+# The virtual disk for MySQL's persistent data is mounted to /mnt/nextcloud_db .
+docker run -dit --name MY-NEXTCLOUD-DB-CONTAINER --ip IP-ADDRESS --network DOCKER-NETWORK --hostname=MY_NEXTCLOUD_DB_CONTAINER_HOSTNAME --restart=unless-stopped -v /mnt/nextcloud_db:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=MY-ROOT-PASSWORD ubuntu/mysql</code></pre>
+
+
+
+<h2 class="wp-block-heading">Docker compose:</h2>
+
+
+
+<p>To be added.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>Troubleshooting Apache Web Server and Name-based Virtual Hosting</title>
 		<link>/troubleshooting-apache-web-server-and-name-based-virtual-hosting/</link>
 		
