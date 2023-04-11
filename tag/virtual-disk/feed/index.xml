@@ -9,8 +9,8 @@
 
 <channel>
 	<title>Virtual Disk &#8211; howdy</title>
-	<atom:link href="/tag/virtual-disk/feed/" rel="self" type="application/rss+xml" />
-	<link>/</link>
+	<atom:link href="https://jameswsullivan.github.io/tag/virtual-disk/feed/" rel="self" type="application/rss+xml" />
+	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
 	<lastBuildDate>Sun, 26 Mar 2023 17:43:08 +0000</lastBuildDate>
 	<language>en-US</language>
@@ -21,7 +21,7 @@
 	<generator>https://wordpress.org/?v=6.2</generator>
 	<item>
 		<title>DISKPART</title>
-		<link>/diskpart/</link>
+		<link>https://jameswsullivan.github.io/diskpart/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sun, 26 Mar 2023 16:18:30 +0000</pubDate>
@@ -32,7 +32,7 @@
 		<category><![CDATA[Storage Pool]]></category>
 		<category><![CDATA[TrueNAS]]></category>
 		<category><![CDATA[Virtual Disk]]></category>
-		<guid isPermaLink="false">/?p=2207</guid>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2207</guid>
 
 					<description><![CDATA[DISKPART commands.]]></description>
 										<content:encoded><![CDATA[
@@ -94,7 +94,7 @@ UNIQUEID    - Displays or sets the GUID partition table (GPT) identifier or
 			</item>
 		<item>
 		<title>Create Storage Pools and Virtual Disks via PowerShell</title>
-		<link>/create-storage-pools-and-virtual-disks-via-powershell/</link>
+		<link>https://jameswsullivan.github.io/create-storage-pools-and-virtual-disks-via-powershell/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sun, 26 Mar 2023 15:57:56 +0000</pubDate>
@@ -105,7 +105,7 @@ UNIQUEID    - Displays or sets the GUID partition table (GPT) identifier or
 		<category><![CDATA[Virtual Disk]]></category>
 		<category><![CDATA[Windows Server]]></category>
 		<category><![CDATA[Windows Systems Administration]]></category>
-		<guid isPermaLink="false">/?p=2203</guid>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2203</guid>
 
 					<description><![CDATA[Create Storage Pools and Virtual Disks via PowerShell when New Virtual Disk Wizard GUI emits error.]]></description>
 										<content:encoded><![CDATA[

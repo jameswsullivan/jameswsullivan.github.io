@@ -8,8 +8,8 @@
 <channel>
 	<title>
 	Comments for howdy	</title>
-	<atom:link href="/comments/feed/" rel="self" type="application/rss+xml" />
-	<link>/</link>
+	<atom:link href="https://jameswsullivan.github.io/comments/feed/" rel="self" type="application/rss+xml" />
+	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
 	<lastBuildDate>Tue, 11 Apr 2023 01:24:00 +0000</lastBuildDate>
 	<sy:updatePeriod>

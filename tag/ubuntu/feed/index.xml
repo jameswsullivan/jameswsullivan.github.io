@@ -9,8 +9,8 @@
 
 <channel>
 	<title>Ubuntu &#8211; howdy</title>
-	<atom:link href="/tag/ubuntu/feed/" rel="self" type="application/rss+xml" />
-	<link>/</link>
+	<atom:link href="https://jameswsullivan.github.io/tag/ubuntu/feed/" rel="self" type="application/rss+xml" />
+	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
 	<lastBuildDate>Sat, 01 Apr 2023 02:10:35 +0000</lastBuildDate>
 	<language>en-US</language>
@@ -21,7 +21,7 @@
 	<generator>https://wordpress.org/?v=6.2</generator>
 	<item>
 		<title>Troubleshooting Apache Web Server and Name-based Virtual Hosting</title>
-		<link>/troubleshooting-apache-web-server-and-name-based-virtual-hosting/</link>
+		<link>https://jameswsullivan.github.io/troubleshooting-apache-web-server-and-name-based-virtual-hosting/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sat, 25 Mar 2023 23:26:42 +0000</pubDate>
@@ -33,7 +33,7 @@
 		<category><![CDATA[Self-Hosting]]></category>
 		<category><![CDATA[Ubuntu]]></category>
 		<category><![CDATA[Web Hosting]]></category>
-		<guid isPermaLink="false">/?p=2185</guid>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2185</guid>
 
 					<description><![CDATA[This troubleshooting note wraps up the Name-based Virtual Hosting Series.]]></description>
 										<content:encoded><![CDATA[
@@ -87,7 +87,7 @@
 
 
 
-<p>I get this error only after I&#8217;ve set the <strong>Permalinks</strong> setting to anything else other than the default <strong>Plain</strong> setting. When <strong>Permalinks</strong> is not set to <strong>Plain</strong>, the URLs need to be rewritten, and that&#8217;s when this error will occur. In my case, it turned out to be that I forgot to add the &lt;Directory> tag in the virtual host configuration file. As you can see in <a href="/configure-apache-web-server-and-name-based-virtual-hosting-with-ubuntu/">this post</a>, my configuration file looks like this:</p>
+<p>I get this error only after I&#8217;ve set the <strong>Permalinks</strong> setting to anything else other than the default <strong>Plain</strong> setting. When <strong>Permalinks</strong> is not set to <strong>Plain</strong>, the URLs need to be rewritten, and that&#8217;s when this error will occur. In my case, it turned out to be that I forgot to add the &lt;Directory> tag in the virtual host configuration file. As you can see in <a href="https://jameswsullivan.github.io/configure-apache-web-server-and-name-based-virtual-hosting-with-ubuntu/">this post</a>, my configuration file looks like this:</p>
 
 
 
@@ -200,7 +200,7 @@ extension=curl</code></pre>
 			</item>
 		<item>
 		<title>Configure Apache Web Server and Name-based Virtual Hosting with Ubuntu</title>
-		<link>/configure-apache-web-server-and-name-based-virtual-hosting-with-ubuntu/</link>
+		<link>https://jameswsullivan.github.io/configure-apache-web-server-and-name-based-virtual-hosting-with-ubuntu/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Fri, 03 Feb 2023 20:19:00 +0000</pubDate>
@@ -210,7 +210,7 @@ extension=curl</code></pre>
 		<category><![CDATA[Hosting]]></category>
 		<category><![CDATA[Self-Hosting]]></category>
 		<category><![CDATA[Ubuntu]]></category>
-		<guid isPermaLink="false">/?p=18</guid>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=18</guid>
 
 					<description><![CDATA[This is the fourth installment of the Name-based Virtual Hosting Series.]]></description>
 										<content:encoded><![CDATA[
@@ -377,7 +377,7 @@ http://example2.mydomain/</code></pre>
 			</item>
 		<item>
 		<title>Configure Docker MySQL Server</title>
-		<link>/configure-docker-mysql-server/</link>
+		<link>https://jameswsullivan.github.io/configure-docker-mysql-server/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Fri, 03 Feb 2023 17:14:00 +0000</pubDate>
@@ -396,7 +396,7 @@ http://example2.mydomain/</code></pre>
 
 
 
-<p>I set up this MySQL server using the <strong><a rel="noreferrer noopener" href="https://hub.docker.com/r/ubuntu/mysql" target="_blank">ubuntu/mysql</a></strong> Docker image and it&#8217;s part of my dev environment setup. My setup has <a href="/docker-volumes-and-smb-share/">CIFS/Samba volume</a> <em>my_smb_vol</em> and an <a href="/ubuntu-server-docker-host-and-docker-networking/">ipvlan network</a> <em>docker_dev_net</em>.</p>
+<p>I set up this MySQL server using the <strong><a rel="noreferrer noopener" href="https://hub.docker.com/r/ubuntu/mysql" target="_blank">ubuntu/mysql</a></strong> Docker image and it&#8217;s part of my dev environment setup. My setup has <a href="https://jameswsullivan.github.io/docker-volumes-and-smb-share/">CIFS/Samba volume</a> <em>my_smb_vol</em> and an <a href="https://jameswsullivan.github.io/ubuntu-server-docker-host-and-docker-networking/">ipvlan network</a> <em>docker_dev_net</em>.</p>
 
 
 
@@ -501,7 +501,7 @@ mysql -h 192.168.1.101 -u wordpress_user -p</code></pre>
 			</item>
 		<item>
 		<title>Docker volumes and SMB share</title>
-		<link>/docker-volumes-and-smb-share/</link>
+		<link>https://jameswsullivan.github.io/docker-volumes-and-smb-share/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Fri, 03 Feb 2023 16:52:00 +0000</pubDate>
@@ -571,7 +571,7 @@ docker run -dit --name WEB_SERVER --network docker_dev_net --ip 192.168.1.103 --
 			</item>
 		<item>
 		<title>Set up Docker on Ubuntu Server</title>
-		<link>/set-up-docker-on-ubuntu-server/</link>
+		<link>https://jameswsullivan.github.io/set-up-docker-on-ubuntu-server/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Tue, 21 Sep 2021 06:14:07 +0000</pubDate>
@@ -702,7 +702,7 @@ docker version</code></pre>
 			</item>
 		<item>
 		<title>Self-signed SSL Certificate, Apache, and Nextcloud</title>
-		<link>/self-signed-ssl-certificate-apache-and-nextcloud/</link>
+		<link>https://jameswsullivan.github.io/self-signed-ssl-certificate-apache-and-nextcloud/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sun, 19 Sep 2021 20:58:07 +0000</pubDate>
@@ -884,7 +884,7 @@ SSLCertificateKeyFile Your-Cert-Key-File-Path</code></pre>
 			</item>
 		<item>
 		<title>Self-host Nextcloud</title>
-		<link>/self-host-nextcloud/</link>
+		<link>https://jameswsullivan.github.io/self-host-nextcloud/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sat, 18 Sep 2021 11:43:43 +0000</pubDate>
@@ -1104,7 +1104,7 @@ SHOW DATABASES;</code></pre>
 			</item>
 		<item>
 		<title>nginx, net-tools, and cifs-utils</title>
-		<link>/nginx-net-tools-and-cifs-utils/</link>
+		<link>https://jameswsullivan.github.io/nginx-net-tools-and-cifs-utils/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Thu, 16 Sep 2021 12:25:36 +0000</pubDate>

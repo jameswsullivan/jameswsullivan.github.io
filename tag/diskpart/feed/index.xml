@@ -9,8 +9,8 @@
 
 <channel>
 	<title>DISKPART &#8211; howdy</title>
-	<atom:link href="/tag/diskpart/feed/" rel="self" type="application/rss+xml" />
-	<link>/</link>
+	<atom:link href="https://jameswsullivan.github.io/tag/diskpart/feed/" rel="self" type="application/rss+xml" />
+	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
 	<lastBuildDate>Sun, 26 Mar 2023 16:18:30 +0000</lastBuildDate>
 	<language>en-US</language>
@@ -21,7 +21,7 @@
 	<generator>https://wordpress.org/?v=6.2</generator>
 	<item>
 		<title>DISKPART</title>
-		<link>/diskpart/</link>
+		<link>https://jameswsullivan.github.io/diskpart/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sun, 26 Mar 2023 16:18:30 +0000</pubDate>
@@ -32,7 +32,7 @@
 		<category><![CDATA[Storage Pool]]></category>
 		<category><![CDATA[TrueNAS]]></category>
 		<category><![CDATA[Virtual Disk]]></category>
-		<guid isPermaLink="false">/?p=2207</guid>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2207</guid>
 
 					<description><![CDATA[DISKPART commands.]]></description>
 										<content:encoded><![CDATA[

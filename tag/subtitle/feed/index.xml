@@ -9,8 +9,8 @@
 
 <channel>
 	<title>Subtitle &#8211; howdy</title>
-	<atom:link href="/tag/subtitle/feed/" rel="self" type="application/rss+xml" />
-	<link>/</link>
+	<atom:link href="https://jameswsullivan.github.io/tag/subtitle/feed/" rel="self" type="application/rss+xml" />
+	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
 	<lastBuildDate>Mon, 03 Apr 2023 05:31:15 +0000</lastBuildDate>
 	<language>en-US</language>
@@ -21,14 +21,14 @@
 	<generator>https://wordpress.org/?v=6.2</generator>
 	<item>
 		<title>播放视频时显示双字幕</title>
-		<link>/dual-language-subtitle/</link>
+		<link>https://jameswsullivan.github.io/dual-language-subtitle/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Tue, 21 Apr 2009 01:54:00 +0000</pubDate>
 				<category><![CDATA[archive]]></category>
 		<category><![CDATA[Subtitle]]></category>
 		<category><![CDATA[Video Editing]]></category>
-		<guid isPermaLink="false">/?p=2267</guid>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2267</guid>
 
 					<description><![CDATA[播放视频时显示双字幕]]></description>
 										<content:encoded><![CDATA[
@@ -78,11 +78,11 @@
 
 
 
-<figure class="wp-block-image size-large"><img decoding="async" width="1024" height="621" src="/wp-content/uploads/2023/04/SrtEdit_01-1024x621.jpg" alt="" class="wp-image-2269" srcset="/wp-content/uploads/2023/04/SrtEdit_01-1024x621.jpg 1024w, /wp-content/uploads/2023/04/SrtEdit_01-300x182.jpg 300w, /wp-content/uploads/2023/04/SrtEdit_01-768x466.jpg 768w, /wp-content/uploads/2023/04/SrtEdit_01-700x425.jpg 700w, /wp-content/uploads/2023/04/SrtEdit_01.jpg 1296w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+<figure class="wp-block-image size-large"><img decoding="async" width="1024" height="621" src="https://jameswsullivan.github.io/wp-content/uploads/2023/04/SrtEdit_01-1024x621.jpg" alt="" class="wp-image-2269" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/04/SrtEdit_01-1024x621.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/04/SrtEdit_01-300x182.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/04/SrtEdit_01-768x466.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/04/SrtEdit_01-700x425.jpg 700w, https://jameswsullivan.github.io/wp-content/uploads/2023/04/SrtEdit_01.jpg 1296w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
 
 
 
-<figure class="wp-block-image size-large is-style-default"><img decoding="async" width="1024" height="621" src="/wp-content/uploads/2023/04/SrtEdit_02-1024x621.jpg" alt="" class="wp-image-2270" srcset="/wp-content/uploads/2023/04/SrtEdit_02-1024x621.jpg 1024w, /wp-content/uploads/2023/04/SrtEdit_02-300x182.jpg 300w, /wp-content/uploads/2023/04/SrtEdit_02-768x466.jpg 768w, /wp-content/uploads/2023/04/SrtEdit_02-700x425.jpg 700w, /wp-content/uploads/2023/04/SrtEdit_02.jpg 1296w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+<figure class="wp-block-image size-large is-style-default"><img decoding="async" width="1024" height="621" src="https://jameswsullivan.github.io/wp-content/uploads/2023/04/SrtEdit_02-1024x621.jpg" alt="" class="wp-image-2270" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/04/SrtEdit_02-1024x621.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/04/SrtEdit_02-300x182.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/04/SrtEdit_02-768x466.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/04/SrtEdit_02-700x425.jpg 700w, https://jameswsullivan.github.io/wp-content/uploads/2023/04/SrtEdit_02.jpg 1296w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
 ]]></content:encoded>
 					
 		

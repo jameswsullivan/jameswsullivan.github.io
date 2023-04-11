@@ -9,8 +9,8 @@
 
 <channel>
 	<title>Nextcloud &#8211; howdy</title>
-	<atom:link href="/tag/nextcloud/feed/" rel="self" type="application/rss+xml" />
-	<link>/</link>
+	<atom:link href="https://jameswsullivan.github.io/tag/nextcloud/feed/" rel="self" type="application/rss+xml" />
+	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
 	<lastBuildDate>Tue, 11 Apr 2023 01:24:00 +0000</lastBuildDate>
 	<language>en-US</language>
@@ -21,7 +21,7 @@
 	<generator>https://wordpress.org/?v=6.2</generator>
 	<item>
 		<title>Self-hosted Nextcloud with Docker</title>
-		<link>/self-hosted-nextcloud-with-docker/</link>
+		<link>https://jameswsullivan.github.io/self-hosted-nextcloud-with-docker/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Tue, 11 Apr 2023 01:24:00 +0000</pubDate>
@@ -31,11 +31,11 @@
 		<category><![CDATA[Nextcloud]]></category>
 		<category><![CDATA[Self-Hosting]]></category>
 		<category><![CDATA[Web Hosting]]></category>
-		<guid isPermaLink="false">/?p=2303</guid>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2303</guid>
 
 					<description><![CDATA[Spin up self-hosted Nextcloud with MySQL using Docker.]]></description>
 										<content:encoded><![CDATA[
-<p>My <a href="/self-host-nextcloud/">previous attempt</a> to spin up a self-hosted Nextcloud was directly on a Ubuntu VM, but its virtual disks were not configured in a way that&#8217;s easily expandable as data grows. This time I&#8217;m using Docker and have addressed the issues.</p>
+<p>My <a href="https://jameswsullivan.github.io/self-host-nextcloud/">previous attempt</a> to spin up a self-hosted Nextcloud was directly on a Ubuntu VM, but its virtual disks were not configured in a way that&#8217;s easily expandable as data grows. This time I&#8217;m using Docker and have addressed the issues.</p>
 
 
 
@@ -116,7 +116,7 @@ docker run -dit --name MY-NEXTCLOUD-DB-CONTAINER --ip IP-ADDRESS --network DOCKE
 			</item>
 		<item>
 		<title>Self-signed SSL Certificate, Apache, and Nextcloud</title>
-		<link>/self-signed-ssl-certificate-apache-and-nextcloud/</link>
+		<link>https://jameswsullivan.github.io/self-signed-ssl-certificate-apache-and-nextcloud/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sun, 19 Sep 2021 20:58:07 +0000</pubDate>
@@ -298,7 +298,7 @@ SSLCertificateKeyFile Your-Cert-Key-File-Path</code></pre>
 			</item>
 		<item>
 		<title>Self-host Nextcloud</title>
-		<link>/self-host-nextcloud/</link>
+		<link>https://jameswsullivan.github.io/self-host-nextcloud/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sat, 18 Sep 2021 11:43:43 +0000</pubDate>

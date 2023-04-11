@@ -9,8 +9,8 @@
 
 <channel>
 	<title>Software Development &#8211; howdy</title>
-	<atom:link href="/tag/software-development/feed/" rel="self" type="application/rss+xml" />
-	<link>/</link>
+	<atom:link href="https://jameswsullivan.github.io/tag/software-development/feed/" rel="self" type="application/rss+xml" />
+	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
 	<lastBuildDate>Wed, 29 Mar 2023 02:44:23 +0000</lastBuildDate>
 	<language>en-US</language>
@@ -21,14 +21,14 @@
 	<generator>https://wordpress.org/?v=6.2</generator>
 	<item>
 		<title>Docker Commands</title>
-		<link>/docker-commands/</link>
+		<link>https://jameswsullivan.github.io/docker-commands/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Wed, 29 Mar 2023 02:18:34 +0000</pubDate>
 				<category><![CDATA[notes]]></category>
 		<category><![CDATA[Docker]]></category>
 		<category><![CDATA[Software Development]]></category>
-		<guid isPermaLink="false">/?p=2249</guid>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2249</guid>
 
 					<description><![CDATA[Docker commands study note.]]></description>
 										<content:encoded><![CDATA[

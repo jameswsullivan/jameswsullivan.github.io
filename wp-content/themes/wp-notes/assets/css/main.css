@@ -7,9 +7,9 @@
     font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
-    src: url("/wp-content/themes/wp-notes/assets/fonts/inter-v3-latin-regular.eot");
+    src: url("https://jameswsullivan.github.io/wp-content/themes/wp-notes/assets/fonts/inter-v3-latin-regular.eot");
     /* IE9 Compat Modes */
-    src: local(""), url("/wp-content/themes/wp-notes/assets/fonts/inter-v3-latin-regular.eot#iefix") format("embedded-opentype"), url("/wp-content/themes/wp-notes/assets/fonts/inter-v3-latin-regular.woff2") format("woff2"), url("/wp-content/themes/wp-notes/assets/fonts/inter-v3-latin-regular.woff") format("woff"), url("/wp-content/themes/wp-notes/assets/fonts/inter-v3-latin-regular.ttf") format("truetype"), url("/wp-content/themes/wp-notes/assets/fonts/inter-v3-latin-regular.svg#Inter") format("svg");
+    src: local(""), url("https://jameswsullivan.github.io/wp-content/themes/wp-notes/assets/fonts/inter-v3-latin-regular.eot#iefix") format("embedded-opentype"), url("https://jameswsullivan.github.io/wp-content/themes/wp-notes/assets/fonts/inter-v3-latin-regular.woff2") format("woff2"), url("https://jameswsullivan.github.io/wp-content/themes/wp-notes/assets/fonts/inter-v3-latin-regular.woff") format("woff"), url("https://jameswsullivan.github.io/wp-content/themes/wp-notes/assets/fonts/inter-v3-latin-regular.ttf") format("truetype"), url("https://jameswsullivan.github.io/wp-content/themes/wp-notes/assets/fonts/inter-v3-latin-regular.svg#Inter") format("svg");
     /* Legacy iOS */
 }
 
@@ -18,9 +18,9 @@
     font-family: 'Inter';
     font-style: normal;
     font-weight: 700;
-    src: url("/wp-content/themes/wp-notes/assets/fonts/inter-v3-latin-700.eot");
+    src: url("https://jameswsullivan.github.io/wp-content/themes/wp-notes/assets/fonts/inter-v3-latin-700.eot");
     /* IE9 Compat Modes */
-    src: local(""), url("/wp-content/themes/wp-notes/assets/fonts/inter-v3-latin-700.eot#iefix") format("embedded-opentype"), url("/wp-content/themes/wp-notes/assets/fonts/inter-v3-latin-700.woff2") format("woff2"), url("/wp-content/themes/wp-notes/assets/fonts/inter-v3-latin-700.woff") format("woff"), url("/wp-content/themes/wp-notes/assets/fonts/inter-v3-latin-700.ttf") format("truetype"), url("/wp-content/themes/wp-notes/assets/fonts/inter-v3-latin-700.svg#Inter") format("svg");
+    src: local(""), url("https://jameswsullivan.github.io/wp-content/themes/wp-notes/assets/fonts/inter-v3-latin-700.eot#iefix") format("embedded-opentype"), url("https://jameswsullivan.github.io/wp-content/themes/wp-notes/assets/fonts/inter-v3-latin-700.woff2") format("woff2"), url("https://jameswsullivan.github.io/wp-content/themes/wp-notes/assets/fonts/inter-v3-latin-700.woff") format("woff"), url("https://jameswsullivan.github.io/wp-content/themes/wp-notes/assets/fonts/inter-v3-latin-700.ttf") format("truetype"), url("https://jameswsullivan.github.io/wp-content/themes/wp-notes/assets/fonts/inter-v3-latin-700.svg#Inter") format("svg");
     /* Legacy iOS */
 }
 

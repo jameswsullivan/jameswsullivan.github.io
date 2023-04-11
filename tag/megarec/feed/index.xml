@@ -9,8 +9,8 @@
 
 <channel>
 	<title>MegaRec &#8211; howdy</title>
-	<atom:link href="/tag/megarec/feed/" rel="self" type="application/rss+xml" />
-	<link>/</link>
+	<atom:link href="https://jameswsullivan.github.io/tag/megarec/feed/" rel="self" type="application/rss+xml" />
+	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
 	<lastBuildDate>Sun, 26 Mar 2023 16:29:31 +0000</lastBuildDate>
 	<language>en-US</language>
@@ -21,7 +21,7 @@
 	<generator>https://wordpress.org/?v=6.2</generator>
 	<item>
 		<title>Flash LSI SAS Adapters to HBA IT MODE</title>
-		<link>/flash-lsi-sas-adapters-to-hba-it-mode/</link>
+		<link>https://jameswsullivan.github.io/flash-lsi-sas-adapters-to-hba-it-mode/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Fri, 10 Mar 2023 17:00:00 +0000</pubDate>
@@ -36,7 +36,7 @@
 		<category><![CDATA[SAS2FLSH]]></category>
 		<category><![CDATA[Storage]]></category>
 		<category><![CDATA[TrueNAS]]></category>
-		<guid isPermaLink="false">/?p=2205</guid>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2205</guid>
 
 					<description><![CDATA[Flash LSI SAS Adapters to IT MODE.]]></description>
 										<content:encoded><![CDATA[

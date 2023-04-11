@@ -9,8 +9,8 @@
 
 <channel>
 	<title>howdy</title>
-	<atom:link href="/feed/" rel="self" type="application/rss+xml" />
-	<link>/</link>
+	<atom:link href="https://jameswsullivan.github.io/feed/" rel="self" type="application/rss+xml" />
+	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
 	<lastBuildDate>Tue, 11 Apr 2023 01:24:00 +0000</lastBuildDate>
 	<language>en-US</language>
@@ -21,7 +21,7 @@
 	<generator>https://wordpress.org/?v=6.2</generator>
 	<item>
 		<title>Self-hosted Nextcloud with Docker</title>
-		<link>/self-hosted-nextcloud-with-docker/</link>
+		<link>https://jameswsullivan.github.io/self-hosted-nextcloud-with-docker/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Tue, 11 Apr 2023 01:24:00 +0000</pubDate>
@@ -31,11 +31,11 @@
 		<category><![CDATA[Nextcloud]]></category>
 		<category><![CDATA[Self-Hosting]]></category>
 		<category><![CDATA[Web Hosting]]></category>
-		<guid isPermaLink="false">/?p=2303</guid>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2303</guid>
 
 					<description><![CDATA[Spin up self-hosted Nextcloud with MySQL using Docker.]]></description>
 										<content:encoded><![CDATA[
-<p>My <a href="/self-host-nextcloud/">previous attempt</a> to spin up a self-hosted Nextcloud was directly on a Ubuntu VM, but its virtual disks were not configured in a way that&#8217;s easily expandable as data grows. This time I&#8217;m using Docker and have addressed the issues.</p>
+<p>My <a href="https://jameswsullivan.github.io/self-host-nextcloud/">previous attempt</a> to spin up a self-hosted Nextcloud was directly on a Ubuntu VM, but its virtual disks were not configured in a way that&#8217;s easily expandable as data grows. This time I&#8217;m using Docker and have addressed the issues.</p>
 
 
 
@@ -116,14 +116,14 @@ docker run -dit --name MY-NEXTCLOUD-DB-CONTAINER --ip IP-ADDRESS --network DOCKE
 			</item>
 		<item>
 		<title>Docker Commands</title>
-		<link>/docker-commands/</link>
+		<link>https://jameswsullivan.github.io/docker-commands/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Wed, 29 Mar 2023 02:18:34 +0000</pubDate>
 				<category><![CDATA[notes]]></category>
 		<category><![CDATA[Docker]]></category>
 		<category><![CDATA[Software Development]]></category>
-		<guid isPermaLink="false">/?p=2249</guid>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2249</guid>
 
 					<description><![CDATA[Docker commands study note.]]></description>
 										<content:encoded><![CDATA[
@@ -201,7 +201,7 @@ docker exec -it MySQL mysql --local-infile=1 -u root -p
 			</item>
 		<item>
 		<title>Cleanly Remove User Profiles from Windows OS</title>
-		<link>/cleanly-remove-user-profiles-from-windows-os/</link>
+		<link>https://jameswsullivan.github.io/cleanly-remove-user-profiles-from-windows-os/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sun, 26 Mar 2023 19:40:25 +0000</pubDate>
@@ -210,7 +210,7 @@ docker exec -it MySQL mysql --local-infile=1 -u root -p
 		<category><![CDATA[Registry]]></category>
 		<category><![CDATA[System Administration]]></category>
 		<category><![CDATA[Windows Systems Administration]]></category>
-		<guid isPermaLink="false">/?p=2230</guid>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2230</guid>
 
 					<description><![CDATA[Cleanly Remove User Profiles from Windows OS]]></description>
 										<content:encoded><![CDATA[
@@ -238,14 +238,14 @@ HKLM\Software\Microsoft\WindowsNT\CurrentVersion\ProfileGuid</code></pre>
 			</item>
 		<item>
 		<title>Invalid Time error and Unable to Change Time Zone</title>
-		<link>/invalid-time-error-and-unable-to-change-time-zone/</link>
+		<link>https://jameswsullivan.github.io/invalid-time-error-and-unable-to-change-time-zone/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sun, 26 Mar 2023 16:52:31 +0000</pubDate>
 				<category><![CDATA[blog]]></category>
 		<category><![CDATA[System Administration]]></category>
 		<category><![CDATA[Windows Systems Administration]]></category>
-		<guid isPermaLink="false">/?p=2217</guid>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2217</guid>
 
 					<description><![CDATA[Fix the Invalid Time error and the Time Zone setting greyed out issue on Windows.]]></description>
 										<content:encoded><![CDATA[
@@ -285,7 +285,7 @@ Deny	Off</code></pre>
 			</item>
 		<item>
 		<title>DISKPART</title>
-		<link>/diskpart/</link>
+		<link>https://jameswsullivan.github.io/diskpart/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sun, 26 Mar 2023 16:18:30 +0000</pubDate>
@@ -296,7 +296,7 @@ Deny	Off</code></pre>
 		<category><![CDATA[Storage Pool]]></category>
 		<category><![CDATA[TrueNAS]]></category>
 		<category><![CDATA[Virtual Disk]]></category>
-		<guid isPermaLink="false">/?p=2207</guid>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2207</guid>
 
 					<description><![CDATA[DISKPART commands.]]></description>
 										<content:encoded><![CDATA[
@@ -358,7 +358,7 @@ UNIQUEID    - Displays or sets the GUID partition table (GPT) identifier or
 			</item>
 		<item>
 		<title>Create Storage Pools and Virtual Disks via PowerShell</title>
-		<link>/create-storage-pools-and-virtual-disks-via-powershell/</link>
+		<link>https://jameswsullivan.github.io/create-storage-pools-and-virtual-disks-via-powershell/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sun, 26 Mar 2023 15:57:56 +0000</pubDate>
@@ -369,7 +369,7 @@ UNIQUEID    - Displays or sets the GUID partition table (GPT) identifier or
 		<category><![CDATA[Virtual Disk]]></category>
 		<category><![CDATA[Windows Server]]></category>
 		<category><![CDATA[Windows Systems Administration]]></category>
-		<guid isPermaLink="false">/?p=2203</guid>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2203</guid>
 
 					<description><![CDATA[Create Storage Pools and Virtual Disks via PowerShell when New Virtual Disk Wizard GUI emits error.]]></description>
 										<content:encoded><![CDATA[
@@ -423,7 +423,7 @@ Get-VirtualDisk</code></pre>
 			</item>
 		<item>
 		<title>SLMGR Commands</title>
-		<link>/slmgr-commands/</link>
+		<link>https://jameswsullivan.github.io/slmgr-commands/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sun, 26 Mar 2023 15:39:05 +0000</pubDate>
@@ -432,7 +432,7 @@ Get-VirtualDisk</code></pre>
 		<category><![CDATA[System Administration]]></category>
 		<category><![CDATA[Windows Server]]></category>
 		<category><![CDATA[Windows Systems Administration]]></category>
-		<guid isPermaLink="false">/?p=2200</guid>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2200</guid>
 
 					<description><![CDATA[SLMGR.vbs Options for Volume Activation]]></description>
 										<content:encoded><![CDATA[
@@ -477,7 +477,7 @@ slmgr /dlv</code></pre>
 			</item>
 		<item>
 		<title>Troubleshooting Apache Web Server and Name-based Virtual Hosting</title>
-		<link>/troubleshooting-apache-web-server-and-name-based-virtual-hosting/</link>
+		<link>https://jameswsullivan.github.io/troubleshooting-apache-web-server-and-name-based-virtual-hosting/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sat, 25 Mar 2023 23:26:42 +0000</pubDate>
@@ -489,7 +489,7 @@ slmgr /dlv</code></pre>
 		<category><![CDATA[Self-Hosting]]></category>
 		<category><![CDATA[Ubuntu]]></category>
 		<category><![CDATA[Web Hosting]]></category>
-		<guid isPermaLink="false">/?p=2185</guid>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2185</guid>
 
 					<description><![CDATA[This troubleshooting note wraps up the Name-based Virtual Hosting Series.]]></description>
 										<content:encoded><![CDATA[
@@ -543,7 +543,7 @@ slmgr /dlv</code></pre>
 
 
 
-<p>I get this error only after I&#8217;ve set the <strong>Permalinks</strong> setting to anything else other than the default <strong>Plain</strong> setting. When <strong>Permalinks</strong> is not set to <strong>Plain</strong>, the URLs need to be rewritten, and that&#8217;s when this error will occur. In my case, it turned out to be that I forgot to add the &lt;Directory> tag in the virtual host configuration file. As you can see in <a href="/configure-apache-web-server-and-name-based-virtual-hosting-with-ubuntu/">this post</a>, my configuration file looks like this:</p>
+<p>I get this error only after I&#8217;ve set the <strong>Permalinks</strong> setting to anything else other than the default <strong>Plain</strong> setting. When <strong>Permalinks</strong> is not set to <strong>Plain</strong>, the URLs need to be rewritten, and that&#8217;s when this error will occur. In my case, it turned out to be that I forgot to add the &lt;Directory> tag in the virtual host configuration file. As you can see in <a href="https://jameswsullivan.github.io/configure-apache-web-server-and-name-based-virtual-hosting-with-ubuntu/">this post</a>, my configuration file looks like this:</p>
 
 
 
@@ -656,7 +656,7 @@ extension=curl</code></pre>
 			</item>
 		<item>
 		<title>Flash LSI SAS Adapters to HBA IT MODE</title>
-		<link>/flash-lsi-sas-adapters-to-hba-it-mode/</link>
+		<link>https://jameswsullivan.github.io/flash-lsi-sas-adapters-to-hba-it-mode/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Fri, 10 Mar 2023 17:00:00 +0000</pubDate>
@@ -671,7 +671,7 @@ extension=curl</code></pre>
 		<category><![CDATA[SAS2FLSH]]></category>
 		<category><![CDATA[Storage]]></category>
 		<category><![CDATA[TrueNAS]]></category>
-		<guid isPermaLink="false">/?p=2205</guid>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2205</guid>
 
 					<description><![CDATA[Flash LSI SAS Adapters to IT MODE.]]></description>
 										<content:encoded><![CDATA[
@@ -752,7 +752,7 @@ MegaRec -writesbr &lt;n> &lt;image> &lt;-i2o/-fusion>    : Write controller SBR 
 			</item>
 		<item>
 		<title>Configure Apache Web Server and Name-based Virtual Hosting with Ubuntu</title>
-		<link>/configure-apache-web-server-and-name-based-virtual-hosting-with-ubuntu/</link>
+		<link>https://jameswsullivan.github.io/configure-apache-web-server-and-name-based-virtual-hosting-with-ubuntu/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Fri, 03 Feb 2023 20:19:00 +0000</pubDate>
@@ -762,7 +762,7 @@ MegaRec -writesbr &lt;n> &lt;image> &lt;-i2o/-fusion>    : Write controller SBR 
 		<category><![CDATA[Hosting]]></category>
 		<category><![CDATA[Self-Hosting]]></category>
 		<category><![CDATA[Ubuntu]]></category>
-		<guid isPermaLink="false">/?p=18</guid>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=18</guid>
 
 					<description><![CDATA[This is the fourth installment of the Name-based Virtual Hosting Series.]]></description>
 										<content:encoded><![CDATA[

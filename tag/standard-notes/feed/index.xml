@@ -9,8 +9,8 @@
 
 <channel>
 	<title>Standard Notes &#8211; howdy</title>
-	<atom:link href="/tag/standard-notes/feed/" rel="self" type="application/rss+xml" />
-	<link>/</link>
+	<atom:link href="https://jameswsullivan.github.io/tag/standard-notes/feed/" rel="self" type="application/rss+xml" />
+	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
 	<lastBuildDate>Sat, 01 Apr 2023 02:10:35 +0000</lastBuildDate>
 	<language>en-US</language>
@@ -21,7 +21,7 @@
 	<generator>https://wordpress.org/?v=6.2</generator>
 	<item>
 		<title>Set up Docker on Ubuntu Server</title>
-		<link>/set-up-docker-on-ubuntu-server/</link>
+		<link>https://jameswsullivan.github.io/set-up-docker-on-ubuntu-server/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Tue, 21 Sep 2021 06:14:07 +0000</pubDate>

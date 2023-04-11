@@ -9,8 +9,8 @@
 
 <channel>
 	<title>notes &#8211; howdy</title>
-	<atom:link href="/category/notes/feed/" rel="self" type="application/rss+xml" />
-	<link>/</link>
+	<atom:link href="https://jameswsullivan.github.io/category/notes/feed/" rel="self" type="application/rss+xml" />
+	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
 	<lastBuildDate>Sat, 01 Apr 2023 02:54:12 +0000</lastBuildDate>
 	<language>en-US</language>
@@ -21,14 +21,14 @@
 	<generator>https://wordpress.org/?v=6.2</generator>
 	<item>
 		<title>Docker Commands</title>
-		<link>/docker-commands/</link>
+		<link>https://jameswsullivan.github.io/docker-commands/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Wed, 29 Mar 2023 02:18:34 +0000</pubDate>
 				<category><![CDATA[notes]]></category>
 		<category><![CDATA[Docker]]></category>
 		<category><![CDATA[Software Development]]></category>
-		<guid isPermaLink="false">/?p=2249</guid>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2249</guid>
 
 					<description><![CDATA[Docker commands study note.]]></description>
 										<content:encoded><![CDATA[
@@ -106,7 +106,7 @@ docker exec -it MySQL mysql --local-infile=1 -u root -p
 			</item>
 		<item>
 		<title>Cleanly Remove User Profiles from Windows OS</title>
-		<link>/cleanly-remove-user-profiles-from-windows-os/</link>
+		<link>https://jameswsullivan.github.io/cleanly-remove-user-profiles-from-windows-os/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sun, 26 Mar 2023 19:40:25 +0000</pubDate>
@@ -115,7 +115,7 @@ docker exec -it MySQL mysql --local-infile=1 -u root -p
 		<category><![CDATA[Registry]]></category>
 		<category><![CDATA[System Administration]]></category>
 		<category><![CDATA[Windows Systems Administration]]></category>
-		<guid isPermaLink="false">/?p=2230</guid>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2230</guid>
 
 					<description><![CDATA[Cleanly Remove User Profiles from Windows OS]]></description>
 										<content:encoded><![CDATA[
@@ -143,7 +143,7 @@ HKLM\Software\Microsoft\WindowsNT\CurrentVersion\ProfileGuid</code></pre>
 			</item>
 		<item>
 		<title>DISKPART</title>
-		<link>/diskpart/</link>
+		<link>https://jameswsullivan.github.io/diskpart/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sun, 26 Mar 2023 16:18:30 +0000</pubDate>
@@ -154,7 +154,7 @@ HKLM\Software\Microsoft\WindowsNT\CurrentVersion\ProfileGuid</code></pre>
 		<category><![CDATA[Storage Pool]]></category>
 		<category><![CDATA[TrueNAS]]></category>
 		<category><![CDATA[Virtual Disk]]></category>
-		<guid isPermaLink="false">/?p=2207</guid>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2207</guid>
 
 					<description><![CDATA[DISKPART commands.]]></description>
 										<content:encoded><![CDATA[
@@ -216,7 +216,7 @@ UNIQUEID    - Displays or sets the GUID partition table (GPT) identifier or
 			</item>
 		<item>
 		<title>Create Storage Pools and Virtual Disks via PowerShell</title>
-		<link>/create-storage-pools-and-virtual-disks-via-powershell/</link>
+		<link>https://jameswsullivan.github.io/create-storage-pools-and-virtual-disks-via-powershell/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sun, 26 Mar 2023 15:57:56 +0000</pubDate>
@@ -227,7 +227,7 @@ UNIQUEID    - Displays or sets the GUID partition table (GPT) identifier or
 		<category><![CDATA[Virtual Disk]]></category>
 		<category><![CDATA[Windows Server]]></category>
 		<category><![CDATA[Windows Systems Administration]]></category>
-		<guid isPermaLink="false">/?p=2203</guid>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2203</guid>
 
 					<description><![CDATA[Create Storage Pools and Virtual Disks via PowerShell when New Virtual Disk Wizard GUI emits error.]]></description>
 										<content:encoded><![CDATA[
@@ -281,7 +281,7 @@ Get-VirtualDisk</code></pre>
 			</item>
 		<item>
 		<title>SLMGR Commands</title>
-		<link>/slmgr-commands/</link>
+		<link>https://jameswsullivan.github.io/slmgr-commands/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sun, 26 Mar 2023 15:39:05 +0000</pubDate>
@@ -290,7 +290,7 @@ Get-VirtualDisk</code></pre>
 		<category><![CDATA[System Administration]]></category>
 		<category><![CDATA[Windows Server]]></category>
 		<category><![CDATA[Windows Systems Administration]]></category>
-		<guid isPermaLink="false">/?p=2200</guid>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2200</guid>
 
 					<description><![CDATA[SLMGR.vbs Options for Volume Activation]]></description>
 										<content:encoded><![CDATA[
@@ -335,7 +335,7 @@ slmgr /dlv</code></pre>
 			</item>
 		<item>
 		<title>Flash LSI SAS Adapters to HBA IT MODE</title>
-		<link>/flash-lsi-sas-adapters-to-hba-it-mode/</link>
+		<link>https://jameswsullivan.github.io/flash-lsi-sas-adapters-to-hba-it-mode/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Fri, 10 Mar 2023 17:00:00 +0000</pubDate>
@@ -350,7 +350,7 @@ slmgr /dlv</code></pre>
 		<category><![CDATA[SAS2FLSH]]></category>
 		<category><![CDATA[Storage]]></category>
 		<category><![CDATA[TrueNAS]]></category>
-		<guid isPermaLink="false">/?p=2205</guid>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2205</guid>
 
 					<description><![CDATA[Flash LSI SAS Adapters to IT MODE.]]></description>
 										<content:encoded><![CDATA[
@@ -431,7 +431,7 @@ MegaRec -writesbr &lt;n> &lt;image> &lt;-i2o/-fusion>    : Write controller SBR 
 			</item>
 		<item>
 		<title>WSUS Reset Server Node Error</title>
-		<link>/wsus-reset-server-node-error/</link>
+		<link>https://jameswsullivan.github.io/wsus-reset-server-node-error/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sat, 04 Jul 2020 23:54:00 +0000</pubDate>

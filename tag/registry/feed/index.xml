@@ -9,8 +9,8 @@
 
 <channel>
 	<title>Registry &#8211; howdy</title>
-	<atom:link href="/tag/registry/feed/" rel="self" type="application/rss+xml" />
-	<link>/</link>
+	<atom:link href="https://jameswsullivan.github.io/tag/registry/feed/" rel="self" type="application/rss+xml" />
+	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
 	<lastBuildDate>Sun, 26 Mar 2023 19:40:25 +0000</lastBuildDate>
 	<language>en-US</language>
@@ -21,7 +21,7 @@
 	<generator>https://wordpress.org/?v=6.2</generator>
 	<item>
 		<title>Cleanly Remove User Profiles from Windows OS</title>
-		<link>/cleanly-remove-user-profiles-from-windows-os/</link>
+		<link>https://jameswsullivan.github.io/cleanly-remove-user-profiles-from-windows-os/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sun, 26 Mar 2023 19:40:25 +0000</pubDate>
@@ -30,7 +30,7 @@
 		<category><![CDATA[Registry]]></category>
 		<category><![CDATA[System Administration]]></category>
 		<category><![CDATA[Windows Systems Administration]]></category>
-		<guid isPermaLink="false">/?p=2230</guid>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2230</guid>
 
 					<description><![CDATA[Cleanly Remove User Profiles from Windows OS]]></description>
 										<content:encoded><![CDATA[

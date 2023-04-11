@@ -9,8 +9,8 @@
 
 <channel>
 	<title>KMS &#8211; howdy</title>
-	<atom:link href="/tag/kms/feed/" rel="self" type="application/rss+xml" />
-	<link>/</link>
+	<atom:link href="https://jameswsullivan.github.io/tag/kms/feed/" rel="self" type="application/rss+xml" />
+	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
 	<lastBuildDate>Sun, 26 Mar 2023 16:36:37 +0000</lastBuildDate>
 	<language>en-US</language>
@@ -21,7 +21,7 @@
 	<generator>https://wordpress.org/?v=6.2</generator>
 	<item>
 		<title>SLMGR Commands</title>
-		<link>/slmgr-commands/</link>
+		<link>https://jameswsullivan.github.io/slmgr-commands/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sun, 26 Mar 2023 15:39:05 +0000</pubDate>
@@ -30,7 +30,7 @@
 		<category><![CDATA[System Administration]]></category>
 		<category><![CDATA[Windows Server]]></category>
 		<category><![CDATA[Windows Systems Administration]]></category>
-		<guid isPermaLink="false">/?p=2200</guid>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2200</guid>
 
 					<description><![CDATA[SLMGR.vbs Options for Volume Activation]]></description>
 										<content:encoded><![CDATA[

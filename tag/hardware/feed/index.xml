@@ -9,8 +9,8 @@
 
 <channel>
 	<title>Hardware &#8211; howdy</title>
-	<atom:link href="/tag/hardware/feed/" rel="self" type="application/rss+xml" />
-	<link>/</link>
+	<atom:link href="https://jameswsullivan.github.io/tag/hardware/feed/" rel="self" type="application/rss+xml" />
+	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
 	<lastBuildDate>Mon, 27 Mar 2023 02:52:06 +0000</lastBuildDate>
 	<language>en-US</language>
@@ -21,7 +21,7 @@
 	<generator>https://wordpress.org/?v=6.2</generator>
 	<item>
 		<title>Dell N-Series 激活SLIC2.0/模拟BIOS激活系统会烧毁主板么？</title>
-		<link>/dell-n-series-laptop-slic20-bios/</link>
+		<link>https://jameswsullivan.github.io/dell-n-series-laptop-slic20-bios/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Thu, 25 Feb 2010 16:16:00 +0000</pubDate>
@@ -30,7 +30,7 @@
 		<category><![CDATA[Hardware]]></category>
 		<category><![CDATA[System Administration]]></category>
 		<category><![CDATA[Windows Systems Administration]]></category>
-		<guid isPermaLink="false">/?p=2219</guid>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2219</guid>
 
 					<description><![CDATA[实测Dell N-Series用SLIC2.0/模拟BIOS激活系统是否会烧毁主板]]></description>
 										<content:encoded><![CDATA[

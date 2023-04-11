@@ -9,8 +9,8 @@
 
 <channel>
 	<title>Web Hosting &#8211; howdy</title>
-	<atom:link href="/tag/web-hosting/feed/" rel="self" type="application/rss+xml" />
-	<link>/</link>
+	<atom:link href="https://jameswsullivan.github.io/tag/web-hosting/feed/" rel="self" type="application/rss+xml" />
+	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
 	<lastBuildDate>Tue, 11 Apr 2023 01:24:00 +0000</lastBuildDate>
 	<language>en-US</language>
@@ -21,7 +21,7 @@
 	<generator>https://wordpress.org/?v=6.2</generator>
 	<item>
 		<title>Self-hosted Nextcloud with Docker</title>
-		<link>/self-hosted-nextcloud-with-docker/</link>
+		<link>https://jameswsullivan.github.io/self-hosted-nextcloud-with-docker/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Tue, 11 Apr 2023 01:24:00 +0000</pubDate>
@@ -31,11 +31,11 @@
 		<category><![CDATA[Nextcloud]]></category>
 		<category><![CDATA[Self-Hosting]]></category>
 		<category><![CDATA[Web Hosting]]></category>
-		<guid isPermaLink="false">/?p=2303</guid>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2303</guid>
 
 					<description><![CDATA[Spin up self-hosted Nextcloud with MySQL using Docker.]]></description>
 										<content:encoded><![CDATA[
-<p>My <a href="/self-host-nextcloud/">previous attempt</a> to spin up a self-hosted Nextcloud was directly on a Ubuntu VM, but its virtual disks were not configured in a way that&#8217;s easily expandable as data grows. This time I&#8217;m using Docker and have addressed the issues.</p>
+<p>My <a href="https://jameswsullivan.github.io/self-host-nextcloud/">previous attempt</a> to spin up a self-hosted Nextcloud was directly on a Ubuntu VM, but its virtual disks were not configured in a way that&#8217;s easily expandable as data grows. This time I&#8217;m using Docker and have addressed the issues.</p>
 
 
 
@@ -116,7 +116,7 @@ docker run -dit --name MY-NEXTCLOUD-DB-CONTAINER --ip IP-ADDRESS --network DOCKE
 			</item>
 		<item>
 		<title>Troubleshooting Apache Web Server and Name-based Virtual Hosting</title>
-		<link>/troubleshooting-apache-web-server-and-name-based-virtual-hosting/</link>
+		<link>https://jameswsullivan.github.io/troubleshooting-apache-web-server-and-name-based-virtual-hosting/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sat, 25 Mar 2023 23:26:42 +0000</pubDate>
@@ -128,7 +128,7 @@ docker run -dit --name MY-NEXTCLOUD-DB-CONTAINER --ip IP-ADDRESS --network DOCKE
 		<category><![CDATA[Self-Hosting]]></category>
 		<category><![CDATA[Ubuntu]]></category>
 		<category><![CDATA[Web Hosting]]></category>
-		<guid isPermaLink="false">/?p=2185</guid>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2185</guid>
 
 					<description><![CDATA[This troubleshooting note wraps up the Name-based Virtual Hosting Series.]]></description>
 										<content:encoded><![CDATA[
@@ -182,7 +182,7 @@ docker run -dit --name MY-NEXTCLOUD-DB-CONTAINER --ip IP-ADDRESS --network DOCKE
 
 
 
-<p>I get this error only after I&#8217;ve set the <strong>Permalinks</strong> setting to anything else other than the default <strong>Plain</strong> setting. When <strong>Permalinks</strong> is not set to <strong>Plain</strong>, the URLs need to be rewritten, and that&#8217;s when this error will occur. In my case, it turned out to be that I forgot to add the &lt;Directory> tag in the virtual host configuration file. As you can see in <a href="/configure-apache-web-server-and-name-based-virtual-hosting-with-ubuntu/">this post</a>, my configuration file looks like this:</p>
+<p>I get this error only after I&#8217;ve set the <strong>Permalinks</strong> setting to anything else other than the default <strong>Plain</strong> setting. When <strong>Permalinks</strong> is not set to <strong>Plain</strong>, the URLs need to be rewritten, and that&#8217;s when this error will occur. In my case, it turned out to be that I forgot to add the &lt;Directory> tag in the virtual host configuration file. As you can see in <a href="https://jameswsullivan.github.io/configure-apache-web-server-and-name-based-virtual-hosting-with-ubuntu/">this post</a>, my configuration file looks like this:</p>
 
 
 
@@ -295,7 +295,7 @@ extension=curl</code></pre>
 			</item>
 		<item>
 		<title>Ubuntu Server Docker Host and Docker Networking</title>
-		<link>/ubuntu-server-docker-host-and-docker-networking/</link>
+		<link>https://jameswsullivan.github.io/ubuntu-server-docker-host-and-docker-networking/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Fri, 03 Feb 2023 04:19:00 +0000</pubDate>
@@ -400,7 +400,7 @@ docker run -dit --name PostgreSQL_DEV --network docker_dev_net --ip 192.168.1.10
 			</item>
 		<item>
 		<title>Self-host Nextcloud</title>
-		<link>/self-host-nextcloud/</link>
+		<link>https://jameswsullivan.github.io/self-host-nextcloud/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sat, 18 Sep 2021 11:43:43 +0000</pubDate>
@@ -620,7 +620,7 @@ SHOW DATABASES;</code></pre>
 			</item>
 		<item>
 		<title>nginx, net-tools, and cifs-utils</title>
-		<link>/nginx-net-tools-and-cifs-utils/</link>
+		<link>https://jameswsullivan.github.io/nginx-net-tools-and-cifs-utils/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Thu, 16 Sep 2021 12:25:36 +0000</pubDate>
@@ -685,7 +685,7 @@ apt install net-tools -y</code></pre>
 			</item>
 		<item>
 		<title>WordPress Won&#8217;t Send Emails</title>
-		<link>/wordpress-wont-send-emails/</link>
+		<link>https://jameswsullivan.github.io/wordpress-wont-send-emails/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Thu, 25 Jun 2020 06:23:00 +0000</pubDate>

@@ -9,8 +9,8 @@
 
 <channel>
 	<title>MySQL &#8211; howdy</title>
-	<atom:link href="/tag/mysql/feed/" rel="self" type="application/rss+xml" />
-	<link>/</link>
+	<atom:link href="https://jameswsullivan.github.io/tag/mysql/feed/" rel="self" type="application/rss+xml" />
+	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
 	<lastBuildDate>Sun, 26 Mar 2023 17:42:45 +0000</lastBuildDate>
 	<language>en-US</language>
@@ -21,7 +21,7 @@
 	<generator>https://wordpress.org/?v=6.2</generator>
 	<item>
 		<title>Configure Docker MySQL Server</title>
-		<link>/configure-docker-mysql-server/</link>
+		<link>https://jameswsullivan.github.io/configure-docker-mysql-server/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Fri, 03 Feb 2023 17:14:00 +0000</pubDate>
@@ -40,7 +40,7 @@
 
 
 
-<p>I set up this MySQL server using the <strong><a rel="noreferrer noopener" href="https://hub.docker.com/r/ubuntu/mysql" target="_blank">ubuntu/mysql</a></strong> Docker image and it&#8217;s part of my dev environment setup. My setup has <a href="/docker-volumes-and-smb-share/">CIFS/Samba volume</a> <em>my_smb_vol</em> and an <a href="/ubuntu-server-docker-host-and-docker-networking/">ipvlan network</a> <em>docker_dev_net</em>.</p>
+<p>I set up this MySQL server using the <strong><a rel="noreferrer noopener" href="https://hub.docker.com/r/ubuntu/mysql" target="_blank">ubuntu/mysql</a></strong> Docker image and it&#8217;s part of my dev environment setup. My setup has <a href="https://jameswsullivan.github.io/docker-volumes-and-smb-share/">CIFS/Samba volume</a> <em>my_smb_vol</em> and an <a href="https://jameswsullivan.github.io/ubuntu-server-docker-host-and-docker-networking/">ipvlan network</a> <em>docker_dev_net</em>.</p>
 
 
 

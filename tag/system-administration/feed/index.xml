@@ -9,8 +9,8 @@
 
 <channel>
 	<title>System Administration &#8211; howdy</title>
-	<atom:link href="/tag/system-administration/feed/" rel="self" type="application/rss+xml" />
-	<link>/</link>
+	<atom:link href="https://jameswsullivan.github.io/tag/system-administration/feed/" rel="self" type="application/rss+xml" />
+	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
 	<lastBuildDate>Mon, 03 Apr 2023 03:46:04 +0000</lastBuildDate>
 	<language>en-US</language>
@@ -21,7 +21,7 @@
 	<generator>https://wordpress.org/?v=6.2</generator>
 	<item>
 		<title>Cleanly Remove User Profiles from Windows OS</title>
-		<link>/cleanly-remove-user-profiles-from-windows-os/</link>
+		<link>https://jameswsullivan.github.io/cleanly-remove-user-profiles-from-windows-os/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sun, 26 Mar 2023 19:40:25 +0000</pubDate>
@@ -30,7 +30,7 @@
 		<category><![CDATA[Registry]]></category>
 		<category><![CDATA[System Administration]]></category>
 		<category><![CDATA[Windows Systems Administration]]></category>
-		<guid isPermaLink="false">/?p=2230</guid>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2230</guid>
 
 					<description><![CDATA[Cleanly Remove User Profiles from Windows OS]]></description>
 										<content:encoded><![CDATA[
@@ -58,14 +58,14 @@ HKLM\Software\Microsoft\WindowsNT\CurrentVersion\ProfileGuid</code></pre>
 			</item>
 		<item>
 		<title>Invalid Time error and Unable to Change Time Zone</title>
-		<link>/invalid-time-error-and-unable-to-change-time-zone/</link>
+		<link>https://jameswsullivan.github.io/invalid-time-error-and-unable-to-change-time-zone/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sun, 26 Mar 2023 16:52:31 +0000</pubDate>
 				<category><![CDATA[blog]]></category>
 		<category><![CDATA[System Administration]]></category>
 		<category><![CDATA[Windows Systems Administration]]></category>
-		<guid isPermaLink="false">/?p=2217</guid>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2217</guid>
 
 					<description><![CDATA[Fix the Invalid Time error and the Time Zone setting greyed out issue on Windows.]]></description>
 										<content:encoded><![CDATA[
@@ -105,7 +105,7 @@ Deny	Off</code></pre>
 			</item>
 		<item>
 		<title>Create Storage Pools and Virtual Disks via PowerShell</title>
-		<link>/create-storage-pools-and-virtual-disks-via-powershell/</link>
+		<link>https://jameswsullivan.github.io/create-storage-pools-and-virtual-disks-via-powershell/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sun, 26 Mar 2023 15:57:56 +0000</pubDate>
@@ -116,7 +116,7 @@ Deny	Off</code></pre>
 		<category><![CDATA[Virtual Disk]]></category>
 		<category><![CDATA[Windows Server]]></category>
 		<category><![CDATA[Windows Systems Administration]]></category>
-		<guid isPermaLink="false">/?p=2203</guid>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2203</guid>
 
 					<description><![CDATA[Create Storage Pools and Virtual Disks via PowerShell when New Virtual Disk Wizard GUI emits error.]]></description>
 										<content:encoded><![CDATA[
@@ -170,7 +170,7 @@ Get-VirtualDisk</code></pre>
 			</item>
 		<item>
 		<title>SLMGR Commands</title>
-		<link>/slmgr-commands/</link>
+		<link>https://jameswsullivan.github.io/slmgr-commands/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sun, 26 Mar 2023 15:39:05 +0000</pubDate>
@@ -179,7 +179,7 @@ Get-VirtualDisk</code></pre>
 		<category><![CDATA[System Administration]]></category>
 		<category><![CDATA[Windows Server]]></category>
 		<category><![CDATA[Windows Systems Administration]]></category>
-		<guid isPermaLink="false">/?p=2200</guid>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2200</guid>
 
 					<description><![CDATA[SLMGR.vbs Options for Volume Activation]]></description>
 										<content:encoded><![CDATA[
@@ -224,7 +224,7 @@ slmgr /dlv</code></pre>
 			</item>
 		<item>
 		<title>Repair Corrupt System Files in Windows 10</title>
-		<link>/corrupt-windows-10-system-files-repair/</link>
+		<link>https://jameswsullivan.github.io/corrupt-windows-10-system-files-repair/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Mon, 21 Mar 2022 02:24:48 +0000</pubDate>
@@ -269,7 +269,7 @@ DISM /get-wiminfo /wimfile:E:\Win10\sources\install.wim</code></pre>
 			</item>
 		<item>
 		<title>WSUS Reset Server Node Error</title>
-		<link>/wsus-reset-server-node-error/</link>
+		<link>https://jameswsullivan.github.io/wsus-reset-server-node-error/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sat, 04 Jul 2020 23:54:00 +0000</pubDate>
@@ -326,7 +326,7 @@ DELETE FROM tbEventInstance WHERE EventNamespaceID= '2' AND EVENTID IN ('381','3
 			</item>
 		<item>
 		<title>White Screen Issue When Presenting in Skype for Business</title>
-		<link>/white-screen-when-presenting-in-skype-for-business/</link>
+		<link>https://jameswsullivan.github.io/white-screen-when-presenting-in-skype-for-business/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Thu, 02 Jul 2020 07:23:00 +0000</pubDate>
@@ -367,7 +367,7 @@ DELETE FROM tbEventInstance WHERE EventNamespaceID= '2' AND EVENTID IN ('381','3
 			</item>
 		<item>
 		<title>Dell N-Series 激活SLIC2.0/模拟BIOS激活系统会烧毁主板么？</title>
-		<link>/dell-n-series-laptop-slic20-bios/</link>
+		<link>https://jameswsullivan.github.io/dell-n-series-laptop-slic20-bios/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Thu, 25 Feb 2010 16:16:00 +0000</pubDate>
@@ -376,7 +376,7 @@ DELETE FROM tbEventInstance WHERE EventNamespaceID= '2' AND EVENTID IN ('381','3
 		<category><![CDATA[Hardware]]></category>
 		<category><![CDATA[System Administration]]></category>
 		<category><![CDATA[Windows Systems Administration]]></category>
-		<guid isPermaLink="false">/?p=2219</guid>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2219</guid>
 
 					<description><![CDATA[实测Dell N-Series用SLIC2.0/模拟BIOS激活系统是否会烧毁主板]]></description>
 										<content:encoded><![CDATA[
