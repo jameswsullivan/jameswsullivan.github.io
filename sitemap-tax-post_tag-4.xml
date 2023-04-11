@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?><?xml-stylesheet type='text/xsl' href='https://jameswsullivan.github.io/wp-content/plugins/google-sitemap-generator/sitemap.xsl'?><!-- sitemap-generator-url='http://www.arnebrachhold.de/' sitemap-generator-version='4.1.8' -->
-<!-- generated-on='2023-04-11 02:23' -->
+<!-- generated-on='2023-04-11 02:32' -->
 <urlset xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd' xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>	<url>
 		<loc>https://jameswsullivan.github.io/tag/system-administration/</loc>
 		<changefreq>daily</changefreq>
@@ -45,4 +45,4 @@
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
 	</url>
-</urlset><!-- Request ID: 20ef84da119fe9a2d91c3d9e2dcf6307; Queries for sitemap: 6; Total queries: 18; Seconds: $end_time; Memory for sitemap: 0MB; Total memory: 6MB -->
+</urlset><!-- Request ID: 7196a99eb110a248655c4aedfb8935d3; Queries for sitemap: 6; Total queries: 18; Seconds: $end_time; Memory for sitemap: 0MB; Total memory: 6MB -->
