@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/docker/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Tue, 11 Apr 2023 01:24:00 +0000</lastBuildDate>
+	<lastBuildDate>Tue, 11 Apr 2023 02:19:44 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -20,6 +20,112 @@
 	1	</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=6.2</generator>
 	<item>
+		<title>Set up Docker host with Ubuntu Server and mount disks</title>
+		<link>https://jameswsullivan.github.io/set-up-docker-host-with-ubuntu-server-and-mount-disks/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Tue, 11 Apr 2023 02:19:44 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[Self-Hosting]]></category>
+		<category><![CDATA[System Administration]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2307</guid>
+
+					<description><![CDATA[Install Docker on Ubuntu Server, attach disks to the Docker host VM and configure mounts.]]></description>
+										<content:encoded><![CDATA[
+<p>In order to run and test things I set up multiple Hyper-V VMs as Docker hosts to run my containers. This blog documents the Docker installation and disk mounting on Ubuntu Server.</p>
+
+
+
+<p>First, if you have installed Docker or any packages along with Ubuntu Server, it&#8217;s likely installed via snap. There is nothing wrong with using snap, but most of the directory paths will be different and it makes it harder to tweak certain configs in the future, so it&#8217;s recommended to remove them before the rest of the steps.</p>
+
+
+
+<pre class="wp-block-code"><code>sudo snap remove docker
+sudo reboot 
+
+# Reboot is needed, otherwise you'll get "bash: /snap/bin/docker: No such file or directory" error.</code></pre>
+
+
+
+<p>Second, install Docker:</p>
+
+
+
+<pre class="wp-block-code"><code># Install using the apt repository:
+# https://docs.docker.com/engine/install/ubuntu/
+apt-get update -y
+apt-get upgrade -y
+apt-get install ca-certificates curl gnupg lsb-release -y
+mkdir -m 0755 -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
+    | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+
+echo "deb &#91;arch=$(dpkg --print-architecture) \
+    signed-by=/etc/apt/keyrings/docker.gpg] \
+    https://download.docker.com/linux/ubuntu \
+    $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+apt-get update -y
+apt-get upgrade -y
+apt-get install docker-ce \
+        docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+# After installing docker-ce, other dependencies are usually automatically installed.
+
+# OPTIONAL: List and verify installed packages.
+
+apt list --installed</code></pre>
+
+
+
+<p>Third, mount physical or virtual disks one by one to the VM so that you can identify the disks by UUID and configure the mount one at a time, especially when you have multiple disks of the same size, because the devices are usually not attached in order when booting, the only way to quickly and accurately identify the disks is by UUID. Use the following commands to format and configure the mounts.</p>
+
+
+
+<pre class="wp-block-code"><code># List devices.
+fdisk -l
+
+# Cross reference with:
+blkid
+blkid | grep /dev/sd
+
+# Use lsscsi if needed.
+apt-get install lsscsi -y
+
+# Create partition:
+gdisk /dev/sda
+
+# Enter ? for help. Enter n and accept all default parameters to use the entire disk capacity.
+# Enter w to write changes to disk.
+
+# Format disk to ext4 file system.
+mkfs.ext4 /dev/sda
+
+# Then run:
+fdisk -l
+blkid | grep /dev/sd
+# again to grab the device name and UUID.
+
+# Create mount locations:
+mkdir /mnt/directory_name
+mount /dev/sda /mnt/directory_name
+
+# Copy the UUID and add entries in /etc/fstab to configure mounts at boot time.
+nano /etc/fstab
+
+# Add entries, e.g., mount 100GB to /mnt/my_folder:
+UUID="dcd8c5ac-db76-435e-ab3c-48570190c7d8" /mnt/my_folder ext4 defaults 0 1
+
+# Verify the mounts after a reboot.</code></pre>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>Self-hosted Nextcloud with Docker</title>
 		<link>https://jameswsullivan.github.io/self-hosted-nextcloud-with-docker/</link>
 		
@@ -1162,226 +1268,6 @@ SSLCertificateKeyFile Your-Cert-Key-File-Path</code></pre>
 
 
 <p>You can choose either to use default-ssl.conf or nextcloud.conf, or a combination of both and use them for different purposes. I disabled default-ssl.conf by renaming it to default-ssl.conf.bak, and left nextcloud.conf active which has all my configs.</p>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Self-host Nextcloud</title>
-		<link>https://jameswsullivan.github.io/self-host-nextcloud/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Sat, 18 Sep 2021 11:43:43 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[Apache]]></category>
-		<category><![CDATA[Docker]]></category>
-		<category><![CDATA[Hosting]]></category>
-		<category><![CDATA[Linux]]></category>
-		<category><![CDATA[Nextcloud]]></category>
-		<category><![CDATA[Self-Hosting]]></category>
-		<category><![CDATA[Ubuntu]]></category>
-		<category><![CDATA[Web Hosting]]></category>
-		<guid isPermaLink="false">https://www.alexchen.net/?p=1597</guid>
-
-					<description><![CDATA[Take back control of your privacy with self-hosted Nextcloud.]]></description>
-										<content:encoded><![CDATA[
-<p><em>I used to trust Google more when they were under the leadership of Larry Page and Sergey Brin and held up their &#8220;Don&#8217;t Do Evil&#8221; motto, and I used to admire them more when they had the balls to stand up against China&#8217;s censorship. But nowadays Google has become more of a censorship giant itself by implementing the radical left&#8217;s communist political agenda, and its ever increasing intrusion to our privacy is just too concerning. Luckily, there are plenty open source alternatives.</em></p>
-
-
-
-<h2 class="wp-block-heading">Installation:</h2>
-
-
-
-<p><strong>Environment:</strong> Windows Server 2019 + Hyper-V</p>
-
-
-
-<p><strong>Linux version:</strong> Ubuntu 20.04 LTS</p>
-
-
-
-<p><strong>LAMP Stack:</strong> PHP8.0, MariaDB, Apache</p>
-
-
-
-<p>My main reference sources are from <a rel="noreferrer noopener" href="https://docs.nextcloud.com/server/latest/admin_manual/installation/example_ubuntu.html" data-type="URL" data-id="https://docs.nextcloud.com/server/latest/admin_manual/installation/example_ubuntu.html" target="_blank">this article</a> and <a rel="noreferrer noopener" href="https://www.itzgeek.com/how-tos/linux/debian/how-to-install-apache-mariadb-php-lamp-stack-on-debian-11.html" data-type="URL" data-id="https://www.itzgeek.com/how-tos/linux/debian/how-to-install-apache-mariadb-php-lamp-stack-on-debian-11.html" target="_blank">this article</a>, however, some commands are slightly modified to fit my needs.</p>
-
-
-
-<pre class="wp-block-code"><code># Become root
-sudo -i
-
-# Install Apache
-apt-get update -y
-apt-get install -y apache2 apache2-utils
-systemctl status apache2
-# After installation, visit http://localhost/ to verify that Apache is running.
-
-# Install MariaDB
-apt-get install -y mariadb-server mariadb-client
-systemctl status mariadb
-mysql_secure_installation
-
-# Install PHP8.0 (the default PHP version might be PHP7.4, I completely skipped what was in the original article and went with PHP8.0)
-apt-get install software-properties-common -y
-add-apt-repository ppa:ondrej/php
-apt-get update -y
-apt-get install php8.0 libapache2-mod-php8.0 -y
-systemctl restart apache2
-
-apt-get update -y
-apt-get install php8.0-fpm libapache2-mod-fcgid -y
-a2enmod proxy_fcgi setenvif
-a2enconf php8.0-fpm
-systemctl restart apache2
-
-# Install other modules for Nextcloud
-apt-get install -y php8.0-gd php8.0-mysql php8.0-curl php8.0-mbstring php8.0-intl
-apt-get install -y php8.0-gmp php8.0-bcmath php-imagick php8.0-xml php8.0-zip
-
-
-# Create MySQL database
-sudo /etc/init.d/mysql start
-mysql -u root -p
-
-CREATE USER 'username'@'localhost' IDENTIFIED BY 'password';
-
-# In the next query, you'll need to remove all the dashes because WordPress's code block editor has problems with the the charset portion of the query by giving a "Publishing failed. The response is not a valid JSON response." error.
-
-CREATE DATABASE IF NOT EXISTS nextcloud CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-
-GRANT ALL PRIVILEGES ON nextcloud.* TO 'username'@'localhost';
-FLUSH PRIVILEGES;
-
-quit;</code></pre>
-
-
-
-<p>Download Nextcloud server package from <a rel="noreferrer noopener" href="https://nextcloud.com/install/" target="_blank" data-type="URL" data-id="https://nextcloud.com/install/">here</a>.</p>
-
-
-
-<pre class="wp-block-code"><code># My Downloads folder path is /home/*username*/Downloads, and the current version Nextcloud build I use is nextcloud-22.1.1.zip .
-cd /home/*username*/Downloads
-unzip nextcloud-22.1.1.zip
-
-# Copy to Apache document root
-cp -r nextcloud /var/www/html</code></pre>
-
-
-
-<p>Next, configure the Apache web server. <a rel="noreferrer noopener" href="https://docs.nextcloud.com/server/latest/admin_manual/installation/source_installation.html#apache-configuration-label" data-type="URL" data-id="https://docs.nextcloud.com/server/latest/admin_manual/installation/source_installation.html#apache-configuration-label" target="_blank">Reference article</a>.</p>
-
-
-
-<pre class="wp-block-code"><code># Use your favorite text editor in Linux to create the nextcloud.conf file under /etc/apache2/sites-available/nextcloud.conf .
-
-# I used directory based installation, so I added the following in nextcloud.conf
-
-Alias /nextcloud "/var/www/html/nextcloud/"
-
-&lt;Directory /var/www/html/nextcloud/>
-  Require all granted
-  AllowOverride All
-  Options FollowSymLinks MultiViews
-
-  &lt;IfModule mod_dav.c>
-    Dav off
-  &lt;/IfModule>
-&lt;/Directory>
-
-
-# Enable modules and sites
-a2ensite nextcloud.conf
-a2enmod rewrite
-a2enmod headers
-a2enmod env
-a2enmod dir
-a2enmod mime
-a2enmod setenvif
-systemctl reload apache2
-
-
-# Enable SSL
-a2enmod ssl
-a2ensite default-ssl
-systemctl reload apache2
-
-# Change directory permission
-chown -R www-data:www-data /var/www/html/nextcloud/</code></pre>
-
-
-
-<p>Now, Nextcloud should be working, the next few steps are very straightforward through Nextcloud&#8217;s setup page.</p>
-
-
-
-<h2 class="wp-block-heading">Post-setup configs and troubleshooting:</h2>
-
-
-
-<ol>
-<li>Add Trusted Domain in Nextcloud&#8217;s config files. <a rel="noreferrer noopener" href="https://help.nextcloud.com/t/howto-add-a-new-trusted-domain/26" data-type="URL" data-id="https://help.nextcloud.com/t/howto-add-a-new-trusted-domain/26" target="_blank">Ref.</a></li>
-
-
-
-<li>Increase PHP memory_limit.</li>
-
-
-
-<li>View phpinfo.</li>
-</ol>
-
-
-
-<pre class="wp-block-code"><code># 1. In your nextcloud directory, /var/www/html/nextcloud/config , find the config.php file and edit the line with 'trusted_domain'. Assuming you'll access your nextcloud using 'localhost', '192.168.0.2', and 'my_nextcloud' , write the trusted_domain like below.
-
-  'trusted_domains' =&gt;
-  array (
-    0 =&gt; 'localhost',
-    1 =&gt; '192.168.0.29',
-    2 =&gt; 'my_nextcloud',
-  ),
-
-# 2. Change line memory_limit to a desired value in both /etc/php/8.0/fpm/php.ini and /etc/php/8.0/apache2/php.ini , e.g. memory_limit=512M, and then restart the services.
-
-service php8.0-fpm restart
-service apache2 restart
-
-# 3. Create a info.php file in document root to verify php info.
-
-cd /var/www/html/
-touch info.php
-
-# Add the following to info.php using your favorite text editor.
-
-&lt;?php phpinfo(); ?&gt;
-
-# Visit info.php in a browser to view phpinfo.</code></pre>
-
-
-
-<p>Useful MariaDB/MySQL commands:</p>
-
-
-
-<pre class="wp-block-code"><code># Find out usernames, databases, ports
-mysql -u root -p
-SELECT User FROM mysql.user;
-SHOW GLOBAL VARIABLES IKE 'PORT';
-SHOW DATABASES;</code></pre>
-
-
-
-<p>Disable (to not enforce) 2FA in Nextcloud:</p>
-
-
-
-<pre class="wp-block-code"><code># In file /var/www/html/nextcloud/config/config.php, change the following.
-
-‘twofactor_enforced’ =&gt; ‘false’</code></pre>
 ]]></content:encoded>
 					
 		

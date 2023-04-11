@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/system-administration/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Mon, 03 Apr 2023 03:46:04 +0000</lastBuildDate>
+	<lastBuildDate>Tue, 11 Apr 2023 02:19:44 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -20,6 +20,112 @@
 	1	</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=6.2</generator>
 	<item>
+		<title>Set up Docker host with Ubuntu Server and mount disks</title>
+		<link>https://jameswsullivan.github.io/set-up-docker-host-with-ubuntu-server-and-mount-disks/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Tue, 11 Apr 2023 02:19:44 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[Self-Hosting]]></category>
+		<category><![CDATA[System Administration]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2307</guid>
+
+					<description><![CDATA[Install Docker on Ubuntu Server, attach disks to the Docker host VM and configure mounts.]]></description>
+										<content:encoded><![CDATA[
+<p>In order to run and test things I set up multiple Hyper-V VMs as Docker hosts to run my containers. This blog documents the Docker installation and disk mounting on Ubuntu Server.</p>
+
+
+
+<p>First, if you have installed Docker or any packages along with Ubuntu Server, it&#8217;s likely installed via snap. There is nothing wrong with using snap, but most of the directory paths will be different and it makes it harder to tweak certain configs in the future, so it&#8217;s recommended to remove them before the rest of the steps.</p>
+
+
+
+<pre class="wp-block-code"><code>sudo snap remove docker
+sudo reboot 
+
+# Reboot is needed, otherwise you'll get "bash: /snap/bin/docker: No such file or directory" error.</code></pre>
+
+
+
+<p>Second, install Docker:</p>
+
+
+
+<pre class="wp-block-code"><code># Install using the apt repository:
+# https://docs.docker.com/engine/install/ubuntu/
+apt-get update -y
+apt-get upgrade -y
+apt-get install ca-certificates curl gnupg lsb-release -y
+mkdir -m 0755 -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
+    | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+
+echo "deb &#91;arch=$(dpkg --print-architecture) \
+    signed-by=/etc/apt/keyrings/docker.gpg] \
+    https://download.docker.com/linux/ubuntu \
+    $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+apt-get update -y
+apt-get upgrade -y
+apt-get install docker-ce \
+        docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+# After installing docker-ce, other dependencies are usually automatically installed.
+
+# OPTIONAL: List and verify installed packages.
+
+apt list --installed</code></pre>
+
+
+
+<p>Third, mount physical or virtual disks one by one to the VM so that you can identify the disks by UUID and configure the mount one at a time, especially when you have multiple disks of the same size, because the devices are usually not attached in order when booting, the only way to quickly and accurately identify the disks is by UUID. Use the following commands to format and configure the mounts.</p>
+
+
+
+<pre class="wp-block-code"><code># List devices.
+fdisk -l
+
+# Cross reference with:
+blkid
+blkid | grep /dev/sd
+
+# Use lsscsi if needed.
+apt-get install lsscsi -y
+
+# Create partition:
+gdisk /dev/sda
+
+# Enter ? for help. Enter n and accept all default parameters to use the entire disk capacity.
+# Enter w to write changes to disk.
+
+# Format disk to ext4 file system.
+mkfs.ext4 /dev/sda
+
+# Then run:
+fdisk -l
+blkid | grep /dev/sd
+# again to grab the device name and UUID.
+
+# Create mount locations:
+mkdir /mnt/directory_name
+mount /dev/sda /mnt/directory_name
+
+# Copy the UUID and add entries in /etc/fstab to configure mounts at boot time.
+nano /etc/fstab
+
+# Add entries, e.g., mount 100GB to /mnt/my_folder:
+UUID="dcd8c5ac-db76-435e-ab3c-48570190c7d8" /mnt/my_folder ext4 defaults 0 1
+
+# Verify the mounts after a reboot.</code></pre>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>Cleanly Remove User Profiles from Windows OS</title>
 		<link>https://jameswsullivan.github.io/cleanly-remove-user-profiles-from-windows-os/</link>
 		

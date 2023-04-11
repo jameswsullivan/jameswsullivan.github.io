@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Tue, 11 Apr 2023 01:24:00 +0000</lastBuildDate>
+	<lastBuildDate>Tue, 11 Apr 2023 02:19:44 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -20,6 +20,112 @@
 	1	</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=6.2</generator>
 	<item>
+		<title>Set up Docker host with Ubuntu Server and mount disks</title>
+		<link>https://jameswsullivan.github.io/set-up-docker-host-with-ubuntu-server-and-mount-disks/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Tue, 11 Apr 2023 02:19:44 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[Self-Hosting]]></category>
+		<category><![CDATA[System Administration]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2307</guid>
+
+					<description><![CDATA[Install Docker on Ubuntu Server, attach disks to the Docker host VM and configure mounts.]]></description>
+										<content:encoded><![CDATA[
+<p>In order to run and test things I set up multiple Hyper-V VMs as Docker hosts to run my containers. This blog documents the Docker installation and disk mounting on Ubuntu Server.</p>
+
+
+
+<p>First, if you have installed Docker or any packages along with Ubuntu Server, it&#8217;s likely installed via snap. There is nothing wrong with using snap, but most of the directory paths will be different and it makes it harder to tweak certain configs in the future, so it&#8217;s recommended to remove them before the rest of the steps.</p>
+
+
+
+<pre class="wp-block-code"><code>sudo snap remove docker
+sudo reboot 
+
+# Reboot is needed, otherwise you'll get "bash: /snap/bin/docker: No such file or directory" error.</code></pre>
+
+
+
+<p>Second, install Docker:</p>
+
+
+
+<pre class="wp-block-code"><code># Install using the apt repository:
+# https://docs.docker.com/engine/install/ubuntu/
+apt-get update -y
+apt-get upgrade -y
+apt-get install ca-certificates curl gnupg lsb-release -y
+mkdir -m 0755 -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
+    | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+
+echo "deb &#91;arch=$(dpkg --print-architecture) \
+    signed-by=/etc/apt/keyrings/docker.gpg] \
+    https://download.docker.com/linux/ubuntu \
+    $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+apt-get update -y
+apt-get upgrade -y
+apt-get install docker-ce \
+        docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+# After installing docker-ce, other dependencies are usually automatically installed.
+
+# OPTIONAL: List and verify installed packages.
+
+apt list --installed</code></pre>
+
+
+
+<p>Third, mount physical or virtual disks one by one to the VM so that you can identify the disks by UUID and configure the mount one at a time, especially when you have multiple disks of the same size, because the devices are usually not attached in order when booting, the only way to quickly and accurately identify the disks is by UUID. Use the following commands to format and configure the mounts.</p>
+
+
+
+<pre class="wp-block-code"><code># List devices.
+fdisk -l
+
+# Cross reference with:
+blkid
+blkid | grep /dev/sd
+
+# Use lsscsi if needed.
+apt-get install lsscsi -y
+
+# Create partition:
+gdisk /dev/sda
+
+# Enter ? for help. Enter n and accept all default parameters to use the entire disk capacity.
+# Enter w to write changes to disk.
+
+# Format disk to ext4 file system.
+mkfs.ext4 /dev/sda
+
+# Then run:
+fdisk -l
+blkid | grep /dev/sd
+# again to grab the device name and UUID.
+
+# Create mount locations:
+mkdir /mnt/directory_name
+mount /dev/sda /mnt/directory_name
+
+# Copy the UUID and add entries in /etc/fstab to configure mounts at boot time.
+nano /etc/fstab
+
+# Add entries, e.g., mount 100GB to /mnt/my_folder:
+UUID="dcd8c5ac-db76-435e-ab3c-48570190c7d8" /mnt/my_folder ext4 defaults 0 1
+
+# Verify the mounts after a reboot.</code></pre>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>Self-hosted Nextcloud with Docker</title>
 		<link>https://jameswsullivan.github.io/self-hosted-nextcloud-with-docker/</link>
 		
@@ -745,183 +851,6 @@ MegaRec -writespd &lt;n> &lt;image> &lt;-i2o/-fusion>    : Write controller SPD 
 MegaRec -readsbr &lt;n> &lt;image> &#91;&lt;byteCount>] &lt;-i2o/-fusion> : Read controller SBR to specified file in I2O/FUSION mode
 MegaRec -writesbr &lt;n> &lt;image> &lt;-i2o/-fusion>    : Write controller SBR from specified file in I2O/FUSION mode
 </code></pre>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Configure Apache Web Server and Name-based Virtual Hosting with Ubuntu</title>
-		<link>https://jameswsullivan.github.io/configure-apache-web-server-and-name-based-virtual-hosting-with-ubuntu/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Fri, 03 Feb 2023 20:19:00 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[Apache]]></category>
-		<category><![CDATA[Docker]]></category>
-		<category><![CDATA[Hosting]]></category>
-		<category><![CDATA[Self-Hosting]]></category>
-		<category><![CDATA[Ubuntu]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=18</guid>
-
-					<description><![CDATA[This is the fourth installment of the Name-based Virtual Hosting Series.]]></description>
-										<content:encoded><![CDATA[
-<p>This is the final installment of my dev environment setup which documents the process of setting up Apache web server and name-based virtual hosting. My setup has CIFS/Samba volume <em>my_smb_vol</em> and an ipvlan network <em>docker_dev_net</em>.</p>
-
-
-
-<h2 class="wp-block-heading">Spin up a Ubuntu Docker container:</h2>
-
-
-
-<pre class="wp-block-code"><code>docker run -dit --name WEB_SERVER --network docker_dev_net --ip 192.168.1.103 --mount source=my_smb_vol,destination=/SharedVolume ubuntu
-
-# -p 443:443 -p 80:80 -p 22:22
-# Port exposure is optional because the containers will be part of the same network that my other machines are in.</code></pre>
-
-
-
-<p>Install necessary packages:</p>
-
-
-
-<pre class="wp-block-code"><code># Install network utilities for troubleshooting:
-apt-get install iputils-ping -y
-apt-get install iproute2 -y
-apt-get install traceroute -y
-
-# Install SSH:
-apt-get install openssh-client -y
-apt-get install openssh-server -y
-
-# Install sudo and other utilities:
-apt-get install sudo -y
-apt-get install nano -y
-
-# Install apache, php, and php-mysql:
-apt-get install apache2 -y
-apt-get install php8.1 -y
-apt-get install php-mysql -y
-apt-get install libapache2-mod-php -y</code></pre>
-
-
-
-<p>Verify services are running and start the them if not:</p>
-
-
-
-<pre class="wp-block-code"><code># ssh and apache2 service status
-service ssh status
-service apache2 status
-
-# start the services:
-service ssh start
-service apache2 start</code></pre>
-
-
-
-<p>Hostname and name server (optional):</p>
-
-
-
-<pre class="wp-block-code"><code># Depending on your setup, you might need to specify the --hostname when creating your container:
-
---hostname=your_hostname
-
-# Technically after specifying --ip and --hostname , you shouldn't need to edit /etc/resolv.conf anymore. To verify:
-
-cat /etc/resolv.conf</code></pre>
-
-
-
-<p>Verify php version:</p>
-
-
-
-<pre class="wp-block-code"><code># Create a info.php file under the /var/www/html directory with the following content:
-
-&lt;?php phpinfo();?&gt;</code></pre>
-
-
-
-<p>Now that you should be able to visit the Apache server&#8217;s default landing page and the info.php page to verify that the Apache server is running and view your php version.</p>
-
-
-
-<h2 class="wp-block-heading">Set up name-based virtual hosting:</h2>
-
-
-
-<pre class="wp-block-code"><code># The example websites I'm using are: example.mydomain, example1.mydomain, example2.mydomain.
-
-# Create directories:
-# example.mydomain will reside under /var/www/html as the "main" website.
-
-mkdir /var/www/html/example1.mydomain
-mkdir /var/www/html/example2.mydomain
-
-# Change ownership of the directories. I simply changed the entire html directory and its subdirectories' ownership to www-data for my convenience.
-
-chown -R www-data:www-data /var/www/html
-
-# Create Virtual Host configuration files for your sites.
-touch /etc/apache2/sites-available/example.mydomain.conf
-touch /etc/apache2/sites-available/example1.mydomain.conf
-touch /etc/apache2/sites-available/example2.mydomain.conf
-
-# Use nano to add the corresponding content to your site config files. Edit the ServerName and DocumentRoot as needed to point to the your domains and directories:
-
-# example.mydomain.conf or use the 000-default.conf:
-&lt;VirtualHost *:80&gt;
-    ServerAdmin webmaster@example.mydomain
-    ServerName example.mydomain
-    DocumentRoot /var/www/html
-    DirectoryIndex index.html
-    ErrorLog ${APACHE_LOG_DIR}/example.mydomain_error.log
-    CustomLog ${APACHE_LOG_DIR}/example.mydomain_access.log combined
-&lt;/VirtualHost&gt;
-
-# example1.mydomain.conf:
-&lt;VirtualHost *:80&gt;
-    ServerAdmin webmaster@example1.mydomain
-    ServerName example1.mydomain
-    DocumentRoot /var/www/html/example1.mydomain
-    DirectoryIndex index.php
-    ErrorLog ${APACHE_LOG_DIR}/example1.mydomain_error.log
-    CustomLog ${APACHE_LOG_DIR}/example1.mydomain_access.log combined
-&lt;/VirtualHost&gt;
-
-# Enable the configuration files for the sites:
-a2ensite example1.mydomain
-a2ensite example2.mydomain
-
-# Restart apache2 service and verify that apache2 is running:
-service apache2 reload
-service apache2 status
-
-# Of course, you will need to add your own index.html or index.php files under the sites' directories.</code></pre>
-
-
-
-<p>Configure your router or DNS server records:</p>
-
-
-
-<pre class="wp-block-code"><code># I'm using my Cisco router as an example:
-
-ip host example.mydomain 192.168.1.103
-ip host example1.mydomain 192.168.1.103
-ip host example2.mydomain 192.168.1.103</code></pre>
-
-
-
-<p>Now that you should be able to visit the sites by going to:</p>
-
-
-
-<pre class="wp-block-code"><code>http:&#47;&#47;example.mydomain
-http://example1.mydomain/
-http://example2.mydomain/</code></pre>
 ]]></content:encoded>
 					
 		
