@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>MediaWiki &#8211; howdy</title>
+	<atom:link href="https://jameswsullivan.github.io/tag/mediawiki/feed/" rel="self" type="application/rss+xml" />
+	<link>https://jameswsullivan.github.io/</link>
+	<description></description>
+	<lastBuildDate>Wed, 12 Apr 2023 03:09:17 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.2</generator>
+	<item>
+		<title>HTMLForm.php gets auto deleted</title>
+		<link>https://jameswsullivan.github.io/htmlform-php-gets-auto-deleted/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sun, 05 Jul 2020 23:54:46 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[MediaWiki]]></category>
+		<category><![CDATA[Web Hosting]]></category>
+		<guid isPermaLink="false">http://www.alexchen.net/?p=858</guid>
+
+					<description><![CDATA[A piece of regular expression code in the HTMLForm.php file under MediaWiki's \includes\htmlform directory was flagged as "malicious" and the HTMLForm.php file gets automatically deleted by hosting server.]]></description>
+										<content:encoded><![CDATA[
+<p>This is by far the oddest issue I&#8217;ve ever experienced since I started using MediaWiki &#8211; the <code>HTMLForm.php</code> file under MediaWiki&#8217;s <code>\includes\htmlform</code> folder got automatically flagged for &#8220;having malicious code&#8221; by NameCheap&#8217;s hosting system, and was deleted shortly after being uploaded. I needed to contact their support to get this file whitelisted to be able to properly use MediaWiki.</p>
+
+
+
+<h2 class="wp-block-heading">Symptoms:</h2>
+
+
+
+<p>During my MediaWiki&#8217;s setup and configuration process everything seemed to be smooth, however, after everything seemed to be all set, I wasn&#8217;t able to login &#8211; it prompted the following errors:</p>
+
+
+
+<pre class="wp-block-code"><code>Warning: require(/yourhostingpath/includes/htmlform/HTMLForm.php): failed to open stream: No such file or directory in /yourhostingpath/includes/AutoLoader.php on line 109
+
+Fatal error: require(): Failed opening required '/yourhostingpath/includes/htmlform/HTMLForm.php' (include_path='/yourhostingpath/vendor/pear/console_getopt:/yourhostingpath/vendor/pear/mail:/yourhostingpath/vendor/pear/mail_mime:/yourhostingpath/vendor/pear/net_smtp:/yourhostingpath/vendor/pear/net_socket:/yourhostingpath/vendor/pear/pear-core-minimal/src:/yourhostingpath/vendor/pear/pear_exception:.:/opt/alt/php73/usr/share/pear') in /yourhostingpath/includes/AutoLoader.php on line 109</code></pre>
+
+
+
+<p>After some research and experimentation I saw that the <code>HTMLForm.php</code> was being removed automatically shortly after being uploaded, no matter what I changes I&#8217;ve made, the file wouldn&#8217;t persist, so I eventually contacted support. Tech support told me that the file was automatically deleted because it contains malicious code, which doesn&#8217;t make sense to me because this was not my first time setting up MediaWiki and I&#8217;ve been using it for the past 10 years since its very early versions and have never come across this issue before. According to their investigation, a regular expression was flagged by their filter, and they needed to whitelist the file for me. The line in question is:</p>
+
+
+
+<pre class="wp-block-code"><code># Regular expression match = &#91;\*&#91;A-Za-z0-9]{12,130}\*]</code></pre>
+
+
+
+<p>Honestly I still didn&#8217;t understand why this happened and didn&#8217;t do further research either, but maybe someone will come across a similar issue and this might save you some time trying to bird-dog the cause.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+	</channel>
+</rss>

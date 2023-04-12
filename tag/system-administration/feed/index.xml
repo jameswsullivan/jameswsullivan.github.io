@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/system-administration/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Tue, 11 Apr 2023 02:19:44 +0000</lastBuildDate>
+	<lastBuildDate>Wed, 12 Apr 2023 03:08:03 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -368,6 +368,88 @@ DISM /get-wiminfo /wimfile:E:\Win10\sources\install.wim</code></pre>
 
 
 <p>For more comprehensive instructions, refer to <a href="https://www.windowscentral.com/how-use-dism-command-line-utility-repair-windows-10-image">this</a> article.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Force Authoritative and Non-Authoritative DFSR Replication</title>
+		<link>https://jameswsullivan.github.io/force-authoritative-and-non-authoritative-dfsr-replication/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sat, 25 Sep 2021 01:17:22 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[System Administration]]></category>
+		<category><![CDATA[Windows Systems Administration]]></category>
+		<guid isPermaLink="false">https://www.alexchen.net/?p=2000</guid>
+
+					<description><![CDATA[NETLONGON and SYSVOL not shared and "The system cannot find the file specified." error when editing group policy.]]></description>
+										<content:encoded><![CDATA[
+<p>After some migration work done on the Domain Controllers I suddenly started to get errors on the new DC when editing group policies.</p>
+
+
+
+<h2 class="wp-block-heading">Symptoms:</h2>
+
+
+
+<ul>
+<li>1. NETLONGON and SYSVOL are not shared.</li>
+
+
+
+<li>2. when editing a group policy object (which used to work just fine), the new DC now prompts a &#8220;The system cannot find the file specified.&#8221; error.</li>
+</ul>
+
+
+
+<p>I don&#8217;t come across this issue very often but experience tells me that this is some syncing/replication issue. After some research, I found <a rel="noreferrer noopener" href="https://docs.microsoft.com/en-US/troubleshoot/windows-server/group-policy/force-authoritative-non-authoritative-synchronization" data-type="URL" data-id="https://docs.microsoft.com/en-US/troubleshoot/windows-server/group-policy/force-authoritative-non-authoritative-synchronization" target="_blank">this Microsoft documentation</a> and <a rel="noreferrer noopener" href="https://www.youtube.com/watch?v=ja53C2Mz1EQ" data-type="URL" data-id="https://www.youtube.com/watch?v=ja53C2Mz1EQ" target="_blank">this YouTube video</a> that solved my issue. </p>
+
+
+
+<h2 class="wp-block-heading">Solution:</h2>
+
+
+
+<pre class="wp-block-code"><code>1. Open adsiedit.msc, expand to all the way down to ....
+OU=Domain Controllers --&gt; CN=NameOfDC --&gt; CN=DFSR-LocalSettings --&gt; CN=Domain System Volume --&gt; CN=SYSVOL Subscription
+
+2. Change <strong>the good one</strong> (here uses DC01 as an example)'s msDFSR-Enabled to False, and msDFSR-Options to 1. (Authoritative)
+
+3. Change <strong>the bad one</strong> (here uses DC02 as an example)'s msDFSR-Enabled to False, only. (You can repeat this step for all the other DCs that are not syncing correctly.) (Non-Authoritative)
+
+4. On DC01, run an elevated powershell window, run
+repadmin /syncall /AdeP
+stop-service dfsr
+
+5. Now hop on to DC02, run an elevated powershell window and run
+stop-service dfsr
+
+6. Now back on DC01, run
+start-service dfsr
+
+in Event Viewer under Applications and Services Logs --&gt; DFS Replication, you should find a 4114 event.
+
+7. Go back to ADSI Edit, change DC01's msDFSR-Enabled back to True.
+
+8. On DC01, in powershell, run
+repadmin /syncall /AdeP
+DFSRDIAG POLLAD
+
+in Event Viewer a 4602 event should now be seen.
+
+9. Now go to DC02, run
+start-service dfsr
+
+10. Go back to ADSI Edit, change DC02's msDFSR-Enabled back to True.
+
+11. Still on DC02, run
+DFSRDIAG POLLAD</code></pre>
+
+
+
+<p>Depending on your environment, you might need to give it a bit time for the replication to finish, though for me the fix was instant.</p>
 ]]></content:encoded>
 					
 		

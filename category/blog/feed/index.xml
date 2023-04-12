@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/category/blog/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Tue, 11 Apr 2023 02:19:44 +0000</lastBuildDate>
+	<lastBuildDate>Wed, 12 Apr 2023 03:08:03 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -968,131 +968,82 @@ DISM /get-wiminfo /wimfile:E:\Win10\sources\install.wim</code></pre>
 		
 			</item>
 		<item>
-		<title>Set up Docker on Ubuntu Server</title>
-		<link>https://jameswsullivan.github.io/set-up-docker-on-ubuntu-server/</link>
+		<title>Force Authoritative and Non-Authoritative DFSR Replication</title>
+		<link>https://jameswsullivan.github.io/force-authoritative-and-non-authoritative-dfsr-replication/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Tue, 21 Sep 2021 06:14:07 +0000</pubDate>
+		<pubDate>Sat, 25 Sep 2021 01:17:22 +0000</pubDate>
 				<category><![CDATA[blog]]></category>
-		<category><![CDATA[Docker]]></category>
-		<category><![CDATA[Hosting]]></category>
-		<category><![CDATA[Linux]]></category>
-		<category><![CDATA[Self-Hosting]]></category>
-		<category><![CDATA[Standard Notes]]></category>
-		<category><![CDATA[Ubuntu]]></category>
-		<guid isPermaLink="false">https://www.alexchen.net/?p=1638</guid>
+		<category><![CDATA[System Administration]]></category>
+		<category><![CDATA[Windows Systems Administration]]></category>
+		<guid isPermaLink="false">https://www.alexchen.net/?p=2000</guid>
 
-					<description><![CDATA[Setting up Ubuntu Server, SSH, UFW, Nginx, and Docker.]]></description>
+					<description><![CDATA[NETLONGON and SYSVOL not shared and "The system cannot find the file specified." error when editing group policy.]]></description>
 										<content:encoded><![CDATA[
-<h2 class="wp-block-heading">Environment: Windows Server 2019, Hyper-V, Ubuntu Server 20.04.3 LTS.</h2>
+<p>After some migration work done on the Domain Controllers I suddenly started to get errors on the new DC when editing group policies.</p>
 
 
 
-<p>1. After Ubuntu Server is installed on a VM (with a clean and minimum installation without any preloaded packages), set up Docker and OpenSSH.</p>
+<h2 class="wp-block-heading">Symptoms:</h2>
 
 
 
-<pre class="wp-block-code"><code># Install OpenSSH
-apt upgrade
-apt update
-apt install openssh-server
-
-# Check SSH Status
-systemctl status ssh
-
-# Allow ssh over UFW firewall
-ufw allow ssh</code></pre>
+<ul>
+<li>1. NETLONGON and SYSVOL are not shared.</li>
 
 
 
-<p>2. Enable UFW, check status, and configure rules.</p>
+<li>2. when editing a group policy object (which used to work just fine), the new DC now prompts a &#8220;The system cannot find the file specified.&#8221; error.</li>
+</ul>
 
 
 
-<pre class="wp-block-code"><code># Enable UFW
-ufw enable
-
-# Check status and rules
-ufw status
-
-# Check status and make results numbered
-ufw status numbered
-
-# Disable UFW
-ufw disable
-
-# Block IP
-ufw deny from IP-Address
-
-# Block by subnet
-ufw deny from IP/CIDR
-
-# Block connections on interface
-ufw deny in on eth0 from IP-Address
-
-# Allow commands:
-ufw allow from IP-Address
-ufw allow in on eth0 from IP-Address
-
-# Delete rule
-ufw status numbered
-ufw delete &#91;number]
-
-# Allow by protocol
-ufw allow from IP-Address proto tcp to any port 22
-ufw allow from IP/CIDR proto tcp to any port 22
-ufw allow proto tcp from any to any port 80,443</code></pre>
+<p>I don&#8217;t come across this issue very often but experience tells me that this is some syncing/replication issue. After some research, I found <a rel="noreferrer noopener" href="https://docs.microsoft.com/en-US/troubleshoot/windows-server/group-policy/force-authoritative-non-authoritative-synchronization" data-type="URL" data-id="https://docs.microsoft.com/en-US/troubleshoot/windows-server/group-policy/force-authoritative-non-authoritative-synchronization" target="_blank">this Microsoft documentation</a> and <a rel="noreferrer noopener" href="https://www.youtube.com/watch?v=ja53C2Mz1EQ" data-type="URL" data-id="https://www.youtube.com/watch?v=ja53C2Mz1EQ" target="_blank">this YouTube video</a> that solved my issue. </p>
 
 
 
-<p>3. Disable ipv6 on Ubuntu Server.</p>
+<h2 class="wp-block-heading">Solution:</h2>
 
 
 
-<pre class="wp-block-code"><code># Add
-net.ipv6.conf.all.disable_ipv6=1
-net.ipv6.conf.default.disable_ipv6=1
-net.ipv6.conf.lo.disable_ipv6=1
-# to file /etc/sysctl.conf</code></pre>
+<pre class="wp-block-code"><code>1. Open adsiedit.msc, expand to all the way down to ....
+OU=Domain Controllers --&gt; CN=NameOfDC --&gt; CN=DFSR-LocalSettings --&gt; CN=Domain System Volume --&gt; CN=SYSVOL Subscription
+
+2. Change <strong>the good one</strong> (here uses DC01 as an example)'s msDFSR-Enabled to False, and msDFSR-Options to 1. (Authoritative)
+
+3. Change <strong>the bad one</strong> (here uses DC02 as an example)'s msDFSR-Enabled to False, only. (You can repeat this step for all the other DCs that are not syncing correctly.) (Non-Authoritative)
+
+4. On DC01, run an elevated powershell window, run
+repadmin /syncall /AdeP
+stop-service dfsr
+
+5. Now hop on to DC02, run an elevated powershell window and run
+stop-service dfsr
+
+6. Now back on DC01, run
+start-service dfsr
+
+in Event Viewer under Applications and Services Logs --&gt; DFS Replication, you should find a 4114 event.
+
+7. Go back to ADSI Edit, change DC01's msDFSR-Enabled back to True.
+
+8. On DC01, in powershell, run
+repadmin /syncall /AdeP
+DFSRDIAG POLLAD
+
+in Event Viewer a 4602 event should now be seen.
+
+9. Now go to DC02, run
+start-service dfsr
+
+10. Go back to ADSI Edit, change DC02's msDFSR-Enabled back to True.
+
+11. Still on DC02, run
+DFSRDIAG POLLAD</code></pre>
 
 
 
-<p>4. Reduce Ubuntu shutdown time.</p>
-
-
-
-<pre class="wp-block-code"><code># Edit /etc/systemd/system.conf and uncomment DefaultTimeoutStopSec=90s and set it to a desired value
-
-DefaultTimeoutStopSec=15s</code></pre>
-
-
-
-<p>5. Install Docker</p>
-
-
-
-<pre class="wp-block-code"><code># Remove existing Docker installations, if any
-apt remove docker docker-engine docker.io containerd runc
-
-# Install using the repository
-apt update
-apt install apt-transport-https ca-certificates curl gnupg lsb-release
-
-# Add Docker's official GPG key
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-
-# Set up stable repository
-echo \
-"deb &#91;arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
-$(lsb_release -cs) stable" \
-| sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-
-# Install Docker engine
-apt update
-apt install docker-ce docker-ce-cli containerd.io
-
-# Verify that Docker Engine is correctly installed
-docker version</code></pre>
+<p>Depending on your environment, you might need to give it a bit time for the replication to finish, though for me the fix was instant.</p>
 ]]></content:encoded>
 					
 		
