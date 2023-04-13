@@ -1,9 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?><?xml-stylesheet type='text/xsl' href='https://jameswsullivan.github.io/wp-content/plugins/google-sitemap-generator/sitemap.xsl'?><!-- sitemap-generator-url='http://www.arnebrachhold.de/' sitemap-generator-version='4.1.8' -->
 <!-- generated-on='2023-04-13 01:16' -->
 <urlset xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd' xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>	<url>
-		<loc>https://jameswsullivan.github.io/corrupt-windows-10-system-files-repair/</loc>
-		<lastmod>2023-04-03T03:46:04+00:00</lastmod>
+		<loc>https://jameswsullivan.github.io/tag/wordpress/</loc>
 		<changefreq>daily</changefreq>
-		<priority>0.6</priority>
+		<priority>0.3</priority>
 	</url>
-</urlset><!-- Request ID: 389c2f26962032e76d651859dc7bfe0c; Queries for sitemap: 2; Total queries: 14; Seconds: $end_time; Memory for sitemap: 0MB; Total memory: 6MB -->
+	<url>
+		<loc>https://jameswsullivan.github.io/tag/wsus/</loc>
+		<changefreq>daily</changefreq>
+		<priority>0.3</priority>
+	</url>
+</urlset><!-- Request ID: 7811d29ca65c85e7098b4871d2f6430e; Queries for sitemap: 6; Total queries: 18; Seconds: $end_time; Memory for sitemap: 0MB; Total memory: 6MB -->

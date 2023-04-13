@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/windows-systems-administration/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Wed, 12 Apr 2023 03:08:03 +0000</lastBuildDate>
+	<lastBuildDate>Thu, 13 Apr 2023 01:09:42 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -344,6 +344,79 @@ DFSRDIAG POLLAD</code></pre>
 
 
 <p>Depending on your environment, you might need to give it a bit time for the replication to finish, though for me the fix was instant.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>RDP CredSSP Error</title>
+		<link>https://jameswsullivan.github.io/rdp-credssp-error/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Thu, 20 Aug 2020 22:41:04 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Remote Desktop]]></category>
+		<category><![CDATA[System Administration]]></category>
+		<category><![CDATA[Windows Systems Administration]]></category>
+		<guid isPermaLink="false">https://www.alexchen.net/?p=941</guid>
+
+					<description><![CDATA[Fix RDP CredSSP Error.]]></description>
+										<content:encoded><![CDATA[
+<p>This blog documents how to fix the following RDP Error:</p>
+
+
+
+<pre class="wp-block-code"><code>An authentication error has occured. The function requested is not supported. This could be due to CredSSP encryption oracle remediation. For more information, see https://go.microsoft.com/fwlink/?linkid=866660</code></pre>
+
+
+
+<h2 class="wp-block-heading">Workaround:</h2>
+
+
+
+<pre class="wp-block-code"><code>gpedit.msc - Computer Configuration - Administrative Templates - System - Credentials Delegation - change Encryption Oracle Remediation policy to Enabled, and Protection Level to Vulnerable.</code></pre>
+
+
+
+<h2 class="wp-block-heading">Permanent Solution:</h2>
+
+
+
+<p>Ensure both client &amp; server side have latest patch installed so that RDP can be established in a secure way. You can find the list of the corresponding KB number for each operating system here: https://portal.msrc.microsoft.com/en-us/security-guidance/advisory/CVE-2018-0886</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>WSUS Post-setup Troubleshooting</title>
+		<link>https://jameswsullivan.github.io/wsus-post-setup-troubleshooting/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Mon, 06 Jul 2020 00:16:59 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[System Administration]]></category>
+		<category><![CDATA[Windows Server]]></category>
+		<category><![CDATA[Windows Systems Administration]]></category>
+		<category><![CDATA[WSUS]]></category>
+		<guid isPermaLink="false">http://www.alexchen.net/?p=867</guid>
+
+					<description><![CDATA[Fix clients who are not reporting to WSUS server after installation.]]></description>
+										<content:encoded><![CDATA[
+<p>I recently set up a WSUS Server at work to deploy updates to client workstations and ran into some common issues which I assume every IT administrator must have come across, such as clients not reporting, updates report errors, etc.</p>
+
+
+
+<p>For me, the client not reporting issue was fairly simple to resolve &#8211; going to each client and manually click &#8220;check for updates&#8221;, and then the client would show up in WSUS console right away. The rest of the clients did show up eventually, it just took them sometime. And for me the <code>wuauclt /detectnow, /reportnow, /updatenow</code> didn&#8217;t work as fast as going to the clients and clicking &#8220;check for updates&#8221;.</p>
+
+
+
+<p>Here is a very useful article that helped me along the way, highly recommended.</p>
+
+
+
+<p><a href="https://www.renanrodrigues.com/post/how-to-fix-clients-not-showing-up-in-wsus-console-step-by-step" target="_blank" rel="noreferrer noopener">https://www.renanrodrigues.com/post/how-to-fix-clients-not-showing-up-in-wsus-console-step-by-step</a></p>
 ]]></content:encoded>
 					
 		

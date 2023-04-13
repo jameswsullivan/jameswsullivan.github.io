@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/windows-server/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Sun, 26 Mar 2023 17:43:08 +0000</lastBuildDate>
+	<lastBuildDate>Thu, 13 Apr 2023 01:06:31 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -133,6 +133,39 @@ slmgr /ato
 
 # Show current activation status.
 slmgr /dlv</code></pre>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>WSUS Post-setup Troubleshooting</title>
+		<link>https://jameswsullivan.github.io/wsus-post-setup-troubleshooting/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Mon, 06 Jul 2020 00:16:59 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[System Administration]]></category>
+		<category><![CDATA[Windows Server]]></category>
+		<category><![CDATA[Windows Systems Administration]]></category>
+		<category><![CDATA[WSUS]]></category>
+		<guid isPermaLink="false">http://www.alexchen.net/?p=867</guid>
+
+					<description><![CDATA[Fix clients who are not reporting to WSUS server after installation.]]></description>
+										<content:encoded><![CDATA[
+<p>I recently set up a WSUS Server at work to deploy updates to client workstations and ran into some common issues which I assume every IT administrator must have come across, such as clients not reporting, updates report errors, etc.</p>
+
+
+
+<p>For me, the client not reporting issue was fairly simple to resolve &#8211; going to each client and manually click &#8220;check for updates&#8221;, and then the client would show up in WSUS console right away. The rest of the clients did show up eventually, it just took them sometime. And for me the <code>wuauclt /detectnow, /reportnow, /updatenow</code> didn&#8217;t work as fast as going to the clients and clicking &#8220;check for updates&#8221;.</p>
+
+
+
+<p>Here is a very useful article that helped me along the way, highly recommended.</p>
+
+
+
+<p><a href="https://www.renanrodrigues.com/post/how-to-fix-clients-not-showing-up-in-wsus-console-step-by-step" target="_blank" rel="noreferrer noopener">https://www.renanrodrigues.com/post/how-to-fix-clients-not-showing-up-in-wsus-console-step-by-step</a></p>
 ]]></content:encoded>
 					
 		

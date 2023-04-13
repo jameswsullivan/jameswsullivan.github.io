@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Remote Desktop &#8211; howdy</title>
+	<atom:link href="https://jameswsullivan.github.io/tag/remote-desktop/feed/" rel="self" type="application/rss+xml" />
+	<link>https://jameswsullivan.github.io/</link>
+	<description></description>
+	<lastBuildDate>Thu, 13 Apr 2023 01:09:42 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.2</generator>
+	<item>
+		<title>RDP CredSSP Error</title>
+		<link>https://jameswsullivan.github.io/rdp-credssp-error/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Thu, 20 Aug 2020 22:41:04 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Remote Desktop]]></category>
+		<category><![CDATA[System Administration]]></category>
+		<category><![CDATA[Windows Systems Administration]]></category>
+		<guid isPermaLink="false">https://www.alexchen.net/?p=941</guid>
+
+					<description><![CDATA[Fix RDP CredSSP Error.]]></description>
+										<content:encoded><![CDATA[
+<p>This blog documents how to fix the following RDP Error:</p>
+
+
+
+<pre class="wp-block-code"><code>An authentication error has occured. The function requested is not supported. This could be due to CredSSP encryption oracle remediation. For more information, see https://go.microsoft.com/fwlink/?linkid=866660</code></pre>
+
+
+
+<h2 class="wp-block-heading">Workaround:</h2>
+
+
+
+<pre class="wp-block-code"><code>gpedit.msc - Computer Configuration - Administrative Templates - System - Credentials Delegation - change Encryption Oracle Remediation policy to Enabled, and Protection Level to Vulnerable.</code></pre>
+
+
+
+<h2 class="wp-block-heading">Permanent Solution:</h2>
+
+
+
+<p>Ensure both client &amp; server side have latest patch installed so that RDP can be established in a secure way. You can find the list of the corresponding KB number for each operating system here: https://portal.msrc.microsoft.com/en-us/security-guidance/advisory/CVE-2018-0886</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+	</channel>
+</rss>
