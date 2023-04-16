@@ -1,8 +1,8 @@
-<?xml version='1.0' encoding='UTF-8'?><?xml-stylesheet type='text/xsl' href='https://jameswsullivan.github.io/wp-content/plugins/google-sitemap-generator/sitemap.xsl'?><!-- sitemap-generator-url='http://www.arnebrachhold.de/' sitemap-generator-version='4.1.8' -->
-<!-- generated-on='2023-04-13 01:16' -->
+<?xml version='1.0' encoding='UTF-8'?><?xml-stylesheet type='text/xsl' href='https://jameswsullivan.github.io/wp-content/plugins/google-sitemap-generator/sitemap.xsl'?><!-- sitemap-generator-url='http://www.arnebrachhold.de/' sitemap-generator-version='4.1.9' -->
+<!-- generated-on='2023-04-16 21:46' -->
 <urlset xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd' xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>	<url>
 		<loc>https://jameswsullivan.github.io/2023/04/</loc>
-		<lastmod>2023-04-11T02:19:44+00:00</lastmod>
+		<lastmod>2023-04-16T21:45:57+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
 	</url>
@@ -21,6 +21,12 @@
 	<url>
 		<loc>https://jameswsullivan.github.io/2022/03/</loc>
 		<lastmod>2022-03-21T02:24:48+00:00</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.3</priority>
+	</url>
+	<url>
+		<loc>https://jameswsullivan.github.io/2021/10/</loc>
+		<lastmod>2021-10-10T09:25:43+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
 	</url>
@@ -60,4 +66,4 @@
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
 	</url>
-</urlset><!-- Request ID: 2ad97a0c4eb3623c9d06ae5cdc95487a; Queries for sitemap: 2; Total queries: 14; Seconds: $end_time; Memory for sitemap: 0MB; Total memory: 6MB -->
+</urlset><!-- Request ID: aa934e9e9e1d88df649b2144b386ee30; Queries for sitemap: 2; Total queries: 14; Seconds: $end_time; Memory for sitemap: 0MB; Total memory: 6MB -->

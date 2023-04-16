@@ -1,6 +1,11 @@
-<?xml version='1.0' encoding='UTF-8'?><?xml-stylesheet type='text/xsl' href='https://jameswsullivan.github.io/wp-content/plugins/google-sitemap-generator/sitemap.xsl'?><!-- sitemap-generator-url='http://www.arnebrachhold.de/' sitemap-generator-version='4.1.8' -->
-<!-- generated-on='2023-04-13 01:16' -->
+<?xml version='1.0' encoding='UTF-8'?><?xml-stylesheet type='text/xsl' href='https://jameswsullivan.github.io/wp-content/plugins/google-sitemap-generator/sitemap.xsl'?><!-- sitemap-generator-url='http://www.arnebrachhold.de/' sitemap-generator-version='4.1.9' -->
+<!-- generated-on='2023-04-16 21:46' -->
 <urlset xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd' xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>	<url>
+		<loc>https://jameswsullivan.github.io/tag/adobe-creative-cloud/</loc>
+		<changefreq>daily</changefreq>
+		<priority>0.3</priority>
+	</url>
+	<url>
 		<loc>https://jameswsullivan.github.io/tag/apache/</loc>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
@@ -36,18 +41,13 @@
 		<priority>0.3</priority>
 	</url>
 	<url>
+		<loc>https://jameswsullivan.github.io/tag/french/</loc>
+		<changefreq>daily</changefreq>
+		<priority>0.3</priority>
+	</url>
+	<url>
 		<loc>https://jameswsullivan.github.io/tag/hardware/</loc>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
 	</url>
-	<url>
-		<loc>https://jameswsullivan.github.io/tag/hba/</loc>
-		<changefreq>daily</changefreq>
-		<priority>0.3</priority>
-	</url>
-	<url>
-		<loc>https://jameswsullivan.github.io/tag/hosting/</loc>
-		<changefreq>daily</changefreq>
-		<priority>0.3</priority>
-	</url>
-</urlset><!-- Request ID: f8edeea44120c964cacb286337b66f48; Queries for sitemap: 6; Total queries: 18; Seconds: $end_time; Memory for sitemap: 0MB; Total memory: 6MB -->
+</urlset><!-- Request ID: d0e164a172de86ca5334023a8ecc2a42; Queries for sitemap: 6; Total queries: 18; Seconds: $end_time; Memory for sitemap: 0MB; Total memory: 6MB -->

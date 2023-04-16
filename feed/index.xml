@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Tue, 11 Apr 2023 02:19:44 +0000</lastBuildDate>
+	<lastBuildDate>Sun, 16 Apr 2023 21:45:57 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -20,6 +20,108 @@
 	1	</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=6.2</generator>
 	<item>
+		<title>Vista下添加法语输入法</title>
+		<link>https://jameswsullivan.github.io/add-french-keyboard-in-vista/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sun, 16 Apr 2023 21:45:57 +0000</pubDate>
+				<category><![CDATA[archive]]></category>
+		<category><![CDATA[French]]></category>
+		<category><![CDATA[System Administration]]></category>
+		<category><![CDATA[Windows Systems Administration]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2321</guid>
+
+					<description><![CDATA[Vista下添加法语输入法
+Add French Keyboard in Vista.]]></description>
+										<content:encoded><![CDATA[
+<p>French Keyboard/input language/input method in Vista</p>
+
+
+
+<blockquote class="wp-block-quote">
+<p>此文系早年博客的备份，仅用于参考学习。<br>This article is an archival copy of my early years&#8217; blog posts.</p>
+</blockquote>
+
+
+
+<p>由于学法语的需要，有时要在word中做一些知识的整理，因此需要打法语字母。虽然大多数法语字母和英文字母相同，但毕竟还是有诸如 ê,è,ü,ï  之类怪异的字母出现，所以需要一个专门用来打法语的输入法。Google了一下，似乎并没有一种单独的法语输入法存在，因此只能用windows自己的装备了。</p>
+
+
+
+<p>Ordinary Chinese or English keyboard can support most French letters, but we will meet problems while trying to type in letters as “ê,è,ü,ï”. I searched Google, but didn’t find any third-party input methods/input aid tools, so I added a French Keyboard to solve the problem.</p>
+
+
+
+<p>Vista系统为例添加法语键盘输入法，其他系统类似：</p>
+
+
+
+<pre class="wp-block-code"><code>控制面板 —— 区域和语言选项 —— 键盘和语言 —— 更改键盘 —— 添加 —— 选择 法语(加拿大)，键盘选择“加拿大法语”，最后添加即可。</code></pre>
+
+
+
+<p>输入法添加完成后，在输入法状态栏中切换到法语键盘，即可输入法文字母了。这里把各个奇异字母的输入方法简单写一下：</p>
+
+
+
+<p>上面带有“ ¨ ”的字母，用 shift+] 来输入。比如，输入“ ü ”，则先按 shift+] ，再按u；若想输入大写“ Ü ”，则先按 shift+] ，再按 shift+u 即可。</p>
+
+
+
+<p>“ ^ ”为 [+字母 ，如先按 [ 再按 e，则输入 ê 。大小写方式同上。</p>
+
+
+
+<p>“ ` ”（下撇）为 ‘ (即引号) + 字母，按键顺序同上。 “ ¸ ” 为 ] + 字母 ，其实最常用也不过就是 ç ，大小写同上。 由于é的使用频率最高，法语键盘给了它一个单独按键 “ / ”.</p>
+
+
+
+<p>I take Windows Vista as the example, if you’re using other OS, the steps are similar:</p>
+
+
+
+<pre class="wp-block-code"><code>Control panel ---- Regional and Language Options ---- Keyboards and Languages ---- Change Keyboards… ---- add ---- French(Canada) ---- Keyboard ---- Canadian French</code></pre>
+
+
+
+<p>After adding the input language, please switch to French Keyboard, and use the following key combinations to insert those funny letters: Letters with “ ¨ ” can be inputted with <code>shift+]</code>. For example, if you want to input “ ü “, press <code>shift+]</code>, then press <code>u</code>; and if you want to input the capital letter, press <code>shift+u</code> after <code>shift+]</code>. </p>
+
+
+
+<p>“ ^ ”: first press <code>[</code> , then press <code>e</code>, you can get <code>“ ê “</code><br>. ” : first press <code>‘</code> , then letter <code>e</code>, you get <code>“ è ”</code>.<br>“ ¸ ” : first press <code>]</code>, then letter <code>c</code>, you get <code>“ ç ”</code>.</p>
+
+
+
+<p>Because letter “ é ” is frequently in use, so the French keyboard provides it with a sole key: “ / ” .</p>
+
+
+
+<p>补充：由于法语的特殊字符占用了一些我们通常使用的字符的位置，因此在输入诸如 <code>/,[,]</code>这类符号时遇到了困难，最近发现了这个问题，在这里再补充一下：</p>
+
+
+
+<p>Update: In the French input language, some special French characters take place of some symbols that we often use, like <code>[ , ] , /</code> etc. So now I add information below, hope it may help:</p>
+
+
+
+<pre class="wp-block-code"><code>? : shift + 6
+: ~
+&lt; : \
+| : shift + ~
+' : shift + 2
+, : shift + ,
+&#91; and ] : ctrl + alt + &#91; and ctrl + alt + ]
+/ : shift + 3</code></pre>
+
+
+
+<p>Tag：法语输入法，如何输入法语字符，法语特殊字符输入，安装法语键盘，windows添加法语键盘，法语键盘组合键，how to input French letters, French input method/input language, key combinations on French keyboard</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>Set up Docker host with Ubuntu Server and mount disks</title>
 		<link>https://jameswsullivan.github.io/set-up-docker-host-with-ubuntu-server-and-mount-disks/</link>
 		
@@ -755,102 +857,6 @@ extension=curl</code></pre>
 
 
 <p>Adding this entry in <strong>/etc/hosts</strong> file also resolves Simply Static&#8217;s <em>&#8220;Checking if WordPress can make requests to itself from your_IP&#8221;</em> FAIL issue.</p>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Flash LSI SAS Adapters to HBA IT MODE</title>
-		<link>https://jameswsullivan.github.io/flash-lsi-sas-adapters-to-hba-it-mode/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Fri, 10 Mar 2023 17:00:00 +0000</pubDate>
-				<category><![CDATA[notes]]></category>
-		<category><![CDATA[Firmware]]></category>
-		<category><![CDATA[HBA]]></category>
-		<category><![CDATA[LSI HBA Adapters]]></category>
-		<category><![CDATA[MegaCLI]]></category>
-		<category><![CDATA[MegaRec]]></category>
-		<category><![CDATA[NAS]]></category>
-		<category><![CDATA[SAS2FLASH.EFI]]></category>
-		<category><![CDATA[SAS2FLSH]]></category>
-		<category><![CDATA[Storage]]></category>
-		<category><![CDATA[TrueNAS]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2205</guid>
-
-					<description><![CDATA[Flash LSI SAS Adapters to IT MODE.]]></description>
-										<content:encoded><![CDATA[
-<p>This documentation is still being actively updated.</p>
-
-
-
-<pre class="wp-block-code"><code>megrec -adplist
-
-megarec -readsbr X file_name.sbr
-megarec -readspd X file_name.spd
-
-megacli -adpallinfo -aALL &gt; allinfo.txt
-
-megarec -writesbr X sbrempty.bin
-
-megarec -cleanflash X
-
-
-
-sas2flash.efi -h
-
-sas2flash.efi -listallboards
-sas2flash.efi -listall
-
-sas2flash.efi -c X -o -f 2118IT.BIN
-sas2flash.efi -c X -o -sasadd 500605xxxxxxxxxx
-
-sas2flash.efi -listall
-
-sas2flash.efi -c X -list</code></pre>
-
-
-
-<h2 class="wp-block-heading">MegaREC Command Usage:</h2>
-
-
-
-<pre class="wp-block-code"><code>MegaRAID HWR Contoller Recovery tool. Version 01.02-007 August 03, 2011
-Copyright (c) 2006-2010 LSI Corp.
-Supports 1078 controller and its Successors.
-
-Usage:
-MegaRec -help                  : Display the list of options
-MegaRec -adpList               : Display identified MR controller(s)
-MegaRec -corruptInfo           : Display corruption information of controller
-MegaRec -m0flash &lt;n> &lt;image>   : Flash controller
-                               : where &lt;n> is the controller index
-                               : and &lt;image> is the image file to flash
-MegaRec -cleanflash &lt;n> &lt;image>: Erase Flash. Programs if image is Provided.
-                               : where &lt;n> is the controller index
-                               : and &lt;image> is the image file to flash
-MegaRec -readspd &lt;n> &lt;image>   : Read controller SPD to specified file
-                               : where &lt;n> is the controller index
-                               : and &lt;image> is the specified file name
-MegaRec -writespd &lt;n> &lt;image>  : Write controller SPD from specified file
-                               : where &lt;n> is the controller index
-                               : and &lt;image> is the specified file name
-MegaRec -readsbr &lt;n> &lt;image> &#91;&lt;byteCount>] : Read controller SBR to specified 
-                               : file where &lt;n> is the controller index,
-                               : &lt;byteCount> is the number of bytes of SBR 
-                               : to be read and is optional to specify
-                               : and &lt;image> is the specified file name
-MegaRec -writesbr &lt;n> &lt;image>  : Write controller SBR from specified file
-                               : where &lt;n> is the controller index
-                               : and &lt;image> is the specified file name
-MegaRec -m0flash &lt;n> &lt;image> &lt;-i2o/-fusion>     : Flash controller in I2O/FUSION mode
-MegaRec -cleanflash &lt;n> &lt;image> &lt;-i2o/-fusion>  : Erase Flash. Programs if image is Provided in I2O/FUSION mode.
-MegaRec -readspd &lt;n> &lt;image> &lt;-i2o/-fusion>     : Read controller SPD to specified file in I2O/FUSION mode
-MegaRec -writespd &lt;n> &lt;image> &lt;-i2o/-fusion>    : Write controller SPD from specified file in I2O/FUSION mode
-MegaRec -readsbr &lt;n> &lt;image> &#91;&lt;byteCount>] &lt;-i2o/-fusion> : Read controller SBR to specified file in I2O/FUSION mode
-MegaRec -writesbr &lt;n> &lt;image> &lt;-i2o/-fusion>    : Write controller SBR from specified file in I2O/FUSION mode
-</code></pre>
 ]]></content:encoded>
 					
 		

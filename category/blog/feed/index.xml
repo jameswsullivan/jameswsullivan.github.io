@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/category/blog/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Wed, 12 Apr 2023 03:08:03 +0000</lastBuildDate>
+	<lastBuildDate>Fri, 14 Apr 2023 02:49:34 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -968,82 +968,47 @@ DISM /get-wiminfo /wimfile:E:\Win10\sources\install.wim</code></pre>
 		
 			</item>
 		<item>
-		<title>Force Authoritative and Non-Authoritative DFSR Replication</title>
-		<link>https://jameswsullivan.github.io/force-authoritative-and-non-authoritative-dfsr-replication/</link>
+		<title>Photoshop Settings</title>
+		<link>https://jameswsullivan.github.io/photoshop-settings/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Sat, 25 Sep 2021 01:17:22 +0000</pubDate>
+		<pubDate>Sun, 10 Oct 2021 09:25:43 +0000</pubDate>
 				<category><![CDATA[blog]]></category>
-		<category><![CDATA[System Administration]]></category>
-		<category><![CDATA[Windows Systems Administration]]></category>
-		<guid isPermaLink="false">https://www.alexchen.net/?p=2000</guid>
+		<category><![CDATA[Adobe Creative Cloud]]></category>
+		<category><![CDATA[Photoshop]]></category>
+		<guid isPermaLink="false">https://www.alexchen.net/?p=2010</guid>
 
-					<description><![CDATA[NETLONGON and SYSVOL not shared and "The system cannot find the file specified." error when editing group policy.]]></description>
+					<description><![CDATA[Photoshop "not enough memory" error and Lighting Effects issue.]]></description>
 										<content:encoded><![CDATA[
-<p>After some migration work done on the Domain Controllers I suddenly started to get errors on the new DC when editing group policies.</p>
+<p>Recently I needed Photoshop for some photo editing tasks and came across the following issues:</p>
 
 
 
-<h2 class="wp-block-heading">Symptoms:</h2>
+<h2 class="wp-block-heading">&#8220;Could not complete your request because there is not enough memory (RAM)&#8221;</h2>
 
 
 
-<ul>
-<li>1. NETLONGON and SYSVOL are not shared.</li>
+<p>For some reason this error kept showing up even though I have over 100GB of RAM available. The easiest solution for me was adding the <strong>OverridePhysicalMemoryMB</strong> DWORD value in the registry.</p>
 
 
 
-<li>2. when editing a group policy object (which used to work just fine), the new DC now prompts a &#8220;The system cannot find the file specified.&#8221; error.</li>
-</ul>
+<pre class="wp-block-code"><code>Run regedit.exe, go to HKEY_CURRENT_USER &gt; Software &gt; Adobe &gt; Photoshop &gt; &#91;YourVersionOfPhotoshop], in the right side pane, create a DWORD value named <strong>OverridePhysicalMemoryMB</strong> and set its value to the desired RAM size. For example, 32768 (1GB = 1024MB, thus 32GB here).</code></pre>
 
 
 
-<p>I don&#8217;t come across this issue very often but experience tells me that this is some syncing/replication issue. After some research, I found <a rel="noreferrer noopener" href="https://docs.microsoft.com/en-US/troubleshoot/windows-server/group-policy/force-authoritative-non-authoritative-synchronization" data-type="URL" data-id="https://docs.microsoft.com/en-US/troubleshoot/windows-server/group-policy/force-authoritative-non-authoritative-synchronization" target="_blank">this Microsoft documentation</a> and <a rel="noreferrer noopener" href="https://www.youtube.com/watch?v=ja53C2Mz1EQ" data-type="URL" data-id="https://www.youtube.com/watch?v=ja53C2Mz1EQ" target="_blank">this YouTube video</a> that solved my issue. </p>
+<h2 class="wp-block-heading">Unable to use Filter &#8211; Render &#8211; Lighting Effects.</h2>
 
 
 
-<h2 class="wp-block-heading">Solution:</h2>
+<p>This one could have multiple issues. If your GPU is shown as <code>Unknown GPU</code> under <code>Edit - Preferences - Performance</code>, then you&#8217;d have to find a way to resolve the issue with your GPU first. Originally I tried to use Photoshop in one of my VMs but VMware Workstation&#8217;s VMware Virtual SVGA 3D Graphics Adapter showed as Unknown GPU and it seems that VMware Workstation is unable to perform GPU passthrough.</p>
 
 
 
-<pre class="wp-block-code"><code>1. Open adsiedit.msc, expand to all the way down to ....
-OU=Domain Controllers --&gt; CN=NameOfDC --&gt; CN=DFSR-LocalSettings --&gt; CN=Domain System Volume --&gt; CN=SYSVOL Subscription
-
-2. Change <strong>the good one</strong> (here uses DC01 as an example)'s msDFSR-Enabled to False, and msDFSR-Options to 1. (Authoritative)
-
-3. Change <strong>the bad one</strong> (here uses DC02 as an example)'s msDFSR-Enabled to False, only. (You can repeat this step for all the other DCs that are not syncing correctly.) (Non-Authoritative)
-
-4. On DC01, run an elevated powershell window, run
-repadmin /syncall /AdeP
-stop-service dfsr
-
-5. Now hop on to DC02, run an elevated powershell window and run
-stop-service dfsr
-
-6. Now back on DC01, run
-start-service dfsr
-
-in Event Viewer under Applications and Services Logs --&gt; DFS Replication, you should find a 4114 event.
-
-7. Go back to ADSI Edit, change DC01's msDFSR-Enabled back to True.
-
-8. On DC01, in powershell, run
-repadmin /syncall /AdeP
-DFSRDIAG POLLAD
-
-in Event Viewer a 4602 event should now be seen.
-
-9. Now go to DC02, run
-start-service dfsr
-
-10. Go back to ADSI Edit, change DC02's msDFSR-Enabled back to True.
-
-11. Still on DC02, run
-DFSRDIAG POLLAD</code></pre>
+<p>Assuming that the GPU is not a problem, but when you try to use <code>Lighting Effects</code> and add a <code>Spot Light</code>, the tool might not work correctly or might not work at all. My symptoms are: after launching the tool, it only shows a tiny area of lighting and no matter how you adjust the sliders the lighting effect won&#8217;t change accordingly, and the lighting area resizing doesn&#8217;t work either.</p>
 
 
 
-<p>Depending on your environment, you might need to give it a bit time for the replication to finish, though for me the fix was instant.</p>
+<p>To resolve this issue, go to <code>Edit - Preferences - Technology Previews</code>, and check <code>Deactivate Native Canvas</code>, and restart Photoshop. Mine worked flawlessly thereafter.</p>
 ]]></content:encoded>
 					
 		

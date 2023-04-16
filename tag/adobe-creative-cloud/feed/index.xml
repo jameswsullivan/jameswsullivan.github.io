@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Adobe Creative Cloud &#8211; howdy</title>
+	<atom:link href="https://jameswsullivan.github.io/tag/adobe-creative-cloud/feed/" rel="self" type="application/rss+xml" />
+	<link>https://jameswsullivan.github.io/</link>
+	<description></description>
+	<lastBuildDate>Fri, 14 Apr 2023 02:49:34 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.2</generator>
+	<item>
+		<title>Photoshop Settings</title>
+		<link>https://jameswsullivan.github.io/photoshop-settings/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sun, 10 Oct 2021 09:25:43 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Adobe Creative Cloud]]></category>
+		<category><![CDATA[Photoshop]]></category>
+		<guid isPermaLink="false">https://www.alexchen.net/?p=2010</guid>
+
+					<description><![CDATA[Photoshop "not enough memory" error and Lighting Effects issue.]]></description>
+										<content:encoded><![CDATA[
+<p>Recently I needed Photoshop for some photo editing tasks and came across the following issues:</p>
+
+
+
+<h2 class="wp-block-heading">&#8220;Could not complete your request because there is not enough memory (RAM)&#8221;</h2>
+
+
+
+<p>For some reason this error kept showing up even though I have over 100GB of RAM available. The easiest solution for me was adding the <strong>OverridePhysicalMemoryMB</strong> DWORD value in the registry.</p>
+
+
+
+<pre class="wp-block-code"><code>Run regedit.exe, go to HKEY_CURRENT_USER &gt; Software &gt; Adobe &gt; Photoshop &gt; &#91;YourVersionOfPhotoshop], in the right side pane, create a DWORD value named <strong>OverridePhysicalMemoryMB</strong> and set its value to the desired RAM size. For example, 32768 (1GB = 1024MB, thus 32GB here).</code></pre>
+
+
+
+<h2 class="wp-block-heading">Unable to use Filter &#8211; Render &#8211; Lighting Effects.</h2>
+
+
+
+<p>This one could have multiple issues. If your GPU is shown as <code>Unknown GPU</code> under <code>Edit - Preferences - Performance</code>, then you&#8217;d have to find a way to resolve the issue with your GPU first. Originally I tried to use Photoshop in one of my VMs but VMware Workstation&#8217;s VMware Virtual SVGA 3D Graphics Adapter showed as Unknown GPU and it seems that VMware Workstation is unable to perform GPU passthrough.</p>
+
+
+
+<p>Assuming that the GPU is not a problem, but when you try to use <code>Lighting Effects</code> and add a <code>Spot Light</code>, the tool might not work correctly or might not work at all. My symptoms are: after launching the tool, it only shows a tiny area of lighting and no matter how you adjust the sliders the lighting effect won&#8217;t change accordingly, and the lighting area resizing doesn&#8217;t work either.</p>
+
+
+
+<p>To resolve this issue, go to <code>Edit - Preferences - Technology Previews</code>, and check <code>Deactivate Native Canvas</code>, and restart Photoshop. Mine worked flawlessly thereafter.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+	</channel>
+</rss>
