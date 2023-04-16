@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/french/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Sun, 16 Apr 2023 21:45:57 +0000</lastBuildDate>
+	<lastBuildDate>Sun, 16 Apr 2023 21:52:31 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -24,7 +24,7 @@
 		<link>https://jameswsullivan.github.io/add-french-keyboard-in-vista/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Sun, 16 Apr 2023 21:45:57 +0000</pubDate>
+		<pubDate>Sun, 02 Aug 2009 17:39:00 +0000</pubDate>
 				<category><![CDATA[archive]]></category>
 		<category><![CDATA[French]]></category>
 		<category><![CDATA[System Administration]]></category>
@@ -108,10 +108,10 @@ Add French Keyboard in Vista.]]></description>
 : ~
 &lt; : \
 | : shift + ~
-' : shift + 2
-, : shift + ,
-&#91; and ] : ctrl + alt + &#91; and ctrl + alt + ]
-/ : shift + 3</code></pre>
+'&nbsp;: shift + 2
+,&nbsp;: shift + ,
+&#91; and ]&nbsp;: ctrl + alt + &#91; and ctrl + alt + ]
+/&nbsp;: shift + 3</code></pre>
 
 
 

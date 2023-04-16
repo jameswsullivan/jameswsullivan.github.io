@@ -1,12 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?><?xml-stylesheet type='text/xsl' href='https://jameswsullivan.github.io/wp-content/plugins/google-sitemap-generator/sitemap.xsl'?><!-- sitemap-generator-url='http://www.arnebrachhold.de/' sitemap-generator-version='4.1.9' -->
-<!-- generated-on='2023-04-16 21:46' -->
+<!-- generated-on='2023-04-16 21:52' -->
 <urlset xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd' xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>	<url>
-		<loc>https://jameswsullivan.github.io/add-french-keyboard-in-vista/</loc>
-		<lastmod>2023-04-16T21:45:57+00:00</lastmod>
-		<changefreq>daily</changefreq>
-		<priority>0.6</priority>
-	</url>
-	<url>
 		<loc>https://jameswsullivan.github.io/set-up-docker-host-with-ubuntu-server-and-mount-disks/</loc>
 		<lastmod>2023-04-11T02:19:44+00:00</lastmod>
 		<changefreq>daily</changefreq>
@@ -18,4 +12,4 @@
 		<changefreq>daily</changefreq>
 		<priority>0.6</priority>
 	</url>
-</urlset><!-- Request ID: ec0069417f86d3a9413530442d174331; Queries for sitemap: 2; Total queries: 14; Seconds: $end_time; Memory for sitemap: 0MB; Total memory: 6MB -->
+</urlset><!-- Request ID: 90cc8cc9cf2df8a3d6e6fa52d4ebc302; Queries for sitemap: 2; Total queries: 14; Seconds: $end_time; Memory for sitemap: 0MB; Total memory: 6MB -->

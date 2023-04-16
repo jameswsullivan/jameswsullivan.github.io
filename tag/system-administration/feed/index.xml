@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/system-administration/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Sun, 16 Apr 2023 21:45:57 +0000</lastBuildDate>
+	<lastBuildDate>Thu, 13 Apr 2023 01:09:42 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -20,108 +20,6 @@
 	1	</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=6.2</generator>
 	<item>
-		<title>Vista下添加法语输入法</title>
-		<link>https://jameswsullivan.github.io/add-french-keyboard-in-vista/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Sun, 16 Apr 2023 21:45:57 +0000</pubDate>
-				<category><![CDATA[archive]]></category>
-		<category><![CDATA[French]]></category>
-		<category><![CDATA[System Administration]]></category>
-		<category><![CDATA[Windows Systems Administration]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2321</guid>
-
-					<description><![CDATA[Vista下添加法语输入法
-Add French Keyboard in Vista.]]></description>
-										<content:encoded><![CDATA[
-<p>French Keyboard/input language/input method in Vista</p>
-
-
-
-<blockquote class="wp-block-quote">
-<p>此文系早年博客的备份，仅用于参考学习。<br>This article is an archival copy of my early years&#8217; blog posts.</p>
-</blockquote>
-
-
-
-<p>由于学法语的需要，有时要在word中做一些知识的整理，因此需要打法语字母。虽然大多数法语字母和英文字母相同，但毕竟还是有诸如 ê,è,ü,ï  之类怪异的字母出现，所以需要一个专门用来打法语的输入法。Google了一下，似乎并没有一种单独的法语输入法存在，因此只能用windows自己的装备了。</p>
-
-
-
-<p>Ordinary Chinese or English keyboard can support most French letters, but we will meet problems while trying to type in letters as “ê,è,ü,ï”. I searched Google, but didn’t find any third-party input methods/input aid tools, so I added a French Keyboard to solve the problem.</p>
-
-
-
-<p>Vista系统为例添加法语键盘输入法，其他系统类似：</p>
-
-
-
-<pre class="wp-block-code"><code>控制面板 —— 区域和语言选项 —— 键盘和语言 —— 更改键盘 —— 添加 —— 选择 法语(加拿大)，键盘选择“加拿大法语”，最后添加即可。</code></pre>
-
-
-
-<p>输入法添加完成后，在输入法状态栏中切换到法语键盘，即可输入法文字母了。这里把各个奇异字母的输入方法简单写一下：</p>
-
-
-
-<p>上面带有“ ¨ ”的字母，用 shift+] 来输入。比如，输入“ ü ”，则先按 shift+] ，再按u；若想输入大写“ Ü ”，则先按 shift+] ，再按 shift+u 即可。</p>
-
-
-
-<p>“ ^ ”为 [+字母 ，如先按 [ 再按 e，则输入 ê 。大小写方式同上。</p>
-
-
-
-<p>“ ` ”（下撇）为 ‘ (即引号) + 字母，按键顺序同上。 “ ¸ ” 为 ] + 字母 ，其实最常用也不过就是 ç ，大小写同上。 由于é的使用频率最高，法语键盘给了它一个单独按键 “ / ”.</p>
-
-
-
-<p>I take Windows Vista as the example, if you’re using other OS, the steps are similar:</p>
-
-
-
-<pre class="wp-block-code"><code>Control panel ---- Regional and Language Options ---- Keyboards and Languages ---- Change Keyboards… ---- add ---- French(Canada) ---- Keyboard ---- Canadian French</code></pre>
-
-
-
-<p>After adding the input language, please switch to French Keyboard, and use the following key combinations to insert those funny letters: Letters with “ ¨ ” can be inputted with <code>shift+]</code>. For example, if you want to input “ ü “, press <code>shift+]</code>, then press <code>u</code>; and if you want to input the capital letter, press <code>shift+u</code> after <code>shift+]</code>. </p>
-
-
-
-<p>“ ^ ”: first press <code>[</code> , then press <code>e</code>, you can get <code>“ ê “</code><br>. ” : first press <code>‘</code> , then letter <code>e</code>, you get <code>“ è ”</code>.<br>“ ¸ ” : first press <code>]</code>, then letter <code>c</code>, you get <code>“ ç ”</code>.</p>
-
-
-
-<p>Because letter “ é ” is frequently in use, so the French keyboard provides it with a sole key: “ / ” .</p>
-
-
-
-<p>补充：由于法语的特殊字符占用了一些我们通常使用的字符的位置，因此在输入诸如 <code>/,[,]</code>这类符号时遇到了困难，最近发现了这个问题，在这里再补充一下：</p>
-
-
-
-<p>Update: In the French input language, some special French characters take place of some symbols that we often use, like <code>[ , ] , /</code> etc. So now I add information below, hope it may help:</p>
-
-
-
-<pre class="wp-block-code"><code>? : shift + 6
-: ~
-&lt; : \
-| : shift + ~
-' : shift + 2
-, : shift + ,
-&#91; and ] : ctrl + alt + &#91; and ctrl + alt + ]
-/ : shift + 3</code></pre>
-
-
-
-<p>Tag：法语输入法，如何输入法语字符，法语特殊字符输入，安装法语键盘，windows添加法语键盘，法语键盘组合键，how to input French letters, French input method/input language, key combinations on French keyboard</p>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
 		<title>Set up Docker host with Ubuntu Server and mount disks</title>
 		<link>https://jameswsullivan.github.io/set-up-docker-host-with-ubuntu-server-and-mount-disks/</link>
 		
@@ -625,6 +523,63 @@ DFSRDIAG POLLAD</code></pre>
 
 
 <p><a href="https://www.renanrodrigues.com/post/how-to-fix-clients-not-showing-up-in-wsus-console-step-by-step" target="_blank" rel="noreferrer noopener">https://www.renanrodrigues.com/post/how-to-fix-clients-not-showing-up-in-wsus-console-step-by-step</a></p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>WSUS Reset Server Node Error</title>
+		<link>https://jameswsullivan.github.io/wsus-reset-server-node-error/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sat, 04 Jul 2020 23:54:00 +0000</pubDate>
+				<category><![CDATA[notes]]></category>
+		<category><![CDATA[System Administration]]></category>
+		<category><![CDATA[Windows Systems Administration]]></category>
+		<guid isPermaLink="false">http://www.alexchen.net/?p=841</guid>
+
+					<description><![CDATA[WSUS Server's Reset Server Node error.]]></description>
+										<content:encoded><![CDATA[
+<h2 class="wp-block-heading">Issue:</h2>
+
+
+
+<p>When attempting to bring up the synchronization history, the window would freeze at <code>Loading synchronization history: 0% complete.</code> and eventually prompted <code>Reset Server Node</code>.</p>
+
+
+
+<h2 class="wp-block-heading">Solution:</h2>
+
+
+
+<ol>
+<li>During the initial synchronization, make sure that your server has sufficient memory. I set my VM to 64GB RAM just in case, and eventually found that the RAM usage climbed up all the way to over 13GB to finish. After the initial synchronization is finished, the subsequent synchronizations wouldn&#8217;t use that much RAM anymore, so it&#8217;s safe to tune down the VM&#8217;s RAM.</li>
+</ol>
+
+
+
+<ol start="2">
+<li>You&#8217;ll also need to set the following values in IIS Manager for the initial synchronization to finish without errors.<br><br>Go to <code>IIS Manager - Application Pools - WsusPool - Advanced Settings</code> and modify the following fields:<br><br>Queue Length: 25000<br>Limit Interval (minutes): 15<br>&#8220;Service Unavailable&#8221; Response: TcpLevel<br>Failure Interval (minutes): 30<br>Maximum Failures: 60<br>Private Memory Limit (KB): 0</li>
+</ol>
+
+
+
+<ol start="3">
+<li>I needed to delete the synchronization history from the SUSDB to be able to sync again, I think it was because my initial sync failed due to insufficient RAM. To delete the sync history from SUSDB, you will need <code>Microsoft SSMS - Run As Administrator</code> , and connect to <code>\\.\pipe\MICROSOFT##WID\tsql\query</code> and run the following commands:</li>
+</ol>
+
+
+
+<pre class="wp-block-code"><code>USE SUSDB
+GO
+DELETE FROM tbEventInstance WHERE EventNamespaceID= '2' AND EVENTID IN ('381','382','384','386','387','389')</code></pre>
+
+
+
+<ol start="4">
+<li>The <code>Microsoft ReportViewer</code> and <code>Microsoft System CLR Types for SQL Server 2012</code> will need to be installed to view update error logs.</li>
+</ol>
 ]]></content:encoded>
 					
 		
