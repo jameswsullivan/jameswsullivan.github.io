@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/category/blog/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Fri, 14 Apr 2023 02:49:34 +0000</lastBuildDate>
+	<lastBuildDate>Sat, 22 Apr 2023 16:33:12 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -20,6 +20,87 @@
 	1	</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=6.2</generator>
 	<item>
+		<title>Use LineageOS on Pixel 3a XL</title>
+		<link>https://jameswsullivan.github.io/use-lineageos-on-pixel-3a-xl/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sat, 22 Apr 2023 16:31:17 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[notes]]></category>
+		<category><![CDATA[ADB]]></category>
+		<category><![CDATA[Android]]></category>
+		<category><![CDATA[bootloader]]></category>
+		<category><![CDATA[Custom ROM]]></category>
+		<category><![CDATA[fastboot]]></category>
+		<category><![CDATA[LineageOS]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2326</guid>
+
+					<description><![CDATA[Install LineageOS 19.1 on Pixel 3a XL.]]></description>
+										<content:encoded><![CDATA[
+<p>It&#8217;s been a while since I flashed a custom ROM on an Android phone a few years back. Recently I needed to get an old Pixel 3a XL to work for a project and I have to say that installing custom ROMs has become much easier than before.</p>
+
+
+
+<h2 class="wp-block-heading">Steps</h2>
+
+
+
+<ol>
+<li>Get your computer and phone ready for ADB. <a href="https://wiki.lineageos.org/adb_fastboot_guide">https://wiki.lineageos.org/adb_fastboot_guide</a></li>
+
+
+
+<li>Follow the steps here provided by LineageOS: <a href="https://wiki.lineageos.org/devices/crosshatch/">https://wiki.lineageos.org/devices/crosshatch/</a></li>
+</ol>
+
+
+
+<h2 class="wp-block-heading">Common Issues</h2>
+
+
+
+<ul>
+<li>If your device is not showing when running the <code>adb devices</code> command, 9 out 10 times it&#8217;s either a driver issue or <code>USB Debugging</code> not properly enabled. When installing the driver, you have to make sure that you manually install the correct &#8220;<code>Android Composite ADB Interface</code>&#8221; rather than letting Windows automatically pick the driver.<br><br>e.g. in <code>Device Manager</code>, right click on your phone, select <code>Update driver</code> &#8211;&gt; <code>Browse my computer for drivers</code> &#8211;&gt; browse to the USB driver folder you just downloaded and choose: <code>Let me pick from a list of available drivers on my computer</code>, and pick <code>Android Composite ADB Interface</code>.<br><br>Upon successful installation, your phone should appear in Device Manager as <code>Android Device - Android Composite ADB Interface</code> instead of under <code>Portable Devices</code> or <code>Universal Serial Bus controllers</code>.</li>
+</ul>
+
+
+
+<ul>
+<li>Additionally, <code>fastboot flashing unlock</code> doesn&#8217;t unlock the bootloader, make sure that <code>Stay awake</code> and <code>OEM Unlocking</code> are enabled under <code>Developer options</code>.</li>
+</ul>
+
+
+
+<p>Other useful troubleshooting commands if your device is not showing under <code>adb devices</code> :</p>
+
+
+
+<pre class="wp-block-code"><code>net stop winnat
+net start winnat
+
+adb kill-server
+adb start-server</code></pre>
+
+
+
+<h2 class="wp-block-heading">ADB Commands</h2>
+
+
+
+<pre class="wp-block-code"><code>adb reboot bootloader
+fastboot devices
+fastboot flashing unlock
+adb reboot bootloader
+fastboot flash boot boot.img
+adb sideload lineage-19.1-20230415-nightly-bonito-signed.zip
+adb sideload MindTheGapps-12.1.0-arm64-20220605_112439.zip
+</code></pre>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>Set up Docker host with Ubuntu Server and mount disks</title>
 		<link>https://jameswsullivan.github.io/set-up-docker-host-with-ubuntu-server-and-mount-disks/</link>
 		
@@ -962,53 +1043,6 @@ DISM /get-wiminfo /wimfile:E:\Win10\sources\install.wim</code></pre>
 
 
 <p>For more comprehensive instructions, refer to <a href="https://www.windowscentral.com/how-use-dism-command-line-utility-repair-windows-10-image">this</a> article.</p>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Photoshop Settings</title>
-		<link>https://jameswsullivan.github.io/photoshop-settings/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Sun, 10 Oct 2021 09:25:43 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[Adobe Creative Cloud]]></category>
-		<category><![CDATA[Photoshop]]></category>
-		<guid isPermaLink="false">https://www.alexchen.net/?p=2010</guid>
-
-					<description><![CDATA[Photoshop "not enough memory" error and Lighting Effects issue.]]></description>
-										<content:encoded><![CDATA[
-<p>Recently I needed Photoshop for some photo editing tasks and came across the following issues:</p>
-
-
-
-<h2 class="wp-block-heading">&#8220;Could not complete your request because there is not enough memory (RAM)&#8221;</h2>
-
-
-
-<p>For some reason this error kept showing up even though I have over 100GB of RAM available. The easiest solution for me was adding the <strong>OverridePhysicalMemoryMB</strong> DWORD value in the registry.</p>
-
-
-
-<pre class="wp-block-code"><code>Run regedit.exe, go to HKEY_CURRENT_USER &gt; Software &gt; Adobe &gt; Photoshop &gt; &#91;YourVersionOfPhotoshop], in the right side pane, create a DWORD value named <strong>OverridePhysicalMemoryMB</strong> and set its value to the desired RAM size. For example, 32768 (1GB = 1024MB, thus 32GB here).</code></pre>
-
-
-
-<h2 class="wp-block-heading">Unable to use Filter &#8211; Render &#8211; Lighting Effects.</h2>
-
-
-
-<p>This one could have multiple issues. If your GPU is shown as <code>Unknown GPU</code> under <code>Edit - Preferences - Performance</code>, then you&#8217;d have to find a way to resolve the issue with your GPU first. Originally I tried to use Photoshop in one of my VMs but VMware Workstation&#8217;s VMware Virtual SVGA 3D Graphics Adapter showed as Unknown GPU and it seems that VMware Workstation is unable to perform GPU passthrough.</p>
-
-
-
-<p>Assuming that the GPU is not a problem, but when you try to use <code>Lighting Effects</code> and add a <code>Spot Light</code>, the tool might not work correctly or might not work at all. My symptoms are: after launching the tool, it only shows a tiny area of lighting and no matter how you adjust the sliders the lighting effect won&#8217;t change accordingly, and the lighting area resizing doesn&#8217;t work either.</p>
-
-
-
-<p>To resolve this issue, go to <code>Edit - Preferences - Technology Previews</code>, and check <code>Deactivate Native Canvas</code>, and restart Photoshop. Mine worked flawlessly thereafter.</p>
 ]]></content:encoded>
 					
 		

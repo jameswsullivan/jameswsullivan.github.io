@@ -1,6 +1,36 @@
 <?xml version='1.0' encoding='UTF-8'?><?xml-stylesheet type='text/xsl' href='https://jameswsullivan.github.io/wp-content/plugins/google-sitemap-generator/sitemap.xsl'?><!-- sitemap-generator-url='http://www.arnebrachhold.de/' sitemap-generator-version='4.1.9' -->
-<!-- generated-on='2023-04-16 21:52' -->
+<!-- generated-on='2023-04-23 02:51' -->
 <urlset xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd' xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>	<url>
+		<loc>https://jameswsullivan.github.io/tag/docker/</loc>
+		<changefreq>daily</changefreq>
+		<priority>0.3</priority>
+	</url>
+	<url>
+		<loc>https://jameswsullivan.github.io/tag/email/</loc>
+		<changefreq>daily</changefreq>
+		<priority>0.3</priority>
+	</url>
+	<url>
+		<loc>https://jameswsullivan.github.io/tag/fastboot/</loc>
+		<changefreq>daily</changefreq>
+		<priority>0.3</priority>
+	</url>
+	<url>
+		<loc>https://jameswsullivan.github.io/tag/firmware/</loc>
+		<changefreq>daily</changefreq>
+		<priority>0.3</priority>
+	</url>
+	<url>
+		<loc>https://jameswsullivan.github.io/tag/french/</loc>
+		<changefreq>daily</changefreq>
+		<priority>0.3</priority>
+	</url>
+	<url>
+		<loc>https://jameswsullivan.github.io/tag/hardware/</loc>
+		<changefreq>daily</changefreq>
+		<priority>0.3</priority>
+	</url>
+	<url>
 		<loc>https://jameswsullivan.github.io/tag/hba/</loc>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
@@ -16,38 +46,8 @@
 		<priority>0.3</priority>
 	</url>
 	<url>
-		<loc>https://jameswsullivan.github.io/tag/linux/</loc>
+		<loc>https://jameswsullivan.github.io/tag/lineageos/</loc>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
 	</url>
-	<url>
-		<loc>https://jameswsullivan.github.io/tag/lsi-hba-adapters/</loc>
-		<changefreq>daily</changefreq>
-		<priority>0.3</priority>
-	</url>
-	<url>
-		<loc>https://jameswsullivan.github.io/tag/mediawiki/</loc>
-		<changefreq>daily</changefreq>
-		<priority>0.3</priority>
-	</url>
-	<url>
-		<loc>https://jameswsullivan.github.io/tag/megacli/</loc>
-		<changefreq>daily</changefreq>
-		<priority>0.3</priority>
-	</url>
-	<url>
-		<loc>https://jameswsullivan.github.io/tag/megarec/</loc>
-		<changefreq>daily</changefreq>
-		<priority>0.3</priority>
-	</url>
-	<url>
-		<loc>https://jameswsullivan.github.io/tag/mysql/</loc>
-		<changefreq>daily</changefreq>
-		<priority>0.3</priority>
-	</url>
-	<url>
-		<loc>https://jameswsullivan.github.io/tag/nas/</loc>
-		<changefreq>daily</changefreq>
-		<priority>0.3</priority>
-	</url>
-</urlset><!-- Request ID: 433a65bc82798872aab8af4d478b8daf; Queries for sitemap: 6; Total queries: 18; Seconds: $end_time; Memory for sitemap: 0MB; Total memory: 6MB -->
+</urlset><!-- Request ID: 58dcc4c8b305aa7e9d4e6f94194fe05a; Queries for sitemap: 6; Total queries: 18; Seconds: $end_time; Memory for sitemap: 0MB; Total memory: 6MB -->

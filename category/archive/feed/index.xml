@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/category/archive/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Sun, 16 Apr 2023 21:52:31 +0000</lastBuildDate>
+	<lastBuildDate>Sun, 23 Apr 2023 02:50:46 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -145,6 +145,88 @@
 
 
 <p>关键字：dell n-series 机器激活slic2.0，模拟bios会不会烧毁主板，用loader激活oem系统会不会烧毁主板，模拟bios激活系统烧毁主板</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>创新Creative SoundBlaster Vibra128 声卡驱动（ForXP）</title>
+		<link>https://jameswsullivan.github.io/install-creative-soundblaster-virbra128-driver-on-windows-xp/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sun, 02 Aug 2009 17:41:00 +0000</pubDate>
+				<category><![CDATA[archive]]></category>
+		<category><![CDATA[Creative SoundBlaster]]></category>
+		<category><![CDATA[System Administration]]></category>
+		<category><![CDATA[Windows Systems Administration]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2336</guid>
+
+					<description><![CDATA[在XP上安装Creative SoundBlaster Vibra128驱动。]]></description>
+										<content:encoded><![CDATA[
+<blockquote class="wp-block-quote">
+<p>此文系早年博客的备份，仅用于参考学习。<br>This article is an archival copy of my early years&#8217; blog posts.</p>
+</blockquote>
+
+
+
+<p>昨天在家把旧机器进行一番整修让其重新运作，可是在一切都弄好之后发现板载声卡（AC97）的音频输出接口有问题，无论怎么插都只有一个声道出声。由于以前一直在使用创新的SoundBlaster Vibra128独立声卡，所以直到现在才发现这个毛病。无奈，将先前的独立声卡再插回去，启动系统安装驱动，却猛然发现手头所有关于它的驱动全都只支持到Win2000，而上网搜索，也都没找到该驱动的更新。冷静了一下，想想以前遇到类似的系统问题，当用中文搜索无法找到答案时，用英文搜索时问题便迎刃而解，于是试了一下，果然最终在一个外国论坛里找到了下载。看到网上也有诸多兄弟苦苦寻找此驱动而无果，我就在这里提供以下下载了：<a href="https://github.com/jameswsullivan/blog-file-share/blob/main/EV1938_Driver_XP.zip">Download</a> (This file contains drivers downloaded from the internet, use at your own risk).</p>
+
+
+
+<p>安装这个驱动的时候注意，使用其自带的setup安装的话，有可能安装程序提示“找不到任何SoundBlaster声卡”，或者安装后弹出“发现新硬件”时无法自动找到其驱动。我建议在系统弹出“发现新硬件”时，手动指向驱动目录 <code>Common\ECTDrivers\WdmDrv</code> 来进行安装，这样完成后即刻好用。</p>
+
+
+
+<p>如果安装的朋友也和我这种情况一样，既有板载声卡又有独立声卡，在安装独立声卡的驱动之前须在BIOS中将AC97设置为Disabled，这样才不会引起冲突。我遇到的情况是WinXP启动条卡死不动，无法进入系统的情况。</p>
+
+
+
+<p>Tag: 创新Creative Vibra128声卡xp驱动，Creative SoundBlaster Vibra128 driver for xp，vibra128声卡xp驱动下载，EV1938声卡芯片xp驱动，EV1938 driver for xp</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Word出现“无法创建工作文件，请检查临时环境变量”的解决方法</title>
+		<link>https://jameswsullivan.github.io/word-unable-to-create-working-file-check-environment-variables/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sun, 02 Aug 2009 17:40:00 +0000</pubDate>
+				<category><![CDATA[archive]]></category>
+		<category><![CDATA[Office]]></category>
+		<category><![CDATA[RamDisk]]></category>
+		<category><![CDATA[System Administration]]></category>
+		<category><![CDATA[Windows Systems Administration]]></category>
+		<category><![CDATA[Word]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2331</guid>
+
+					<description><![CDATA[修复Word“无法创建工作文件，请检查临时环境变量”的错误。]]></description>
+										<content:encoded><![CDATA[
+<blockquote class="wp-block-quote">
+<p>此文系早年博客的备份，仅用于参考学习。<br>This article is an archival copy of my early years&#8217; blog posts.</p>
+</blockquote>
+
+
+
+<p>某天帮一同学安装office，安完后打开word使用时却发现提示<code>“无法创建工作文件，请检查临时环境变量”</code>，将对话框关闭后虽能输入字符，但无法保存文件，剪切、粘贴等操作也会收到错误提示。自己判断加上再Google一下，总结以下解决方法：</p>
+
+
+
+<p>1 &#8211; 我的电脑 &#8211; 属性 &#8211; 高级 &#8211; 环境变量 &#8211; 在 ”用户变量” 里, 将 TEMP 和 TMP 的值改为 <code>%USERPROFILE%\Local Settings\Temp</code> ; 在 ”系统变量” 里, 将 TEMP 和 TMP 设置为：<code>%SystemRoot%\TEMP</code></p>
+
+
+
+<p>2 &#8211; 将IE的缓存文件目录更改回默认位置, 操作如下:<br>工具 &#8211; Internet选项 &#8211; 浏览历史 &#8211; 设置 &#8211; 将 现在位置 改为 <code>C:/Document and settings/</code></p>
+
+
+
+<p>更改完上述设置后，该问题应该已经解决了。这里顺便说一下，造成这个问题的原因似乎是安装了RamDisk，如果不会用或者不想用它的话，可以直接将其卸载，然后按照上述方法修改设置即可。如果RamDisk没有出现在添加/删除程序里，可以先去网上搜一个RamDisk安装后再卸载。</p>
+
+
+
+<p>关键字：ramdisk的卸载，ramdisk导致word无法工作，ramdisk导致word无法创建工作文件/请检查临时环境变量</p>
 ]]></content:encoded>
 					
 		

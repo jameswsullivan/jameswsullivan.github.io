@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Creative SoundBlaster &#8211; howdy</title>
+	<atom:link href="https://jameswsullivan.github.io/tag/creative-soundblaster/feed/" rel="self" type="application/rss+xml" />
+	<link>https://jameswsullivan.github.io/</link>
+	<description></description>
+	<lastBuildDate>Sun, 23 Apr 2023 02:50:46 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.2</generator>
+	<item>
+		<title>创新Creative SoundBlaster Vibra128 声卡驱动（ForXP）</title>
+		<link>https://jameswsullivan.github.io/install-creative-soundblaster-virbra128-driver-on-windows-xp/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sun, 02 Aug 2009 17:41:00 +0000</pubDate>
+				<category><![CDATA[archive]]></category>
+		<category><![CDATA[Creative SoundBlaster]]></category>
+		<category><![CDATA[System Administration]]></category>
+		<category><![CDATA[Windows Systems Administration]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2336</guid>
+
+					<description><![CDATA[在XP上安装Creative SoundBlaster Vibra128驱动。]]></description>
+										<content:encoded><![CDATA[
+<blockquote class="wp-block-quote">
+<p>此文系早年博客的备份，仅用于参考学习。<br>This article is an archival copy of my early years&#8217; blog posts.</p>
+</blockquote>
+
+
+
+<p>昨天在家把旧机器进行一番整修让其重新运作，可是在一切都弄好之后发现板载声卡（AC97）的音频输出接口有问题，无论怎么插都只有一个声道出声。由于以前一直在使用创新的SoundBlaster Vibra128独立声卡，所以直到现在才发现这个毛病。无奈，将先前的独立声卡再插回去，启动系统安装驱动，却猛然发现手头所有关于它的驱动全都只支持到Win2000，而上网搜索，也都没找到该驱动的更新。冷静了一下，想想以前遇到类似的系统问题，当用中文搜索无法找到答案时，用英文搜索时问题便迎刃而解，于是试了一下，果然最终在一个外国论坛里找到了下载。看到网上也有诸多兄弟苦苦寻找此驱动而无果，我就在这里提供以下下载了：<a href="https://github.com/jameswsullivan/blog-file-share/blob/main/EV1938_Driver_XP.zip">Download</a> (This file contains drivers downloaded from the internet, use at your own risk).</p>
+
+
+
+<p>安装这个驱动的时候注意，使用其自带的setup安装的话，有可能安装程序提示“找不到任何SoundBlaster声卡”，或者安装后弹出“发现新硬件”时无法自动找到其驱动。我建议在系统弹出“发现新硬件”时，手动指向驱动目录 <code>Common\ECTDrivers\WdmDrv</code> 来进行安装，这样完成后即刻好用。</p>
+
+
+
+<p>如果安装的朋友也和我这种情况一样，既有板载声卡又有独立声卡，在安装独立声卡的驱动之前须在BIOS中将AC97设置为Disabled，这样才不会引起冲突。我遇到的情况是WinXP启动条卡死不动，无法进入系统的情况。</p>
+
+
+
+<p>Tag: 创新Creative Vibra128声卡xp驱动，Creative SoundBlaster Vibra128 driver for xp，vibra128声卡xp驱动下载，EV1938声卡芯片xp驱动，EV1938 driver for xp</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+	</channel>
+</rss>

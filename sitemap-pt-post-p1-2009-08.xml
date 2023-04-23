@@ -1,9 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?><?xml-stylesheet type='text/xsl' href='https://jameswsullivan.github.io/wp-content/plugins/google-sitemap-generator/sitemap.xsl'?><!-- sitemap-generator-url='http://www.arnebrachhold.de/' sitemap-generator-version='4.1.9' -->
-<!-- generated-on='2023-04-16 21:53' -->
+<!-- generated-on='2023-04-23 02:51' -->
 <urlset xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd' xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>	<url>
+		<loc>https://jameswsullivan.github.io/install-creative-soundblaster-virbra128-driver-on-windows-xp/</loc>
+		<lastmod>2023-04-23T02:50:46+00:00</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.6</priority>
+	</url>
+	<url>
+		<loc>https://jameswsullivan.github.io/word-unable-to-create-working-file-check-environment-variables/</loc>
+		<lastmod>2023-04-23T02:21:55+00:00</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.6</priority>
+	</url>
+	<url>
 		<loc>https://jameswsullivan.github.io/add-french-keyboard-in-vista/</loc>
 		<lastmod>2023-04-16T21:52:31+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.6</priority>
 	</url>
-</urlset><!-- Request ID: b2c86ffb5f9601d88037073ba768e74e; Queries for sitemap: 2; Total queries: 14; Seconds: $end_time; Memory for sitemap: 0MB; Total memory: 6MB -->
+</urlset><!-- Request ID: 8860a69c9d29be11a8431526bf259741; Queries for sitemap: 2; Total queries: 14; Seconds: $end_time; Memory for sitemap: 0MB; Total memory: 6MB -->
