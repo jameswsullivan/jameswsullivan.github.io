@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?><?xml-stylesheet type='text/xsl' href='https://jameswsullivan.github.io/wp-content/plugins/google-sitemap-generator/sitemap.xsl'?><!-- sitemap-generator-url='http://www.arnebrachhold.de/' sitemap-generator-version='4.1.9' -->
-<!-- generated-on='2023-04-23 02:51' -->
+<!-- generated-on='2023-04-23 03:21' -->
 <urlset xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd' xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>	<url>
 		<loc>https://jameswsullivan.github.io/use-lineageos-on-pixel-3a-xl/</loc>
 		<lastmod>2023-04-22T16:33:12+00:00</lastmod>
@@ -18,4 +18,4 @@
 		<changefreq>daily</changefreq>
 		<priority>0.6</priority>
 	</url>
-</urlset><!-- Request ID: 955f5a95cc9c7b24a8f39e9a580299b7; Queries for sitemap: 2; Total queries: 14; Seconds: $end_time; Memory for sitemap: 0MB; Total memory: 6MB -->
+</urlset><!-- Request ID: a0e3e7deaf17540d1055a6ba9269417f; Queries for sitemap: 2; Total queries: 14; Seconds: $end_time; Memory for sitemap: 0MB; Total memory: 6MB -->
