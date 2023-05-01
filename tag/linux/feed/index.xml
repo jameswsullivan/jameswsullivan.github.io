@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/linux/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Sat, 01 Apr 2023 02:10:35 +0000</lastBuildDate>
+	<lastBuildDate>Mon, 01 May 2023 00:25:19 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -20,6 +20,213 @@
 	1	</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=6.2</generator>
 	<item>
+		<title>Set up self-hosted BookStack</title>
+		<link>https://jameswsullivan.github.io/set-up-self-hosted-bookstack/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Mon, 01 May 2023 00:23:40 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[notes]]></category>
+		<category><![CDATA[BookStack]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[Linux]]></category>
+		<category><![CDATA[Self-Hosting]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+		<category><![CDATA[Web Hosting]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2353</guid>
+
+					<description><![CDATA[Self-host BookStack with Docker.]]></description>
+										<content:encoded><![CDATA[
+<p>As I venture more and more into software development and homelab building, I found that I&#8217;m in need of a better way for my documentation because OneNote just doesn&#8217;t native support all my needs. After a bit research I found BookStack to be a good choice. Since <a href="https://github.com/jameswsullivan/selfhosted/tree/main/BookStack">this project</a> is on GitHub as part of my <a href="https://github.com/jameswsullivan/selfhosted">self-hosted application suite</a>, this article only serves as a documentation.</p>
+
+
+
+<h2 class="wp-block-heading">Dockerfile:</h2>
+
+
+
+<pre class="wp-block-code"><code>FROM ubuntu
+
+ARG APACHE_DIR=/var/www
+ARG BOOKSTACK_DIR=/var/www/bookstack
+ARG DEBIAN_FRONTEND=noninteractive
+
+ENV LC_ALL en_US.UTF-8
+ENV LANG en_US.UTF-8
+
+RUN apt-get update -y &amp;&amp; \
+    apt-get upgrade -y &amp;&amp; \
+    apt-get install wget -y &amp;&amp; \
+    apt-get install iproute2 -y &amp;&amp; \
+    apt-get install nano -y &amp;&amp; \
+    apt-get install tzdata -y &amp;&amp; \
+    ln -fs /usr/share/zoneinfo/US/Central /etc/localtime &amp;&amp; \
+    dpkg-reconfigure -f noninteractive tzdata &amp;&amp; \
+    apt-get install locales -y &amp;&amp; \
+    locale-gen en_US.UTF-8 &amp;&amp; \
+    update-locale LANG=en_US.UTF-8 &amp;&amp; \
+    apt-get install -y git unzip apache2 php8.1 curl php8.1-curl \
+    php8.1-mbstring php8.1-ldap php8.1-xml php8.1-zip php8.1-gd \
+    php8.1-mysql libapache2-mod-php8.1 &amp;&amp; \
+    curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+WORKDIR $APACHE_DIR
+
+RUN git clone https://github.com/BookStackApp/BookStack.git --branch release --single-branch &amp;&amp; \       
+    mv BookStack/ bookstack/ &amp;&amp; \
+    chown -R www-data:www-data $BOOKSTACK_DIR
+
+WORKDIR $BOOKSTACK_DIR
+
+COPY ./config.sh ./config.sh
+
+RUN composer install --no-dev &amp;&amp; \
+    mv $BOOKSTACK_DIR/public/.htaccess $BOOKSTACK_DIR/public/.htaccess.bk &amp;&amp; \
+    mv /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/000-default.conf.bk &amp;&amp; \
+    mv /etc/apache2/sites-available/default-ssl.conf /etc/apache2/sites-available/default-ssl.conf.bk &amp;&amp; \
+    chmod +x config.sh
+
+ENTRYPOINT &#91;"/var/www/bookstack/config.sh"]</code></pre>
+
+
+
+<h2 class="wp-block-heading">Post-setup configuration script:</h2>
+
+
+
+<pre class="wp-block-code"><code>#!/bin/bash
+BOOKSTACK_DIR="/var/www/bookstack"
+
+service apache2 start
+a2ensite bookstack.conf
+a2enmod rewrite
+a2enmod headers
+
+cd "$BOOKSTACK_DIR"
+
+php artisan key:generate --no-interaction --force
+php artisan migrate --no-interaction --force
+
+service apache2 restart
+
+exec "$@"
+tail -f /var/log/apache2/access.log</code></pre>
+
+
+
+<h2 class="wp-block-heading">BookStack Virtual Host file:</h2>
+
+
+
+<pre class="wp-block-code"><code>&lt;VirtualHost *:80&gt;
+
+        ServerName bookstack.example.com
+        DocumentRoot /var/www/bookstack/public/
+
+        &lt;Directory /var/www/bookstack/public/&gt;
+                Options Indexes FollowSymLinks
+                AllowOverride None
+                Require all granted
+                &lt;IfModule mod_rewrite.c&gt;
+                        &lt;IfModule mod_negotiation.c&gt;
+                                Options -MultiViews -Indexes
+                        &lt;/IfModule&gt;
+
+                        RewriteEngine On
+
+                        # Handle Authorization Header
+                        RewriteCond %{HTTP:Authorization} .
+                        RewriteRule .* - &#91;E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+                        # Redirect Trailing Slashes If Not A Folder...
+                        RewriteCond %{REQUEST_FILENAME} !-d
+                        RewriteCond %{REQUEST_URI} (.+)/$
+                        RewriteRule ^ %1 &#91;L,R=301]
+
+                        # Handle Front Controller...
+                        RewriteCond %{REQUEST_FILENAME} !-d
+                        RewriteCond %{REQUEST_FILENAME} !-f
+                        RewriteRule ^ index.php &#91;L]
+                &lt;/IfModule&gt;
+        &lt;/Directory&gt;
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+&lt;/VirtualHost&gt;</code></pre>
+
+
+
+<p>BookStack .env file:</p>
+
+
+
+<pre class="wp-block-code"><code>APP_KEY=SomeRandomString
+
+APP_URL=http://example.com/
+
+# Database details
+DB_HOST=YOUR_DB_URL
+DB_DATABASE=YOUR_DB_NAME
+DB_USERNAME=YOUR_DB_USER
+DB_PASSWORD=YOUR_DB_PASS
+
+# Mail system to use
+# Can be 'smtp' or 'sendmail'
+MAIL_DRIVER=smtp
+
+# Mail sender details
+MAIL_FROM_NAME="BookStack"
+MAIL_FROM=bookstack@example.com
+
+# SMTP mail options
+# These settings can be checked using the "Send a Test Email"
+# feature found in the "Settings &gt; Maintenance" area of the system.
+MAIL_HOST=localhost
+MAIL_PORT=1025
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_ENCRYPTION=null</code></pre>
+
+
+
+<h2 class="wp-block-heading"><em>docker image build</em> and <em>docker run</em> commands:</h2>
+
+
+
+<pre class="wp-block-code"><code># Linux build:
+docker image build --file bookstack.dockerfile --tag bookstack:1.0 --progress plain --no-cache . 2&gt;&amp;1 | tee bookstack_build.log
+
+# Windows build using PowerShell
+docker image build --file bookstack.dockerfile --tag bookstack:1.0 --progress plain --no-cache . 2&gt;&amp;1 | Tee-Object bookstack_build.log
+
+# Start a container:
+docker run -dit \
+    --name MY_BOOKSTACK_CONTAINER_NAME \
+    --ip IP_ADDRESS --network DOCKER_NETWORK \
+    --hostname=MY_HOSTNAME \
+    --restart=unless-stopped \
+    --mount type=bind,source=SOURCE_DIRECTORY/.env,target=/var/www/bookstack/.env \
+    --mount type=bind,source=SOURCE_DIRECTORY/bookstack.conf,target=/etc/apache2/sites-available/bookstack.conf \
+    -v SOURCE_DIRECTORY:/var/www/bookstack/public/uploads \
+    -v SOURCE_DIRECTORY:/var/www/bookstack/storage/uploads \
+    bookstack:1.0</code></pre>
+
+
+
+<h2 class="wp-block-heading">Default login:</h2>
+
+
+
+<pre class="wp-block-code"><code>Default login email: admin@admin.com
+Default login password: password</code></pre>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>Troubleshooting Apache Web Server and Name-based Virtual Hosting</title>
 		<link>https://jameswsullivan.github.io/troubleshooting-apache-web-server-and-name-based-virtual-hosting/</link>
 		

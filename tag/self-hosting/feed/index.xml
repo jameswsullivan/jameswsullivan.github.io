@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/self-hosting/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Tue, 11 Apr 2023 02:19:44 +0000</lastBuildDate>
+	<lastBuildDate>Mon, 01 May 2023 00:25:19 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -20,6 +20,213 @@
 	1	</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=6.2</generator>
 	<item>
+		<title>Set up self-hosted BookStack</title>
+		<link>https://jameswsullivan.github.io/set-up-self-hosted-bookstack/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Mon, 01 May 2023 00:23:40 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[notes]]></category>
+		<category><![CDATA[BookStack]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[Linux]]></category>
+		<category><![CDATA[Self-Hosting]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+		<category><![CDATA[Web Hosting]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2353</guid>
+
+					<description><![CDATA[Self-host BookStack with Docker.]]></description>
+										<content:encoded><![CDATA[
+<p>As I venture more and more into software development and homelab building, I found that I&#8217;m in need of a better way for my documentation because OneNote just doesn&#8217;t native support all my needs. After a bit research I found BookStack to be a good choice. Since <a href="https://github.com/jameswsullivan/selfhosted/tree/main/BookStack">this project</a> is on GitHub as part of my <a href="https://github.com/jameswsullivan/selfhosted">self-hosted application suite</a>, this article only serves as a documentation.</p>
+
+
+
+<h2 class="wp-block-heading">Dockerfile:</h2>
+
+
+
+<pre class="wp-block-code"><code>FROM ubuntu
+
+ARG APACHE_DIR=/var/www
+ARG BOOKSTACK_DIR=/var/www/bookstack
+ARG DEBIAN_FRONTEND=noninteractive
+
+ENV LC_ALL en_US.UTF-8
+ENV LANG en_US.UTF-8
+
+RUN apt-get update -y &amp;&amp; \
+    apt-get upgrade -y &amp;&amp; \
+    apt-get install wget -y &amp;&amp; \
+    apt-get install iproute2 -y &amp;&amp; \
+    apt-get install nano -y &amp;&amp; \
+    apt-get install tzdata -y &amp;&amp; \
+    ln -fs /usr/share/zoneinfo/US/Central /etc/localtime &amp;&amp; \
+    dpkg-reconfigure -f noninteractive tzdata &amp;&amp; \
+    apt-get install locales -y &amp;&amp; \
+    locale-gen en_US.UTF-8 &amp;&amp; \
+    update-locale LANG=en_US.UTF-8 &amp;&amp; \
+    apt-get install -y git unzip apache2 php8.1 curl php8.1-curl \
+    php8.1-mbstring php8.1-ldap php8.1-xml php8.1-zip php8.1-gd \
+    php8.1-mysql libapache2-mod-php8.1 &amp;&amp; \
+    curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+WORKDIR $APACHE_DIR
+
+RUN git clone https://github.com/BookStackApp/BookStack.git --branch release --single-branch &amp;&amp; \       
+    mv BookStack/ bookstack/ &amp;&amp; \
+    chown -R www-data:www-data $BOOKSTACK_DIR
+
+WORKDIR $BOOKSTACK_DIR
+
+COPY ./config.sh ./config.sh
+
+RUN composer install --no-dev &amp;&amp; \
+    mv $BOOKSTACK_DIR/public/.htaccess $BOOKSTACK_DIR/public/.htaccess.bk &amp;&amp; \
+    mv /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/000-default.conf.bk &amp;&amp; \
+    mv /etc/apache2/sites-available/default-ssl.conf /etc/apache2/sites-available/default-ssl.conf.bk &amp;&amp; \
+    chmod +x config.sh
+
+ENTRYPOINT &#91;"/var/www/bookstack/config.sh"]</code></pre>
+
+
+
+<h2 class="wp-block-heading">Post-setup configuration script:</h2>
+
+
+
+<pre class="wp-block-code"><code>#!/bin/bash
+BOOKSTACK_DIR="/var/www/bookstack"
+
+service apache2 start
+a2ensite bookstack.conf
+a2enmod rewrite
+a2enmod headers
+
+cd "$BOOKSTACK_DIR"
+
+php artisan key:generate --no-interaction --force
+php artisan migrate --no-interaction --force
+
+service apache2 restart
+
+exec "$@"
+tail -f /var/log/apache2/access.log</code></pre>
+
+
+
+<h2 class="wp-block-heading">BookStack Virtual Host file:</h2>
+
+
+
+<pre class="wp-block-code"><code>&lt;VirtualHost *:80&gt;
+
+        ServerName bookstack.example.com
+        DocumentRoot /var/www/bookstack/public/
+
+        &lt;Directory /var/www/bookstack/public/&gt;
+                Options Indexes FollowSymLinks
+                AllowOverride None
+                Require all granted
+                &lt;IfModule mod_rewrite.c&gt;
+                        &lt;IfModule mod_negotiation.c&gt;
+                                Options -MultiViews -Indexes
+                        &lt;/IfModule&gt;
+
+                        RewriteEngine On
+
+                        # Handle Authorization Header
+                        RewriteCond %{HTTP:Authorization} .
+                        RewriteRule .* - &#91;E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+                        # Redirect Trailing Slashes If Not A Folder...
+                        RewriteCond %{REQUEST_FILENAME} !-d
+                        RewriteCond %{REQUEST_URI} (.+)/$
+                        RewriteRule ^ %1 &#91;L,R=301]
+
+                        # Handle Front Controller...
+                        RewriteCond %{REQUEST_FILENAME} !-d
+                        RewriteCond %{REQUEST_FILENAME} !-f
+                        RewriteRule ^ index.php &#91;L]
+                &lt;/IfModule&gt;
+        &lt;/Directory&gt;
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+&lt;/VirtualHost&gt;</code></pre>
+
+
+
+<p>BookStack .env file:</p>
+
+
+
+<pre class="wp-block-code"><code>APP_KEY=SomeRandomString
+
+APP_URL=http://example.com/
+
+# Database details
+DB_HOST=YOUR_DB_URL
+DB_DATABASE=YOUR_DB_NAME
+DB_USERNAME=YOUR_DB_USER
+DB_PASSWORD=YOUR_DB_PASS
+
+# Mail system to use
+# Can be 'smtp' or 'sendmail'
+MAIL_DRIVER=smtp
+
+# Mail sender details
+MAIL_FROM_NAME="BookStack"
+MAIL_FROM=bookstack@example.com
+
+# SMTP mail options
+# These settings can be checked using the "Send a Test Email"
+# feature found in the "Settings &gt; Maintenance" area of the system.
+MAIL_HOST=localhost
+MAIL_PORT=1025
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_ENCRYPTION=null</code></pre>
+
+
+
+<h2 class="wp-block-heading"><em>docker image build</em> and <em>docker run</em> commands:</h2>
+
+
+
+<pre class="wp-block-code"><code># Linux build:
+docker image build --file bookstack.dockerfile --tag bookstack:1.0 --progress plain --no-cache . 2&gt;&amp;1 | tee bookstack_build.log
+
+# Windows build using PowerShell
+docker image build --file bookstack.dockerfile --tag bookstack:1.0 --progress plain --no-cache . 2&gt;&amp;1 | Tee-Object bookstack_build.log
+
+# Start a container:
+docker run -dit \
+    --name MY_BOOKSTACK_CONTAINER_NAME \
+    --ip IP_ADDRESS --network DOCKER_NETWORK \
+    --hostname=MY_HOSTNAME \
+    --restart=unless-stopped \
+    --mount type=bind,source=SOURCE_DIRECTORY/.env,target=/var/www/bookstack/.env \
+    --mount type=bind,source=SOURCE_DIRECTORY/bookstack.conf,target=/etc/apache2/sites-available/bookstack.conf \
+    -v SOURCE_DIRECTORY:/var/www/bookstack/public/uploads \
+    -v SOURCE_DIRECTORY:/var/www/bookstack/storage/uploads \
+    bookstack:1.0</code></pre>
+
+
+
+<h2 class="wp-block-heading">Default login:</h2>
+
+
+
+<pre class="wp-block-code"><code>Default login email: admin@admin.com
+Default login password: password</code></pre>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>Set up Docker host with Ubuntu Server and mount disks</title>
 		<link>https://jameswsullivan.github.io/set-up-docker-host-with-ubuntu-server-and-mount-disks/</link>
 		
@@ -1183,226 +1390,6 @@ SSLCertificateKeyFile Your-Cert-Key-File-Path</code></pre>
 
 
 <p>You can choose either to use default-ssl.conf or nextcloud.conf, or a combination of both and use them for different purposes. I disabled default-ssl.conf by renaming it to default-ssl.conf.bak, and left nextcloud.conf active which has all my configs.</p>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Self-host Nextcloud</title>
-		<link>https://jameswsullivan.github.io/self-host-nextcloud/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Sat, 18 Sep 2021 11:43:43 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[Apache]]></category>
-		<category><![CDATA[Docker]]></category>
-		<category><![CDATA[Hosting]]></category>
-		<category><![CDATA[Linux]]></category>
-		<category><![CDATA[Nextcloud]]></category>
-		<category><![CDATA[Self-Hosting]]></category>
-		<category><![CDATA[Ubuntu]]></category>
-		<category><![CDATA[Web Hosting]]></category>
-		<guid isPermaLink="false">https://www.alexchen.net/?p=1597</guid>
-
-					<description><![CDATA[Take back control of your privacy with self-hosted Nextcloud.]]></description>
-										<content:encoded><![CDATA[
-<p><em>I used to trust Google more when they were under the leadership of Larry Page and Sergey Brin and held up their &#8220;Don&#8217;t Do Evil&#8221; motto, and I used to admire them more when they had the balls to stand up against China&#8217;s censorship. But nowadays Google has become more of a censorship giant itself by implementing the radical left&#8217;s communist political agenda, and its ever increasing intrusion to our privacy is just too concerning. Luckily, there are plenty open source alternatives.</em></p>
-
-
-
-<h2 class="wp-block-heading">Installation:</h2>
-
-
-
-<p><strong>Environment:</strong> Windows Server 2019 + Hyper-V</p>
-
-
-
-<p><strong>Linux version:</strong> Ubuntu 20.04 LTS</p>
-
-
-
-<p><strong>LAMP Stack:</strong> PHP8.0, MariaDB, Apache</p>
-
-
-
-<p>My main reference sources are from <a rel="noreferrer noopener" href="https://docs.nextcloud.com/server/latest/admin_manual/installation/example_ubuntu.html" data-type="URL" data-id="https://docs.nextcloud.com/server/latest/admin_manual/installation/example_ubuntu.html" target="_blank">this article</a> and <a rel="noreferrer noopener" href="https://www.itzgeek.com/how-tos/linux/debian/how-to-install-apache-mariadb-php-lamp-stack-on-debian-11.html" data-type="URL" data-id="https://www.itzgeek.com/how-tos/linux/debian/how-to-install-apache-mariadb-php-lamp-stack-on-debian-11.html" target="_blank">this article</a>, however, some commands are slightly modified to fit my needs.</p>
-
-
-
-<pre class="wp-block-code"><code># Become root
-sudo -i
-
-# Install Apache
-apt-get update -y
-apt-get install -y apache2 apache2-utils
-systemctl status apache2
-# After installation, visit http://localhost/ to verify that Apache is running.
-
-# Install MariaDB
-apt-get install -y mariadb-server mariadb-client
-systemctl status mariadb
-mysql_secure_installation
-
-# Install PHP8.0 (the default PHP version might be PHP7.4, I completely skipped what was in the original article and went with PHP8.0)
-apt-get install software-properties-common -y
-add-apt-repository ppa:ondrej/php
-apt-get update -y
-apt-get install php8.0 libapache2-mod-php8.0 -y
-systemctl restart apache2
-
-apt-get update -y
-apt-get install php8.0-fpm libapache2-mod-fcgid -y
-a2enmod proxy_fcgi setenvif
-a2enconf php8.0-fpm
-systemctl restart apache2
-
-# Install other modules for Nextcloud
-apt-get install -y php8.0-gd php8.0-mysql php8.0-curl php8.0-mbstring php8.0-intl
-apt-get install -y php8.0-gmp php8.0-bcmath php-imagick php8.0-xml php8.0-zip
-
-
-# Create MySQL database
-sudo /etc/init.d/mysql start
-mysql -u root -p
-
-CREATE USER 'username'@'localhost' IDENTIFIED BY 'password';
-
-# In the next query, you'll need to remove all the dashes because WordPress's code block editor has problems with the the charset portion of the query by giving a "Publishing failed. The response is not a valid JSON response." error.
-
-CREATE DATABASE IF NOT EXISTS nextcloud CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-
-GRANT ALL PRIVILEGES ON nextcloud.* TO 'username'@'localhost';
-FLUSH PRIVILEGES;
-
-quit;</code></pre>
-
-
-
-<p>Download Nextcloud server package from <a rel="noreferrer noopener" href="https://nextcloud.com/install/" target="_blank" data-type="URL" data-id="https://nextcloud.com/install/">here</a>.</p>
-
-
-
-<pre class="wp-block-code"><code># My Downloads folder path is /home/*username*/Downloads, and the current version Nextcloud build I use is nextcloud-22.1.1.zip .
-cd /home/*username*/Downloads
-unzip nextcloud-22.1.1.zip
-
-# Copy to Apache document root
-cp -r nextcloud /var/www/html</code></pre>
-
-
-
-<p>Next, configure the Apache web server. <a rel="noreferrer noopener" href="https://docs.nextcloud.com/server/latest/admin_manual/installation/source_installation.html#apache-configuration-label" data-type="URL" data-id="https://docs.nextcloud.com/server/latest/admin_manual/installation/source_installation.html#apache-configuration-label" target="_blank">Reference article</a>.</p>
-
-
-
-<pre class="wp-block-code"><code># Use your favorite text editor in Linux to create the nextcloud.conf file under /etc/apache2/sites-available/nextcloud.conf .
-
-# I used directory based installation, so I added the following in nextcloud.conf
-
-Alias /nextcloud "/var/www/html/nextcloud/"
-
-&lt;Directory /var/www/html/nextcloud/>
-  Require all granted
-  AllowOverride All
-  Options FollowSymLinks MultiViews
-
-  &lt;IfModule mod_dav.c>
-    Dav off
-  &lt;/IfModule>
-&lt;/Directory>
-
-
-# Enable modules and sites
-a2ensite nextcloud.conf
-a2enmod rewrite
-a2enmod headers
-a2enmod env
-a2enmod dir
-a2enmod mime
-a2enmod setenvif
-systemctl reload apache2
-
-
-# Enable SSL
-a2enmod ssl
-a2ensite default-ssl
-systemctl reload apache2
-
-# Change directory permission
-chown -R www-data:www-data /var/www/html/nextcloud/</code></pre>
-
-
-
-<p>Now, Nextcloud should be working, the next few steps are very straightforward through Nextcloud&#8217;s setup page.</p>
-
-
-
-<h2 class="wp-block-heading">Post-setup configs and troubleshooting:</h2>
-
-
-
-<ol>
-<li>Add Trusted Domain in Nextcloud&#8217;s config files. <a rel="noreferrer noopener" href="https://help.nextcloud.com/t/howto-add-a-new-trusted-domain/26" data-type="URL" data-id="https://help.nextcloud.com/t/howto-add-a-new-trusted-domain/26" target="_blank">Ref.</a></li>
-
-
-
-<li>Increase PHP memory_limit.</li>
-
-
-
-<li>View phpinfo.</li>
-</ol>
-
-
-
-<pre class="wp-block-code"><code># 1. In your nextcloud directory, /var/www/html/nextcloud/config , find the config.php file and edit the line with 'trusted_domain'. Assuming you'll access your nextcloud using 'localhost', '192.168.0.2', and 'my_nextcloud' , write the trusted_domain like below.
-
-  'trusted_domains' =&gt;
-  array (
-    0 =&gt; 'localhost',
-    1 =&gt; '192.168.0.29',
-    2 =&gt; 'my_nextcloud',
-  ),
-
-# 2. Change line memory_limit to a desired value in both /etc/php/8.0/fpm/php.ini and /etc/php/8.0/apache2/php.ini , e.g. memory_limit=512M, and then restart the services.
-
-service php8.0-fpm restart
-service apache2 restart
-
-# 3. Create a info.php file in document root to verify php info.
-
-cd /var/www/html/
-touch info.php
-
-# Add the following to info.php using your favorite text editor.
-
-&lt;?php phpinfo(); ?&gt;
-
-# Visit info.php in a browser to view phpinfo.</code></pre>
-
-
-
-<p>Useful MariaDB/MySQL commands:</p>
-
-
-
-<pre class="wp-block-code"><code># Find out usernames, databases, ports
-mysql -u root -p
-SELECT User FROM mysql.user;
-SHOW GLOBAL VARIABLES IKE 'PORT';
-SHOW DATABASES;</code></pre>
-
-
-
-<p>Disable (to not enforce) 2FA in Nextcloud:</p>
-
-
-
-<pre class="wp-block-code"><code># In file /var/www/html/nextcloud/config/config.php, change the following.
-
-‘twofactor_enforced’ =&gt; ‘false’</code></pre>
 ]]></content:encoded>
 					
 		
