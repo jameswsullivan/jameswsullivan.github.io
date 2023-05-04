@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/bookstack/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Mon, 01 May 2023 00:25:19 +0000</lastBuildDate>
+	<lastBuildDate>Thu, 04 May 2023 02:57:52 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -38,7 +38,7 @@
 
 					<description><![CDATA[Self-host BookStack with Docker.]]></description>
 										<content:encoded><![CDATA[
-<p>As I venture more and more into software development and homelab building, I found that I&#8217;m in need of a better way for my documentation because OneNote just doesn&#8217;t native support all my needs. After a bit research I found BookStack to be a good choice. Since <a href="https://github.com/jameswsullivan/selfhosted/tree/main/BookStack">this project</a> is on GitHub as part of my <a href="https://github.com/jameswsullivan/selfhosted">self-hosted application suite</a>, this article only serves as a documentation.</p>
+<p>As I venture more and more into software development and homelab building, I found that I&#8217;m in need of a better way for my documentation because OneNote just doesn&#8217;t natively support all my needs. After a bit research I found BookStack to be a good choice. Since <a href="https://github.com/jameswsullivan/selfhosted/tree/main/BookStack">this project</a> is on GitHub as part of my <a href="https://github.com/jameswsullivan/selfhosted">self-hosted application suite</a>, this article only serves as a documentation.</p>
 
 
 

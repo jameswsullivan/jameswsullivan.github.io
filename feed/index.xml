@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Mon, 01 May 2023 00:25:19 +0000</lastBuildDate>
+	<lastBuildDate>Thu, 04 May 2023 03:42:23 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -38,7 +38,7 @@
 
 					<description><![CDATA[Self-host BookStack with Docker.]]></description>
 										<content:encoded><![CDATA[
-<p>As I venture more and more into software development and homelab building, I found that I&#8217;m in need of a better way for my documentation because OneNote just doesn&#8217;t native support all my needs. After a bit research I found BookStack to be a good choice. Since <a href="https://github.com/jameswsullivan/selfhosted/tree/main/BookStack">this project</a> is on GitHub as part of my <a href="https://github.com/jameswsullivan/selfhosted">self-hosted application suite</a>, this article only serves as a documentation.</p>
+<p>As I venture more and more into software development and homelab building, I found that I&#8217;m in need of a better way for my documentation because OneNote just doesn&#8217;t natively support all my needs. After a bit research I found BookStack to be a good choice. Since <a href="https://github.com/jameswsullivan/selfhosted/tree/main/BookStack">this project</a> is on GitHub as part of my <a href="https://github.com/jameswsullivan/selfhosted">self-hosted application suite</a>, this article only serves as a documentation.</p>
 
 
 
@@ -334,6 +334,44 @@ Default login password: password</code></pre>
 
 <li>If you have or have access to better tools &#8211; such as a laser cutter, you can probably create more ventilation by slotting the upper panel around the heatsink areas without adding an active cooler. I thought about doing it this way but my access to a proper cutter is limited so I changed course. Nevertheless, it&#8217;s cooling after all, as long as the temperature is under control there are plenty of room for innovation.</li>
 </ul>
+
+
+
+<h2 class="wp-block-heading">Pictures:</h2>
+
+
+
+<figure class="wp-block-gallery has-nested-images columns-default is-cropped wp-block-gallery-1 is-layout-flex">
+<figure class="wp-block-image size-large is-style-default"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD01-scaled.jpg"><img decoding="async" width="1024" height="306" data-id="2370"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD01-1024x306.jpg" alt="" class="wp-image-2370" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD01-1024x306.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD01-300x90.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD01-768x229.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD01-1536x459.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD01-2048x612.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD01-700x209.jpg 700w" sizes="(max-width: 1024px) 100vw, 1024px" /></a></figure>
+
+
+
+<figure class="wp-block-image size-large"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD02-scaled.jpg"><img decoding="async" width="1024" height="576" data-id="2371"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD02-1024x576.jpg" alt="" class="wp-image-2371" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD02-1024x576.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD02-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD02-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD02-1536x864.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD02-2048x1152.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD02-700x394.jpg 700w" sizes="(max-width: 1024px) 100vw, 1024px" /></a></figure>
+
+
+
+<figure class="wp-block-image size-large"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD03-scaled.jpg"><img decoding="async" width="1024" height="576" data-id="2375"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD03-1024x576.jpg" alt="" class="wp-image-2375" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD03-1024x576.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD03-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD03-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD03-1536x864.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD03-2048x1152.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD03-700x394.jpg 700w" sizes="(max-width: 1024px) 100vw, 1024px" /></a></figure>
+
+
+
+<figure class="wp-block-image size-large"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD04-scaled.jpg"><img decoding="async" width="1024" height="576" data-id="2373"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD04-1024x576.jpg" alt="" class="wp-image-2373" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD04-1024x576.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD04-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD04-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD04-1536x864.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD04-2048x1152.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD04-700x394.jpg 700w" sizes="(max-width: 1024px) 100vw, 1024px" /></a></figure>
+
+
+
+<figure class="wp-block-image size-large"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD05-scaled.jpg"><img decoding="async" width="1024" height="576" data-id="2372"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD05-1024x576.jpg" alt="" class="wp-image-2372" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD05-1024x576.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD05-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD05-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD05-1536x864.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD05-2048x1152.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD05-700x394.jpg 700w" sizes="(max-width: 1024px) 100vw, 1024px" /></a></figure>
+
+
+
+<figure class="wp-block-image size-large"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD06-scaled.jpg"><img decoding="async" width="1024" height="576" data-id="2374"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD06-1024x576.jpg" alt="" class="wp-image-2374" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD06-1024x576.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD06-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD06-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD06-1536x864.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD06-2048x1152.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD06-700x394.jpg 700w" sizes="(max-width: 1024px) 100vw, 1024px" /></a></figure>
+
+
+
+<figure class="wp-block-image size-large"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD07-scaled.jpg"><img decoding="async" width="1024" height="576" data-id="2376"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD07-1024x576.jpg" alt="" class="wp-image-2376" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD07-1024x576.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD07-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD07-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD07-1536x864.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD07-2048x1152.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD07-700x394.jpg 700w" sizes="(max-width: 1024px) 100vw, 1024px" /></a></figure>
+
+
+
+<figure class="wp-block-image size-large"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD08-scaled.jpg"><img decoding="async" width="1024" height="576" data-id="2377"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD08-1024x576.jpg" alt="" class="wp-image-2377" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD08-1024x576.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD08-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD08-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD08-1536x864.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD08-2048x1152.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD08-700x394.jpg 700w" sizes="(max-width: 1024px) 100vw, 1024px" /></a></figure>
+</figure>
 ]]></content:encoded>
 					
 		
