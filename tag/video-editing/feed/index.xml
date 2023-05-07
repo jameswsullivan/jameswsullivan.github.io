@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/video-editing/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Mon, 03 Apr 2023 05:31:15 +0000</lastBuildDate>
+	<lastBuildDate>Sat, 06 May 2023 16:54:46 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -20,6 +20,96 @@
 	1	</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=6.2</generator>
 	<item>
+		<title>将DVD制作成压缩视频</title>
+		<link>https://jameswsullivan.github.io/dvd-rip-and-subtitle-extraction/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sun, 02 Aug 2009 17:42:00 +0000</pubDate>
+				<category><![CDATA[archive]]></category>
+		<category><![CDATA[Video Editing]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2385</guid>
+
+					<description><![CDATA[DVD压缩以及字母提取]]></description>
+										<content:encoded><![CDATA[
+<blockquote class="wp-block-quote">
+<p>此文系早年博客的备份，仅用于参考学习。<br>This article is an archival copy of my early years&#8217; blog posts.</p>
+</blockquote>
+
+
+
+<p>日前从老姐那儿借来一套纪录片儿——《动物王国》，7张DVD，里面有很多有关哈士奇的内容，我想收藏，可直接拷贝又无奈DVD文件实在太大，复刻DVD光盘又觉得不太值。于是开始着手研究DVD的压缩转换，希望能做出和verycd中的资源相类似的压缩视频。</p>
+
+
+
+<h2 class="wp-block-heading">多个VOB文件的合并：</h2>
+
+
+
+<p>DVD光盘中经常一段影片被分为几个vob文件，这时可能需要将这几个文件合并成一个大文件后再进行压缩。这里我使用的是：<a href="https://www.videohelp.com/software/VOBMerge" target="_blank" rel="noreferrer noopener">VOBMerge</a>。它的操作很简便，上手即会，合并速度也很快。</p>
+
+
+
+<h2 class="wp-block-heading">视频文件的压缩：</h2>
+
+
+
+<p>回想我以前用过的几个视频压缩转换工具，功能均不全面并且压缩速度很慢，不适合如今的批量转换。经过在网上的不懈搜索，我发现一个叫<a href="https://www.erightsoft.com/home.html" target="_blank" rel="noreferrer noopener">SUPER（点击链接至官网）</a>的工具，它是一款国外免费软件，除了没有对中文的支持外，近乎没什么缺点。它支持大多数的常见音视频编码方式，转换速度快，压缩比大，只要设置得当，几乎不损失视频质量。</p>
+
+
+
+<p>软件下载页（拖至页面最下方download SUPER setup file）：<a href="https://www.erightsoft.com/home.html" target="_blank" rel="noreferrer noopener">https://www.erightsoft.com/home.html</a></p>
+
+
+
+<p>说起选项的设置，我在这里想简单提一提使用中遇到的几个问题（以转换成mpeg-4编码的avi文件为例）。</p>
+
+
+
+<ol>
+<li>编码器选择FFmpeg，不要选择MEncoder，因为选择MEncoder后压缩出来的视频有很严重的横纹。上网查了一下，说是这种问题是由于场的设置而导致的，但在软件里我没有找到相关设置，而我对音视频方面的专业知识也知之甚少，所以无法给出确切的答案。选择FFmpeg则无横纹出现了。&nbsp;</li>
+
+
+
+<li>在output audio codec选项里，如果DVD本身的音轨并不特殊，那么选择mp3是比较安全的。我试过AC3和AAC，压缩出来的文件音视均不同步，而且不知何故画面跳帧现象十分严重。至于这个现象的原因，我还没弄清楚，我们一起学习吧。&nbsp;</li>
+
+
+
+<li>根据源视频的清晰度，可以适当改变码率来调整清晰度。</li>
+
+
+
+<li>如果想只保留音频或只保留视频，可将音频流或视频流选择Disable，这样也可以用来做音视频的提取工作。</li>
+</ol>
+
+
+
+<h2 class="wp-block-heading">DVD字幕的提取：</h2>
+
+
+
+<p>完成了视频的压缩，还需要解决字幕问题，即提取DVD光盘中的字幕，并将其转换成idx/sub字幕。当然，转换成了sub字幕之后，再利用ocr工具制作srt等类型的字幕也就好办了。这里我用到的工具是：<a href="https://www.softpedia.com/get/Multimedia/Video/Other-VIDEO-Tools/VobSub-Ripper-Wizard.shtml" target="_blank" rel="noreferrer noopener">VobSub Ripper Wizard</a>。打开软件后，只需选定DVD中相应的IFO文件，选择目的文件夹，按下一步即可开始生成sub文件。</p>
+
+
+
+<p>这里做一点补充：如此生成的字幕文件，和DVD光盘当中源文件的时间线是相同的，即在合并vob文件时要和源光盘中的影片段落划分一致；还有，如果对视频文件进行了合并、分割、剪辑等操作，注意要对字幕文件做调整。</p>
+
+
+
+<p>在做这件事情的时候，我回想起了当年在学校时做简单的视频采编工作的情景，也想起了几款经典的软件，在这里补一笔：TMPGEnc（俗称小日本儿），Canopus Procoder，EDIUS 5（强大的非线编工具）。</p>
+
+
+
+<p>注：本文纯粹面向菜鸟，旨在将视频压缩的实际经验与方法发上来分享。本人不太清楚音视频方面的知识，所以文中有很多东西一定讲的都不清楚不专业，音视频编码等方面一定也都有很多错误的用词，请明白的读者加以指正。</p>
+
+
+
+<p>Tag: DVD光盘压缩，DVD电影压缩，DVD压缩，DVD转换成avi，DVD视频转换，DVD音频提取，DVD视频提取，批量转换电影格式，批量压缩电影，制作压缩视频，dvd文件合并，vob文件合并，dvd字幕提取，dvd字幕转换，sub字幕制作，SUPER下载，SUPER压缩后音视频不同步，压缩后视频出现横纹</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>播放视频时显示双字幕</title>
 		<link>https://jameswsullivan.github.io/dual-language-subtitle/</link>
 		
