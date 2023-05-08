@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/linux/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Mon, 08 May 2023 03:01:16 +0000</lastBuildDate>
+	<lastBuildDate>Mon, 08 May 2023 03:16:14 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -135,6 +135,18 @@ service nginx restart</code></pre>
 
 <li>Browser&#8217;s cache &amp; cookies might need to be cleared for the new cert to take effect.</li>
 </ul>
+
+
+
+<h2 class="wp-block-heading">Troubleshooting:</h2>
+
+
+
+<p>When generating the self-signed certificate, the <code>subjectAltName</code> must be specified, otherwise you&#8217;ll likely encounter this error when scanning the QR code. (<a href="https://community.passbolt.com/t/error-setting-up-mobile-app/5875" target="_blank" rel="noreferrer noopener">See this post.</a>)</p>
+
+
+
+<pre class="wp-block-code"><code>There was an error during transfer update(Something went wrong!)</code></pre>
 ]]></content:encoded>
 					
 		
