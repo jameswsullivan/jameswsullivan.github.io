@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/self-hosting/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Sun, 07 May 2023 20:34:32 +0000</lastBuildDate>
+	<lastBuildDate>Mon, 08 May 2023 03:01:16 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -20,6 +20,127 @@
 	1	</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=6.2</generator>
 	<item>
+		<title>Self-host Passbolt</title>
+		<link>https://jameswsullivan.github.io/self-host-passbolt/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Mon, 08 May 2023 02:57:53 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[notes]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[Linux]]></category>
+		<category><![CDATA[Nginx]]></category>
+		<category><![CDATA[Passbolt]]></category>
+		<category><![CDATA[Password Manager]]></category>
+		<category><![CDATA[Self-Hosting]]></category>
+		<category><![CDATA[Web Hosting]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2427</guid>
+
+					<description><![CDATA[Self-host the Passbolt password manager using self-signed certificate.]]></description>
+										<content:encoded><![CDATA[
+<h2 class="wp-block-heading">Background:</h2>
+
+
+
+<ul>
+<li>The Passbolt instance is locally hosted and only available in my homelab&#8217;s LAN environment. It&#8217;s not exposed to the internet.</li>
+
+
+
+<li>The instance uses a self-signed certificate. See <a href="https://help.passbolt.com/faq/hosting/mobile-faq" target="_blank" rel="noreferrer noopener">official FAQ here</a>.</li>
+
+
+
+<li>My test environment: Windows, Ubuntu Server 22.04 LTS, Pixel 5 phone with the Passbolt app. (<a href="https://help.passbolt.com/faq/hosting/how-to-import-ssl-certificate-on-mobile" target="_blank" rel="noreferrer noopener">Install self-signed certificate on Android</a>.)</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading">Setup:</h2>
+
+
+
+<pre class="wp-block-code"><code># Passbolt Docker image.
+
+pull passbolt/passbolt
+
+
+# Start the container.
+
+docker run -dit \
+    --name=YOUR_CONTAINER_NAME \
+    --ip IP_ADDRESS --network YOUR_DOCKER_NETWORK \
+    --hostname=YOUR_PASSBOLT_HOSTNAME \
+    --restart=unless-stopped \
+    -e DATASOURCES_DEFAULT_HOST=YOUR_DATABASE_SERVER \
+    -e DATASOURCES_DEFAULT_PASSWORD=YOUR_DB_PASSWORD \
+    -e DATASOURCES_DEFAULT_USERNAME=YOUR_DB_USER \
+    -e DATASOURCES_DEFAULT_DATABASE=YOUR_PASSBOLT_DB_NAME \
+    -e APP_FULL_BASE_URL=https://YOUR_PASSBOLT_APP_URL/ \
+    passbolt/passbolt
+
+
+# Generate self-signed certificate
+
+openssl req -x509 \
+    -newkey rsa:4096 \
+    -days SPECIFY_YOUR_OWN \
+    -subj "/C=YOUR_COUNTRY/ST=YOUR_STATE/L=YOUR_CITY/O=YOUR_ORG/OU=YOUR_OU/CN=YOUR_PASSBOLT_APP_URL/" \
+    -nodes \
+    -addext "subjectAltName = DNS:YOUR_PASSBOLT_APP_URL" \
+    -keyout passbolt_self_signed_key.pem \
+    -out passbolt_self_signed_cert.pem
+
+
+# Create your first admin user
+
+docker exec -it YOUR_CONTAINER_NAME bash
+
+su -m -c "/usr/share/php/passbolt/bin/cake passbolt register_user -u YOUR_ADMIN_USER@YOUR_DOMAIN.COM -f YOUR_FIRSTNAME -l YOUR_LASTNAME -r admin" -s /bin/sh www-data
+
+
+# Edit <em><strong>/etc/nginx/snippets/passbolt-ssl.conf</strong></em> to point to your self-generated certificates.
+
+apt-get install nano -y
+nano /etc/nginx/snippets/passbolt-ssl.conf
+
+
+# Restart nginx
+
+service nginx restart</code></pre>
+
+
+
+<h2 class="wp-block-heading">Install the certificates:</h2>
+
+
+
+<ul>
+<li>Import the <code>passbolt_self_signed_cert.pem</code> certificate into Windows&#8217; <code>Trusted Root Certification Authorities</code>.</li>
+
+
+
+<li>On Android devices, go to<br><code>Security &amp; privacy - Encryption &amp; credentials - Install a certificate - CA certificate - Install anyway</code><br>Browse to the passbolt_self_signed_cert.pem cert file and install it.</li>
+
+
+
+<li><a href="https://help.passbolt.com/faq/hosting/mobile-faq">Official FAQ on generating self-signed cert.</a></li>
+
+
+
+<li><a href="https://help.passbolt.com/faq/hosting/how-to-import-ssl-certificate-on-mobile">Official FAQ on installing cert on Android devices.</a></li>
+
+
+
+<li>Browser&#8217;s cache &amp; cookies might need to be cleared for the new cert to take effect.</li>
+</ul>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>Docker Containerization of Koha ILS Software</title>
 		<link>https://jameswsullivan.github.io/docker-containerization-of-koha-ils-software/</link>
 		
@@ -196,7 +317,7 @@ echo -e "\n\nKoha Password: $koha_password"</code></pre>
 
 
 
-<p>Keywords: Install Koha ILS on Ubuntu 22.04 LTS, Install Koha ILS on Docker</p>
+<p>Keywords: Install Koha ILS on Ubuntu 22.04 LTS, Install Koha ILS on Docker, Dockerizing Koha ILS, Containerizing Koha ILS</p>
 ]]></content:encoded>
 					
 		
@@ -1260,137 +1381,6 @@ docker run -dit --name PostgreSQL_DEV --network docker_dev_net --ip 192.168.1.10
 
 
 <p></p>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Set up Docker on Ubuntu Server</title>
-		<link>https://jameswsullivan.github.io/set-up-docker-on-ubuntu-server/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Tue, 21 Sep 2021 06:14:07 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[Docker]]></category>
-		<category><![CDATA[Hosting]]></category>
-		<category><![CDATA[Linux]]></category>
-		<category><![CDATA[Self-Hosting]]></category>
-		<category><![CDATA[Standard Notes]]></category>
-		<category><![CDATA[Ubuntu]]></category>
-		<guid isPermaLink="false">https://www.alexchen.net/?p=1638</guid>
-
-					<description><![CDATA[Setting up Ubuntu Server, SSH, UFW, Nginx, and Docker.]]></description>
-										<content:encoded><![CDATA[
-<h2 class="wp-block-heading">Environment: Windows Server 2019, Hyper-V, Ubuntu Server 20.04.3 LTS.</h2>
-
-
-
-<p>1. After Ubuntu Server is installed on a VM (with a clean and minimum installation without any preloaded packages), set up Docker and OpenSSH.</p>
-
-
-
-<pre class="wp-block-code"><code># Install OpenSSH
-apt upgrade
-apt update
-apt install openssh-server
-
-# Check SSH Status
-systemctl status ssh
-
-# Allow ssh over UFW firewall
-ufw allow ssh</code></pre>
-
-
-
-<p>2. Enable UFW, check status, and configure rules.</p>
-
-
-
-<pre class="wp-block-code"><code># Enable UFW
-ufw enable
-
-# Check status and rules
-ufw status
-
-# Check status and make results numbered
-ufw status numbered
-
-# Disable UFW
-ufw disable
-
-# Block IP
-ufw deny from IP-Address
-
-# Block by subnet
-ufw deny from IP/CIDR
-
-# Block connections on interface
-ufw deny in on eth0 from IP-Address
-
-# Allow commands:
-ufw allow from IP-Address
-ufw allow in on eth0 from IP-Address
-
-# Delete rule
-ufw status numbered
-ufw delete &#91;number]
-
-# Allow by protocol
-ufw allow from IP-Address proto tcp to any port 22
-ufw allow from IP/CIDR proto tcp to any port 22
-ufw allow proto tcp from any to any port 80,443</code></pre>
-
-
-
-<p>3. Disable ipv6 on Ubuntu Server.</p>
-
-
-
-<pre class="wp-block-code"><code># Add
-net.ipv6.conf.all.disable_ipv6=1
-net.ipv6.conf.default.disable_ipv6=1
-net.ipv6.conf.lo.disable_ipv6=1
-# to file /etc/sysctl.conf</code></pre>
-
-
-
-<p>4. Reduce Ubuntu shutdown time.</p>
-
-
-
-<pre class="wp-block-code"><code># Edit /etc/systemd/system.conf and uncomment DefaultTimeoutStopSec=90s and set it to a desired value
-
-DefaultTimeoutStopSec=15s</code></pre>
-
-
-
-<p>5. Install Docker</p>
-
-
-
-<pre class="wp-block-code"><code># Remove existing Docker installations, if any
-apt remove docker docker-engine docker.io containerd runc
-
-# Install using the repository
-apt update
-apt install apt-transport-https ca-certificates curl gnupg lsb-release
-
-# Add Docker's official GPG key
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-
-# Set up stable repository
-echo \
-"deb &#91;arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
-$(lsb_release -cs) stable" \
-| sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-
-# Install Docker engine
-apt update
-apt install docker-ce docker-ce-cli containerd.io
-
-# Verify that Docker Engine is correctly installed
-docker version</code></pre>
 ]]></content:encoded>
 					
 		

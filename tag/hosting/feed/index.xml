@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/hosting/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Sun, 07 May 2023 20:34:32 +0000</lastBuildDate>
+	<lastBuildDate>Mon, 08 May 2023 03:01:16 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -20,6 +20,127 @@
 	1	</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=6.2</generator>
 	<item>
+		<title>Self-host Passbolt</title>
+		<link>https://jameswsullivan.github.io/self-host-passbolt/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Mon, 08 May 2023 02:57:53 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[notes]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[Linux]]></category>
+		<category><![CDATA[Nginx]]></category>
+		<category><![CDATA[Passbolt]]></category>
+		<category><![CDATA[Password Manager]]></category>
+		<category><![CDATA[Self-Hosting]]></category>
+		<category><![CDATA[Web Hosting]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2427</guid>
+
+					<description><![CDATA[Self-host the Passbolt password manager using self-signed certificate.]]></description>
+										<content:encoded><![CDATA[
+<h2 class="wp-block-heading">Background:</h2>
+
+
+
+<ul>
+<li>The Passbolt instance is locally hosted and only available in my homelab&#8217;s LAN environment. It&#8217;s not exposed to the internet.</li>
+
+
+
+<li>The instance uses a self-signed certificate. See <a href="https://help.passbolt.com/faq/hosting/mobile-faq" target="_blank" rel="noreferrer noopener">official FAQ here</a>.</li>
+
+
+
+<li>My test environment: Windows, Ubuntu Server 22.04 LTS, Pixel 5 phone with the Passbolt app. (<a href="https://help.passbolt.com/faq/hosting/how-to-import-ssl-certificate-on-mobile" target="_blank" rel="noreferrer noopener">Install self-signed certificate on Android</a>.)</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading">Setup:</h2>
+
+
+
+<pre class="wp-block-code"><code># Passbolt Docker image.
+
+pull passbolt/passbolt
+
+
+# Start the container.
+
+docker run -dit \
+    --name=YOUR_CONTAINER_NAME \
+    --ip IP_ADDRESS --network YOUR_DOCKER_NETWORK \
+    --hostname=YOUR_PASSBOLT_HOSTNAME \
+    --restart=unless-stopped \
+    -e DATASOURCES_DEFAULT_HOST=YOUR_DATABASE_SERVER \
+    -e DATASOURCES_DEFAULT_PASSWORD=YOUR_DB_PASSWORD \
+    -e DATASOURCES_DEFAULT_USERNAME=YOUR_DB_USER \
+    -e DATASOURCES_DEFAULT_DATABASE=YOUR_PASSBOLT_DB_NAME \
+    -e APP_FULL_BASE_URL=https://YOUR_PASSBOLT_APP_URL/ \
+    passbolt/passbolt
+
+
+# Generate self-signed certificate
+
+openssl req -x509 \
+    -newkey rsa:4096 \
+    -days SPECIFY_YOUR_OWN \
+    -subj "/C=YOUR_COUNTRY/ST=YOUR_STATE/L=YOUR_CITY/O=YOUR_ORG/OU=YOUR_OU/CN=YOUR_PASSBOLT_APP_URL/" \
+    -nodes \
+    -addext "subjectAltName = DNS:YOUR_PASSBOLT_APP_URL" \
+    -keyout passbolt_self_signed_key.pem \
+    -out passbolt_self_signed_cert.pem
+
+
+# Create your first admin user
+
+docker exec -it YOUR_CONTAINER_NAME bash
+
+su -m -c "/usr/share/php/passbolt/bin/cake passbolt register_user -u YOUR_ADMIN_USER@YOUR_DOMAIN.COM -f YOUR_FIRSTNAME -l YOUR_LASTNAME -r admin" -s /bin/sh www-data
+
+
+# Edit <em><strong>/etc/nginx/snippets/passbolt-ssl.conf</strong></em> to point to your self-generated certificates.
+
+apt-get install nano -y
+nano /etc/nginx/snippets/passbolt-ssl.conf
+
+
+# Restart nginx
+
+service nginx restart</code></pre>
+
+
+
+<h2 class="wp-block-heading">Install the certificates:</h2>
+
+
+
+<ul>
+<li>Import the <code>passbolt_self_signed_cert.pem</code> certificate into Windows&#8217; <code>Trusted Root Certification Authorities</code>.</li>
+
+
+
+<li>On Android devices, go to<br><code>Security &amp; privacy - Encryption &amp; credentials - Install a certificate - CA certificate - Install anyway</code><br>Browse to the passbolt_self_signed_cert.pem cert file and install it.</li>
+
+
+
+<li><a href="https://help.passbolt.com/faq/hosting/mobile-faq">Official FAQ on generating self-signed cert.</a></li>
+
+
+
+<li><a href="https://help.passbolt.com/faq/hosting/how-to-import-ssl-certificate-on-mobile">Official FAQ on installing cert on Android devices.</a></li>
+
+
+
+<li>Browser&#8217;s cache &amp; cookies might need to be cleared for the new cert to take effect.</li>
+</ul>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>Docker Containerization of Koha ILS Software</title>
 		<link>https://jameswsullivan.github.io/docker-containerization-of-koha-ils-software/</link>
 		
@@ -196,7 +317,7 @@ echo -e "\n\nKoha Password: $koha_password"</code></pre>
 
 
 
-<p>Keywords: Install Koha ILS on Ubuntu 22.04 LTS, Install Koha ILS on Docker</p>
+<p>Keywords: Install Koha ILS on Ubuntu 22.04 LTS, Install Koha ILS on Docker, Dockerizing Koha ILS, Containerizing Koha ILS</p>
 ]]></content:encoded>
 					
 		
@@ -1286,188 +1407,6 @@ apt install docker-ce docker-ce-cli containerd.io
 
 # Verify that Docker Engine is correctly installed
 docker version</code></pre>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Self-signed SSL Certificate, Apache, and Nextcloud</title>
-		<link>https://jameswsullivan.github.io/self-signed-ssl-certificate-apache-and-nextcloud/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Sun, 19 Sep 2021 20:58:07 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[Apache]]></category>
-		<category><![CDATA[Docker]]></category>
-		<category><![CDATA[Hosting]]></category>
-		<category><![CDATA[Linux]]></category>
-		<category><![CDATA[Nextcloud]]></category>
-		<category><![CDATA[Self-Hosting]]></category>
-		<category><![CDATA[SSL]]></category>
-		<category><![CDATA[Ubuntu]]></category>
-		<guid isPermaLink="false">https://www.alexchen.net/?p=1622</guid>
-
-					<description><![CDATA[Perfecting SSL configuration on Nextcloud server.]]></description>
-										<content:encoded><![CDATA[
-<p>In my last blog post about bringing up a self-hosted Nextcloud setup, everything went well until it reached the SSL cert and configuration part. The instructions I found were all somehow missing some pieces or doing things a little bit differently than what I had expected, plus my own lack of in-depth understanding of SSL, I finally had my issues resolved with the help of these resources: <a rel="noreferrer noopener" href="https://stackoverflow.com/questions/46349459/chrome-neterr-cert-authority-invalid-error-on-self-signing-certificate-at-loca?rq=1" data-type="URL" data-id="https://stackoverflow.com/questions/46349459/chrome-neterr-cert-authority-invalid-error-on-self-signing-certificate-at-loca?rq=1" target="_blank">article 1</a>, <a rel="noreferrer noopener" href="https://alexanderzeitler.com/articles/Fixing-Chrome-missing_subjectAltName-selfsigned-cert-openssl/" data-type="URL" data-id="https://alexanderzeitler.com/articles/Fixing-Chrome-missing_subjectAltName-selfsigned-cert-openssl/" target="_blank">article 2</a>, <a rel="noreferrer noopener" href="https://superuser.com/questions/1631692/why-is-chrome-not-trusting-imported-self-signed-root-ca" data-type="URL" data-id="https://superuser.com/questions/1631692/why-is-chrome-not-trusting-imported-self-signed-root-ca" target="_blank">article 3</a>, <a rel="noreferrer noopener" href="https://www.youtube.com/watch?v=e8vMTlobW3c" data-type="URL" data-id="https://www.youtube.com/watch?v=e8vMTlobW3c" target="_blank">video</a>.</p>
-
-
-
-<h2 class="wp-block-heading">Issues<strong>:</strong></h2>
-
-
-
-<ul>
-<li>SSL/HTTPS won&#8217;t go into effect even if I&#8217;ve enabled SSL in Apache, generated the certs, and configured the config files.</li>
-
-
-
-<li>HTTPS goes into effect in Firefox but always said &#8220;Not Secure&#8221; or &#8220;Invalid&#8221; cert in Chrome.</li>
-
-
-
-<li>Chrome errors: &#8220;NET::ERR_CERT_AUTHORITY_INVALID&#8221;, &#8220;NET::ERR_CERT_COMMON_NAME_INVALID&#8221;</li>
-</ul>
-
-
-
-<h2 class="wp-block-heading">Solutions:</h2>
-
-
-
-<p>1. Originally, I followed this article to generate my certs, but the cert won&#8217;t get accepted by Chrome even if I&#8217;ve imported it into Trusted Root Certification Authorities store. The certificate generation procedures that worked are:</p>
-
-
-
-<pre class="wp-block-code"><code># Generate a Certificate Authority (CA)
-
-openssl genrsa -des3 -out nextcloudCA.key 2048
-# A password needs to be created after this command is run.
-
-openssl req -x509 -new -nodes -key nextcloudCA.key -sha256 -days 365 -out nextcloudCA.pem
-# A series of information will be asked after this command is run. You can customize your own or just follow whatever is in the &#91;dn] section below.
-
-openssl x509 -outform pem -in nextcloudCA.pem -out nextcloudCA.crt
-# Generate a crt file for future import. The pem file can also be used for import.
-
-# Prepare the v3.ext and config files.
-# cert.csr.cnf file
-&#91;req]
-default_bits = 2048
-prompt = no
-default_md = sha256
-distinguished_name = dn
-
-&#91;dn]
-C=Replace-with-Your-Info
-ST=Replace-with-Your-Info
-L=Replace-with-Your-Info
-O=Replace-with-Your-Info
-OU=Replace-with-Your-Info
-emailAddress=Replace-with-Your-Info
-CN=Replace-with-Your-Info
-
-# v3.ext file
-authorityKeyIdentifier=keyid,issuer
-basicConstraints=CA:FALSE
-keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
-subjectAltName = @alt_names
-
-&#91;alt_names]
-DNS.1 = Replace-with-Your-Info-Or-Delete-Line
-DNS.2 = Replace-with-Your-Info-Or-Delete-Line
-DNS.3 = Replace-with-Your-Info-Or-Delete-Line
-IP.1 = Replace-with-Your-Info-Or-Delete-Line
-IP.2 = Replace-with-Your-Info-Or-Delete-Line
-
-# Generate the domain name cert
-openssl req -new -sha256 -nodes -out nextcloudDNCert.csr -newkey rsa:2048 -keyout nextcloudDNCert.key -config cert.csr.cnf
-
-openssl x509 -req -in nextcloudDNCert.csr -CA nextcloudCA.crt -CAkey nextcloudCA.key -CAcreateserial -out nextcloudDNCert.crt -days 365 -sha256 -extfile v3.ext</code></pre>
-
-
-
-<p>2. Put your cert files (<strong>nextcloudDNCert.crt</strong> and <strong>nextcloudDNCert.key</strong>) in the directories that&#8217;s suitable for your setup, and modify your SSL config file or the nextcloud.conf file to point to the cert files. Sample config files can be downloaded here: <a rel="noreferrer noopener" href="https://github.com/jameswsullivan/blog-file-share/blob/main/sample.nextcloud.conf" target="_blank">sample.nextcloud.conf</a> .</p>
-
-
-
-<pre class="wp-block-code"><code># Under /etc/apache2/sites-available, modify nextcloud.conf .
-
-SSLCertificateFile Your-Cert-File-Path
-SSLCertificateKeyFile Your-Cert-Key-File-Path</code></pre>
-
-
-
-<p>3. Restart Apache service</p>
-
-
-
-<pre class="wp-block-code"><code>service apache2 restart</code></pre>
-
-
-
-<p>4. Import <strong>nextcloudCA.crt</strong> into your Trusted Root Certification Authorities store, clear your browser&#8217;s cookies, restart the browser and access your Nextcloud server again, this time the HTTPS padlock should be solid grey, no &#8220;Not Secure&#8221; and other errors.</p>
-
-
-
-<p>5. Explanation about the &#8220;NET::ERR_CERT_AUTHORITY_INVALID&#8221; and &#8220;NET::ERR_CERT_COMMON_NAME_INVALID&#8221; errors.</p>
-
-
-
-<p>&#8220;NET::ERR_CERT_AUTHORITY_INVALID&#8221; is due to how the certs were generated, when using <a rel="noreferrer noopener" href="https://betterprogramming.pub/how-to-create-trusted-ssl-certificates-for-your-local-development-13fd5aad29c6" data-type="URL" data-id="https://betterprogramming.pub/how-to-create-trusted-ssl-certificates-for-your-local-development-13fd5aad29c6" target="_blank">this method</a> to generate, I always got the error, but after I switched to the method written in #1 and the certs were properly imported, this error was gone.</p>
-
-
-
-<p>&#8220;NET::ERR_CERT_COMMON_NAME_INVALID&#8221; . Assuming you already put in the Common Name (which is your FQDN, e.g. nextcloud.mydomain.com) correctly when generating the certs and it still gave this error, check the @alt_names section above, make sure all the DNS.x and IP.x entries cover all your alt_name variants. Once I added stuff under the alt_names section correctly (for me it&#8217;s &#8220;localhost&#8221;, my server&#8217;s IP, and the &#8220;subdomain&#8221; URL I&#8217;d like to use in my own environment), the error was gone.</p>
-
-
-
-<p>6. Other issues and thoughts that emerged during the troubleshooting process.</p>
-
-
-
-<ol>
-<li>Some mentioned that Chrome versions played a role in accepting self-signed certs. But my issues were resolved without dealing with Chrome versions.</li>
-
-
-
-<li>I&#8217;ve seen posts mentioning the <code>chrome://flags/#allow-insecure-localhost</code> flag, but it didn&#8217;t apply to my scenario.</li>
-
-
-
-<li>Some articles say that self-signed certs won&#8217;t be deemed secure and valid by browsers/OSs/Chrome, which is not true if the certs are generated imported and generated correctly.</li>
-</ol>
-
-
-
-<p>7. Security hardening &#8211; forcing HTTPS, Strict-Transport-Security, and URL redirections. See <a href="https://github.com/jameswsullivan/blog-file-share/blob/main/sample.nextcloud.conf" data-type="URL" data-id="https://drive.google.com/file/d/1QQRGrROpZhrnDc-ET8mDUfj2EjtHzAnK/view?usp=sharing" target="_blank" rel="noreferrer noopener">sample.nextcloud.conf</a> and its comments for details.</p>
-
-
-
-<p>8. Apache&#8217;s SSL config files, which to use?</p>
-
-
-
-<p>Assuming your installation is very similar to mine, you&#8217;d now have 3 files under /etc/apache2/sites-available : 000-default.conf, default-ssl.conf, and nextcloud.conf . </p>
-
-
-
-<ul>
-<li>000-default.conf is a template for you to start with, not a live file to use.</li>
-
-
-
-<li>default-ssl.conf is the default Apache SSL config file.</li>
-
-
-
-<li>nextcloud.conf is the config file for Nextcloud.</li>
-</ul>
-
-
-
-<p>You can choose either to use default-ssl.conf or nextcloud.conf, or a combination of both and use them for different purposes. I disabled default-ssl.conf by renaming it to default-ssl.conf.bak, and left nextcloud.conf active which has all my configs.</p>
 ]]></content:encoded>
 					
 		

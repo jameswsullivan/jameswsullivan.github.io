@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/docker/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Sun, 07 May 2023 20:34:32 +0000</lastBuildDate>
+	<lastBuildDate>Mon, 08 May 2023 03:01:16 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -20,6 +20,127 @@
 	1	</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=6.2</generator>
 	<item>
+		<title>Self-host Passbolt</title>
+		<link>https://jameswsullivan.github.io/self-host-passbolt/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Mon, 08 May 2023 02:57:53 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[notes]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[Linux]]></category>
+		<category><![CDATA[Nginx]]></category>
+		<category><![CDATA[Passbolt]]></category>
+		<category><![CDATA[Password Manager]]></category>
+		<category><![CDATA[Self-Hosting]]></category>
+		<category><![CDATA[Web Hosting]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2427</guid>
+
+					<description><![CDATA[Self-host the Passbolt password manager using self-signed certificate.]]></description>
+										<content:encoded><![CDATA[
+<h2 class="wp-block-heading">Background:</h2>
+
+
+
+<ul>
+<li>The Passbolt instance is locally hosted and only available in my homelab&#8217;s LAN environment. It&#8217;s not exposed to the internet.</li>
+
+
+
+<li>The instance uses a self-signed certificate. See <a href="https://help.passbolt.com/faq/hosting/mobile-faq" target="_blank" rel="noreferrer noopener">official FAQ here</a>.</li>
+
+
+
+<li>My test environment: Windows, Ubuntu Server 22.04 LTS, Pixel 5 phone with the Passbolt app. (<a href="https://help.passbolt.com/faq/hosting/how-to-import-ssl-certificate-on-mobile" target="_blank" rel="noreferrer noopener">Install self-signed certificate on Android</a>.)</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading">Setup:</h2>
+
+
+
+<pre class="wp-block-code"><code># Passbolt Docker image.
+
+pull passbolt/passbolt
+
+
+# Start the container.
+
+docker run -dit \
+    --name=YOUR_CONTAINER_NAME \
+    --ip IP_ADDRESS --network YOUR_DOCKER_NETWORK \
+    --hostname=YOUR_PASSBOLT_HOSTNAME \
+    --restart=unless-stopped \
+    -e DATASOURCES_DEFAULT_HOST=YOUR_DATABASE_SERVER \
+    -e DATASOURCES_DEFAULT_PASSWORD=YOUR_DB_PASSWORD \
+    -e DATASOURCES_DEFAULT_USERNAME=YOUR_DB_USER \
+    -e DATASOURCES_DEFAULT_DATABASE=YOUR_PASSBOLT_DB_NAME \
+    -e APP_FULL_BASE_URL=https://YOUR_PASSBOLT_APP_URL/ \
+    passbolt/passbolt
+
+
+# Generate self-signed certificate
+
+openssl req -x509 \
+    -newkey rsa:4096 \
+    -days SPECIFY_YOUR_OWN \
+    -subj "/C=YOUR_COUNTRY/ST=YOUR_STATE/L=YOUR_CITY/O=YOUR_ORG/OU=YOUR_OU/CN=YOUR_PASSBOLT_APP_URL/" \
+    -nodes \
+    -addext "subjectAltName = DNS:YOUR_PASSBOLT_APP_URL" \
+    -keyout passbolt_self_signed_key.pem \
+    -out passbolt_self_signed_cert.pem
+
+
+# Create your first admin user
+
+docker exec -it YOUR_CONTAINER_NAME bash
+
+su -m -c "/usr/share/php/passbolt/bin/cake passbolt register_user -u YOUR_ADMIN_USER@YOUR_DOMAIN.COM -f YOUR_FIRSTNAME -l YOUR_LASTNAME -r admin" -s /bin/sh www-data
+
+
+# Edit <em><strong>/etc/nginx/snippets/passbolt-ssl.conf</strong></em> to point to your self-generated certificates.
+
+apt-get install nano -y
+nano /etc/nginx/snippets/passbolt-ssl.conf
+
+
+# Restart nginx
+
+service nginx restart</code></pre>
+
+
+
+<h2 class="wp-block-heading">Install the certificates:</h2>
+
+
+
+<ul>
+<li>Import the <code>passbolt_self_signed_cert.pem</code> certificate into Windows&#8217; <code>Trusted Root Certification Authorities</code>.</li>
+
+
+
+<li>On Android devices, go to<br><code>Security &amp; privacy - Encryption &amp; credentials - Install a certificate - CA certificate - Install anyway</code><br>Browse to the passbolt_self_signed_cert.pem cert file and install it.</li>
+
+
+
+<li><a href="https://help.passbolt.com/faq/hosting/mobile-faq">Official FAQ on generating self-signed cert.</a></li>
+
+
+
+<li><a href="https://help.passbolt.com/faq/hosting/how-to-import-ssl-certificate-on-mobile">Official FAQ on installing cert on Android devices.</a></li>
+
+
+
+<li>Browser&#8217;s cache &amp; cookies might need to be cleared for the new cert to take effect.</li>
+</ul>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>Docker Containerization of Koha ILS Software</title>
 		<link>https://jameswsullivan.github.io/docker-containerization-of-koha-ils-software/</link>
 		
@@ -196,7 +317,7 @@ echo -e "\n\nKoha Password: $koha_password"</code></pre>
 
 
 
-<p>Keywords: Install Koha ILS on Ubuntu 22.04 LTS, Install Koha ILS on Docker</p>
+<p>Keywords: Install Koha ILS on Ubuntu 22.04 LTS, Install Koha ILS on Docker, Dockerizing Koha ILS, Containerizing Koha ILS</p>
 ]]></content:encoded>
 					
 		
@@ -1216,111 +1337,6 @@ docker volume ls
 # Start the WEB_SERVER container with the volume just created
 
 docker run -dit --name WEB_SERVER --network docker_dev_net --ip 192.168.1.103 --mount source=my_smb_vol,destination=/SharedVolume -p 443:443 -p 80:80 -p 22:22 ubuntu</code></pre>
-
-
-
-<p></p>
-
-
-
-<p></p>
-
-
-
-<p></p>
-
-
-
-<p></p>
-
-
-
-<p></p>
-
-
-
-<p></p>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Ubuntu Server Docker Host and Docker Networking</title>
-		<link>https://jameswsullivan.github.io/ubuntu-server-docker-host-and-docker-networking/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Fri, 03 Feb 2023 04:19:00 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[Apache]]></category>
-		<category><![CDATA[Docker]]></category>
-		<category><![CDATA[Linux]]></category>
-		<category><![CDATA[Self-Hosting]]></category>
-		<category><![CDATA[Web Hosting]]></category>
-		<guid isPermaLink="false">https://www.alexchen.net/?p=2115</guid>
-
-					<description><![CDATA[This is the first installment of the Name-based Virtual Hosting Series.]]></description>
-										<content:encoded><![CDATA[
-<p>Since I started with my new job late last year I have been dealing quite bit with Docker, the majority of the applications at work are hosted and developed in a Docker environment, and even for personal projects Docker has made hosting and development much easier compared to using traditional VMs. But recently I came across a rather inconvenient issue with Docker Desktop for Windows when it comes to networking.</p>
-
-
-
-<p>The background is that my home lab&#8217;s network is well organized and controlled by IPs, access-lists, etc., via Cisco switches and routers, I needed my Docker host and dev containers to have static IP addresses and be within a specific IP range and add custom DNS records to my router to point to them. The Docker networking part is fairly straightforward, but what&#8217;s inconvenient is how Docker Desktop for Windows and WSL2 handle their networking part behind the scene. WSL2 gets its own vEthernet adapter with an IP in the 172.0.0.0 range and the containers get placed in a different 172.0.0.0 network segment and assigned with dynamic IPs and depending on how the Hyper-V and WSL2 backend handles the routing and switching, it&#8217;s rather difficult (if not impossible) to easily assign static IPs to the containers within the same IP segment as the host machine and make them part of the same subnet for easy access. After a couple of hours fiddling around with different solutions I basically gave up on it as it&#8217;s really not worth the time and efforts doing so, I opted to have a dedicated Hyper-V VM running Ubuntu Server as the Docker host on my home server.</p>
-
-
-
-<p>Since it&#8217;s Ubuntu Server, the networking part becomes very straightforward:</p>
-
-
-
-<p>The Docker host VM has its own static IP, e.g. 192.168.1.100/24. (The IP is assigned to interface <strong>eth0</strong> in Ubuntu.)</p>
-
-
-
-<pre class="wp-block-code"><code>ip address show eth0</code></pre>
-
-
-
-<p>Create an <strong><a href="https://docs.docker.com/network/ipvlan/" target="_blank" rel="noreferrer noopener">ipvlan</a></strong> network of the same subnet:</p>
-
-
-
-<pre class="wp-block-code"><code>docker network create --driver ipvlan --subnet=192.168.1.0/24 --gateway=192.168.1.1 -o ipvlan_mode=l2 -o parent=eth0 docker_dev_net</code></pre>
-
-
-
-<p>And then we can create containers using this network and assign static IPs to them:</p>
-
-
-
-<pre class="wp-block-code"><code># I'm using the ubuntu/mysql Docker Image here as an example.
-# The port 22 here is for being able to SSH into this container from my main windows computer.
-
-docker run -dit --name MySQL_DEV --network docker_dev_net --ip 192.168.1.101 -p 3306:3306 -p 22:22 -e MYSQL_ROOT_PASSWORD=password ubuntu/mysql
-
-# Make sure you add the corresponding DNS entries to your DNS server or router. e.g., on my Cisco router:
-
-ip host MySQL_DEV.mydomain 192.168.1.101</code></pre>
-
-
-
-<p>After the containers are running, test the connection with PowerShell:</p>
-
-
-
-<pre class="wp-block-code"><code>Test-NetConnection -ComputerName MySQL_DEV.mydomain -Port 3306</code></pre>
-
-
-
-<p>To conclude, it&#8217;s much easier to create Docker networks and containers and tap them into your existing network infrastructure in this way, without having to mess with Docker Desktop for Windows and WSL2. The final results are that I started three containers running MySQL, PostgreSQL, and Ubuntu, respectively. (The Ubuntu container will serve as an Apache web server hosting my websites.)</p>
-
-
-
-<pre class="wp-block-code"><code>docker run -dit --name WEB_SERVER --network docker_dev_net --ip 192.168.1.103 -p 443:443 -p 80:80 -p 22:22 ubuntu
-
-docker run -dit --name MySQL_DEV --network docker_dev_net --ip 192.168.1.101 -p 3306:3306 -p 22:22 -e MYSQL_ROOT_PASSWORD=password ubuntu/mysql
-
-docker run -dit --name PostgreSQL_DEV --network docker_dev_net --ip 192.168.1.102 -p 5432:5432 -p 22:22 -e POSTGRES_PASSWORD=password postgres</code></pre>
 
 
 

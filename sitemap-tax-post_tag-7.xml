@@ -1,6 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?><?xml-stylesheet type='text/xsl' href='https://jameswsullivan.github.io/wp-content/plugins/google-sitemap-generator/sitemap.xsl'?><!-- sitemap-generator-url='http://www.arnebrachhold.de/' sitemap-generator-version='4.1.10' -->
-<!-- generated-on='2023-05-07 21:34' -->
+<!-- generated-on='2023-05-08 03:01' -->
 <urlset xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd' xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>	<url>
+		<loc>https://jameswsullivan.github.io/tag/ubuntu/</loc>
+		<changefreq>daily</changefreq>
+		<priority>0.3</priority>
+	</url>
+	<url>
+		<loc>https://jameswsullivan.github.io/tag/unicode/</loc>
+		<changefreq>daily</changefreq>
+		<priority>0.3</priority>
+	</url>
+	<url>
+		<loc>https://jameswsullivan.github.io/tag/video-editing/</loc>
+		<changefreq>daily</changefreq>
+		<priority>0.3</priority>
+	</url>
+	<url>
 		<loc>https://jameswsullivan.github.io/tag/virtual-disk/</loc>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
@@ -35,4 +50,4 @@
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
 	</url>
-</urlset><!-- Request ID: d0394b18949fc77a6fc16d18d957f382; Queries for sitemap: 6; Total queries: 18; Seconds: $end_time; Memory for sitemap: 0MB; Total memory: 6MB -->
+</urlset><!-- Request ID: 5a0fb900160ff068661cd72879e44e87; Queries for sitemap: 6; Total queries: 18; Seconds: $end_time; Memory for sitemap: 0MB; Total memory: 6MB -->

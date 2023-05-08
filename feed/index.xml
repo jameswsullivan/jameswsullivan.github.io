@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Sun, 07 May 2023 20:34:32 +0000</lastBuildDate>
+	<lastBuildDate>Mon, 08 May 2023 03:01:16 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -20,6 +20,127 @@
 	1	</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=6.2</generator>
 	<item>
+		<title>Self-host Passbolt</title>
+		<link>https://jameswsullivan.github.io/self-host-passbolt/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Mon, 08 May 2023 02:57:53 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[notes]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[Linux]]></category>
+		<category><![CDATA[Nginx]]></category>
+		<category><![CDATA[Passbolt]]></category>
+		<category><![CDATA[Password Manager]]></category>
+		<category><![CDATA[Self-Hosting]]></category>
+		<category><![CDATA[Web Hosting]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2427</guid>
+
+					<description><![CDATA[Self-host the Passbolt password manager using self-signed certificate.]]></description>
+										<content:encoded><![CDATA[
+<h2 class="wp-block-heading">Background:</h2>
+
+
+
+<ul>
+<li>The Passbolt instance is locally hosted and only available in my homelab&#8217;s LAN environment. It&#8217;s not exposed to the internet.</li>
+
+
+
+<li>The instance uses a self-signed certificate. See <a href="https://help.passbolt.com/faq/hosting/mobile-faq" target="_blank" rel="noreferrer noopener">official FAQ here</a>.</li>
+
+
+
+<li>My test environment: Windows, Ubuntu Server 22.04 LTS, Pixel 5 phone with the Passbolt app. (<a href="https://help.passbolt.com/faq/hosting/how-to-import-ssl-certificate-on-mobile" target="_blank" rel="noreferrer noopener">Install self-signed certificate on Android</a>.)</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading">Setup:</h2>
+
+
+
+<pre class="wp-block-code"><code># Passbolt Docker image.
+
+pull passbolt/passbolt
+
+
+# Start the container.
+
+docker run -dit \
+    --name=YOUR_CONTAINER_NAME \
+    --ip IP_ADDRESS --network YOUR_DOCKER_NETWORK \
+    --hostname=YOUR_PASSBOLT_HOSTNAME \
+    --restart=unless-stopped \
+    -e DATASOURCES_DEFAULT_HOST=YOUR_DATABASE_SERVER \
+    -e DATASOURCES_DEFAULT_PASSWORD=YOUR_DB_PASSWORD \
+    -e DATASOURCES_DEFAULT_USERNAME=YOUR_DB_USER \
+    -e DATASOURCES_DEFAULT_DATABASE=YOUR_PASSBOLT_DB_NAME \
+    -e APP_FULL_BASE_URL=https://YOUR_PASSBOLT_APP_URL/ \
+    passbolt/passbolt
+
+
+# Generate self-signed certificate
+
+openssl req -x509 \
+    -newkey rsa:4096 \
+    -days SPECIFY_YOUR_OWN \
+    -subj "/C=YOUR_COUNTRY/ST=YOUR_STATE/L=YOUR_CITY/O=YOUR_ORG/OU=YOUR_OU/CN=YOUR_PASSBOLT_APP_URL/" \
+    -nodes \
+    -addext "subjectAltName = DNS:YOUR_PASSBOLT_APP_URL" \
+    -keyout passbolt_self_signed_key.pem \
+    -out passbolt_self_signed_cert.pem
+
+
+# Create your first admin user
+
+docker exec -it YOUR_CONTAINER_NAME bash
+
+su -m -c "/usr/share/php/passbolt/bin/cake passbolt register_user -u YOUR_ADMIN_USER@YOUR_DOMAIN.COM -f YOUR_FIRSTNAME -l YOUR_LASTNAME -r admin" -s /bin/sh www-data
+
+
+# Edit <em><strong>/etc/nginx/snippets/passbolt-ssl.conf</strong></em> to point to your self-generated certificates.
+
+apt-get install nano -y
+nano /etc/nginx/snippets/passbolt-ssl.conf
+
+
+# Restart nginx
+
+service nginx restart</code></pre>
+
+
+
+<h2 class="wp-block-heading">Install the certificates:</h2>
+
+
+
+<ul>
+<li>Import the <code>passbolt_self_signed_cert.pem</code> certificate into Windows&#8217; <code>Trusted Root Certification Authorities</code>.</li>
+
+
+
+<li>On Android devices, go to<br><code>Security &amp; privacy - Encryption &amp; credentials - Install a certificate - CA certificate - Install anyway</code><br>Browse to the passbolt_self_signed_cert.pem cert file and install it.</li>
+
+
+
+<li><a href="https://help.passbolt.com/faq/hosting/mobile-faq">Official FAQ on generating self-signed cert.</a></li>
+
+
+
+<li><a href="https://help.passbolt.com/faq/hosting/how-to-import-ssl-certificate-on-mobile">Official FAQ on installing cert on Android devices.</a></li>
+
+
+
+<li>Browser&#8217;s cache &amp; cookies might need to be cleared for the new cert to take effect.</li>
+</ul>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>Docker Containerization of Koha ILS Software</title>
 		<link>https://jameswsullivan.github.io/docker-containerization-of-koha-ils-software/</link>
 		
@@ -196,7 +317,7 @@ echo -e "\n\nKoha Password: $koha_password"</code></pre>
 
 
 
-<p>Keywords: Install Koha ILS on Ubuntu 22.04 LTS, Install Koha ILS on Docker</p>
+<p>Keywords: Install Koha ILS on Ubuntu 22.04 LTS, Install Koha ILS on Docker, Dockerizing Koha ILS, Containerizing Koha ILS</p>
 ]]></content:encoded>
 					
 		
@@ -1006,79 +1127,6 @@ as follows:
 
 Allow	On
 Deny	Off</code></pre>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>DISKPART</title>
-		<link>https://jameswsullivan.github.io/diskpart/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Sun, 26 Mar 2023 16:18:30 +0000</pubDate>
-				<category><![CDATA[notes]]></category>
-		<category><![CDATA[DISKPART]]></category>
-		<category><![CDATA[NAS]]></category>
-		<category><![CDATA[Storage]]></category>
-		<category><![CDATA[Storage Pool]]></category>
-		<category><![CDATA[TrueNAS]]></category>
-		<category><![CDATA[Virtual Disk]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2207</guid>
-
-					<description><![CDATA[DISKPART commands.]]></description>
-										<content:encoded><![CDATA[
-<p>Output of the &#8220;help&#8221; command:</p>
-
-
-
-<pre class="wp-block-code"><code>ACTIVE      - Mark the selected partition as active.
-ADD         - Add a mirror to a simple volume.
-ASSIGN      - Assign a drive letter or mount point to the selected volume.
-ATTRIBUTES  - Manipulate volume or disk attributes.
-ATTACH      - Attaches a virtual disk file.
-AUTOMOUNT   - Enable and disable automatic mounting of basic volumes.
-BREAK       - Break a mirror set.
-CLEAN       - Clear the configuration information, or all information, off the
-              disk.
-COMPACT     - Attempts to reduce the physical size of the file.
-CONVERT     - Convert between different disk formats.
-CREATE      - Create a volume, partition or virtual disk.
-DELETE      - Delete an object.
-DETAIL      - Provide details about an object.
-DETACH      - Detaches a virtual disk file.
-EXIT        - Exit DiskPart.
-EXTEND      - Extend a volume.
-EXPAND      - Expands the maximum size available on a virtual disk.
-FILESYSTEMS - Display current and supported file systems on the volume.
-FORMAT      - Format the volume or partition.
-GPT         - Assign attributes to the selected GPT partition.
-HELP        - Display a list of commands.
-IMPORT      - Import a disk group.
-INACTIVE    - Mark the selected partition as inactive.
-LIST        - Display a list of objects.
-MERGE       - Merges a child disk with its parents.
-ONLINE      - Online an object that is currently marked as offline.
-OFFLINE     - Offline an object that is currently marked as online.
-RECOVER     - Refreshes the state of all disks in the selected pack.
-              Attempts recovery on disks in the invalid pack, and
-              resynchronizes mirrored volumes and RAID5 volumes
-              that have stale plex or parity data.
-REM         - Does nothing. This is used to comment scripts.
-REMOVE      - Remove a drive letter or mount point assignment.
-REPAIR      - Repair a RAID-5 volume with a failed member.
-RESCAN      - Rescan the computer looking for disks and volumes.
-RETAIN      - Place a retained partition under a simple volume.
-SAN         - Display or set the SAN policy for the currently booted OS.
-SELECT      - Shift the focus to an object.
-SETID       - Change the partition type.
-SHRINK      - Reduce the size of the selected volume.
-UNIQUEID    - Displays or sets the GUID partition table (GPT) identifier or
-              master boot record (MBR) signature of a disk.</code></pre>
-
-
-
-<p>If a disk has corrupt partitions/volumes and the <code>delete</code> command does not work, use the <code>clean</code> command to force clean the partitions/volumes on a disk.</p>
 ]]></content:encoded>
 					
 		

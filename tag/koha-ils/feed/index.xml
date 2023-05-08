@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/koha-ils/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Sun, 07 May 2023 20:34:32 +0000</lastBuildDate>
+	<lastBuildDate>Mon, 08 May 2023 03:01:16 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -196,7 +196,7 @@ echo -e "\n\nKoha Password: $koha_password"</code></pre>
 
 
 
-<p>Keywords: Install Koha ILS on Ubuntu 22.04 LTS, Install Koha ILS on Docker</p>
+<p>Keywords: Install Koha ILS on Ubuntu 22.04 LTS, Install Koha ILS on Docker, Dockerizing Koha ILS, Containerizing Koha ILS</p>
 ]]></content:encoded>
 					
 		
