@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/self-hosting/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Wed, 10 May 2023 02:17:59 +0000</lastBuildDate>
+	<lastBuildDate>Wed, 10 May 2023 02:21:47 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -60,7 +60,11 @@
 
 
 
-<li>Bitwarden&#8217;s <a href="https://bitwarden.com/help/install-on-premise-linux/" data-type="URL" data-id="https://bitwarden.com/help/install-on-premise-linux/" target="_blank" rel="noreferrer noopener">official installation guide</a>.</li>
+<li>Bitwarden&#8217;s <a rel="noreferrer noopener" href="https://bitwarden.com/help/install-on-premise-linux/" data-type="URL" data-id="https://bitwarden.com/help/install-on-premise-linux/" target="_blank">official installation guide</a>.</li>
+
+
+
+<li><a href="https://frdmtoplay.com/self-hosting-bitwarden-without-smtp/" target="_blank" rel="noreferrer noopener">Reference article</a>.</li>
 </ul>
 
 
