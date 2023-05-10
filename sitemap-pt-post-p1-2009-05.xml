@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?><?xml-stylesheet type='text/xsl' href='https://jameswsullivan.github.io/wp-content/plugins/google-sitemap-generator/sitemap.xsl'?><!-- sitemap-generator-url='http://www.arnebrachhold.de/' sitemap-generator-version='4.1.10' -->
-<!-- generated-on='2023-05-08 03:18' -->
+<!-- generated-on='2023-05-10 02:18' -->
 <urlset xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd' xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>	<url>
 		<loc>https://jameswsullivan.github.io/use-applocale-to-get-rid-of-garbled-characters/</loc>
 		<lastmod>2023-05-07T21:03:16+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.6</priority>
 	</url>
-</urlset><!-- Request ID: e37008cbb8d6f0482a8537a8d3987f50; Queries for sitemap: 2; Total queries: 14; Seconds: $end_time; Memory for sitemap: 0MB; Total memory: 6MB -->
+</urlset><!-- Request ID: 28d71ab02fc4f4e7ad23e55cb21faebf; Queries for sitemap: 2; Total queries: 14; Seconds: $end_time; Memory for sitemap: 0MB; Total memory: 6MB -->

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>MSSQL &#8211; howdy</title>
+	<atom:link href="https://jameswsullivan.github.io/tag/mssql/feed/" rel="self" type="application/rss+xml" />
+	<link>https://jameswsullivan.github.io/</link>
+	<description></description>
+	<lastBuildDate>Wed, 10 May 2023 02:17:59 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.2</generator>
+	<item>
+		<title>Self-host Bitwarden</title>
+		<link>https://jameswsullivan.github.io/self-host-bitwarden/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Wed, 10 May 2023 02:16:01 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[notes]]></category>
+		<category><![CDATA[Bitwarden]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[MSSQL]]></category>
+		<category><![CDATA[Password Manager]]></category>
+		<category><![CDATA[Self-Hosting]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+		<category><![CDATA[Web Hosting]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2436</guid>
+
+					<description><![CDATA[Self-host Bitwarden using self-signed certificate and "hack" the database to manually verify emails without a live SMTP server.]]></description>
+										<content:encoded><![CDATA[
+<h2 class="wp-block-heading">Background:</h2>
+
+
+
+<p>I chose Bitwarden over Passbolt because Bitwarden stores a cached copy of your vault to allow offline access (read-only) on mobile devices while I&#8217;m away from my home lab or don&#8217;t have internet connection. I&#8217;m also using KeePass so it would be sufficient for my need.</p>
+
+
+
+<p>My Bitwarden instance runs on a Hyper-V VM running Ubuntu Server 22.04 LTS.</p>
+
+
+
+<h2 class="wp-block-heading">Project:</h2>
+
+
+
+<ul>
+<li>This project is documented on <a rel="noreferrer noopener" href="https://github.com/jameswsullivan/selfhosted" target="_blank">my GitHub</a>. (<a href="https://github.com/jameswsullivan/selfhosted/blob/main/bitwarden.md" target="_blank" rel="noreferrer noopener">instruction</a>, <a href="https://github.com/jameswsullivan/selfhosted/blob/main/bitwarden.sh" data-type="URL" data-id="https://github.com/jameswsullivan/selfhosted/blob/main/bitwarden.sh" target="_blank" rel="noreferrer noopener">installation script</a>)</li>
+
+
+
+<li>Bitwarden&#8217;s <a href="https://bitwarden.com/help/install-on-premise-linux/" data-type="URL" data-id="https://bitwarden.com/help/install-on-premise-linux/" target="_blank" rel="noreferrer noopener">official installation guide</a>.</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading">Customization:</h2>
+
+
+
+<h4 class="wp-block-heading"><strong>Manually &#8220;verify&#8221; emails without an SMTP server.</strong></h4>
+
+
+
+<pre class="wp-block-code"><code># On the bitwarden host machine: (assuming that you're using the bitwarden user and in the /opt/bitwarden directory)
+
+
+# Retrieve the database password:
+cat bwdata/env/mssql.override.env
+
+
+# You'll get:
+SA_PASSWORD=YOUR_DB_PASS
+
+# Connect to the bitwarden-mssql container:
+docker exec -it bitwarden-mssql bash
+
+# While in the bitwarden-mssql container, do the following:
+# Connect to the DB instance:
+cd /opt/mssql-tools/bin
+./sqlcmd -S 127.0.0.1 -U sa -P YOUR_DB_PASS
+
+# List all databases:
+SELECT name, database_id, create_date  
+FROM sys.databases;  
+GO
+
+# Find the database name (your database name was specified during this installation step: Enter the database name for your Bitwarden instance (ex. vault): YOUR_DB_NAME):
+USE YOUR_DB_NAME
+GO
+SELECT Name, Email, EmailVerified FROM &#91;User]
+GO
+
+# Change "admin" to the user that you need to modify.
+UPDATE &#91;User] SET EmailVerified = 1 WHERE &#91;User].Name="admin";
+GO
+
+# The EmailVerified field (0 = not verified, 1 = verified) is what you need to change.</code></pre>
+
+
+
+<h4 class="wp-block-heading"><strong>Self-signed certificate:</strong></h4>
+
+
+
+<p>If you use a self-signed certificate, refer to the <em>Install the certificates:</em> section <a rel="noreferrer noopener" href="https://jameswsullivan.github.io/self-host-passbolt/" target="_blank">in this article</a>.</p>
+
+
+
+<p>Fun fact: Bitwarden&#8217;s self-signed certificate is valid for 100 years.</p>
+
+
+
+<p></p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+	</channel>
+</rss>

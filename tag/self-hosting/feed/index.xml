@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/self-hosting/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Mon, 08 May 2023 03:16:14 +0000</lastBuildDate>
+	<lastBuildDate>Wed, 10 May 2023 02:17:59 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -20,6 +20,115 @@
 	1	</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=6.2</generator>
 	<item>
+		<title>Self-host Bitwarden</title>
+		<link>https://jameswsullivan.github.io/self-host-bitwarden/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Wed, 10 May 2023 02:16:01 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[notes]]></category>
+		<category><![CDATA[Bitwarden]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[MSSQL]]></category>
+		<category><![CDATA[Password Manager]]></category>
+		<category><![CDATA[Self-Hosting]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+		<category><![CDATA[Web Hosting]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2436</guid>
+
+					<description><![CDATA[Self-host Bitwarden using self-signed certificate and "hack" the database to manually verify emails without a live SMTP server.]]></description>
+										<content:encoded><![CDATA[
+<h2 class="wp-block-heading">Background:</h2>
+
+
+
+<p>I chose Bitwarden over Passbolt because Bitwarden stores a cached copy of your vault to allow offline access (read-only) on mobile devices while I&#8217;m away from my home lab or don&#8217;t have internet connection. I&#8217;m also using KeePass so it would be sufficient for my need.</p>
+
+
+
+<p>My Bitwarden instance runs on a Hyper-V VM running Ubuntu Server 22.04 LTS.</p>
+
+
+
+<h2 class="wp-block-heading">Project:</h2>
+
+
+
+<ul>
+<li>This project is documented on <a rel="noreferrer noopener" href="https://github.com/jameswsullivan/selfhosted" target="_blank">my GitHub</a>. (<a href="https://github.com/jameswsullivan/selfhosted/blob/main/bitwarden.md" target="_blank" rel="noreferrer noopener">instruction</a>, <a href="https://github.com/jameswsullivan/selfhosted/blob/main/bitwarden.sh" data-type="URL" data-id="https://github.com/jameswsullivan/selfhosted/blob/main/bitwarden.sh" target="_blank" rel="noreferrer noopener">installation script</a>)</li>
+
+
+
+<li>Bitwarden&#8217;s <a href="https://bitwarden.com/help/install-on-premise-linux/" data-type="URL" data-id="https://bitwarden.com/help/install-on-premise-linux/" target="_blank" rel="noreferrer noopener">official installation guide</a>.</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading">Customization:</h2>
+
+
+
+<h4 class="wp-block-heading"><strong>Manually &#8220;verify&#8221; emails without an SMTP server.</strong></h4>
+
+
+
+<pre class="wp-block-code"><code># On the bitwarden host machine: (assuming that you're using the bitwarden user and in the /opt/bitwarden directory)
+
+
+# Retrieve the database password:
+cat bwdata/env/mssql.override.env
+
+
+# You'll get:
+SA_PASSWORD=YOUR_DB_PASS
+
+# Connect to the bitwarden-mssql container:
+docker exec -it bitwarden-mssql bash
+
+# While in the bitwarden-mssql container, do the following:
+# Connect to the DB instance:
+cd /opt/mssql-tools/bin
+./sqlcmd -S 127.0.0.1 -U sa -P YOUR_DB_PASS
+
+# List all databases:
+SELECT name, database_id, create_date  
+FROM sys.databases;  
+GO
+
+# Find the database name (your database name was specified during this installation step: Enter the database name for your Bitwarden instance (ex. vault): YOUR_DB_NAME):
+USE YOUR_DB_NAME
+GO
+SELECT Name, Email, EmailVerified FROM &#91;User]
+GO
+
+# Change "admin" to the user that you need to modify.
+UPDATE &#91;User] SET EmailVerified = 1 WHERE &#91;User].Name="admin";
+GO
+
+# The EmailVerified field (0 = not verified, 1 = verified) is what you need to change.</code></pre>
+
+
+
+<h4 class="wp-block-heading"><strong>Self-signed certificate:</strong></h4>
+
+
+
+<p>If you use a self-signed certificate, refer to the <em>Install the certificates:</em> section <a rel="noreferrer noopener" href="https://jameswsullivan.github.io/self-host-passbolt/" target="_blank">in this article</a>.</p>
+
+
+
+<p>Fun fact: Bitwarden&#8217;s self-signed certificate is valid for 100 years.</p>
+
+
+
+<p></p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>Self-host Passbolt</title>
 		<link>https://jameswsullivan.github.io/self-host-passbolt/</link>
 		
@@ -1264,111 +1373,6 @@ docker volume ls
 # Start the WEB_SERVER container with the volume just created
 
 docker run -dit --name WEB_SERVER --network docker_dev_net --ip 192.168.1.103 --mount source=my_smb_vol,destination=/SharedVolume -p 443:443 -p 80:80 -p 22:22 ubuntu</code></pre>
-
-
-
-<p></p>
-
-
-
-<p></p>
-
-
-
-<p></p>
-
-
-
-<p></p>
-
-
-
-<p></p>
-
-
-
-<p></p>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Ubuntu Server Docker Host and Docker Networking</title>
-		<link>https://jameswsullivan.github.io/ubuntu-server-docker-host-and-docker-networking/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Fri, 03 Feb 2023 04:19:00 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[Apache]]></category>
-		<category><![CDATA[Docker]]></category>
-		<category><![CDATA[Linux]]></category>
-		<category><![CDATA[Self-Hosting]]></category>
-		<category><![CDATA[Web Hosting]]></category>
-		<guid isPermaLink="false">https://www.alexchen.net/?p=2115</guid>
-
-					<description><![CDATA[This is the first installment of the Name-based Virtual Hosting Series.]]></description>
-										<content:encoded><![CDATA[
-<p>Since I started with my new job late last year I have been dealing quite bit with Docker, the majority of the applications at work are hosted and developed in a Docker environment, and even for personal projects Docker has made hosting and development much easier compared to using traditional VMs. But recently I came across a rather inconvenient issue with Docker Desktop for Windows when it comes to networking.</p>
-
-
-
-<p>The background is that my home lab&#8217;s network is well organized and controlled by IPs, access-lists, etc., via Cisco switches and routers, I needed my Docker host and dev containers to have static IP addresses and be within a specific IP range and add custom DNS records to my router to point to them. The Docker networking part is fairly straightforward, but what&#8217;s inconvenient is how Docker Desktop for Windows and WSL2 handle their networking part behind the scene. WSL2 gets its own vEthernet adapter with an IP in the 172.0.0.0 range and the containers get placed in a different 172.0.0.0 network segment and assigned with dynamic IPs and depending on how the Hyper-V and WSL2 backend handles the routing and switching, it&#8217;s rather difficult (if not impossible) to easily assign static IPs to the containers within the same IP segment as the host machine and make them part of the same subnet for easy access. After a couple of hours fiddling around with different solutions I basically gave up on it as it&#8217;s really not worth the time and efforts doing so, I opted to have a dedicated Hyper-V VM running Ubuntu Server as the Docker host on my home server.</p>
-
-
-
-<p>Since it&#8217;s Ubuntu Server, the networking part becomes very straightforward:</p>
-
-
-
-<p>The Docker host VM has its own static IP, e.g. 192.168.1.100/24. (The IP is assigned to interface <strong>eth0</strong> in Ubuntu.)</p>
-
-
-
-<pre class="wp-block-code"><code>ip address show eth0</code></pre>
-
-
-
-<p>Create an <strong><a href="https://docs.docker.com/network/ipvlan/" target="_blank" rel="noreferrer noopener">ipvlan</a></strong> network of the same subnet:</p>
-
-
-
-<pre class="wp-block-code"><code>docker network create --driver ipvlan --subnet=192.168.1.0/24 --gateway=192.168.1.1 -o ipvlan_mode=l2 -o parent=eth0 docker_dev_net</code></pre>
-
-
-
-<p>And then we can create containers using this network and assign static IPs to them:</p>
-
-
-
-<pre class="wp-block-code"><code># I'm using the ubuntu/mysql Docker Image here as an example.
-# The port 22 here is for being able to SSH into this container from my main windows computer.
-
-docker run -dit --name MySQL_DEV --network docker_dev_net --ip 192.168.1.101 -p 3306:3306 -p 22:22 -e MYSQL_ROOT_PASSWORD=password ubuntu/mysql
-
-# Make sure you add the corresponding DNS entries to your DNS server or router. e.g., on my Cisco router:
-
-ip host MySQL_DEV.mydomain 192.168.1.101</code></pre>
-
-
-
-<p>After the containers are running, test the connection with PowerShell:</p>
-
-
-
-<pre class="wp-block-code"><code>Test-NetConnection -ComputerName MySQL_DEV.mydomain -Port 3306</code></pre>
-
-
-
-<p>To conclude, it&#8217;s much easier to create Docker networks and containers and tap them into your existing network infrastructure in this way, without having to mess with Docker Desktop for Windows and WSL2. The final results are that I started three containers running MySQL, PostgreSQL, and Ubuntu, respectively. (The Ubuntu container will serve as an Apache web server hosting my websites.)</p>
-
-
-
-<pre class="wp-block-code"><code>docker run -dit --name WEB_SERVER --network docker_dev_net --ip 192.168.1.103 -p 443:443 -p 80:80 -p 22:22 ubuntu
-
-docker run -dit --name MySQL_DEV --network docker_dev_net --ip 192.168.1.101 -p 3306:3306 -p 22:22 -e MYSQL_ROOT_PASSWORD=password ubuntu/mysql
-
-docker run -dit --name PostgreSQL_DEV --network docker_dev_net --ip 192.168.1.102 -p 5432:5432 -p 22:22 -e POSTGRES_PASSWORD=password postgres</code></pre>
 
 
 

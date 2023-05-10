@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/hosting/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Mon, 08 May 2023 03:16:14 +0000</lastBuildDate>
+	<lastBuildDate>Wed, 10 May 2023 02:17:59 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -20,6 +20,115 @@
 	1	</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=6.2</generator>
 	<item>
+		<title>Self-host Bitwarden</title>
+		<link>https://jameswsullivan.github.io/self-host-bitwarden/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Wed, 10 May 2023 02:16:01 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[notes]]></category>
+		<category><![CDATA[Bitwarden]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[MSSQL]]></category>
+		<category><![CDATA[Password Manager]]></category>
+		<category><![CDATA[Self-Hosting]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+		<category><![CDATA[Web Hosting]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2436</guid>
+
+					<description><![CDATA[Self-host Bitwarden using self-signed certificate and "hack" the database to manually verify emails without a live SMTP server.]]></description>
+										<content:encoded><![CDATA[
+<h2 class="wp-block-heading">Background:</h2>
+
+
+
+<p>I chose Bitwarden over Passbolt because Bitwarden stores a cached copy of your vault to allow offline access (read-only) on mobile devices while I&#8217;m away from my home lab or don&#8217;t have internet connection. I&#8217;m also using KeePass so it would be sufficient for my need.</p>
+
+
+
+<p>My Bitwarden instance runs on a Hyper-V VM running Ubuntu Server 22.04 LTS.</p>
+
+
+
+<h2 class="wp-block-heading">Project:</h2>
+
+
+
+<ul>
+<li>This project is documented on <a rel="noreferrer noopener" href="https://github.com/jameswsullivan/selfhosted" target="_blank">my GitHub</a>. (<a href="https://github.com/jameswsullivan/selfhosted/blob/main/bitwarden.md" target="_blank" rel="noreferrer noopener">instruction</a>, <a href="https://github.com/jameswsullivan/selfhosted/blob/main/bitwarden.sh" data-type="URL" data-id="https://github.com/jameswsullivan/selfhosted/blob/main/bitwarden.sh" target="_blank" rel="noreferrer noopener">installation script</a>)</li>
+
+
+
+<li>Bitwarden&#8217;s <a href="https://bitwarden.com/help/install-on-premise-linux/" data-type="URL" data-id="https://bitwarden.com/help/install-on-premise-linux/" target="_blank" rel="noreferrer noopener">official installation guide</a>.</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading">Customization:</h2>
+
+
+
+<h4 class="wp-block-heading"><strong>Manually &#8220;verify&#8221; emails without an SMTP server.</strong></h4>
+
+
+
+<pre class="wp-block-code"><code># On the bitwarden host machine: (assuming that you're using the bitwarden user and in the /opt/bitwarden directory)
+
+
+# Retrieve the database password:
+cat bwdata/env/mssql.override.env
+
+
+# You'll get:
+SA_PASSWORD=YOUR_DB_PASS
+
+# Connect to the bitwarden-mssql container:
+docker exec -it bitwarden-mssql bash
+
+# While in the bitwarden-mssql container, do the following:
+# Connect to the DB instance:
+cd /opt/mssql-tools/bin
+./sqlcmd -S 127.0.0.1 -U sa -P YOUR_DB_PASS
+
+# List all databases:
+SELECT name, database_id, create_date  
+FROM sys.databases;  
+GO
+
+# Find the database name (your database name was specified during this installation step: Enter the database name for your Bitwarden instance (ex. vault): YOUR_DB_NAME):
+USE YOUR_DB_NAME
+GO
+SELECT Name, Email, EmailVerified FROM &#91;User]
+GO
+
+# Change "admin" to the user that you need to modify.
+UPDATE &#91;User] SET EmailVerified = 1 WHERE &#91;User].Name="admin";
+GO
+
+# The EmailVerified field (0 = not verified, 1 = verified) is what you need to change.</code></pre>
+
+
+
+<h4 class="wp-block-heading"><strong>Self-signed certificate:</strong></h4>
+
+
+
+<p>If you use a self-signed certificate, refer to the <em>Install the certificates:</em> section <a rel="noreferrer noopener" href="https://jameswsullivan.github.io/self-host-passbolt/" target="_blank">in this article</a>.</p>
+
+
+
+<p>Fun fact: Bitwarden&#8217;s self-signed certificate is valid for 100 years.</p>
+
+
+
+<p></p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>Self-host Passbolt</title>
 		<link>https://jameswsullivan.github.io/self-host-passbolt/</link>
 		
@@ -1288,137 +1397,6 @@ docker run -dit --name WEB_SERVER --network docker_dev_net --ip 192.168.1.103 --
 
 
 <p></p>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Set up Docker on Ubuntu Server</title>
-		<link>https://jameswsullivan.github.io/set-up-docker-on-ubuntu-server/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Tue, 21 Sep 2021 06:14:07 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[Docker]]></category>
-		<category><![CDATA[Hosting]]></category>
-		<category><![CDATA[Linux]]></category>
-		<category><![CDATA[Self-Hosting]]></category>
-		<category><![CDATA[Standard Notes]]></category>
-		<category><![CDATA[Ubuntu]]></category>
-		<guid isPermaLink="false">https://www.alexchen.net/?p=1638</guid>
-
-					<description><![CDATA[Setting up Ubuntu Server, SSH, UFW, Nginx, and Docker.]]></description>
-										<content:encoded><![CDATA[
-<h2 class="wp-block-heading">Environment: Windows Server 2019, Hyper-V, Ubuntu Server 20.04.3 LTS.</h2>
-
-
-
-<p>1. After Ubuntu Server is installed on a VM (with a clean and minimum installation without any preloaded packages), set up Docker and OpenSSH.</p>
-
-
-
-<pre class="wp-block-code"><code># Install OpenSSH
-apt upgrade
-apt update
-apt install openssh-server
-
-# Check SSH Status
-systemctl status ssh
-
-# Allow ssh over UFW firewall
-ufw allow ssh</code></pre>
-
-
-
-<p>2. Enable UFW, check status, and configure rules.</p>
-
-
-
-<pre class="wp-block-code"><code># Enable UFW
-ufw enable
-
-# Check status and rules
-ufw status
-
-# Check status and make results numbered
-ufw status numbered
-
-# Disable UFW
-ufw disable
-
-# Block IP
-ufw deny from IP-Address
-
-# Block by subnet
-ufw deny from IP/CIDR
-
-# Block connections on interface
-ufw deny in on eth0 from IP-Address
-
-# Allow commands:
-ufw allow from IP-Address
-ufw allow in on eth0 from IP-Address
-
-# Delete rule
-ufw status numbered
-ufw delete &#91;number]
-
-# Allow by protocol
-ufw allow from IP-Address proto tcp to any port 22
-ufw allow from IP/CIDR proto tcp to any port 22
-ufw allow proto tcp from any to any port 80,443</code></pre>
-
-
-
-<p>3. Disable ipv6 on Ubuntu Server.</p>
-
-
-
-<pre class="wp-block-code"><code># Add
-net.ipv6.conf.all.disable_ipv6=1
-net.ipv6.conf.default.disable_ipv6=1
-net.ipv6.conf.lo.disable_ipv6=1
-# to file /etc/sysctl.conf</code></pre>
-
-
-
-<p>4. Reduce Ubuntu shutdown time.</p>
-
-
-
-<pre class="wp-block-code"><code># Edit /etc/systemd/system.conf and uncomment DefaultTimeoutStopSec=90s and set it to a desired value
-
-DefaultTimeoutStopSec=15s</code></pre>
-
-
-
-<p>5. Install Docker</p>
-
-
-
-<pre class="wp-block-code"><code># Remove existing Docker installations, if any
-apt remove docker docker-engine docker.io containerd runc
-
-# Install using the repository
-apt update
-apt install apt-transport-https ca-certificates curl gnupg lsb-release
-
-# Add Docker's official GPG key
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-
-# Set up stable repository
-echo \
-"deb &#91;arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
-$(lsb_release -cs) stable" \
-| sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-
-# Install Docker engine
-apt update
-apt install docker-ce docker-ce-cli containerd.io
-
-# Verify that Docker Engine is correctly installed
-docker version</code></pre>
 ]]></content:encoded>
 					
 		

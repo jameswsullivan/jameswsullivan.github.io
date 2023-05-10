@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/web-hosting/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Mon, 08 May 2023 03:16:14 +0000</lastBuildDate>
+	<lastBuildDate>Wed, 10 May 2023 02:17:59 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -20,6 +20,115 @@
 	1	</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=6.2</generator>
 	<item>
+		<title>Self-host Bitwarden</title>
+		<link>https://jameswsullivan.github.io/self-host-bitwarden/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Wed, 10 May 2023 02:16:01 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[notes]]></category>
+		<category><![CDATA[Bitwarden]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[MSSQL]]></category>
+		<category><![CDATA[Password Manager]]></category>
+		<category><![CDATA[Self-Hosting]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+		<category><![CDATA[Web Hosting]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2436</guid>
+
+					<description><![CDATA[Self-host Bitwarden using self-signed certificate and "hack" the database to manually verify emails without a live SMTP server.]]></description>
+										<content:encoded><![CDATA[
+<h2 class="wp-block-heading">Background:</h2>
+
+
+
+<p>I chose Bitwarden over Passbolt because Bitwarden stores a cached copy of your vault to allow offline access (read-only) on mobile devices while I&#8217;m away from my home lab or don&#8217;t have internet connection. I&#8217;m also using KeePass so it would be sufficient for my need.</p>
+
+
+
+<p>My Bitwarden instance runs on a Hyper-V VM running Ubuntu Server 22.04 LTS.</p>
+
+
+
+<h2 class="wp-block-heading">Project:</h2>
+
+
+
+<ul>
+<li>This project is documented on <a rel="noreferrer noopener" href="https://github.com/jameswsullivan/selfhosted" target="_blank">my GitHub</a>. (<a href="https://github.com/jameswsullivan/selfhosted/blob/main/bitwarden.md" target="_blank" rel="noreferrer noopener">instruction</a>, <a href="https://github.com/jameswsullivan/selfhosted/blob/main/bitwarden.sh" data-type="URL" data-id="https://github.com/jameswsullivan/selfhosted/blob/main/bitwarden.sh" target="_blank" rel="noreferrer noopener">installation script</a>)</li>
+
+
+
+<li>Bitwarden&#8217;s <a href="https://bitwarden.com/help/install-on-premise-linux/" data-type="URL" data-id="https://bitwarden.com/help/install-on-premise-linux/" target="_blank" rel="noreferrer noopener">official installation guide</a>.</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading">Customization:</h2>
+
+
+
+<h4 class="wp-block-heading"><strong>Manually &#8220;verify&#8221; emails without an SMTP server.</strong></h4>
+
+
+
+<pre class="wp-block-code"><code># On the bitwarden host machine: (assuming that you're using the bitwarden user and in the /opt/bitwarden directory)
+
+
+# Retrieve the database password:
+cat bwdata/env/mssql.override.env
+
+
+# You'll get:
+SA_PASSWORD=YOUR_DB_PASS
+
+# Connect to the bitwarden-mssql container:
+docker exec -it bitwarden-mssql bash
+
+# While in the bitwarden-mssql container, do the following:
+# Connect to the DB instance:
+cd /opt/mssql-tools/bin
+./sqlcmd -S 127.0.0.1 -U sa -P YOUR_DB_PASS
+
+# List all databases:
+SELECT name, database_id, create_date  
+FROM sys.databases;  
+GO
+
+# Find the database name (your database name was specified during this installation step: Enter the database name for your Bitwarden instance (ex. vault): YOUR_DB_NAME):
+USE YOUR_DB_NAME
+GO
+SELECT Name, Email, EmailVerified FROM &#91;User]
+GO
+
+# Change "admin" to the user that you need to modify.
+UPDATE &#91;User] SET EmailVerified = 1 WHERE &#91;User].Name="admin";
+GO
+
+# The EmailVerified field (0 = not verified, 1 = verified) is what you need to change.</code></pre>
+
+
+
+<h4 class="wp-block-heading"><strong>Self-signed certificate:</strong></h4>
+
+
+
+<p>If you use a self-signed certificate, refer to the <em>Install the certificates:</em> section <a rel="noreferrer noopener" href="https://jameswsullivan.github.io/self-host-passbolt/" target="_blank">in this article</a>.</p>
+
+
+
+<p>Fun fact: Bitwarden&#8217;s self-signed certificate is valid for 100 years.</p>
+
+
+
+<p></p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>Self-host Passbolt</title>
 		<link>https://jameswsullivan.github.io/self-host-passbolt/</link>
 		
@@ -1247,69 +1356,6 @@ Fatal error: require(): Failed opening required '/yourhostingpath/includes/htmlf
 
 
 <p>Honestly I still didn&#8217;t understand why this happened and didn&#8217;t do further research either, but maybe someone will come across a similar issue and this might save you some time trying to bird-dog the cause.</p>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>WordPress Won&#8217;t Send Emails</title>
-		<link>https://jameswsullivan.github.io/wordpress-wont-send-emails/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Thu, 25 Jun 2020 06:23:00 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[Email]]></category>
-		<category><![CDATA[Hosting]]></category>
-		<category><![CDATA[Web Hosting]]></category>
-		<category><![CDATA[WordPress]]></category>
-		<guid isPermaLink="false">http://www.alexchen.net/?p=833</guid>
-
-					<description><![CDATA[Email Routing configuration in cPanel caused WordPress to fail sending emails.]]></description>
-										<content:encoded><![CDATA[
-<p>WordPress not sending emails is not a rare issue and I&#8217;ve come across a lot of articles while troubleshooting mine, but since everyone&#8217;s hosting providers and email setup are a little bit different, I&#8217;m writing this article here to document how I resolved the issue in my particular setup.</p>
-
-
-
-<p>I use namecheap&#8217;s Stellar Plus shared hosting plan, and my email is through Microsoft 365 subscription using my own subdomain mail.alexchen.net .</p>
-
-
-
-<h2 class="wp-block-heading">Issue:</h2>
-
-
-
-<ul>
-<li>My WordPress site suddenly won&#8217;t send emails anymore via its default PHP Mailer. I have no idea what might have triggered it to stop sending.</li>
-
-
-
-<li>I tried the solutions from many posts that I&#8217;ve found which said it would fix the issue, but unfortunately none did. And the majority of the posts recommended that the SMTP method be used, but in my particular situation the PHP Mailer comes a lot more handy than hooking up another email.</li>
-
-
-
-<li>In the cPanel&#8217;s <code>Email Accounts</code> section, I see bounce back emails in my default admin mailbox with subject either being &#8220;<code>rejected by local scanning code</code>&#8220;, or &#8220;<code>Mail delivery failed: returning message to sender</code>&#8221; with a &#8220;<code>No Such User Here</code>&#8221; message in the bounce back, but the destination email was listed correctly.</li>
-</ul>
-
-
-
-<h2 class="wp-block-heading">Solution<strong>:</strong></h2>
-
-
-
-<p>In cPanel, go to <code>Email Routing</code>, select the email domain (in my case it&#8217;s <code>mail.alexchen.net</code>), and change the <code>Configure Email Routing to Remote Mail Exchanger</code> from A<code>utomatically Detect Configuration (recommended)</code>.</p>
-
-
-
-<h2 class="wp-block-heading">Thoughts:</h2>
-
-
-
-<p>I indeed double checked to make sure that my domain&#8217;s <code>Zone Records</code> are all set up correctly on both the namecheap side and the Microsoft 365 side and I&#8217;ve been able to successfully send and receive emails for quite a while, so the email side is likely not the issue. However, I do think that either something changed in the email exchanger system that confused the automatic configuration, or my recent removal and cleanup of old domains/subdomains on the Microsoft 365 side had made some differences that I didn&#8217;t notice.</p>
-
-
-
-<p>Keywords: WordPress PHP Mailer not sending emails; No Such User Here; NameCheap.</p>
 ]]></content:encoded>
 					
 		

@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/category/blog/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Mon, 08 May 2023 03:16:14 +0000</lastBuildDate>
+	<lastBuildDate>Wed, 10 May 2023 02:17:59 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -20,6 +20,115 @@
 	1	</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=6.2</generator>
 	<item>
+		<title>Self-host Bitwarden</title>
+		<link>https://jameswsullivan.github.io/self-host-bitwarden/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Wed, 10 May 2023 02:16:01 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[notes]]></category>
+		<category><![CDATA[Bitwarden]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[MSSQL]]></category>
+		<category><![CDATA[Password Manager]]></category>
+		<category><![CDATA[Self-Hosting]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+		<category><![CDATA[Web Hosting]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2436</guid>
+
+					<description><![CDATA[Self-host Bitwarden using self-signed certificate and "hack" the database to manually verify emails without a live SMTP server.]]></description>
+										<content:encoded><![CDATA[
+<h2 class="wp-block-heading">Background:</h2>
+
+
+
+<p>I chose Bitwarden over Passbolt because Bitwarden stores a cached copy of your vault to allow offline access (read-only) on mobile devices while I&#8217;m away from my home lab or don&#8217;t have internet connection. I&#8217;m also using KeePass so it would be sufficient for my need.</p>
+
+
+
+<p>My Bitwarden instance runs on a Hyper-V VM running Ubuntu Server 22.04 LTS.</p>
+
+
+
+<h2 class="wp-block-heading">Project:</h2>
+
+
+
+<ul>
+<li>This project is documented on <a rel="noreferrer noopener" href="https://github.com/jameswsullivan/selfhosted" target="_blank">my GitHub</a>. (<a href="https://github.com/jameswsullivan/selfhosted/blob/main/bitwarden.md" target="_blank" rel="noreferrer noopener">instruction</a>, <a href="https://github.com/jameswsullivan/selfhosted/blob/main/bitwarden.sh" data-type="URL" data-id="https://github.com/jameswsullivan/selfhosted/blob/main/bitwarden.sh" target="_blank" rel="noreferrer noopener">installation script</a>)</li>
+
+
+
+<li>Bitwarden&#8217;s <a href="https://bitwarden.com/help/install-on-premise-linux/" data-type="URL" data-id="https://bitwarden.com/help/install-on-premise-linux/" target="_blank" rel="noreferrer noopener">official installation guide</a>.</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading">Customization:</h2>
+
+
+
+<h4 class="wp-block-heading"><strong>Manually &#8220;verify&#8221; emails without an SMTP server.</strong></h4>
+
+
+
+<pre class="wp-block-code"><code># On the bitwarden host machine: (assuming that you're using the bitwarden user and in the /opt/bitwarden directory)
+
+
+# Retrieve the database password:
+cat bwdata/env/mssql.override.env
+
+
+# You'll get:
+SA_PASSWORD=YOUR_DB_PASS
+
+# Connect to the bitwarden-mssql container:
+docker exec -it bitwarden-mssql bash
+
+# While in the bitwarden-mssql container, do the following:
+# Connect to the DB instance:
+cd /opt/mssql-tools/bin
+./sqlcmd -S 127.0.0.1 -U sa -P YOUR_DB_PASS
+
+# List all databases:
+SELECT name, database_id, create_date  
+FROM sys.databases;  
+GO
+
+# Find the database name (your database name was specified during this installation step: Enter the database name for your Bitwarden instance (ex. vault): YOUR_DB_NAME):
+USE YOUR_DB_NAME
+GO
+SELECT Name, Email, EmailVerified FROM &#91;User]
+GO
+
+# Change "admin" to the user that you need to modify.
+UPDATE &#91;User] SET EmailVerified = 1 WHERE &#91;User].Name="admin";
+GO
+
+# The EmailVerified field (0 = not verified, 1 = verified) is what you need to change.</code></pre>
+
+
+
+<h4 class="wp-block-heading"><strong>Self-signed certificate:</strong></h4>
+
+
+
+<p>If you use a self-signed certificate, refer to the <em>Install the certificates:</em> section <a rel="noreferrer noopener" href="https://jameswsullivan.github.io/self-host-passbolt/" target="_blank">in this article</a>.</p>
+
+
+
+<p>Fun fact: Bitwarden&#8217;s self-signed certificate is valid for 100 years.</p>
+
+
+
+<p></p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>Self-host Passbolt</title>
 		<link>https://jameswsullivan.github.io/self-host-passbolt/</link>
 		
@@ -1196,183 +1305,6 @@ extension=curl</code></pre>
 
 
 <p>Adding this entry in <strong>/etc/hosts</strong> file also resolves Simply Static&#8217;s <em>&#8220;Checking if WordPress can make requests to itself from your_IP&#8221;</em> FAIL issue.</p>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Configure Apache Web Server and Name-based Virtual Hosting with Ubuntu</title>
-		<link>https://jameswsullivan.github.io/configure-apache-web-server-and-name-based-virtual-hosting-with-ubuntu/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Fri, 03 Feb 2023 20:19:00 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[Apache]]></category>
-		<category><![CDATA[Docker]]></category>
-		<category><![CDATA[Hosting]]></category>
-		<category><![CDATA[Self-Hosting]]></category>
-		<category><![CDATA[Ubuntu]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=18</guid>
-
-					<description><![CDATA[This is the fourth installment of the Name-based Virtual Hosting Series.]]></description>
-										<content:encoded><![CDATA[
-<p>This is the final installment of my dev environment setup which documents the process of setting up Apache web server and name-based virtual hosting. My setup has CIFS/Samba volume <em>my_smb_vol</em> and an ipvlan network <em>docker_dev_net</em>.</p>
-
-
-
-<h2 class="wp-block-heading">Spin up a Ubuntu Docker container:</h2>
-
-
-
-<pre class="wp-block-code"><code>docker run -dit --name WEB_SERVER --network docker_dev_net --ip 192.168.1.103 --mount source=my_smb_vol,destination=/SharedVolume ubuntu
-
-# -p 443:443 -p 80:80 -p 22:22
-# Port exposure is optional because the containers will be part of the same network that my other machines are in.</code></pre>
-
-
-
-<p>Install necessary packages:</p>
-
-
-
-<pre class="wp-block-code"><code># Install network utilities for troubleshooting:
-apt-get install iputils-ping -y
-apt-get install iproute2 -y
-apt-get install traceroute -y
-
-# Install SSH:
-apt-get install openssh-client -y
-apt-get install openssh-server -y
-
-# Install sudo and other utilities:
-apt-get install sudo -y
-apt-get install nano -y
-
-# Install apache, php, and php-mysql:
-apt-get install apache2 -y
-apt-get install php8.1 -y
-apt-get install php-mysql -y
-apt-get install libapache2-mod-php -y</code></pre>
-
-
-
-<p>Verify services are running and start the them if not:</p>
-
-
-
-<pre class="wp-block-code"><code># ssh and apache2 service status
-service ssh status
-service apache2 status
-
-# start the services:
-service ssh start
-service apache2 start</code></pre>
-
-
-
-<p>Hostname and name server (optional):</p>
-
-
-
-<pre class="wp-block-code"><code># Depending on your setup, you might need to specify the --hostname when creating your container:
-
---hostname=your_hostname
-
-# Technically after specifying --ip and --hostname , you shouldn't need to edit /etc/resolv.conf anymore. To verify:
-
-cat /etc/resolv.conf</code></pre>
-
-
-
-<p>Verify php version:</p>
-
-
-
-<pre class="wp-block-code"><code># Create a info.php file under the /var/www/html directory with the following content:
-
-&lt;?php phpinfo();?&gt;</code></pre>
-
-
-
-<p>Now that you should be able to visit the Apache server&#8217;s default landing page and the info.php page to verify that the Apache server is running and view your php version.</p>
-
-
-
-<h2 class="wp-block-heading">Set up name-based virtual hosting:</h2>
-
-
-
-<pre class="wp-block-code"><code># The example websites I'm using are: example.mydomain, example1.mydomain, example2.mydomain.
-
-# Create directories:
-# example.mydomain will reside under /var/www/html as the "main" website.
-
-mkdir /var/www/html/example1.mydomain
-mkdir /var/www/html/example2.mydomain
-
-# Change ownership of the directories. I simply changed the entire html directory and its subdirectories' ownership to www-data for my convenience.
-
-chown -R www-data:www-data /var/www/html
-
-# Create Virtual Host configuration files for your sites.
-touch /etc/apache2/sites-available/example.mydomain.conf
-touch /etc/apache2/sites-available/example1.mydomain.conf
-touch /etc/apache2/sites-available/example2.mydomain.conf
-
-# Use nano to add the corresponding content to your site config files. Edit the ServerName and DocumentRoot as needed to point to the your domains and directories:
-
-# example.mydomain.conf or use the 000-default.conf:
-&lt;VirtualHost *:80&gt;
-    ServerAdmin webmaster@example.mydomain
-    ServerName example.mydomain
-    DocumentRoot /var/www/html
-    DirectoryIndex index.html
-    ErrorLog ${APACHE_LOG_DIR}/example.mydomain_error.log
-    CustomLog ${APACHE_LOG_DIR}/example.mydomain_access.log combined
-&lt;/VirtualHost&gt;
-
-# example1.mydomain.conf:
-&lt;VirtualHost *:80&gt;
-    ServerAdmin webmaster@example1.mydomain
-    ServerName example1.mydomain
-    DocumentRoot /var/www/html/example1.mydomain
-    DirectoryIndex index.php
-    ErrorLog ${APACHE_LOG_DIR}/example1.mydomain_error.log
-    CustomLog ${APACHE_LOG_DIR}/example1.mydomain_access.log combined
-&lt;/VirtualHost&gt;
-
-# Enable the configuration files for the sites:
-a2ensite example1.mydomain
-a2ensite example2.mydomain
-
-# Restart apache2 service and verify that apache2 is running:
-service apache2 reload
-service apache2 status
-
-# Of course, you will need to add your own index.html or index.php files under the sites' directories.</code></pre>
-
-
-
-<p>Configure your router or DNS server records:</p>
-
-
-
-<pre class="wp-block-code"><code># I'm using my Cisco router as an example:
-
-ip host example.mydomain 192.168.1.103
-ip host example1.mydomain 192.168.1.103
-ip host example2.mydomain 192.168.1.103</code></pre>
-
-
-
-<p>Now that you should be able to visit the sites by going to:</p>
-
-
-
-<pre class="wp-block-code"><code>http:&#47;&#47;example.mydomain
-http://example1.mydomain/
-http://example2.mydomain/</code></pre>
 ]]></content:encoded>
 					
 		
