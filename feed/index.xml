@@ -12,13 +12,13 @@
 	<atom:link href="https://jameswsullivan.github.io/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Wed, 10 May 2023 02:21:47 +0000</lastBuildDate>
+	<lastBuildDate>Sun, 21 May 2023 21:05:09 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
 	<sy:updateFrequency>
 	1	</sy:updateFrequency>
-	<generator>https://wordpress.org/?v=6.2</generator>
+	<generator>https://wordpress.org/?v=6.2.2</generator>
 	<item>
 		<title>Self-host Bitwarden</title>
 		<link>https://jameswsullivan.github.io/self-host-bitwarden/</link>
@@ -1066,7 +1066,7 @@ EXPOSE 80 443</code></pre>
 
 
 <pre class="wp-block-code"><code># Build Nextcloud image
-docker image build --tag nextcloud:1.0 --progress plain --no-cache . 2>&amp;1 | tee build.log
+docker image build --tag nextcloud:1.0 --progress plain --no-cache . 2&gt;&amp;1 | tee build.log
 
 # Start Nextcloud container.
 # The drive for Nextcloud's persistent data is mounted to /mnt/nextcloud_data .
@@ -1075,14 +1075,6 @@ docker run -dit --name MY-NEXTCLOUD-CONTAINER --ip IP-ADDRESS --network DOCKER-N
 # Start a MySQL container for Nextcloud.
 # The virtual disk for MySQL's persistent data is mounted to /mnt/nextcloud_db .
 docker run -dit --name MY-NEXTCLOUD-DB-CONTAINER --ip IP-ADDRESS --network DOCKER-NETWORK --hostname=MY_NEXTCLOUD_DB_CONTAINER_HOSTNAME --restart=unless-stopped -v /mnt/nextcloud_db:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=MY-ROOT-PASSWORD ubuntu/mysql</code></pre>
-
-
-
-<h2 class="wp-block-heading">Docker compose:</h2>
-
-
-
-<p>To be added.</p>
 ]]></content:encoded>
 					
 		

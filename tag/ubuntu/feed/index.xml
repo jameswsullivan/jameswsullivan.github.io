@@ -12,13 +12,13 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/ubuntu/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Wed, 10 May 2023 02:21:47 +0000</lastBuildDate>
+	<lastBuildDate>Sun, 21 May 2023 22:18:24 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
 	<sy:updateFrequency>
 	1	</sy:updateFrequency>
-	<generator>https://wordpress.org/?v=6.2</generator>
+	<generator>https://wordpress.org/?v=6.2.2</generator>
 	<item>
 		<title>Self-host Bitwarden</title>
 		<link>https://jameswsullivan.github.io/self-host-bitwarden/</link>
@@ -696,18 +696,18 @@ UUID="dcd8c5ac-db76-435e-ab3c-48570190c7d8" /mnt/my_folder ext4 defaults 0 1
 
 
 
-<p>I get this error only after I&#8217;ve set the <strong>Permalinks</strong> setting to anything else other than the default <strong>Plain</strong> setting. When <strong>Permalinks</strong> is not set to <strong>Plain</strong>, the URLs need to be rewritten, and that&#8217;s when this error will occur. In my case, it turned out to be that I forgot to add the &lt;Directory> tag in the virtual host configuration file. As you can see in <a href="https://jameswsullivan.github.io/configure-apache-web-server-and-name-based-virtual-hosting-with-ubuntu/">this post</a>, my configuration file looks like this:</p>
+<p>I get this error only after I&#8217;ve set the <strong>Permalinks</strong> setting to anything else other than the default <strong>Plain</strong> setting. When <strong>Permalinks</strong> is not set to <strong>Plain</strong>, the URLs need to be rewritten, and that&#8217;s when this error will occur. In my case, it turned out to be that I forgot to add the &lt;Directory&gt; tag in the virtual host configuration file. As you can see in <a href="https://jameswsullivan.github.io/configure-apache-web-server-and-name-based-virtual-hosting-with-ubuntu/">this post</a>, my configuration file looks like this:</p>
 
 
 
-<pre class="wp-block-code"><code>&lt;VirtualHost *:80>
+<pre class="wp-block-code"><code>&lt;VirtualHost *:80&gt;
     ServerAdmin webmaster@example1.mydomain
     ServerName example1.mydomain
     DocumentRoot /var/www/html/example1.mydomain
     DirectoryIndex index.php
     ErrorLog ${APACHE_LOG_DIR}/example1.mydomain_error.log
     CustomLog ${APACHE_LOG_DIR}/example1.mydomain_access.log combined
-&lt;/VirtualHost></code></pre>
+&lt;/VirtualHost&gt;</code></pre>
 
 
 
@@ -715,25 +715,25 @@ UUID="dcd8c5ac-db76-435e-ab3c-48570190c7d8" /mnt/my_folder ext4 defaults 0 1
 
 
 
-<pre class="wp-block-code"><code>&lt;VirtualHost *:80>
+<pre class="wp-block-code"><code>&lt;VirtualHost *:80&gt;
     ServerAdmin webmaster@example1.mydomain
     ServerName example1.mydomain
     DocumentRoot /var/www/html/example1.mydomain
 
-        &lt;Directory /var/www/html/example1.mydomain>
+        &lt;Directory /var/www/html/example1.mydomain&gt;
                 Options Indexes FollowSymLinks
                 AllowOverride All
                 Require all granted
                 DirectoryIndex index.php
-        &lt;/Directory>
+        &lt;/Directory&gt;
 
     ErrorLog ${APACHE_LOG_DIR}/example1.mydomain_error.log
     CustomLog ${APACHE_LOG_DIR}/example1.mydomain_access.log combined
-&lt;/VirtualHost></code></pre>
+&lt;/VirtualHost&gt;</code></pre>
 
 
 
-<p>Without the <strong>&lt;Directory></strong> element, the <strong>.htaccess</strong> file is unable to override the rewrite rules.</p>
+<p>Without the <strong>&lt;Directory&gt;</strong> element, the <strong>.htaccess</strong> file is unable to override the rewrite rules.</p>
 
 
 
@@ -746,7 +746,8 @@ UUID="dcd8c5ac-db76-435e-ab3c-48570190c7d8" /mnt/my_folder ext4 defaults 0 1
 
 
 <pre class="wp-block-code"><code># Install the php8.1-gd module
-apt-get install php8.1-gd -y</code></pre>
+apt-get install php8.1-gd -y
+service apache2 restart</code></pre>
 
 
 
@@ -760,6 +761,19 @@ When testing the REST API, an error was encountered:
 
 REST API Endpoint: http://example1.mydomain/wp-json/wp/v2/types/post?context=edit
 REST API Response: (http_request_failed) cURL error 6: Could not resolve host: example1.mydomain</code></pre>
+
+
+
+<p>Or:</p>
+
+
+
+<pre class="wp-block-code"><code>The REST API is one way that WordPress and other applications communicate with the server. For example, the block editor screen relies on the REST API to display and save your posts and pages.
+
+When testing the REST API, an unexpected result was returned:
+
+REST API Endpoint: http://example1.mydomain/wp-json/wp/v2/types/post?context=edit
+REST API Response: (404) Not Found</code></pre>
 
 
 
@@ -784,11 +798,11 @@ Error: cURL error 6: Could not resolve host: example1.mydomain (http_request_fai
 
 
 
-<p>Additionally, you might need to install the curl package:</p>
+<p>Additionally, you might need to install the curl package and double check to see if the <code>rewrite</code> module is properly enabled:</p>
 
 
 
-<pre class="wp-block-code"><code>apt-get install php8.1-curl -y
+<pre class="wp-block-code"><code>apt-get install php8.1-curl curl -y
 
 # Verify curl version:
 curl --version
@@ -797,7 +811,11 @@ curl --version
 nano /etc/php/8.1/apache2/php.ini
 
 # Uncomment this line:
-extension=curl</code></pre>
+extension=curl
+
+# Enable the rewrite module.
+a2enmod rewrite
+service restart apache2</code></pre>
 
 
 
@@ -823,6 +841,16 @@ extension=curl</code></pre>
 
 					<description><![CDATA[This is the fourth installment of the Name-based Virtual Hosting Series.]]></description>
 										<content:encoded><![CDATA[
+<blockquote class="wp-block-quote">
+<p>2023-05-21 UPDATE:</p>
+
+
+
+<p>This project has been optimized and containerized. See this <a href="https://github.com/jameswsullivan/selfhosted/tree/main/UbuntuLAMP" target="_blank" rel="noreferrer noopener">UbuntuLAMP project</a> on my github.</p>
+</blockquote>
+
+
+
 <p>This is the final installment of my dev environment setup which documents the process of setting up Apache web server and name-based virtual hosting. My setup has CIFS/Samba volume <em>my_smb_vol</em> and an ipvlan network <em>docker_dev_net</em>.</p>
 
 
@@ -883,11 +911,7 @@ service apache2 start</code></pre>
 
 <pre class="wp-block-code"><code># Depending on your setup, you might need to specify the --hostname when creating your container:
 
---hostname=your_hostname
-
-# Technically after specifying --ip and --hostname , you shouldn't need to edit /etc/resolv.conf anymore. To verify:
-
-cat /etc/resolv.conf</code></pre>
+--hostname=your_hostname</code></pre>
 
 
 

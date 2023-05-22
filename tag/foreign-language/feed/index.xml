@@ -18,7 +18,7 @@
 	hourly	</sy:updatePeriod>
 	<sy:updateFrequency>
 	1	</sy:updateFrequency>
-	<generator>https://wordpress.org/?v=6.2</generator>
+	<generator>https://wordpress.org/?v=6.2.2</generator>
 	<item>
 		<title>AppLocale让你的软件不再显示乱码</title>
 		<link>https://jameswsullivan.github.io/use-applocale-to-get-rid-of-garbled-characters/</link>
