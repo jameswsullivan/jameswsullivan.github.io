@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/category/blog/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Sun, 21 May 2023 22:12:37 +0000</lastBuildDate>
+	<lastBuildDate>Tue, 23 May 2023 03:10:45 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -20,6 +20,119 @@
 	1	</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=6.2.2</generator>
 	<item>
+		<title>Self-host iredmail</title>
+		<link>https://jameswsullivan.github.io/self-host-iredmail/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Tue, 23 May 2023 03:04:02 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[iredmail]]></category>
+		<category><![CDATA[Mail Server]]></category>
+		<category><![CDATA[Self-Hosting]]></category>
+		<category><![CDATA[Web Hosting]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2549</guid>
+
+					<description><![CDATA[Set up self hosted iredmail mail server.]]></description>
+										<content:encoded><![CDATA[
+<h2 class="wp-block-heading">Environment:</h2>
+
+
+
+<ul>
+<li>Docker host running Ubuntu Server 22.04 LTS</li>
+
+
+
+<li><a href="https://hub.docker.com/r/iredmail/mariadb" target="_blank" rel="noreferrer noopener">iredmail Docker image</a></li>
+</ul>
+
+
+
+<h2 class="wp-block-heading">Set up:</h2>
+
+
+
+<p>Follow <a href="https://hub.docker.com/r/iredmail/mariadb" target="_blank" rel="noreferrer noopener">this instruction</a> and create the necessary folders and the default config file.</p>
+
+
+
+<p>Sample script:</p>
+
+
+
+<pre class="wp-block-code"><code>cd YOUR_DIRECTORY
+mkdir iredmail
+cd iredmail
+mkdir -p data/{backup-mysql,clamav,custom,imapsieve_copy,mailboxes,mlmmj,mlmmj-archive,mysql,sa_rules,ssl,postfix_queue}
+
+nano iredmail-docker.conf
+
+# Paste the following content into iredmail-docker.conf
+HOSTNAME=&lt;YOUR_HOSTNAME>
+FIRST_MAIL_DOMAIN=&lt;YOUR_DOMAIN>
+FIRST_MAIL_DOMAIN_ADMIN_PASSWORD=&lt;YOUR_ADMIN_PASSWORD>
+MLMMJADMIN_API_TOKEN=$(openssl rand -base64 32)
+ROUNDCUBE_DES_KEY=$(openssl rand -base64 24)
+MYSQL_ROOT_PASSWORD=&lt;YOUR_MYSQL_ROOT_PASSWORD></code></pre>
+
+
+
+<p>docker run command:</p>
+
+
+
+<pre class="wp-block-code"><code>docker run -dit \
+    --name YOUR_CONTAINER_NAME \
+    --env-file iredmail-docker.conf \
+    --network YOUR_DOCKER_NETWORK \
+    --hostname YOUR_HOSTNAME \
+    --ip IP_ADDRESS --restart=unless-stopped \
+    -v YOUR_DATA_DIRECTORY/iredmail/data/backup-mysql:/var/vmail/backup/mysql \
+    -v YOUR_DATA_DIRECTORY/iredmail/data/mailboxes:/var/vmail/vmail1 \
+    -v YOUR_DATA_DIRECTORY/iredmail/data/mlmmj:/var/vmail/mlmmj \
+    -v YOUR_DATA_DIRECTORY/iredmail/data/mlmmj-archive:/var/vmail/mlmmj-archive \
+    -v YOUR_DATA_DIRECTORY/iredmail/data/imapsieve_copy:/var/vmail/imapsieve_copy \
+    -v YOUR_DATA_DIRECTORY/iredmail/data/custom:/opt/iredmail/custom \
+    -v YOUR_DATA_DIRECTORY/iredmail/data/ssl:/opt/iredmail/ssl \
+    -v YOUR_DATA_DIRECTORY/iredmail/data/mysql:/var/lib/mysql \
+    -v YOUR_DATA_DIRECTORY/iredmail/data/clamav:/var/lib/clamav \
+    -v YOUR_DATA_DIRECTORY/iredmail/data/sa_rules:/var/lib/spamassassin \
+    -v YOUR_DATA_DIRECTORY/iredmail/data/postfix_queue:/var/spool/postfix \
+    iredmail/mariadb:nightly</code></pre>
+
+
+
+<h2 class="wp-block-heading">Issues:</h2>
+
+
+
+<ul>
+<li>Container first time startup takes some time, if the server is not responding after the container&#8217;s been started, wait for a few a minutes and try again.</li>
+
+
+
+<li>For some reason there is no &#8220;latest&#8221; tag, thus the <code>docker pull iredmail/mariadb</code> doesn&#8217;t work. You&#8217;ll have to use either <code>docker pull iredmail/mariadb:nightly</code> or <code>docker pull iredmail/mariadb:stable</code> .</li>
+
+
+
+<li>Default admin login:
+<ul>
+<li>username: postmaster@&lt;YOUR_DOMAIN></li>
+
+
+
+<li>password: your password specified in iredmail-docker.conf file. <code>FIRST_MAIL_DOMAIN_ADMIN_PASSWORD=&lt;YOUR_ADMIN_PASSWORD></code></li>
+</ul>
+</li>
+</ul>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>Self-host Bitwarden</title>
 		<link>https://jameswsullivan.github.io/self-host-bitwarden/</link>
 		
@@ -1122,203 +1235,6 @@ as follows:
 
 Allow	On
 Deny	Off</code></pre>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Troubleshooting Apache Web Server and Name-based Virtual Hosting</title>
-		<link>https://jameswsullivan.github.io/troubleshooting-apache-web-server-and-name-based-virtual-hosting/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Sat, 25 Mar 2023 23:26:42 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[Apache]]></category>
-		<category><![CDATA[Docker]]></category>
-		<category><![CDATA[Hosting]]></category>
-		<category><![CDATA[Linux]]></category>
-		<category><![CDATA[Self-Hosting]]></category>
-		<category><![CDATA[Ubuntu]]></category>
-		<category><![CDATA[Web Hosting]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2185</guid>
-
-					<description><![CDATA[This troubleshooting note wraps up the Name-based Virtual Hosting Series.]]></description>
-										<content:encoded><![CDATA[
-<p>During the process of setting up name-based virtual hosting with Apache, I ran into a few issues with the WordPress container, this post documents the steps taken to address them.</p>
-
-
-
-<h2 class="wp-block-heading">Background:</h2>
-
-
-
-<p>I use the locally hosted WordPress site to write documentation and blog posts and then use Simply Static to convert and get it ready for GitHub Pages. During the process I ran into the following issues:</p>
-
-
-
-<ul>
-<li>WordPress Site Health check has three critical issues:
-<ul>
-<li>The required module, gd, is not installed, or has been disabled.</li>
-
-
-
-<li>The REST API encountered an error.</li>
-
-
-
-<li>Your site could not complete a loopback request.</li>
-</ul>
-</li>
-
-
-
-<li><em>Updating failed. The response is not a valid JSON response.</em> when creating and updating posts.</li>
-
-
-
-<li>Simply Static&#8217;s failed diagnostics:
-<ul>
-<li>Checking if WordPress can make requests to itself from YOUR_IP  FAIL</li>
-
-
-
-<li>Checking for cURL support  FAIL</li>
-</ul>
-</li>
-</ul>
-
-
-
-<h2 class="wp-block-heading">Issue 1: Updating failed. The response is not a valid JSON response.</h2>
-
-
-
-<p>I get this error only after I&#8217;ve set the <strong>Permalinks</strong> setting to anything else other than the default <strong>Plain</strong> setting. When <strong>Permalinks</strong> is not set to <strong>Plain</strong>, the URLs need to be rewritten, and that&#8217;s when this error will occur. In my case, it turned out to be that I forgot to add the &lt;Directory&gt; tag in the virtual host configuration file. As you can see in <a href="https://jameswsullivan.github.io/configure-apache-web-server-and-name-based-virtual-hosting-with-ubuntu/">this post</a>, my configuration file looks like this:</p>
-
-
-
-<pre class="wp-block-code"><code>&lt;VirtualHost *:80&gt;
-    ServerAdmin webmaster@example1.mydomain
-    ServerName example1.mydomain
-    DocumentRoot /var/www/html/example1.mydomain
-    DirectoryIndex index.php
-    ErrorLog ${APACHE_LOG_DIR}/example1.mydomain_error.log
-    CustomLog ${APACHE_LOG_DIR}/example1.mydomain_access.log combined
-&lt;/VirtualHost&gt;</code></pre>
-
-
-
-<p>But the correct configs for rewrite to work need to look like this:</p>
-
-
-
-<pre class="wp-block-code"><code>&lt;VirtualHost *:80&gt;
-    ServerAdmin webmaster@example1.mydomain
-    ServerName example1.mydomain
-    DocumentRoot /var/www/html/example1.mydomain
-
-        &lt;Directory /var/www/html/example1.mydomain&gt;
-                Options Indexes FollowSymLinks
-                AllowOverride All
-                Require all granted
-                DirectoryIndex index.php
-        &lt;/Directory&gt;
-
-    ErrorLog ${APACHE_LOG_DIR}/example1.mydomain_error.log
-    CustomLog ${APACHE_LOG_DIR}/example1.mydomain_access.log combined
-&lt;/VirtualHost&gt;</code></pre>
-
-
-
-<p>Without the <strong>&lt;Directory&gt;</strong> element, the <strong>.htaccess</strong> file is unable to override the rewrite rules.</p>
-
-
-
-<h2 class="wp-block-heading">Issue 2: WordPress Site Health Critical Issues</h2>
-
-
-
-<p><strong>The required module, gd, is not installed, or has been disabled.</strong></p>
-
-
-
-<pre class="wp-block-code"><code># Install the php8.1-gd module
-apt-get install php8.1-gd -y
-service apache2 restart</code></pre>
-
-
-
-<p><strong>The REST API encountered an error.</strong></p>
-
-
-
-<pre class="wp-block-code"><code>The REST API is one way that WordPress and other applications communicate with the server. For example, the block editor screen relies on the REST API to display and save your posts and pages.
-
-When testing the REST API, an error was encountered:
-
-REST API Endpoint: http://example1.mydomain/wp-json/wp/v2/types/post?context=edit
-REST API Response: (http_request_failed) cURL error 6: Could not resolve host: example1.mydomain</code></pre>
-
-
-
-<p>Or:</p>
-
-
-
-<pre class="wp-block-code"><code>The REST API is one way that WordPress and other applications communicate with the server. For example, the block editor screen relies on the REST API to display and save your posts and pages.
-
-When testing the REST API, an unexpected result was returned:
-
-REST API Endpoint: http://example1.mydomain/wp-json/wp/v2/types/post?context=edit
-REST API Response: (404) Not Found</code></pre>
-
-
-
-<p><strong>Your site could not complete a loopback request.</strong></p>
-
-
-
-<pre class="wp-block-code"><code>Loopback requests are used to run scheduled events, and are also used by the built-in editors for themes and plugins to verify code stability.
-
-The loopback request to your site failed, this means features relying on them are not currently working as expected.
-Error: cURL error 6: Could not resolve host: example1.mydomain (http_request_failed)</code></pre>
-
-
-
-<p>Edit the <strong>/etc/hosts</strong> file:</p>
-
-
-
-<pre class="wp-block-code"><code>nano /etc/hosts
-
-# Add a new line: IP hostname. e.g. 192.168.0.4 website1.example.com</code></pre>
-
-
-
-<p>Additionally, you might need to install the curl package and double check to see if the <code>rewrite</code> module is properly enabled:</p>
-
-
-
-<pre class="wp-block-code"><code>apt-get install php8.1-curl curl -y
-
-# Verify curl version:
-curl --version
-
-# Verify curl is enabled in php.ini
-nano /etc/php/8.1/apache2/php.ini
-
-# Uncomment this line:
-extension=curl
-
-# Enable the rewrite module.
-a2enmod rewrite
-service restart apache2</code></pre>
-
-
-
-<p>Adding this entry in <strong>/etc/hosts</strong> file also resolves Simply Static&#8217;s <em>&#8220;Checking if WordPress can make requests to itself from your_IP&#8221;</em> FAIL issue.</p>
 ]]></content:encoded>
 					
 		

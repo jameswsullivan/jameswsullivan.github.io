@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Cisco &#8211; howdy</title>
+	<atom:link href="https://jameswsullivan.github.io/tag/cisco/feed/" rel="self" type="application/rss+xml" />
+	<link>https://jameswsullivan.github.io/</link>
+	<description></description>
+	<lastBuildDate>Tue, 23 May 2023 03:20:43 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.2.2</generator>
+	<item>
+		<title>SSH: no matching cipher found</title>
+		<link>https://jameswsullivan.github.io/ssh-no-matching-cipher-found/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Tue, 23 May 2023 03:20:43 +0000</pubDate>
+				<category><![CDATA[notes]]></category>
+		<category><![CDATA[Cisco]]></category>
+		<category><![CDATA[Cisco 2951]]></category>
+		<category><![CDATA[Cisco IOS]]></category>
+		<category><![CDATA[Networking]]></category>
+		<category><![CDATA[System Administration]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2555</guid>
+
+					<description><![CDATA[SSH: no matching cipher found]]></description>
+										<content:encoded><![CDATA[
+<p>When connecting to older Cisco routers and switches (e.g. Cisco 2951, Cisco C3750G), it&#8217;s likely that you&#8217;ll encounter this error when initiating an SSH connection: <code>SSH: no matching cipher found</code> and the device will display a list of offered ciphers. e.g. <code>Their offer: aes128-cbc,3des-cbc,aes192-cbc,aes256-cbc</code></p>
+
+
+
+<p>To connect, run the SSH command with the -c flag plus one of the offered ciphers:</p>
+
+
+
+<pre class="wp-block-code"><code>ssh -c aes256-cbc USERNAME@IP</code></pre>
+]]></content:encoded>
+					
+		
+		
+			</item>
+	</channel>
+</rss>

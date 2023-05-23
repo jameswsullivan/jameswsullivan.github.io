@@ -1,6 +1,26 @@
 <?xml version='1.0' encoding='UTF-8'?><?xml-stylesheet type='text/xsl' href='https://jameswsullivan.github.io/wp-content/plugins/google-sitemap-generator/sitemap.xsl'?><!-- sitemap-generator-url='http://www.arnebrachhold.de/' sitemap-generator-version='4.1.11' -->
-<!-- generated-on='2023-05-22 04:56' -->
+<!-- generated-on='2023-05-23 15:32' -->
 <urlset xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd' xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>	<url>
+		<loc>https://jameswsullivan.github.io/tag/mssql/</loc>
+		<changefreq>daily</changefreq>
+		<priority>0.3</priority>
+	</url>
+	<url>
+		<loc>https://jameswsullivan.github.io/tag/mysql/</loc>
+		<changefreq>daily</changefreq>
+		<priority>0.3</priority>
+	</url>
+	<url>
+		<loc>https://jameswsullivan.github.io/tag/nas/</loc>
+		<changefreq>daily</changefreq>
+		<priority>0.3</priority>
+	</url>
+	<url>
+		<loc>https://jameswsullivan.github.io/tag/networking/</loc>
+		<changefreq>daily</changefreq>
+		<priority>0.3</priority>
+	</url>
+	<url>
 		<loc>https://jameswsullivan.github.io/tag/nextcloud/</loc>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
@@ -30,24 +50,4 @@
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
 	</url>
-	<url>
-		<loc>https://jameswsullivan.github.io/tag/powershell/</loc>
-		<changefreq>daily</changefreq>
-		<priority>0.3</priority>
-	</url>
-	<url>
-		<loc>https://jameswsullivan.github.io/tag/ramdisk/</loc>
-		<changefreq>daily</changefreq>
-		<priority>0.3</priority>
-	</url>
-	<url>
-		<loc>https://jameswsullivan.github.io/tag/registry/</loc>
-		<changefreq>daily</changefreq>
-		<priority>0.3</priority>
-	</url>
-	<url>
-		<loc>https://jameswsullivan.github.io/tag/remote-desktop/</loc>
-		<changefreq>daily</changefreq>
-		<priority>0.3</priority>
-	</url>
-</urlset><!-- Request ID: aec0b0977bad87c776bd16d491d2e3c5; Queries for sitemap: 6; Total queries: 16; Seconds: $end_time; Memory for sitemap: 0MB; Total memory: 4MB -->
+</urlset><!-- Request ID: ce0b199bf46d5c27960d1f6de68bbfe4; Queries for sitemap: 6; Total queries: 16; Seconds: $end_time; Memory for sitemap: 0MB; Total memory: 4MB -->

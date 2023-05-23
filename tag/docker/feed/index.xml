@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/docker/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Sun, 21 May 2023 22:18:24 +0000</lastBuildDate>
+	<lastBuildDate>Tue, 23 May 2023 03:10:45 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -20,6 +20,119 @@
 	1	</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=6.2.2</generator>
 	<item>
+		<title>Self-host iredmail</title>
+		<link>https://jameswsullivan.github.io/self-host-iredmail/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Tue, 23 May 2023 03:04:02 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[iredmail]]></category>
+		<category><![CDATA[Mail Server]]></category>
+		<category><![CDATA[Self-Hosting]]></category>
+		<category><![CDATA[Web Hosting]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2549</guid>
+
+					<description><![CDATA[Set up self hosted iredmail mail server.]]></description>
+										<content:encoded><![CDATA[
+<h2 class="wp-block-heading">Environment:</h2>
+
+
+
+<ul>
+<li>Docker host running Ubuntu Server 22.04 LTS</li>
+
+
+
+<li><a href="https://hub.docker.com/r/iredmail/mariadb" target="_blank" rel="noreferrer noopener">iredmail Docker image</a></li>
+</ul>
+
+
+
+<h2 class="wp-block-heading">Set up:</h2>
+
+
+
+<p>Follow <a href="https://hub.docker.com/r/iredmail/mariadb" target="_blank" rel="noreferrer noopener">this instruction</a> and create the necessary folders and the default config file.</p>
+
+
+
+<p>Sample script:</p>
+
+
+
+<pre class="wp-block-code"><code>cd YOUR_DIRECTORY
+mkdir iredmail
+cd iredmail
+mkdir -p data/{backup-mysql,clamav,custom,imapsieve_copy,mailboxes,mlmmj,mlmmj-archive,mysql,sa_rules,ssl,postfix_queue}
+
+nano iredmail-docker.conf
+
+# Paste the following content into iredmail-docker.conf
+HOSTNAME=&lt;YOUR_HOSTNAME>
+FIRST_MAIL_DOMAIN=&lt;YOUR_DOMAIN>
+FIRST_MAIL_DOMAIN_ADMIN_PASSWORD=&lt;YOUR_ADMIN_PASSWORD>
+MLMMJADMIN_API_TOKEN=$(openssl rand -base64 32)
+ROUNDCUBE_DES_KEY=$(openssl rand -base64 24)
+MYSQL_ROOT_PASSWORD=&lt;YOUR_MYSQL_ROOT_PASSWORD></code></pre>
+
+
+
+<p>docker run command:</p>
+
+
+
+<pre class="wp-block-code"><code>docker run -dit \
+    --name YOUR_CONTAINER_NAME \
+    --env-file iredmail-docker.conf \
+    --network YOUR_DOCKER_NETWORK \
+    --hostname YOUR_HOSTNAME \
+    --ip IP_ADDRESS --restart=unless-stopped \
+    -v YOUR_DATA_DIRECTORY/iredmail/data/backup-mysql:/var/vmail/backup/mysql \
+    -v YOUR_DATA_DIRECTORY/iredmail/data/mailboxes:/var/vmail/vmail1 \
+    -v YOUR_DATA_DIRECTORY/iredmail/data/mlmmj:/var/vmail/mlmmj \
+    -v YOUR_DATA_DIRECTORY/iredmail/data/mlmmj-archive:/var/vmail/mlmmj-archive \
+    -v YOUR_DATA_DIRECTORY/iredmail/data/imapsieve_copy:/var/vmail/imapsieve_copy \
+    -v YOUR_DATA_DIRECTORY/iredmail/data/custom:/opt/iredmail/custom \
+    -v YOUR_DATA_DIRECTORY/iredmail/data/ssl:/opt/iredmail/ssl \
+    -v YOUR_DATA_DIRECTORY/iredmail/data/mysql:/var/lib/mysql \
+    -v YOUR_DATA_DIRECTORY/iredmail/data/clamav:/var/lib/clamav \
+    -v YOUR_DATA_DIRECTORY/iredmail/data/sa_rules:/var/lib/spamassassin \
+    -v YOUR_DATA_DIRECTORY/iredmail/data/postfix_queue:/var/spool/postfix \
+    iredmail/mariadb:nightly</code></pre>
+
+
+
+<h2 class="wp-block-heading">Issues:</h2>
+
+
+
+<ul>
+<li>Container first time startup takes some time, if the server is not responding after the container&#8217;s been started, wait for a few a minutes and try again.</li>
+
+
+
+<li>For some reason there is no &#8220;latest&#8221; tag, thus the <code>docker pull iredmail/mariadb</code> doesn&#8217;t work. You&#8217;ll have to use either <code>docker pull iredmail/mariadb:nightly</code> or <code>docker pull iredmail/mariadb:stable</code> .</li>
+
+
+
+<li>Default admin login:
+<ul>
+<li>username: postmaster@&lt;YOUR_DOMAIN></li>
+
+
+
+<li>password: your password specified in iredmail-docker.conf file. <code>FIRST_MAIL_DOMAIN_ADMIN_PASSWORD=&lt;YOUR_ADMIN_PASSWORD></code></li>
+</ul>
+</li>
+</ul>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>Self-host Bitwarden</title>
 		<link>https://jameswsullivan.github.io/self-host-bitwarden/</link>
 		
@@ -1308,130 +1421,6 @@ ip host example2.mydomain 192.168.1.103</code></pre>
 <pre class="wp-block-code"><code>http:&#47;&#47;example.mydomain
 http://example1.mydomain/
 http://example2.mydomain/</code></pre>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Configure Docker MySQL Server</title>
-		<link>https://jameswsullivan.github.io/configure-docker-mysql-server/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Fri, 03 Feb 2023 17:14:00 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[Apache]]></category>
-		<category><![CDATA[Docker]]></category>
-		<category><![CDATA[Hosting]]></category>
-		<category><![CDATA[MySQL]]></category>
-		<category><![CDATA[Self-Hosting]]></category>
-		<category><![CDATA[Ubuntu]]></category>
-		<guid isPermaLink="false">https://www.alexchen.net/?p=2124</guid>
-
-					<description><![CDATA[This is the third installment of the Name-based Virtual Hosting Series.]]></description>
-										<content:encoded><![CDATA[
-<p>Background:</p>
-
-
-
-<p>I set up this MySQL server using the <strong><a rel="noreferrer noopener" href="https://hub.docker.com/r/ubuntu/mysql" target="_blank">ubuntu/mysql</a></strong> Docker image and it&#8217;s part of my dev environment setup. My setup has <a href="https://jameswsullivan.github.io/docker-volumes-and-smb-share/">CIFS/Samba volume</a> <em>my_smb_vol</em> and an <a href="https://jameswsullivan.github.io/ubuntu-server-docker-host-and-docker-networking/">ipvlan network</a> <em>docker_dev_net</em>.</p>
-
-
-
-<p>Steps:</p>
-
-
-
-<p>Create a ubuntu/mysql container:</p>
-
-
-
-<pre class="wp-block-code"><code>docker run -dit --name MySQL_DEV --network docker_dev_net --ip 192.168.1.101 --mount source=my_smb_vol,destination=/SharedVolume -p 3306:3306 -p 22:22 -e MYSQL_ROOT_PASSWORD=password ubuntu/mysql</code></pre>
-
-
-
-<p>Create users and databases:</p>
-
-
-
-<pre class="wp-block-code"><code># Connect to mysql instance:
-mysql -u root -p
-
-# Show databases:
-SHOW DATABASES;
-
-# Describe a table:
-USE mysql;
-DESC user;
-
-# Show all the users:
-SELECT user, host FROM mysql.user;
-
-# Create databases:
-CREATE DATABASE my_wordpress_db;
-
-# Create users:
-CREATE USER 'wordpress_user'@'192.168.1.103' IDENTIFIED BY 'password';
-
-# Explanation here: 192.168.1.103 is my other Ubuntu Apache web server container. If you are creating a local user use the following command:
-CREATE USER 'wordpress_user'@'localhost' IDENTIFIED BY 'password';
-
-# Grant privileges to the user:
-GRANT ALL ON my_wordpress_db.* TO 'wordpress_user'@'192.168.1.103' WITH GRANT OPTION;
-FLUSH PRIVILEGES;
-
-# Verify privileges:
-SHOW GRANTS FOR 'wordpress_user'@'192.168.1.103';</code></pre>
-
-
-
-<p>Allow remote connection to this mysql instance:</p>
-
-
-
-<pre class="wp-block-code"><code># You will have to modify one of the .cnf files to allow remote connection to your mysql instance, if you list the files under /etc/mysql/, you'll find the following files and directories listed:
-
-ls -al /etc/mysql/
-
-conf.d
-my.cnf
-my.cnf.fallback
-
-# See the content of my.cnf:
-cat /etc/mysql/my.cnf
-
-# On the last two lines of the output, you should see:
-# Custom config should go here
-!includedir /etc/mysql/conf.d/
-
-# List files under the conf.d directory:
-ls -al /etc/mysql/conf.d/
-
-docker.cnf
-mysql.cnf
-mysqldump.cnf
-
-# The mysql.cnf is what you're going to edit:
-nano /etc/mysql/conf.d/mysql.cnf
-
-# By default, your mysql.cnf file should only contain one line: &#91;mysql]. Add a new line below it so it looks like the following:
-
-&#91;mysql]
-bind-address = 0.0.0.0</code></pre>
-
-
-
-<p>Test connection to the mysql instance from the remote machine/container using the newly created <em>wordpress_user</em> user.</p>
-
-
-
-<pre class="wp-block-code"><code># I'm performing these steps on the Ubuntu Apache web server, 192.168.1.103:
-# Install the mysql-client package if it's not been installed.
-
-apt-get install mysql-client
-
-# Connect to the mysql instance at 192.168.1.101:
-mysql -h 192.168.1.101 -u wordpress_user -p</code></pre>
 ]]></content:encoded>
 					
 		
