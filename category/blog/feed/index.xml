@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/category/blog/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Tue, 23 May 2023 03:10:45 +0000</lastBuildDate>
+	<lastBuildDate>Sat, 17 Jun 2023 18:56:18 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -20,6 +20,78 @@
 	1	</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=6.2.2</generator>
 	<item>
+		<title>Code Signing Certificate for your application</title>
+		<link>https://jameswsullivan.github.io/code-signing-certificate-for-your-application/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sat, 17 Jun 2023 18:56:18 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Code Signing]]></category>
+		<category><![CDATA[CodeSigningCert]]></category>
+		<category><![CDATA[Software Development]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2561</guid>
+
+					<description><![CDATA[Sign your self-made applications with self-signed code signing certificate.]]></description>
+										<content:encoded><![CDATA[
+<p>Some organizations have self-made applications they use internally that are not signed with well-known code signing certificates, which Windows will prompt the follow Security Warning when the apps are being opened:</p>
+
+
+
+<pre class="wp-block-code"><code>Open File - Security Warning
+The publisher could not be verified. Are you sure you want to run this software?</code></pre>
+
+
+
+<p>This warning is typically benign and most sys admins know what they are doing when running such applications, but if an app is being distributed to client workstations and end users see this message, they might be deterred (which is a good thing) or cause unnecessary complaints to the help desk.</p>
+
+
+
+<p>Here is how you can generate self-signed code signing certificates and sign your application. After the cert is generated and signed, all you need to do is deploy the cert to your client machines (using GPO or other RMM tools).</p>
+
+
+
+<h2 class="wp-block-heading">Steps:</h2>
+
+
+
+<p>1 &#8211; Either use Visual Studio or install the <a href="https://developer.microsoft.com/en-us/windows/downloads/windows-sdk/">Windows SDK</a> which includes the <a href="https://learn.microsoft.com/en-us/windows/win32/seccrypto/signtool">Microsoft SignTool</a>.</p>
+
+
+
+<p>2 &#8211; Generate a certificate:</p>
+
+
+
+<pre class="wp-block-code"><code>$cert = New-SelfSignedCertificate -DNSName "www.yourdomain.com" -CertStoreLocation Cert:\LocalMachine\My -Type CodeSigningCert -Subject "YOUR_APPLICATION_NAME"</code></pre>
+
+
+
+<p>3 &#8211; Export the certificate into a .pfx certificate file using &#8220;Manage computer certificates&#8221; or the <a href="https://learn.microsoft.com/en-us/powershell/module/pki/export-pfxcertificate?view=windowsserver2022-ps">Export-PfxCertificate</a> cmdlet.</p>
+
+
+
+<p>4 &#8211; Use the SignTool to sign the exe file with the exported .pfx certificate.</p>
+
+
+
+<pre class="wp-block-code"><code>signtool sign /f YOUR_CERT_FILE.pfx /p YOUR_CERT_PASS /fd SHA256 "YOUR .EXE"
+
+
+If you encounter the following error, set the PATH to your signtool.exe file using the following command:
+
+<em>'Signtool' is not recognized as an internal or external command, operable program or batch file.</em>
+
+set PATH=&lt;full-path-to-your-signtool.exe>;%PATH%</code></pre>
+
+
+
+<p>5 &#8211; Deploy the certificate and the signed exe file to client workstations.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>Self-host iredmail</title>
 		<link>https://jameswsullivan.github.io/self-host-iredmail/</link>
 		
@@ -1188,53 +1260,6 @@ docker run -dit --name MY-NEXTCLOUD-CONTAINER --ip IP-ADDRESS --network DOCKER-N
 # Start a MySQL container for Nextcloud.
 # The virtual disk for MySQL's persistent data is mounted to /mnt/nextcloud_db .
 docker run -dit --name MY-NEXTCLOUD-DB-CONTAINER --ip IP-ADDRESS --network DOCKER-NETWORK --hostname=MY_NEXTCLOUD_DB_CONTAINER_HOSTNAME --restart=unless-stopped -v /mnt/nextcloud_db:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=MY-ROOT-PASSWORD ubuntu/mysql</code></pre>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Invalid Time error and Unable to Change Time Zone</title>
-		<link>https://jameswsullivan.github.io/invalid-time-error-and-unable-to-change-time-zone/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Sun, 26 Mar 2023 16:52:31 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[System Administration]]></category>
-		<category><![CDATA[Windows Systems Administration]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2217</guid>
-
-					<description><![CDATA[Fix the Invalid Time error and the Time Zone setting greyed out issue on Windows.]]></description>
-										<content:encoded><![CDATA[
-<p>If your applications are encountering an Invalid Time error, check the following settings:</p>
-
-
-
-<pre class="wp-block-preformatted">Control Panel - Date and Time - Internet Time - Change Settings ... - Synchronize with an Internet time server - Set server to: time.nist.gov</pre>
-
-
-
-<p>For some reason the <code>time.windows.com</code> occasionally has issues with certain programs.</p>
-
-
-
-<p>If your <code>Time zone</code> setting is greyed out in Windows Settings, use <a href="https://learn.microsoft.com/en-us/troubleshoot/windows-client/shell-experience/cannot-set-timezone-automatically">this guide</a> to fix it:</p>
-
-
-
-<pre class="wp-block-code"><code>1. Change the Set time zone automatically setting and set the data value of the registry entry
-HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\tzautoupdate\Start
-as follows:
-
-3	Enable Set time zone automatically
-4	Disable Set time zone automatically
-
-2. Change the location setting and set the value of the registry entry
-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location\Value
-as follows:
-
-Allow	On
-Deny	Off</code></pre>
 ]]></content:encoded>
 					
 		

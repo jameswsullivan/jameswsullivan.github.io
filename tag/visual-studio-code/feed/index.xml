@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Visual Studio Code &#8211; howdy</title>
+	<atom:link href="https://jameswsullivan.github.io/tag/visual-studio-code/feed/" rel="self" type="application/rss+xml" />
+	<link>https://jameswsullivan.github.io/</link>
+	<description></description>
+	<lastBuildDate>Sat, 17 Jun 2023 19:25:44 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.2.2</generator>
+	<item>
+		<title>Skip Ctrl+P and Ctrl+Q in VS Code Shell/Terminal</title>
+		<link>https://jameswsullivan.github.io/vs-code-commands-to-skip-shell/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sat, 17 Jun 2023 19:25:17 +0000</pubDate>
+				<category><![CDATA[notes]]></category>
+		<category><![CDATA[Software Development]]></category>
+		<category><![CDATA[Visual Studio Code]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2564</guid>
+
+					<description><![CDATA[Skip Ctrl+P and Ctrl+Q in VS Code Shell/Terminal using terminal.integrated.commandsToSkipShell in defaultSettings.json.]]></description>
+										<content:encoded><![CDATA[
+<p>Refer to this issue: <a href="https://github.com/microsoft/vscode/issues/94268">VS Code eats terminal keyboard shortcuts</a></p>
+
+
+
+<h2 class="wp-block-heading">Solution:</h2>
+
+
+
+<pre class="wp-block-code"><code>Go to VS Code - Manage - Settings (Ctrl + ,) - Features - Terminal - Integrated: commands To Skip Shell
+
+Or, open VS Code - Manage - Settings - Search settings - search for:
+
+terminal.integrated.commandsToSkipShell
+or 
+open the default settings JSON (defaultSettings.json)
+
+And modify the corresponding section as follows:
+
+"terminal.integrated.commandsToSkipShell": &#91;
+      "-workbench.action.quickOpen",
+      "-workbench.action.quickOpenView"
+]</code></pre>
+]]></content:encoded>
+					
+		
+		
+			</item>
+	</channel>
+</rss>

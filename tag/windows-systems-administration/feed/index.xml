@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/windows-systems-administration/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Thu, 13 Apr 2023 01:09:42 +0000</lastBuildDate>
+	<lastBuildDate>Sat, 17 Jun 2023 19:51:05 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -20,6 +20,36 @@
 	1	</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=6.2.2</generator>
 	<item>
+		<title>Network Administration</title>
+		<link>https://jameswsullivan.github.io/network-administration/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sat, 17 Jun 2023 19:51:05 +0000</pubDate>
+				<category><![CDATA[notes]]></category>
+		<category><![CDATA[Network Administration]]></category>
+		<category><![CDATA[Networking]]></category>
+		<category><![CDATA[System Administration]]></category>
+		<category><![CDATA[Windows Systems Administration]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2567</guid>
+
+					<description><![CDATA[Common network administration tools, commands, and notes.]]></description>
+										<content:encoded><![CDATA[
+<blockquote class="wp-block-quote">
+<p>In Construction</p>
+</blockquote>
+
+
+
+<pre class="wp-block-code"><code>Command requires cmd with administrative privilege.
+
+netsh wlan show wlanreport
+</code></pre>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>Cleanly Remove User Profiles from Windows OS</title>
 		<link>https://jameswsullivan.github.io/cleanly-remove-user-profiles-from-windows-os/</link>
 		
@@ -474,137 +504,6 @@ DELETE FROM tbEventInstance WHERE EventNamespaceID= '2' AND EVENTID IN ('381','3
 <ol start="4">
 <li>The <code>Microsoft ReportViewer</code> and <code>Microsoft System CLR Types for SQL Server 2012</code> will need to be installed to view update error logs.</li>
 </ol>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Dell N-Series 激活SLIC2.0/模拟BIOS激活系统会烧毁主板么？</title>
-		<link>https://jameswsullivan.github.io/dell-n-series-laptop-slic20-bios/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Thu, 25 Feb 2010 16:16:00 +0000</pubDate>
-				<category><![CDATA[archive]]></category>
-		<category><![CDATA[Dell]]></category>
-		<category><![CDATA[Hardware]]></category>
-		<category><![CDATA[System Administration]]></category>
-		<category><![CDATA[Windows Systems Administration]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2219</guid>
-
-					<description><![CDATA[实测Dell N-Series用SLIC2.0/模拟BIOS激活系统是否会烧毁主板]]></description>
-										<content:encoded><![CDATA[
-<blockquote class="wp-block-quote">
-<p>此文系早年博客的备份，仅用于参考学习。<br>This article is an archival copy of my early years&#8217; blog posts.</p>
-</blockquote>
-
-
-
-<p><a href="http://bbs.pcbeta.com/">论坛</a>里对于Dell N-Series系列笔记本如何激活SLIC2.0的解答已经很明确了，所以在这个问题上本文仅做一个简记，第二个问题才是本文的重点。</p>
-
-
-
-<p>前几天偶然看到一篇有关“使用loader（即模拟BIOS）的方式激活Vista/Win7有烧毁主板的可能”的文章，读过之后我着实被吓了一跳，赶紧Google了一下相关知识并对自己身边的几台机器进行温度检测（我已用loader给自己和朋友装了若干台机器，一旦埋下隐患后果不堪设想 -_-!!! ），在此顺便将检测结果和我的一些思考写下来，供他人和自己日后作为参考。</p>
-
-
-
-<div style="height:50px" aria-hidden="true" class="wp-block-spacer"></div>
-
-
-
-<h2 class="wp-block-heading">1. Dell N-Series 系列激活SLIC2.0的方法（实践机器为Dell Latitude D830）</h2>
-
-
-
-<p>Dell N-Series由于在出厂时没有预装系统，所以它把SLIC2.0给隐藏了。这对于Vista之前的系统是没有影响的，但是为了完美使用Vista，我们需要借助dell的一个小工具将其显示出来。</p>
-
-
-
-<p><s>点击下载：DellServiceTag</s></p>
-
-
-
-<p>具体操作方法很简单，任意一种方式进入纯DOS，运行其中的svctag.exe，然后根据屏幕提示操作即可。有人说需要上网找同型号机器的ServiceTag以便更改时使用，但其实只要执行两次更改，第一次将自己的ServiceTag记住，提述输入新的Tag时留空直接回车，然后运行第二次的时候再将自己的Tag填回去即可。</p>
-
-
-
-<p>更具体的操作方法参见远景的帖子：<s>http://bbs.pcbeta.com/viewthread.php?tid=607414</s></p>
-
-
-
-<p><s>SLIC查看器：SLIC_ToolKit_V3.2</s></p>
-
-
-
-<p><strong>一点小补充：</strong>经我本人测试，D830使用网上达人修改的BIOS升级程序升级至SLIC2.1是安全的，我升级后使用至今没有出现任何不良反应，只要在BIOS升级的过程中不出断电之类的问题应该就没有问题。（D830 N-Series 我并未尝试，我的机器是T7300配置、预装XP的版本）</p>
-
-
-
-<p><strong>注意：</strong>博主不对升级BIOS有可能产生的不良后果负责，我只在我的机器上测试成功，若你的机器与我的有不同，请Google后再实践！</p>
-
-
-
-<div style="height:50px" aria-hidden="true" class="wp-block-spacer"></div>
-
-
-
-<h2 class="wp-block-heading">2. “用loader能烧毁主板”的问题</h2>
-
-
-
-<p>首先，我要陈述下述事实：</p>
-
-
-
-<p>1). 我在网上并没有搜到任何一个确因使用loader而使得主板烧毁或者元件高温脱焊的实例；</p>
-
-
-
-<p>2). 综论坛、各种“知道”所述，所谓“用loader能烧毁主板”的说法，其核心就是在讨论两个问题：</p>
-
-
-
-<p>(1). 模拟BIOS使得系统与真实BIOS之间的通信不能正常进行，进而BIOS温控程序无法根据硬件温度调节风扇转速，最终导致过热而烧毁硬件;（此为我以及大多数网友所担心的问题）</p>
-
-
-
-<p>(2). 由于模拟BIOS与真实BIOS之间的差异，使得系统在对真实BIOS进行读写时写入了错误值（主要为电压）而导致硬件烧毁；（说实话这个问题我不是很明白，也无法去验证）</p>
-
-
-
-<p>其实(1)还是比较容易去检验的，最简单的方法就是用EVEREST一类的软件对一台机器使用/未使用模拟BIOS的状态进行一段时间的温度和风扇转速监测，并且在两次监测过程中使电脑的运转负荷尽量相同。我在修改一台Dell D830 N-Series机器的SLIC前后对它进行了检测，结果如下：</p>
-
-
-
-<p>1). 用SLIC ToolKit查看模拟的SLIC版本是DELLM07_V2.0，修改后真实的SLIC是DELLM08_V2.0；</p>
-
-
-
-<p>2). EVEREST监测过程中均是先开机闲置大约20分钟，再打一会儿G-Force，其间频繁查看EVEREST的温度检测，结果是用/未用模拟BIOS的元件温度前者与后者大致相同，上下2-3℃的误差也在传感器和软件的误差范围内；风扇转速显示倒是有些区别，前者比后者数值上要少5-600RPM，但在玩游戏过程中由于显卡和CPU温度的升高，风扇都提高了大约相同比例的转速，所以基本上从我当前的这台机器判断，模拟BIOS并未对机器的温度检测与控制系统产生什么影响。</p>
-
-
-
-<p>但是，我这种检测有很大的局限性：</p>
-
-
-
-<p>1. 我的机器本身就是Dell的，模拟的BIOS也用的是Dell的，同时模拟BIOS与真实BIOS版本差别不大，所以二者在温控方面可能本来就没有多大差异。而对于使用A品牌的电脑却用B品牌的模拟BIOS的情况，我没去进行检测，因为手头实在没有可以随意折腾的电脑，也没有那么长的空闲时间来做多个测试。</p>
-
-
-
-<p>2. 我没有对兼容机进行测试。兼容机的BIOS与笔记本和品牌机还是有很大不同的，而且不同品牌的主板、新品与旧品主板的BIOS都可能存在差异，使用模拟BIOS会不会对它有影响我就无法一一测试了。</p>
-
-
-
-<p>不过单就使用效果来看，毕竟loader已经被中国人用的很广泛了，每个经常承接“装系统”任务的人周围肯定都有几台机器是用loader激活的，也没听说有人真的因此而损坏了硬件。所以我在此下一个并无坚实理论依据的结论：<strong>用loader基本上是安全的</strong>。</p>
-
-
-
-<p>一篇我认为讲解的比较透彻的参考文章：<s>http://www.metsky.com/archives/133.html</s></p>
-
-
-
-<p>关键字：dell n-series 机器激活slic2.0，模拟bios会不会烧毁主板，用loader激活oem系统会不会烧毁主板，模拟bios激活系统烧毁主板</p>
 ]]></content:encoded>
 					
 		

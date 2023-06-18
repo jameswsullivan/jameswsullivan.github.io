@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/cisco-ios/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Tue, 23 May 2023 03:20:43 +0000</lastBuildDate>
+	<lastBuildDate>Sun, 18 Jun 2023 00:02:38 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -20,6 +20,103 @@
 	1	</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=6.2.2</generator>
 	<item>
+		<title>Flash Cisco IOS on a C3750G Switch</title>
+		<link>https://jameswsullivan.github.io/flash-cisco-ios-on-a-c3750g-switch/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sun, 18 Jun 2023 00:01:28 +0000</pubDate>
+				<category><![CDATA[notes]]></category>
+		<category><![CDATA[Cisco]]></category>
+		<category><![CDATA[Cisco C3750G]]></category>
+		<category><![CDATA[Cisco IOS]]></category>
+		<category><![CDATA[Network Administration]]></category>
+		<category><![CDATA[Networking]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2570</guid>
+
+					<description><![CDATA[Flash Cisco IOS firmware on C3750G switch.]]></description>
+										<content:encoded><![CDATA[
+<h2 class="wp-block-heading">Environment</h2>
+
+
+
+<ul>
+<li>Switch Model: WS-C3750G-24PS-S</li>
+
+
+
+<li>Old firmware: c3750-advipservicesk9-mz.122-44.SE4.bin</li>
+
+
+
+<li>New firmware: c3750-ipservicesk9-mz.150-2.SE11.bin</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading">Steps</h2>
+
+
+
+<ol>
+<li>Set up a TFTP server with SolarWinds TFTP Server. We assume the server IP is 192.168.0.100 .</li>
+
+
+
+<li>On the switch, perform the following steps:</li>
+</ol>
+
+
+
+<pre class="wp-block-code"><code># Verify current IOS version, view current IOS bin file.
+show version
+show switch
+dir flash:
+# Assuming that your switch only have one flash.
+
+# Delete old IOS firmware file.
+delete /f /r flash:c3750-advipservicesk9-mz.122-44.SE4.bin
+
+# Copy new IOS firmware from TFTP server.
+copy tftp flash
+# Follow the prompts and provide server IP and file name.
+
+# Configure and verify boot file.
+show boot
+
+config t
+boot system switch all flash:/c3750-ipservicesk9-mz.150-2.SE11.bin
+exit
+show boot
+
+# Apply changes and reload switch.
+write memory
+reload</code></pre>
+
+
+
+<h2 class="wp-block-heading">Troubleshooting</h2>
+
+
+
+<p>When using the c3750-advipservicesk9-mz.122-44.SE4.bin firmware, SSH connection to the switch prompts the following message:</p>
+
+
+
+<pre class="wp-block-code"><code>no matching key exchange method found. Their offer: diffie-hellman-group1-sha1</code></pre>
+
+
+
+<p>Use the following command to connect (using PowerShell or CMD):</p>
+
+
+
+<pre class="wp-block-code"><code>ssh -oKexAlgorithms=+diffie-hellman-group1-sha1 -c aes256-cbc username@ip_address</code></pre>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>SSH: no matching cipher found</title>
 		<link>https://jameswsullivan.github.io/ssh-no-matching-cipher-found/</link>
 		

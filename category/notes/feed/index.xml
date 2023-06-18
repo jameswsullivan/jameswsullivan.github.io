@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/category/notes/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Tue, 23 May 2023 03:20:43 +0000</lastBuildDate>
+	<lastBuildDate>Sun, 18 Jun 2023 00:02:38 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -20,6 +20,173 @@
 	1	</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=6.2.2</generator>
 	<item>
+		<title>Flash Cisco IOS on a C3750G Switch</title>
+		<link>https://jameswsullivan.github.io/flash-cisco-ios-on-a-c3750g-switch/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sun, 18 Jun 2023 00:01:28 +0000</pubDate>
+				<category><![CDATA[notes]]></category>
+		<category><![CDATA[Cisco]]></category>
+		<category><![CDATA[Cisco C3750G]]></category>
+		<category><![CDATA[Cisco IOS]]></category>
+		<category><![CDATA[Network Administration]]></category>
+		<category><![CDATA[Networking]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2570</guid>
+
+					<description><![CDATA[Flash Cisco IOS firmware on C3750G switch.]]></description>
+										<content:encoded><![CDATA[
+<h2 class="wp-block-heading">Environment</h2>
+
+
+
+<ul>
+<li>Switch Model: WS-C3750G-24PS-S</li>
+
+
+
+<li>Old firmware: c3750-advipservicesk9-mz.122-44.SE4.bin</li>
+
+
+
+<li>New firmware: c3750-ipservicesk9-mz.150-2.SE11.bin</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading">Steps</h2>
+
+
+
+<ol>
+<li>Set up a TFTP server with SolarWinds TFTP Server. We assume the server IP is 192.168.0.100 .</li>
+
+
+
+<li>On the switch, perform the following steps:</li>
+</ol>
+
+
+
+<pre class="wp-block-code"><code># Verify current IOS version, view current IOS bin file.
+show version
+show switch
+dir flash:
+# Assuming that your switch only have one flash.
+
+# Delete old IOS firmware file.
+delete /f /r flash:c3750-advipservicesk9-mz.122-44.SE4.bin
+
+# Copy new IOS firmware from TFTP server.
+copy tftp flash
+# Follow the prompts and provide server IP and file name.
+
+# Configure and verify boot file.
+show boot
+
+config t
+boot system switch all flash:/c3750-ipservicesk9-mz.150-2.SE11.bin
+exit
+show boot
+
+# Apply changes and reload switch.
+write memory
+reload</code></pre>
+
+
+
+<h2 class="wp-block-heading">Troubleshooting</h2>
+
+
+
+<p>When using the c3750-advipservicesk9-mz.122-44.SE4.bin firmware, SSH connection to the switch prompts the following message:</p>
+
+
+
+<pre class="wp-block-code"><code>no matching key exchange method found. Their offer: diffie-hellman-group1-sha1</code></pre>
+
+
+
+<p>Use the following command to connect (using PowerShell or CMD):</p>
+
+
+
+<pre class="wp-block-code"><code>ssh -oKexAlgorithms=+diffie-hellman-group1-sha1 -c aes256-cbc username@ip_address</code></pre>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Network Administration</title>
+		<link>https://jameswsullivan.github.io/network-administration/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sat, 17 Jun 2023 19:51:05 +0000</pubDate>
+				<category><![CDATA[notes]]></category>
+		<category><![CDATA[Network Administration]]></category>
+		<category><![CDATA[Networking]]></category>
+		<category><![CDATA[System Administration]]></category>
+		<category><![CDATA[Windows Systems Administration]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2567</guid>
+
+					<description><![CDATA[Common network administration tools, commands, and notes.]]></description>
+										<content:encoded><![CDATA[
+<blockquote class="wp-block-quote">
+<p>In Construction</p>
+</blockquote>
+
+
+
+<pre class="wp-block-code"><code>Command requires cmd with administrative privilege.
+
+netsh wlan show wlanreport
+</code></pre>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Skip Ctrl+P and Ctrl+Q in VS Code Shell/Terminal</title>
+		<link>https://jameswsullivan.github.io/vs-code-commands-to-skip-shell/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sat, 17 Jun 2023 19:25:17 +0000</pubDate>
+				<category><![CDATA[notes]]></category>
+		<category><![CDATA[Software Development]]></category>
+		<category><![CDATA[Visual Studio Code]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2564</guid>
+
+					<description><![CDATA[Skip Ctrl+P and Ctrl+Q in VS Code Shell/Terminal using terminal.integrated.commandsToSkipShell in defaultSettings.json.]]></description>
+										<content:encoded><![CDATA[
+<p>Refer to this issue: <a href="https://github.com/microsoft/vscode/issues/94268">VS Code eats terminal keyboard shortcuts</a></p>
+
+
+
+<h2 class="wp-block-heading">Solution:</h2>
+
+
+
+<pre class="wp-block-code"><code>Go to VS Code - Manage - Settings (Ctrl + ,) - Features - Terminal - Integrated: commands To Skip Shell
+
+Or, open VS Code - Manage - Settings - Search settings - search for:
+
+terminal.integrated.commandsToSkipShell
+or 
+open the default settings JSON (defaultSettings.json)
+
+And modify the corresponding section as follows:
+
+"terminal.integrated.commandsToSkipShell": &#91;
+      "-workbench.action.quickOpen",
+      "-workbench.action.quickOpenView"
+]</code></pre>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>SSH: no matching cipher found</title>
 		<link>https://jameswsullivan.github.io/ssh-no-matching-cipher-found/</link>
 		
@@ -846,181 +1013,6 @@ docker run -d -p 5000:5000 --restart=always --name registry registry:2
 
 docker exec -it MySQL mysql --local-infile=1 -u root -p
 </code></pre>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Cleanly Remove User Profiles from Windows OS</title>
-		<link>https://jameswsullivan.github.io/cleanly-remove-user-profiles-from-windows-os/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Sun, 26 Mar 2023 19:40:25 +0000</pubDate>
-				<category><![CDATA[notes]]></category>
-		<category><![CDATA[Desktop Support]]></category>
-		<category><![CDATA[Registry]]></category>
-		<category><![CDATA[System Administration]]></category>
-		<category><![CDATA[Windows Systems Administration]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2230</guid>
-
-					<description><![CDATA[Cleanly Remove User Profiles from Windows OS]]></description>
-										<content:encoded><![CDATA[
-<ol>
-<li>Delete profile account using <code>lusrmgr.msc</code>.</li>
-
-
-
-<li>Delete profile folder under <code>Users</code>.</li>
-
-
-
-<li>Delete registry keys:</li>
-</ol>
-
-
-
-<pre class="wp-block-code"><code>HKLM\Software\Microsoft\WindowsNT\CurrentVersion\ProfileList
-
-HKLM\Software\Microsoft\WindowsNT\CurrentVersion\ProfileGuid</code></pre>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>DISKPART</title>
-		<link>https://jameswsullivan.github.io/diskpart/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Sun, 26 Mar 2023 16:18:30 +0000</pubDate>
-				<category><![CDATA[notes]]></category>
-		<category><![CDATA[DISKPART]]></category>
-		<category><![CDATA[NAS]]></category>
-		<category><![CDATA[Storage]]></category>
-		<category><![CDATA[Storage Pool]]></category>
-		<category><![CDATA[TrueNAS]]></category>
-		<category><![CDATA[Virtual Disk]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2207</guid>
-
-					<description><![CDATA[DISKPART commands.]]></description>
-										<content:encoded><![CDATA[
-<p>Output of the &#8220;help&#8221; command:</p>
-
-
-
-<pre class="wp-block-code"><code>ACTIVE      - Mark the selected partition as active.
-ADD         - Add a mirror to a simple volume.
-ASSIGN      - Assign a drive letter or mount point to the selected volume.
-ATTRIBUTES  - Manipulate volume or disk attributes.
-ATTACH      - Attaches a virtual disk file.
-AUTOMOUNT   - Enable and disable automatic mounting of basic volumes.
-BREAK       - Break a mirror set.
-CLEAN       - Clear the configuration information, or all information, off the
-              disk.
-COMPACT     - Attempts to reduce the physical size of the file.
-CONVERT     - Convert between different disk formats.
-CREATE      - Create a volume, partition or virtual disk.
-DELETE      - Delete an object.
-DETAIL      - Provide details about an object.
-DETACH      - Detaches a virtual disk file.
-EXIT        - Exit DiskPart.
-EXTEND      - Extend a volume.
-EXPAND      - Expands the maximum size available on a virtual disk.
-FILESYSTEMS - Display current and supported file systems on the volume.
-FORMAT      - Format the volume or partition.
-GPT         - Assign attributes to the selected GPT partition.
-HELP        - Display a list of commands.
-IMPORT      - Import a disk group.
-INACTIVE    - Mark the selected partition as inactive.
-LIST        - Display a list of objects.
-MERGE       - Merges a child disk with its parents.
-ONLINE      - Online an object that is currently marked as offline.
-OFFLINE     - Offline an object that is currently marked as online.
-RECOVER     - Refreshes the state of all disks in the selected pack.
-              Attempts recovery on disks in the invalid pack, and
-              resynchronizes mirrored volumes and RAID5 volumes
-              that have stale plex or parity data.
-REM         - Does nothing. This is used to comment scripts.
-REMOVE      - Remove a drive letter or mount point assignment.
-REPAIR      - Repair a RAID-5 volume with a failed member.
-RESCAN      - Rescan the computer looking for disks and volumes.
-RETAIN      - Place a retained partition under a simple volume.
-SAN         - Display or set the SAN policy for the currently booted OS.
-SELECT      - Shift the focus to an object.
-SETID       - Change the partition type.
-SHRINK      - Reduce the size of the selected volume.
-UNIQUEID    - Displays or sets the GUID partition table (GPT) identifier or
-              master boot record (MBR) signature of a disk.</code></pre>
-
-
-
-<p>If a disk has corrupt partitions/volumes and the <code>delete</code> command does not work, use the <code>clean</code> command to force clean the partitions/volumes on a disk.</p>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Create Storage Pools and Virtual Disks via PowerShell</title>
-		<link>https://jameswsullivan.github.io/create-storage-pools-and-virtual-disks-via-powershell/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Sun, 26 Mar 2023 15:57:56 +0000</pubDate>
-				<category><![CDATA[notes]]></category>
-		<category><![CDATA[PowerShell]]></category>
-		<category><![CDATA[Storage Pool]]></category>
-		<category><![CDATA[System Administration]]></category>
-		<category><![CDATA[Virtual Disk]]></category>
-		<category><![CDATA[Windows Server]]></category>
-		<category><![CDATA[Windows Systems Administration]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2203</guid>
-
-					<description><![CDATA[Create Storage Pools and Virtual Disks via PowerShell when New Virtual Disk Wizard GUI emits error.]]></description>
-										<content:encoded><![CDATA[
-<p>If creating New Virtual Disk using the New Virtual Disk Wizard GUI emits this error:</p>
-
-
-
-<pre class="wp-block-code"><code>Failed to create virtual disk - Not Supported
-
-Extended information:
-The storage pool does not have sufficient eligible resources for the creation of the specified virtual disk.
-
-Recommended Actions:
-- Choose a combination of FaultDomainAwareness and NumberOfDataCopies (or PhysicalDiskRedundancy) supported by the storage pool.
-- Choose a value for NumberOfColumns that is less than or equal to the number of physical disks in the storage fault domain selected for the virtual disk.
-
-Activity ID:</code></pre>
-
-
-
-<p>use PowerShell might work. <a href="https://www.petenetlive.com/KB/Article/0001562">Ref</a>. This might happen when you have multiple SSDs/HDDs connected to the host via an HBA Adapter.</p>
-
-
-
-<ul>
-<li><a href="https://learn.microsoft.com/en-us/powershell/module/storage/new-storagepool?view=windowsserver2022-ps">New-StoragePool</a></li>
-
-
-
-<li><a href="https://learn.microsoft.com/en-us/powershell/module/storage/get-virtualdisk?view=windowsserver2022-ps">Get-VirtualDisk</a></li>
-
-
-
-<li><a href="https://learn.microsoft.com/en-us/powershell/module/storage/new-virtualdisk?view=windowsserver2022-ps">New-VirtualDisk</a></li>
-</ul>
-
-
-
-<pre class="wp-block-code"><code>New-StoragePool
-
-New-VirtualDisk -StoragePoolFriendlyName STORAGE_POOL_NAME `
-                -FriendlyName VIRTUAL_DISK_NAME -UseMaximumSize `
-                -ResiliencySettingName "Parity" -PhysicalDiskRedundancy 1 `
-                -ProvisioningType Fixed -MediaType SSD
-
-Get-VirtualDisk</code></pre>
 ]]></content:encoded>
 					
 		
