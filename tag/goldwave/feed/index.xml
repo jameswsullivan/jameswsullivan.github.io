@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Goldwave &#8211; howdy</title>
+	<atom:link href="https://jameswsullivan.github.io/tag/goldwave/feed/" rel="self" type="application/rss+xml" />
+	<link>https://jameswsullivan.github.io/</link>
+	<description></description>
+	<lastBuildDate>Sun, 18 Jun 2023 14:37:27 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.2.2</generator>
+	<item>
+		<title>用Goldwave改变音频文件的播放速度</title>
+		<link>https://jameswsullivan.github.io/change-audio-playback-speed-with-goldwave/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sun, 02 Aug 2009 17:56:00 +0000</pubDate>
+				<category><![CDATA[archive]]></category>
+		<category><![CDATA[Audio]]></category>
+		<category><![CDATA[Goldwave]]></category>
+		<category><![CDATA[Podcast]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2578</guid>
+
+					<description><![CDATA[用Goldwave改变音频文件的播放速度]]></description>
+										<content:encoded><![CDATA[
+<blockquote class="wp-block-quote">
+<p>此文系早年博客的备份，仅用于参考学习。<br>This article is an archival copy of my early years&#8217; blog posts.</p>
+</blockquote>
+
+
+
+<p>经常听英语听力的同学有时可能会觉得自己下载的听力音频的速度不是很合适，希望将它们调快或调慢1～2倍速来播放，可是我们常用的音频播放器均不支持快放或慢放功能，而且即使有个别的播放器支持此功能，其调整后的音频音色改变也很大，听起来效果很不理想。那么，到底用什么方法能既避免严重的失真，又达到我们需要的效果呢？今天，我们就用Goldwave来实现这个目的（本文以将多个文件批量调快1.5倍速为例）。<br> <br>在调整过程中，我们要用到Goldwave的“时间弯曲”效果和“批处理”功能。首先，打开一个待处理的音频文件，选择“效果”—“时间弯曲”，切换到“类似”选项，并从下方的“预置”中选择“默认”（在“预置”菜单中，Goldwave已经为我们提供了几个预置选项，此处选择“默认”是为了将我们用于批处理的效果存入其中）。<br> <br>然后，将“变化”一栏改为150（加快1.5倍速），此时可以点击“预置”旁边的播放键试听，对效果满意则点击旁边的加号，将此设置存入“默认”中。如图：</p>
+
+
+
+<figure class="wp-block-image size-full"><img decoding="async" width="332" height="309" src="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogGoldWave01.jpg" alt="" class="wp-image-2580" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogGoldWave01.jpg 332w, https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogGoldWave01-300x279.jpg 300w" sizes="(max-width: 332px) 100vw, 332px" /></figure>
+
+
+
+<p>最后，打开“文件”—“批处理”，向其中添加需要批量更改的文件，再切换至“处理”选项卡，从“添加效果”中选择上一步中设定好的“时间弯曲 — 默认”并将其添加，最后在“文件夹”里设置修改后的文件的保存方式，就可以点击“开始”来进行批处理了。</p>
+
+
+
+<figure class="wp-block-image size-full is-style-default"><img decoding="async" width="340" height="332" src="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogGoldWave02.jpg" alt="" class="wp-image-2581" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogGoldWave02.jpg 340w, https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogGoldWave02-300x293.jpg 300w" sizes="(max-width: 340px) 100vw, 340px" /></figure>
+
+
+
+<p>用此方法改变音频的播放速度，只要更改的范围合理，对一般音频的音色不会产生太大的影响，因此对于英语听力或品质要求不高的音乐伴奏来说，这是一个快速而简便的技巧。</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+	</channel>
+</rss>

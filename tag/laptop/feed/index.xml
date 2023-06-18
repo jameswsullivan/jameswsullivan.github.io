@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Laptop &#8211; howdy</title>
+	<atom:link href="https://jameswsullivan.github.io/tag/laptop/feed/" rel="self" type="application/rss+xml" />
+	<link>https://jameswsullivan.github.io/</link>
+	<description></description>
+	<lastBuildDate>Sun, 18 Jun 2023 14:47:47 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.2.2</generator>
+	<item>
+		<title>华硕N81E87Vg</title>
+		<link>https://jameswsullivan.github.io/asus-n81e87vg-laptop/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Thu, 23 Jul 2009 22:11:00 +0000</pubDate>
+				<category><![CDATA[archive]]></category>
+		<category><![CDATA[Laptop]]></category>
+		<category><![CDATA[Product Review]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2587</guid>
+
+					<description><![CDATA[华硕N81E87Vg笔记本评测。]]></description>
+										<content:encoded><![CDATA[
+<blockquote class="wp-block-quote">
+<p>此文系早年博客的备份，仅用于参考学习。<br>This article is an archival copy of my early years&#8217; blog posts.</p>
+</blockquote>
+
+
+
+<p>前两天朱哥买了笔记本儿，华硕N81E87Vg-SL，作为民间技术员的我当然责无旁贷的担起了提供技术支持的任务。细节及使用感受后说，这里先提供该本儿的主要参数：</p>
+
+
+
+<pre class="wp-block-code"><code>CPU: Intel Core2 Duo(Penryn) P8700 (2.53G/3072KB L2/1066MHz)
+RAM: 4G
+Primary Storage: 500G Hard Drive
+Optical Drive: DVD +/- RW
+Graphics: nVIDIA GeForce GT 120M (1024MB/128bit)
+LCD Panel: 14.1''
+
+Other Details: <a href="http://detail.zol.com.cn/203/202774/param.shtml">http://detail.zol.com.cn/203/202774/param.shtml</a></code></pre>
+
+
+
+<p>这款本儿最后的成交价是7200RMB，把原来的2G内存升为了4G，还抽了两次奖，第一次得了个拉杆箱，第二次得了一个双肩笔记本儿包、一个2G优盘和一个水杯。当然啦，赠送的东西一般都不是好东西：拉杆箱刚拖起来的感觉就不好，拉杆儿总是晃；笔记本儿包让我给抢走了，东西还行，足够我骑车子背本儿用；优盘用起来像USB1.1的，拷贝东西很慢；水杯也是2元店里那种。所以，当你觉得捡了便宜的时候，不妨想想：商家怎么能让你占便宜呢？</p>
+
+
+
+<p>好了言归正传，说俩小小感想：</p>
+
+
+
+<ol>
+<li>为了能完全使用4G内存，并且朱哥考虑到日后还可能用它来做音视频方面的工作，所以就装了64位的vista，相应的软件也更新为了64位版本。由于我也是首次安装64位系统，所以刚开始安装的时候还略有胆怯，脑海里回响着网上的各种言论：“64位系统兼容性很差”，“64位vista软件少”，“XX游戏在64位下不能玩”……但是系统安装完毕后，发现大多数程序默认即可运行，只是少数几个软件需要下载对应的64位版本。驱动方面，也只需要去华硕官网下载一个显卡（GT 120M）驱动的64位版本和另一个和人脸识别登录相关的程序就行了。</li>
+
+
+
+<li>给系统做备份方面，我一直坚持用传统的Ghost，插一张DOS启动盘，然后进入Ghost手动操作。可是随着SATA硬盘和光驱的普及，传统Ghost有时会启动不了，硬要用这种方法的话还需要设置BIOS。今天找到了一个可以满足任何人使用的Ghost工具，无需对本机做任何设置，完全的傻瓜式操作。</li>
+</ol>
+
+
+
+<p>点击下载 Ghost安装器 ，大多数情况下你只需要为你的GHO镜像命名和选择保存路径，其他选项保持默认即可。</p>
+
+
+
+<p>关键字： 华硕N81笔记本儿，64位系统兼容性，一键Ghost备份，SATA硬盘光驱做Ghost，64位vista做Ghost</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+	</channel>
+</rss>

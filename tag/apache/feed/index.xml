@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/apache/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Sun, 21 May 2023 22:18:24 +0000</lastBuildDate>
+	<lastBuildDate>Sun, 18 Jun 2023 22:55:25 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -1208,6 +1208,339 @@ SHOW DATABASES;</code></pre>
 <pre class="wp-block-code"><code># In file /var/www/html/nextcloud/config/config.php, change the following.
 
 ‘twofactor_enforced’ =&gt; ‘false’</code></pre>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>修改WordPress主题手记</title>
+		<link>https://jameswsullivan.github.io/wordpress-theming/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Thu, 30 Jul 2009 00:29:00 +0000</pubDate>
+				<category><![CDATA[archive]]></category>
+		<category><![CDATA[blog]]></category>
+		<category><![CDATA[Apache]]></category>
+		<category><![CDATA[Linux]]></category>
+		<category><![CDATA[php]]></category>
+		<category><![CDATA[Software Development]]></category>
+		<category><![CDATA[Web Hosting]]></category>
+		<category><![CDATA[WordPress]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2590</guid>
+
+					<description><![CDATA[自定义WordPress主题。
+WordPress Theming.]]></description>
+										<content:encoded><![CDATA[
+<blockquote class="wp-block-quote">
+<p>此文系早年博客的备份，仅用于参考学习。<br>This article is an archival copy of my early years&#8217; blog posts.</p>
+</blockquote>
+
+
+
+<p>使用Wordpress做博客已经一年多了，印象中自建博以来就一直在使用Studiopress主题，只是中间因为少许习惯的原因和对某项功能的扩展而对其略微做过一些修改。这次着手写这篇文章，源于最近将主题代码全都重写为XHTML Strict、为Studiopress主题增添嵌套评论功能和对Feed进行优化等的一系列更改，为了能让和我一样不懂php、略懂CSS和XHTML的博主也能按自己的喜好对Wordpress主题进行修改，我将修改过程总结于此，以Studiopress主题为例，供读者参考。</p>
+
+
+
+<h2 class="wp-block-heading">1. 为不支持嵌套评论的主题添加嵌套评论。</h2>
+
+
+
+<p>WordPress从2.7版开始便原生支持嵌套评论，用户不必再借助插件来实现这个功能了。可是，有时自己使用的主题却并不支持嵌套评论，而往往博主又都不太愿意仅仅因此就更换一个使用已久的主题。这时，对主题文件做一点小小的改动来让它支持嵌套评论不失为一个好办法。以下代码可以直接拷贝使用。</p>
+
+
+
+<p>打开<code>comments.php</code>，找到原先的显示评论部分的代码：</p>
+
+
+
+<pre class="wp-block-code"><code>&lt;?php if ($comments) : ?&gt;
+	&lt;h3 id="comments"&gt;&lt;?php comments_number('No Comments', 'One Comment', '% Comments' );?&gt; on &amp;#8220;&lt;?php the_title(); ?&gt;&amp;#8221;&lt;/h3&gt;
+
+	&lt;ol class="commentlist"&gt;
+
+	&lt;?php foreach ($comments as $comment) : ?&gt;
+		&lt;li &lt;?php echo $oddcomment; ?&gt;id="comment-&lt;?php comment_ID() ?&gt;"&gt;
+
+			&lt;a href="http://gravatar.com/" rel="external nofollow" class="gravatar"&gt;
+			&lt;?php  if (function_exists('get_avatar')) { echo get_avatar( $comment, 69); } else { 
+			//alternate gravatar code for &lt; 2.5
+				$grav_url = "http://www.gravatar.com/avatar.php?gravatar_id=" . md5($email) . "&amp;default=" . urlencode($default) . "&amp;size=" . $size;
+				echo "&lt;img src='$grav_url'/&gt;";}
+			?&gt;
+			&lt;/a&gt;
+
+			&lt;div class="commentbody"&gt;
+			&lt;cite&gt;&lt;?php comment_author_link() ?&gt;&lt;/cite&gt;
+			&lt;?php if ($comment-&gt;comment_approved == '0') : ?&gt;
+			&lt;em&gt;Your comment is awaiting moderation.&lt;/em&gt;
+			&lt;?php endif; ?&gt;
+			&lt;br /&gt;
+
+			&lt;small class="commentmetadata"&gt;&lt;a href="#comment-&lt;?php comment_ID() ?&gt;" title=""&gt;&lt;?php comment_date('F jS, Y') ?&gt; at &lt;?php comment_time() ?&gt;&lt;/a&gt; &lt;?php edit_comment_link('edit','&amp;nbsp;&amp;nbsp;',''); ?&gt;&lt;/small&gt;
+			&lt;?php comment_text() ?&gt;
+			&lt;/div&gt;
+		&lt;/li&gt;
+		&lt;div class="cleared"&gt;&lt;/div&gt;
+
+	&lt;?php
+		/* Changes every other comment to a different class */
+		$oddcomment = ( empty( $oddcomment ) ) ? 'class="alt" ' : '';
+	?&gt;
+
+	&lt;?php endforeach; /* end for each comment */ ?&gt;
+
+	&lt;/ol&gt;
+
+ 	&lt;?php else : // this is displayed if there are no comments so far ?&gt;
+
+		&lt;?php if ('open' == $post-&gt;comment_status) : ?&gt;
+			&lt;!-- If comments are open, but there are no comments. --&gt;
+
+	 	&lt;?php else : // comments are closed ?&gt;
+			&lt;!-- If comments are closed. --&gt;
+			&lt;p class="nocomments"&gt;Comments are closed.&lt;/p&gt;
+
+	&lt;?php endif; ?&gt;
+&lt;?php endif; ?&gt;</code></pre>
+
+
+
+<p>将上述部分用下面的代码替换掉：</p>
+
+
+
+<pre class="wp-block-code"><code>&lt;?php if ( have_comments() ) : ?&gt;
+	&lt;h3 id="comments"&gt;&lt;?php comments_number('No Responses', 'One Response', '% Responses' );?&gt; to &amp;#8220;&lt;?php the_title(); ?&gt;&amp;#8221;&lt;/h3&gt;
+ 
+	&lt;ol class="commentlist"&gt;
+	&lt;?php wp_list_comments(); ?&gt;
+	&lt;/ol&gt;
+	&lt;div class="navigation"&gt;
+		&lt;div class="alignleft"&gt;&lt;?php previous_comments_link() ?&gt;&lt;/div&gt;
+		&lt;div class="alignright"&gt;&lt;?php next_comments_link() ?&gt;&lt;/div&gt;
+	&lt;/div&gt;
+ &lt;?php else : // this is displayed if there are no comments so far ?&gt;
+ 
+	&lt;?php if ('open' == $post-&gt;comment_status) : ?&gt;
+		&lt;!-- If comments are open, but there are no comments. --&gt;
+ 
+	 &lt;?php else : // comments are closed ?&gt;
+		&lt;!-- If comments are closed. --&gt;
+		&lt;p class="nocomments"&gt;Comments are closed.&lt;/p&gt;
+ 
+	&lt;?php endif; ?&gt;
+&lt;?php endif; ?&gt;</code></pre>
+
+
+
+<p>仅从代码量上来看，嵌套评论的代码比原先要少了很多。当然这还没完，还需要在下方提交评论的表单中加入：</p>
+
+
+
+<pre class="wp-block-code"><code>&lt;?php comment_id_fields(); ?&gt; ，如下：
+
+	&lt;p&gt;
+	&lt;input name="submit" type="submit" id="submit" tabindex="5" value="Submit Comment" /&gt;
+	&lt;?php comment_id_fields(); ?&gt;
+	&lt;input type="hidden" name="comment_post_ID" value="&lt;?php echo $id; ?&gt;" /&gt;
+&lt;/p&gt;</code></pre>
+
+
+
+<p>以及需要在Wordpress后台的 <code>Settings &gt;&gt; Discussion</code> 中将</p>
+
+
+
+<figure class="wp-block-image size-full"><img decoding="async" width="364" height="30" src="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogWordPressTheming01.jpg" alt="" class="wp-image-2591" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogWordPressTheming01.jpg 364w, https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogWordPressTheming01-300x25.jpg 300w" sizes="(max-width: 364px) 100vw, 364px" /></figure>
+
+
+
+<p>选中，并选择嵌套层数，最多可以支持10层。</p>
+
+
+
+<p>做完以上的更改，嵌套评论已经可以实现了。但通常情况下默认样式的嵌套评论很不美观，这时可以通过修改CSS来加以装饰，以下是我的嵌套评论样式，写法很容易看懂，读者即使不懂CSS，也可以仿照下列代码进行修改。</p>
+
+
+
+<pre class="wp-block-code"><code>/* Begin Comments*/
+.commentlist {
+	padding:5px 1px;
+	overflow:hidden;
+	height:100%;
+	}
+	
+.commentlist ul.parents {
+	background:#FFFFEF;
+	}
+	
+.commentlist li.depth-1{
+	border-top:1px solid #a8c4d3;
+	border-bottom:1px solid #a8c4d3;
+	background:#F9FDFF;
+	margin-bottom:12px;
+	padding:6px 8px;
+	} 
+	
+.commentlist .commenttext {
+	margin-left:42px;
+	padding-top:8px;
+	}
+	
+.commentlist ul.children {
+	overflow:hidden;
+	height:100%;
+	margin:6px;
+	}
+	
+.commentlist li ul.children li.depth-2,
+.commentlist li ul.children li.depth-3,
+.commentlist li ul.children li.depth-4,
+.commentlist li ul.children li.depth-5,
+.commentlist li ul.children li.depth-6,
+.commentlist li ul.children li.depth-7,
+.commentlist li ul.children li.depth-8,
+.commentlist li ul.children li.depth-9,
+.commentlist li ul.children li.depth-10 {
+ 	background:#EDF8FF;
+ 	border:1px dashed #C7E1EF;
+ 	padding:8px;
+ 	margin-bottom:8px;
+ 	}
+ 
+.commentlist li ul.children li.depth-3,
+.commentlist li ul.children li.depth-5,
+.commentlist li ul.children li.depth-7,
+.commentlist li ul.children li.depth-9 {
+	background:#FFFFFF;
+	}
+	
+.commentlist li ul.children li dl {
+	background-image:none;
+	}
+/* End Comments */</code></pre>
+
+
+
+<h2 class="wp-block-heading">2. 让Wordpress的RSS Feed真正实现全文输出</h2>
+
+
+
+<p>虽然Wordpress的设置里有关于Feed全文输出的选项，安装ozh-better-feed后插件设置项里也有不在Feed中截断文章的选项，可是当文章使用了<code>&lt;!--more--&gt;</code>签之后，Feed中的文章依然随之变成了摘要输出，而且通过调整后台设置无法改变这一状况。既然如此，我们还得依靠修改代码来实现，最简单的修改方式如下：</p>
+
+
+
+<p>打开<code>wp-includes/post-template.php</code>文件，找到</p>
+
+
+
+<pre class="wp-block-code"><code>if( preg_match(’//’, $content, $matches) ){<br>$content = explode($matches&#91;0], $content, 2);<br>…………</code></pre>
+
+
+
+<p>将第一行改为：</p>
+
+
+
+<pre class="wp-block-code"><code>if ( preg_match(’//’, $content, $matches) &amp;&amp; !is_feed() ){</code></pre>
+
+
+
+<p>最后，再到你的托管商那里重新同步一下Feed，你的Feed就会显示全文输出了。</p>
+
+
+
+<h2 class="wp-block-heading">3. 在博客侧边栏上添加delicious和豆瓣代码，与网友共享你的资源</h2>
+
+
+
+<h4 class="wp-block-heading">delicious代码：</h4>
+
+
+
+<p>登录你的delicious账户，定位到 <code>settings &gt;&gt; Blogging &gt;&gt; Link Rolls</code> ，先在下面的 <code>Display options</code> 里面设置相应的参数，填写要显示的书签数目，最后拷贝代码，到WordPress后台中以Widgets方式或自行修改<code>sidebar.php</code>的方式添加至主题中即可。</p>
+
+
+
+<h4 class="wp-block-heading">豆瓣代码：</h4>
+
+
+
+<p>登录豆瓣主页，在右下角的地方找到“豆瓣服务（API）”，然后选择“豆瓣秀代码生成器”，一般的Blog选择Javascript代码即可，在下一个页面设置你希望显示的内容，最后拷贝代码至你的博客即可。</p>
+
+
+
+<h2 class="wp-block-heading">4. 给文章添加分享&amp;收藏功能</h2>
+
+
+
+<p>在浏览其他人的博客时，你是否经常看到文章底部都会有一排链接，可以让你将本文添加至delicious、Googlemarks等地方，方便进行收藏或分享？添加分享&amp;收藏工具栏有几种方法，可以借助插件、手动添加收藏代码以及使用addtoany提供的工具。插件和addtoany都易于使用，因此笔者在这里只提供几个常用的收藏代码。</p>
+
+
+
+<pre class="wp-block-code"><code>Del.icio.us:
+&lt;a target="_blank" href="http://del.icio.us/post?url=&lt;?php the_permalink() ?&gt;&amp;amp;title=&lt;?php the_title(); ?&gt;"&gt;Del.icio.us&lt;/a&gt;
+
+百度搜藏:
+&lt;a target="_blank" href="http://cang.baidu.com/do/add?it=&lt;?php the_title(); ?&gt;&amp;amp;iu=&lt;?php the_permalink() ?&gt;"&gt;百度搜藏&lt;/a&gt;
+
+QQ书签:
+&lt;a target="_blank" href="http://shuqian.qq.com/post?from=3&amp;amp;title=&lt;?php the_title(); ?&gt;&amp;amp;uri=&lt;?php the_permalink() ?&gt;"&gt;QQ书签&lt;/a&gt;
+
+Google书签:
+&lt;a target="_blank" href="http://google.com/bookmarks/mark?op=edit&amp;amp;bkmk=&lt;?php the_permalink() ?&gt;&amp;amp;title=&lt;?php the_title(); ?&gt;"&gt;Google书签&lt;/a&gt;
+</code></pre>
+
+
+
+<p>相关文章请参考：<a href="http://l-wy.cn/post/make-the-wordpress-social-bookmark-tool.html">http://l-wy.cn/post/make-the-wordpress-social-bookmark-tool.html</a></p>
+
+
+
+<h2 class="wp-block-heading">5. 将主题按照XHTML Strict标准改写</h2>
+
+
+
+<p>现在的Wordpress主题大都是以XHTML Transitional的标准写的，如果你希望自己的主题代码更加符合W3C规范，想把它按Strict标准改写的话，需要注意一下几个常见的问题。</p>
+
+
+
+<p>1). 首先要将header.php的文件头部改为以下代码：</p>
+
+
+
+<pre class="wp-block-code"><code>&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
+</code></pre>
+
+
+
+<p>2). XHTML 1.0 Strict 不支持链接中的 target 属性（如上述收藏代码中的 target 属性），因为标准的制定者认为，是否在新窗口中打开链接应取决于浏览者的喜好，而不应是网站制作者所强制的，因此在Strict标准中取消了对这一属性的支持。如果一定要让链接在新窗口中打开，则需要以JS代码的方式实现。</p>
+
+
+
+<p>3). XHTML 1.0 Strict 因为要严格的实行以CSS控制排版的原则，所以它不支持对<code>&lt;p&gt;</code>等元素使用 align 属性。这个现象一般在发布文章时，从word粘贴已排过版的文本的时候发生，建议博主在使用可视化编辑文章之后还要再看一眼代码，免得因为几个不合法的属性而使得本文无法通过W3C验证。</p>
+
+
+
+<p>4). 无论是以Transitional 还是 Strict 方式来写代码，形如<code>"&amp;"</code>的字符实体都要写成对应的实体名称或实体代码才能够通过验证，比如上文JS代码中的<code>"&amp;"</code>字符。以下是常用的字符实体及其名称和编号：</p>
+
+
+
+<figure class="wp-block-image size-full"><img decoding="async" width="613" height="520" src="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogWordPressTheming02.jpg" alt="" class="wp-image-2592" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogWordPressTheming02.jpg 613w, https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogWordPressTheming02-300x254.jpg 300w" sizes="(max-width: 613px) 100vw, 613px" /></figure>
+
+
+
+<p>5). 必须在XHTML代码中完全删除类似于<code>&lt;font&gt;</code>等用来控制显示的标签，因为Strict严格的要求以XHTML控制结构，而以CSS来控制布局和显示，所以这些在Transitional中可以被允许的元素，在这里必须以具有同等功效的CSS代码来取代。</p>
+
+
+
+<p>最后，在对所有的主题文件、日志内容进行了检查和修改之后，就可以登录 <a href="http://validator.w3.org/">http://validator.w3.org/</a> 来对自己的页面进行验证了。</p>
+
+
+
+<p>至此，对Wordpress主题几个部分的修改已经全部完成。</p>
 ]]></content:encoded>
 					
 		

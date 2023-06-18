@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/cisco-2951/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Tue, 23 May 2023 03:20:43 +0000</lastBuildDate>
+	<lastBuildDate>Sun, 18 Jun 2023 14:30:04 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -25,7 +25,7 @@
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Tue, 23 May 2023 03:20:43 +0000</pubDate>
-				<category><![CDATA[notes]]></category>
+				<category><![CDATA[blog]]></category>
 		<category><![CDATA[Cisco]]></category>
 		<category><![CDATA[Cisco 2951]]></category>
 		<category><![CDATA[Cisco IOS]]></category>

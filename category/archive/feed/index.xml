@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/category/archive/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Sun, 07 May 2023 21:31:31 +0000</lastBuildDate>
+	<lastBuildDate>Sun, 18 Jun 2023 22:55:25 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -145,6 +145,48 @@
 
 
 <p>关键字：dell n-series 机器激活slic2.0，模拟bios会不会烧毁主板，用loader激活oem系统会不会烧毁主板，模拟bios激活系统烧毁主板</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>用Goldwave改变音频文件的播放速度</title>
+		<link>https://jameswsullivan.github.io/change-audio-playback-speed-with-goldwave/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sun, 02 Aug 2009 17:56:00 +0000</pubDate>
+				<category><![CDATA[archive]]></category>
+		<category><![CDATA[Audio]]></category>
+		<category><![CDATA[Goldwave]]></category>
+		<category><![CDATA[Podcast]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2578</guid>
+
+					<description><![CDATA[用Goldwave改变音频文件的播放速度]]></description>
+										<content:encoded><![CDATA[
+<blockquote class="wp-block-quote">
+<p>此文系早年博客的备份，仅用于参考学习。<br>This article is an archival copy of my early years&#8217; blog posts.</p>
+</blockquote>
+
+
+
+<p>经常听英语听力的同学有时可能会觉得自己下载的听力音频的速度不是很合适，希望将它们调快或调慢1～2倍速来播放，可是我们常用的音频播放器均不支持快放或慢放功能，而且即使有个别的播放器支持此功能，其调整后的音频音色改变也很大，听起来效果很不理想。那么，到底用什么方法能既避免严重的失真，又达到我们需要的效果呢？今天，我们就用Goldwave来实现这个目的（本文以将多个文件批量调快1.5倍速为例）。<br> <br>在调整过程中，我们要用到Goldwave的“时间弯曲”效果和“批处理”功能。首先，打开一个待处理的音频文件，选择“效果”—“时间弯曲”，切换到“类似”选项，并从下方的“预置”中选择“默认”（在“预置”菜单中，Goldwave已经为我们提供了几个预置选项，此处选择“默认”是为了将我们用于批处理的效果存入其中）。<br> <br>然后，将“变化”一栏改为150（加快1.5倍速），此时可以点击“预置”旁边的播放键试听，对效果满意则点击旁边的加号，将此设置存入“默认”中。如图：</p>
+
+
+
+<figure class="wp-block-image size-full"><img decoding="async" width="332" height="309" src="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogGoldWave01.jpg" alt="" class="wp-image-2580" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogGoldWave01.jpg 332w, https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogGoldWave01-300x279.jpg 300w" sizes="(max-width: 332px) 100vw, 332px" /></figure>
+
+
+
+<p>最后，打开“文件”—“批处理”，向其中添加需要批量更改的文件，再切换至“处理”选项卡，从“添加效果”中选择上一步中设定好的“时间弯曲 — 默认”并将其添加，最后在“文件夹”里设置修改后的文件的保存方式，就可以点击“开始”来进行批处理了。</p>
+
+
+
+<figure class="wp-block-image size-full is-style-default"><img decoding="async" width="340" height="332" src="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogGoldWave02.jpg" alt="" class="wp-image-2581" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogGoldWave02.jpg 340w, https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogGoldWave02-300x293.jpg 300w" sizes="(max-width: 340px) 100vw, 340px" /></figure>
+
+
+
+<p>用此方法改变音频的播放速度，只要更改的范围合理，对一般音频的音色不会产生太大的影响，因此对于英语听力或品质要求不高的音乐伴奏来说，这是一个快速而简便的技巧。</p>
 ]]></content:encoded>
 					
 		
@@ -586,20 +628,23 @@ Add French Keyboard in Vista.]]></description>
 		
 			</item>
 		<item>
-		<title>AppLocale让你的软件不再显示乱码</title>
-		<link>https://jameswsullivan.github.io/use-applocale-to-get-rid-of-garbled-characters/</link>
+		<title>修改WordPress主题手记</title>
+		<link>https://jameswsullivan.github.io/wordpress-theming/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Wed, 06 May 2009 22:02:00 +0000</pubDate>
+		<pubDate>Thu, 30 Jul 2009 00:29:00 +0000</pubDate>
 				<category><![CDATA[archive]]></category>
-		<category><![CDATA[Foreign Language]]></category>
-		<category><![CDATA[Locale]]></category>
-		<category><![CDATA[System Administration]]></category>
-		<category><![CDATA[Unicode]]></category>
-		<category><![CDATA[Windows Systems Administration]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2412</guid>
+		<category><![CDATA[blog]]></category>
+		<category><![CDATA[Apache]]></category>
+		<category><![CDATA[Linux]]></category>
+		<category><![CDATA[php]]></category>
+		<category><![CDATA[Software Development]]></category>
+		<category><![CDATA[Web Hosting]]></category>
+		<category><![CDATA[WordPress]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2590</guid>
 
-					<description><![CDATA[使用AppLocale让你的软件不再显示乱码。]]></description>
+					<description><![CDATA[自定义WordPress主题。
+WordPress Theming.]]></description>
 										<content:encoded><![CDATA[
 <blockquote class="wp-block-quote">
 <p>此文系早年博客的备份，仅用于参考学习。<br>This article is an archival copy of my early years&#8217; blog posts.</p>
@@ -607,76 +652,326 @@ Add French Keyboard in Vista.]]></description>
 
 
 
-<p>有很多玩外文游戏(主要是日文)和使用外语软件的朋友们可能会遇到这样的情况：由于系统本身默认状态下对小语种语言支持的不够完美，因而导致部分游戏或软件界面出现乱码。除了在 <s>另一篇文章</s> 中谈到的设置非Unicode程序的语言的方法之外，Microsoft还提供了<a rel="noreferrer noopener" href="https://en.wikipedia.org/wiki/AppLocale" target="_blank">AppLocale</a>这样一个工具来支持众多的小语种软件。</p>
+<p>使用Wordpress做博客已经一年多了，印象中自建博以来就一直在使用Studiopress主题，只是中间因为少许习惯的原因和对某项功能的扩展而对其略微做过一些修改。这次着手写这篇文章，源于最近将主题代码全都重写为XHTML Strict、为Studiopress主题增添嵌套评论功能和对Feed进行优化等的一系列更改，为了能让和我一样不懂php、略懂CSS和XHTML的博主也能按自己的喜好对Wordpress主题进行修改，我将修改过程总结于此，以Studiopress主题为例，供读者参考。</p>
 
 
 
-<p>Some people who often use foreign language software or play foreign games might face up with such a problem: there may be a lot of garbled characters on the interface. Except for setting the system&#8217;s non-Unicode language, we can use another tool AppLocale to solve this problem.</p>
+<h2 class="wp-block-heading">1. 为不支持嵌套评论的主题添加嵌套评论。</h2>
 
 
 
-<p><s>点击下载AppLocale(Click to download AppLocale):</s></p>
+<p>WordPress从2.7版开始便原生支持嵌套评论，用户不必再借助插件来实现这个功能了。可是，有时自己使用的主题却并不支持嵌套评论，而往往博主又都不太愿意仅仅因此就更换一个使用已久的主题。这时，对主题文件做一点小小的改动来让它支持嵌套评论不失为一个好办法。以下代码可以直接拷贝使用。</p>
 
 
 
-<p>此工具在vista以下的系统中可以直接运行.msi文件安装，但在vista及更高版本系统中，直接双击打开apploc.msi会因权限限制而无法安装，而.msi文件又无法使用右键以管理员身份运行，这时通过</p>
+<p>打开<code>comments.php</code>，找到原先的显示评论部分的代码：</p>
 
 
 
-<p>If you are using Windows Vista, you can&#8217;t begin the installation by directly double clicking apploc.msi, because it needs to be run as Administrator. But there&#8217;s no Run as Administrator in the right click menu. Now, follow these steps to install it:</p>
+<pre class="wp-block-code"><code>&lt;?php if ($comments) : ?&gt;
+	&lt;h3 id="comments"&gt;&lt;?php comments_number('No Comments', 'One Comment', '% Comments' );?&gt; on &amp;#8220;&lt;?php the_title(); ?&gt;&amp;#8221;&lt;/h3&gt;
+
+	&lt;ol class="commentlist"&gt;
+
+	&lt;?php foreach ($comments as $comment) : ?&gt;
+		&lt;li &lt;?php echo $oddcomment; ?&gt;id="comment-&lt;?php comment_ID() ?&gt;"&gt;
+
+			&lt;a href="http://gravatar.com/" rel="external nofollow" class="gravatar"&gt;
+			&lt;?php  if (function_exists('get_avatar')) { echo get_avatar( $comment, 69); } else { 
+			//alternate gravatar code for &lt; 2.5
+				$grav_url = "http://www.gravatar.com/avatar.php?gravatar_id=" . md5($email) . "&amp;default=" . urlencode($default) . "&amp;size=" . $size;
+				echo "&lt;img src='$grav_url'/&gt;";}
+			?&gt;
+			&lt;/a&gt;
+
+			&lt;div class="commentbody"&gt;
+			&lt;cite&gt;&lt;?php comment_author_link() ?&gt;&lt;/cite&gt;
+			&lt;?php if ($comment-&gt;comment_approved == '0') : ?&gt;
+			&lt;em&gt;Your comment is awaiting moderation.&lt;/em&gt;
+			&lt;?php endif; ?&gt;
+			&lt;br /&gt;
+
+			&lt;small class="commentmetadata"&gt;&lt;a href="#comment-&lt;?php comment_ID() ?&gt;" title=""&gt;&lt;?php comment_date('F jS, Y') ?&gt; at &lt;?php comment_time() ?&gt;&lt;/a&gt; &lt;?php edit_comment_link('edit','&amp;nbsp;&amp;nbsp;',''); ?&gt;&lt;/small&gt;
+			&lt;?php comment_text() ?&gt;
+			&lt;/div&gt;
+		&lt;/li&gt;
+		&lt;div class="cleared"&gt;&lt;/div&gt;
+
+	&lt;?php
+		/* Changes every other comment to a different class */
+		$oddcomment = ( empty( $oddcomment ) ) ? 'class="alt" ' : '';
+	?&gt;
+
+	&lt;?php endforeach; /* end for each comment */ ?&gt;
+
+	&lt;/ol&gt;
+
+ 	&lt;?php else : // this is displayed if there are no comments so far ?&gt;
+
+		&lt;?php if ('open' == $post-&gt;comment_status) : ?&gt;
+			&lt;!-- If comments are open, but there are no comments. --&gt;
+
+	 	&lt;?php else : // comments are closed ?&gt;
+			&lt;!-- If comments are closed. --&gt;
+			&lt;p class="nocomments"&gt;Comments are closed.&lt;/p&gt;
+
+	&lt;?php endif; ?&gt;
+&lt;?php endif; ?&gt;</code></pre>
 
 
 
-<p>以管理员身份运行命令提示符 &#8212;- 在命令提示符中定位到apploc.msi所在目录 &#8212;- 输入apploc.msi &#8212;- 回车</p>
+<p>将上述部分用下面的代码替换掉：</p>
 
 
 
-<p>Run Command Prompt as Administrator ==&gt; locate to the directory where the apploc.msi is ==&gt; input apploc.msi then press Enter</p>
+<pre class="wp-block-code"><code>&lt;?php if ( have_comments() ) : ?&gt;
+	&lt;h3 id="comments"&gt;&lt;?php comments_number('No Responses', 'One Response', '% Responses' );?&gt; to &amp;#8220;&lt;?php the_title(); ?&gt;&amp;#8221;&lt;/h3&gt;
+ 
+	&lt;ol class="commentlist"&gt;
+	&lt;?php wp_list_comments(); ?&gt;
+	&lt;/ol&gt;
+	&lt;div class="navigation"&gt;
+		&lt;div class="alignleft"&gt;&lt;?php previous_comments_link() ?&gt;&lt;/div&gt;
+		&lt;div class="alignright"&gt;&lt;?php next_comments_link() ?&gt;&lt;/div&gt;
+	&lt;/div&gt;
+ &lt;?php else : // this is displayed if there are no comments so far ?&gt;
+ 
+	&lt;?php if ('open' == $post-&gt;comment_status) : ?&gt;
+		&lt;!-- If comments are open, but there are no comments. --&gt;
+ 
+	 &lt;?php else : // comments are closed ?&gt;
+		&lt;!-- If comments are closed. --&gt;
+		&lt;p class="nocomments"&gt;Comments are closed.&lt;/p&gt;
+ 
+	&lt;?php endif; ?&gt;
+&lt;?php endif; ?&gt;</code></pre>
 
 
 
-<p>来运行它，就可以顺利安装了。</p>
+<p>仅从代码量上来看，嵌套评论的代码比原先要少了很多。当然这还没完，还需要在下方提交评论的表单中加入：</p>
 
 
 
-<p>Then you can correctly install it.</p>
+<pre class="wp-block-code"><code>&lt;?php comment_id_fields(); ?&gt; ，如下：
+
+	&lt;p&gt;
+	&lt;input name="submit" type="submit" id="submit" tabindex="5" value="Submit Comment" /&gt;
+	&lt;?php comment_id_fields(); ?&gt;
+	&lt;input type="hidden" name="comment_post_ID" value="&lt;?php echo $id; ?&gt;" /&gt;
+&lt;/p&gt;</code></pre>
 
 
 
-<p>安装完成后启动AppLocale，按照提示点击下一步，选择要通过它运行的程序，再在下一步中选择该程序的语言，最后可以建立“通过AppLocale启动”的快捷方式(快捷方式会生成在开始菜单中Microsoft AppLocale目录下)，程序运行后就不会显示乱码了。</p>
+<p>以及需要在Wordpress后台的 <code>Settings &gt;&gt; Discussion</code> 中将</p>
 
 
 
-<p>After the installation, run AppLocale, follow the instructions and correctly choose the language you need for running your program, then create its shortcut (the shortcut will be created in the start menu, under the directory Microsoft AppLocale). This time your program will not contain garbled characters any more.</p>
+<figure class="wp-block-image size-full"><img decoding="async" width="364" height="30" src="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogWordPressTheming01.jpg" alt="" class="wp-image-2591" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogWordPressTheming01.jpg 364w, https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogWordPressTheming01-300x25.jpg 300w" sizes="(max-width: 364px) 100vw, 364px" /></figure>
 
 
 
-<p>注：经我测试AppLocale并不能解决所有的外文软件出现乱码的问题，比如Harrap字典在我的机器上就不行。但对于大多数常用软件(例如QQ，迅雷等)，它支持的都很完美，因此朋友们可以放心使用。</p>
+<p>选中，并选择嵌套层数，最多可以支持10层。</p>
 
 
 
-<p>P.S. I found that AppLocale can&#8217;t solve this kind of problems every time, for example the Harrap French Dictionary. But for some common softwares and games, it deals with them well.</p>
+<p>做完以上的更改，嵌套评论已经可以实现了。但通常情况下默认样式的嵌套评论很不美观，这时可以通过修改CSS来加以装饰，以下是我的嵌套评论样式，写法很容易看懂，读者即使不懂CSS，也可以仿照下列代码进行修改。</p>
 
 
 
-<p>关键字：软件界面乱码怎么办，外文软件显示乱码，小语种软件显示乱码，法语软件乱码，日语软件乱码，德语软件乱码, garbled characters in some programs, some programs contain garbled characters</p>
+<pre class="wp-block-code"><code>/* Begin Comments*/
+.commentlist {
+	padding:5px 1px;
+	overflow:hidden;
+	height:100%;
+	}
+	
+.commentlist ul.parents {
+	background:#FFFFEF;
+	}
+	
+.commentlist li.depth-1{
+	border-top:1px solid #a8c4d3;
+	border-bottom:1px solid #a8c4d3;
+	background:#F9FDFF;
+	margin-bottom:12px;
+	padding:6px 8px;
+	} 
+	
+.commentlist .commenttext {
+	margin-left:42px;
+	padding-top:8px;
+	}
+	
+.commentlist ul.children {
+	overflow:hidden;
+	height:100%;
+	margin:6px;
+	}
+	
+.commentlist li ul.children li.depth-2,
+.commentlist li ul.children li.depth-3,
+.commentlist li ul.children li.depth-4,
+.commentlist li ul.children li.depth-5,
+.commentlist li ul.children li.depth-6,
+.commentlist li ul.children li.depth-7,
+.commentlist li ul.children li.depth-8,
+.commentlist li ul.children li.depth-9,
+.commentlist li ul.children li.depth-10 {
+ 	background:#EDF8FF;
+ 	border:1px dashed #C7E1EF;
+ 	padding:8px;
+ 	margin-bottom:8px;
+ 	}
+ 
+.commentlist li ul.children li.depth-3,
+.commentlist li ul.children li.depth-5,
+.commentlist li ul.children li.depth-7,
+.commentlist li ul.children li.depth-9 {
+	background:#FFFFFF;
+	}
+	
+.commentlist li ul.children li dl {
+	background-image:none;
+	}
+/* End Comments */</code></pre>
+
+
+
+<h2 class="wp-block-heading">2. 让Wordpress的RSS Feed真正实现全文输出</h2>
+
+
+
+<p>虽然Wordpress的设置里有关于Feed全文输出的选项，安装ozh-better-feed后插件设置项里也有不在Feed中截断文章的选项，可是当文章使用了<code>&lt;!--more--&gt;</code>签之后，Feed中的文章依然随之变成了摘要输出，而且通过调整后台设置无法改变这一状况。既然如此，我们还得依靠修改代码来实现，最简单的修改方式如下：</p>
+
+
+
+<p>打开<code>wp-includes/post-template.php</code>文件，找到</p>
+
+
+
+<pre class="wp-block-code"><code>if( preg_match(’//’, $content, $matches) ){<br>$content = explode($matches&#91;0], $content, 2);<br>…………</code></pre>
+
+
+
+<p>将第一行改为：</p>
+
+
+
+<pre class="wp-block-code"><code>if ( preg_match(’//’, $content, $matches) &amp;&amp; !is_feed() ){</code></pre>
+
+
+
+<p>最后，再到你的托管商那里重新同步一下Feed，你的Feed就会显示全文输出了。</p>
+
+
+
+<h2 class="wp-block-heading">3. 在博客侧边栏上添加delicious和豆瓣代码，与网友共享你的资源</h2>
+
+
+
+<h4 class="wp-block-heading">delicious代码：</h4>
+
+
+
+<p>登录你的delicious账户，定位到 <code>settings &gt;&gt; Blogging &gt;&gt; Link Rolls</code> ，先在下面的 <code>Display options</code> 里面设置相应的参数，填写要显示的书签数目，最后拷贝代码，到WordPress后台中以Widgets方式或自行修改<code>sidebar.php</code>的方式添加至主题中即可。</p>
+
+
+
+<h4 class="wp-block-heading">豆瓣代码：</h4>
+
+
+
+<p>登录豆瓣主页，在右下角的地方找到“豆瓣服务（API）”，然后选择“豆瓣秀代码生成器”，一般的Blog选择Javascript代码即可，在下一个页面设置你希望显示的内容，最后拷贝代码至你的博客即可。</p>
+
+
+
+<h2 class="wp-block-heading">4. 给文章添加分享&amp;收藏功能</h2>
+
+
+
+<p>在浏览其他人的博客时，你是否经常看到文章底部都会有一排链接，可以让你将本文添加至delicious、Googlemarks等地方，方便进行收藏或分享？添加分享&amp;收藏工具栏有几种方法，可以借助插件、手动添加收藏代码以及使用addtoany提供的工具。插件和addtoany都易于使用，因此笔者在这里只提供几个常用的收藏代码。</p>
+
+
+
+<pre class="wp-block-code"><code>Del.icio.us:
+&lt;a target="_blank" href="http://del.icio.us/post?url=&lt;?php the_permalink() ?&gt;&amp;amp;title=&lt;?php the_title(); ?&gt;"&gt;Del.icio.us&lt;/a&gt;
+
+百度搜藏:
+&lt;a target="_blank" href="http://cang.baidu.com/do/add?it=&lt;?php the_title(); ?&gt;&amp;amp;iu=&lt;?php the_permalink() ?&gt;"&gt;百度搜藏&lt;/a&gt;
+
+QQ书签:
+&lt;a target="_blank" href="http://shuqian.qq.com/post?from=3&amp;amp;title=&lt;?php the_title(); ?&gt;&amp;amp;uri=&lt;?php the_permalink() ?&gt;"&gt;QQ书签&lt;/a&gt;
+
+Google书签:
+&lt;a target="_blank" href="http://google.com/bookmarks/mark?op=edit&amp;amp;bkmk=&lt;?php the_permalink() ?&gt;&amp;amp;title=&lt;?php the_title(); ?&gt;"&gt;Google书签&lt;/a&gt;
+</code></pre>
+
+
+
+<p>相关文章请参考：<a href="http://l-wy.cn/post/make-the-wordpress-social-bookmark-tool.html">http://l-wy.cn/post/make-the-wordpress-social-bookmark-tool.html</a></p>
+
+
+
+<h2 class="wp-block-heading">5. 将主题按照XHTML Strict标准改写</h2>
+
+
+
+<p>现在的Wordpress主题大都是以XHTML Transitional的标准写的，如果你希望自己的主题代码更加符合W3C规范，想把它按Strict标准改写的话，需要注意一下几个常见的问题。</p>
+
+
+
+<p>1). 首先要将header.php的文件头部改为以下代码：</p>
+
+
+
+<pre class="wp-block-code"><code>&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
+</code></pre>
+
+
+
+<p>2). XHTML 1.0 Strict 不支持链接中的 target 属性（如上述收藏代码中的 target 属性），因为标准的制定者认为，是否在新窗口中打开链接应取决于浏览者的喜好，而不应是网站制作者所强制的，因此在Strict标准中取消了对这一属性的支持。如果一定要让链接在新窗口中打开，则需要以JS代码的方式实现。</p>
+
+
+
+<p>3). XHTML 1.0 Strict 因为要严格的实行以CSS控制排版的原则，所以它不支持对<code>&lt;p&gt;</code>等元素使用 align 属性。这个现象一般在发布文章时，从word粘贴已排过版的文本的时候发生，建议博主在使用可视化编辑文章之后还要再看一眼代码，免得因为几个不合法的属性而使得本文无法通过W3C验证。</p>
+
+
+
+<p>4). 无论是以Transitional 还是 Strict 方式来写代码，形如<code>"&amp;"</code>的字符实体都要写成对应的实体名称或实体代码才能够通过验证，比如上文JS代码中的<code>"&amp;"</code>字符。以下是常用的字符实体及其名称和编号：</p>
+
+
+
+<figure class="wp-block-image size-full"><img decoding="async" width="613" height="520" src="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogWordPressTheming02.jpg" alt="" class="wp-image-2592" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogWordPressTheming02.jpg 613w, https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogWordPressTheming02-300x254.jpg 300w" sizes="(max-width: 613px) 100vw, 613px" /></figure>
+
+
+
+<p>5). 必须在XHTML代码中完全删除类似于<code>&lt;font&gt;</code>等用来控制显示的标签，因为Strict严格的要求以XHTML控制结构，而以CSS来控制布局和显示，所以这些在Transitional中可以被允许的元素，在这里必须以具有同等功效的CSS代码来取代。</p>
+
+
+
+<p>最后，在对所有的主题文件、日志内容进行了检查和修改之后，就可以登录 <a href="http://validator.w3.org/">http://validator.w3.org/</a> 来对自己的页面进行验证了。</p>
+
+
+
+<p>至此，对Wordpress主题几个部分的修改已经全部完成。</p>
 ]]></content:encoded>
 					
 		
 		
 			</item>
 		<item>
-		<title>播放视频时显示双字幕</title>
-		<link>https://jameswsullivan.github.io/dual-language-subtitle/</link>
+		<title>华硕N81E87Vg</title>
+		<link>https://jameswsullivan.github.io/asus-n81e87vg-laptop/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Tue, 21 Apr 2009 01:54:00 +0000</pubDate>
+		<pubDate>Thu, 23 Jul 2009 22:11:00 +0000</pubDate>
 				<category><![CDATA[archive]]></category>
-		<category><![CDATA[Subtitle]]></category>
-		<category><![CDATA[Video Editing]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2267</guid>
+		<category><![CDATA[Laptop]]></category>
+		<category><![CDATA[Product Review]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2587</guid>
 
-					<description><![CDATA[播放视频时显示双字幕]]></description>
+					<description><![CDATA[华硕N81E87Vg笔记本评测。]]></description>
 										<content:encoded><![CDATA[
 <blockquote class="wp-block-quote">
 <p>此文系早年博客的备份，仅用于参考学习。<br>This article is an archival copy of my early years&#8217; blog posts.</p>
@@ -684,51 +979,44 @@ Add French Keyboard in Vista.]]></description>
 
 
 
-<p>想必很多希望通过电影和电视剧来练习英语的朋友们都有这样的感受：听原声看中文字幕觉得起不到练习的作用，可是看英文字幕又经常因为语速过快或生词过多而导致不少地方看不懂。那么，最理想的状态莫过于中英文字幕同时出现了。可是现在除了内嵌字幕的压缩视频外（如rmvb），大多数清晰度高的视频都采用外挂字幕，甚至大多数时候还要自己去shooter.cn这样的字幕网站去搜索字幕文件。这样的好处是字幕的版本、语言等选择范围更广了，但对于观看者来说却遇到一个大问题——现今大多数播放器都只能同时加载一种字幕，只允许用户在多个字幕间切换。</p>
+<p>前两天朱哥买了笔记本儿，华硕N81E87Vg-SL，作为民间技术员的我当然责无旁贷的担起了提供技术支持的任务。细节及使用感受后说，这里先提供该本儿的主要参数：</p>
 
 
 
-<p>看了那么多的电影和美剧，这个问题也着实困扰了我好久，我一直希望能寻得一款能够加载多个字幕的播放器，可是现在主流的播放器：暴风影音、realplayer、Kmplayer、VLC等，无一能轻松实现这个功能（我也听说有人能通过插件来解决此问题，但是我不会，如有搞定的高手请指教）。</p>
+<pre class="wp-block-code"><code>CPU: Intel Core2 Duo(Penryn) P8700 (2.53G/3072KB L2/1066MHz)
+RAM: 4G
+Primary Storage: 500G Hard Drive
+Optical Drive: DVD +/- RW
+Graphics: nVIDIA GeForce GT 120M (1024MB/128bit)
+LCD Panel: 14.1''
+
+Other Details: <a href="http://detail.zol.com.cn/203/202774/param.shtml">http://detail.zol.com.cn/203/202774/param.shtml</a></code></pre>
 
 
 
-<p>前些天再次Google这个问题的时候，偶然发现有人通过编辑字幕文件解决了这个问题。仔细一看，居然是一个在简单不过的方式：将中英文字幕文件的内容合并到一个文件内！我试了一下，完全成功。唉，有时我们沿着一条路探索问题的答案，发现困难重重，殊不知换一个角度着手，答案近在眼前。</p>
+<p>这款本儿最后的成交价是7200RMB，把原来的2G内存升为了4G，还抽了两次奖，第一次得了个拉杆箱，第二次得了一个双肩笔记本儿包、一个2G优盘和一个水杯。当然啦，赠送的东西一般都不是好东西：拉杆箱刚拖起来的感觉就不好，拉杆儿总是晃；笔记本儿包让我给抢走了，东西还行，足够我骑车子背本儿用；优盘用起来像USB1.1的，拷贝东西很慢；水杯也是2元店里那种。所以，当你觉得捡了便宜的时候，不妨想想：商家怎么能让你占便宜呢？</p>
 
 
 
-<p>不多废话了，我以srt字幕为例说一下方法：</p>
+<p>好了言归正传，说俩小小感想：</p>
 
 
 
-<p>用任意文本编辑器打开srt字幕文件（记事本即可），新建一个文本文件并将中英字幕文件的内容拷贝到新文件中。不需要中英文字幕的内容每行一一对应（因为在播放时只要时间线对应即可，实际行并不用对应），直接粘贴即可，粘贴的先后顺序决定字幕显示时是中文在上还是英文在上。然后将此文件保存为srt格式，在播放视频时加载即可。-_-!!!</p>
+<ol>
+<li>为了能完全使用4G内存，并且朱哥考虑到日后还可能用它来做音视频方面的工作，所以就装了64位的vista，相应的软件也更新为了64位版本。由于我也是首次安装64位系统，所以刚开始安装的时候还略有胆怯，脑海里回响着网上的各种言论：“64位系统兼容性很差”，“64位vista软件少”，“XX游戏在64位下不能玩”……但是系统安装完毕后，发现大多数程序默认即可运行，只是少数几个软件需要下载对应的64位版本。驱动方面，也只需要去华硕官网下载一个显卡（GT 120M）驱动的64位版本和另一个和人脸识别登录相关的程序就行了。</li>
 
 
 
-<p>但是这种方式有一个小问题，即如果时间线不完全对应，则会出现双字幕不同步的问题。但对于大多数字幕来说，这种方法就足够了。</p>
+<li>给系统做备份方面，我一直坚持用传统的Ghost，插一张DOS启动盘，然后进入Ghost手动操作。可是随着SATA硬盘和光驱的普及，传统Ghost有时会启动不了，硬要用这种方法的话还需要设置BIOS。今天找到了一个可以满足任何人使用的Ghost工具，无需对本机做任何设置，完全的傻瓜式操作。</li>
+</ol>
 
 
 
-<p>但如果有人要精益求精，或者需要对更多格式的字幕文件做编辑、校对等工作，我推荐下面这款软件：SrtEdit v.4.1 <s>(点击下载)</s></p>
+<p>点击下载 Ghost安装器 ，大多数情况下你只需要为你的GHO镜像命名和选择保存路径，其他选项保持默认即可。</p>
 
 
 
-<p>这款软件功能强大，可以更好地实现双字幕的合并，并在合并过程当中可以校对时间线。同时它也支持对单一字幕做转码、校对等操作，不仅可以满足一般用户的需要，甚至可以作为专业工具来使用。鉴于我并不精通视频字幕制作方面的知识，我就不在这里多说了，朋友们可以自己下载后钻研。</p>
-
-
-
-<p>注：使用它的“双语字幕合成”功能时，虚先打开一种语言的字幕，再选择此功能，打开另一种语言的字幕。</p>
-
-
-
-<p>软件截图：</p>
-
-
-
-<figure class="wp-block-image size-large"><img decoding="async" width="1024" height="621" src="https://jameswsullivan.github.io/wp-content/uploads/2023/04/SrtEdit_01-1024x621.jpg" alt="" class="wp-image-2269" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/04/SrtEdit_01-1024x621.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/04/SrtEdit_01-300x182.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/04/SrtEdit_01-768x466.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/04/SrtEdit_01-700x425.jpg 700w, https://jameswsullivan.github.io/wp-content/uploads/2023/04/SrtEdit_01.jpg 1296w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
-
-
-
-<figure class="wp-block-image size-large is-style-default"><img decoding="async" width="1024" height="621" src="https://jameswsullivan.github.io/wp-content/uploads/2023/04/SrtEdit_02-1024x621.jpg" alt="" class="wp-image-2270" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/04/SrtEdit_02-1024x621.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/04/SrtEdit_02-300x182.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/04/SrtEdit_02-768x466.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/04/SrtEdit_02-700x425.jpg 700w, https://jameswsullivan.github.io/wp-content/uploads/2023/04/SrtEdit_02.jpg 1296w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+<p>关键字： 华硕N81笔记本儿，64位系统兼容性，一键Ghost备份，SATA硬盘光驱做Ghost，64位vista做Ghost</p>
 ]]></content:encoded>
 					
 		

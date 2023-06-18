@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/category/blog/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Sat, 17 Jun 2023 18:56:18 +0000</lastBuildDate>
+	<lastBuildDate>Sun, 18 Jun 2023 14:30:04 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -20,6 +20,144 @@
 	1	</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=6.2.2</generator>
 	<item>
+		<title>Flash Cisco IOS on a C3750G Switch</title>
+		<link>https://jameswsullivan.github.io/flash-cisco-ios-on-a-c3750g-switch/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sun, 18 Jun 2023 00:01:28 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Cisco]]></category>
+		<category><![CDATA[Cisco C3750G]]></category>
+		<category><![CDATA[Cisco IOS]]></category>
+		<category><![CDATA[Network Administration]]></category>
+		<category><![CDATA[Networking]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2570</guid>
+
+					<description><![CDATA[Flash Cisco IOS firmware on C3750G switch.]]></description>
+										<content:encoded><![CDATA[
+<h2 class="wp-block-heading">Environment</h2>
+
+
+
+<ul>
+<li>Switch Model: WS-C3750G-24PS-S</li>
+
+
+
+<li>Old firmware: c3750-advipservicesk9-mz.122-44.SE4.bin</li>
+
+
+
+<li>New firmware: c3750-ipservicesk9-mz.150-2.SE11.bin</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading">Steps</h2>
+
+
+
+<ol>
+<li>Set up a TFTP server with SolarWinds TFTP Server. We assume the server IP is 192.168.0.100 .</li>
+
+
+
+<li>On the switch, perform the following steps:</li>
+</ol>
+
+
+
+<pre class="wp-block-code"><code># Verify current IOS version, view current IOS bin file.
+show version
+show switch
+dir flash:
+# Assuming that your switch only have one flash.
+
+# Delete old IOS firmware file.
+delete /f /r flash:c3750-advipservicesk9-mz.122-44.SE4.bin
+
+# Copy new IOS firmware from TFTP server.
+copy tftp flash
+# Follow the prompts and provide server IP and file name.
+
+# Configure and verify boot file.
+show boot
+
+config t
+boot system switch all flash:/c3750-ipservicesk9-mz.150-2.SE11.bin
+exit
+show boot
+
+# Apply changes and reload switch.
+write memory
+reload</code></pre>
+
+
+
+<h2 class="wp-block-heading">Troubleshooting</h2>
+
+
+
+<p>When using the c3750-advipservicesk9-mz.122-44.SE4.bin firmware, SSH connection to the switch prompts the following message:</p>
+
+
+
+<pre class="wp-block-code"><code>no matching key exchange method found. Their offer: diffie-hellman-group1-sha1</code></pre>
+
+
+
+<p>Use the following command to connect (using PowerShell or CMD):</p>
+
+
+
+<pre class="wp-block-code"><code>ssh -oKexAlgorithms=+diffie-hellman-group1-sha1 -c aes256-cbc username@ip_address
+</code></pre>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Skip Ctrl+P and Ctrl+Q in VS Code Shell/Terminal</title>
+		<link>https://jameswsullivan.github.io/vs-code-commands-to-skip-shell/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sat, 17 Jun 2023 19:25:17 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Software Development]]></category>
+		<category><![CDATA[Visual Studio Code]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2564</guid>
+
+					<description><![CDATA[Skip Ctrl+P and Ctrl+Q in VS Code Shell/Terminal using terminal.integrated.commandsToSkipShell in defaultSettings.json.]]></description>
+										<content:encoded><![CDATA[
+<p>Refer to this issue: <a href="https://github.com/microsoft/vscode/issues/94268">VS Code eats terminal keyboard shortcuts</a></p>
+
+
+
+<h2 class="wp-block-heading">Solution:</h2>
+
+
+
+<pre class="wp-block-code"><code>Go to VS Code - Manage - Settings (Ctrl + ,) - Features - Terminal - Integrated: commands To Skip Shell
+
+Or, open VS Code - Manage - Settings - Search settings - search for:
+
+terminal.integrated.commandsToSkipShell
+or 
+open the default settings JSON (defaultSettings.json)
+
+And modify the corresponding section as follows:
+
+"terminal.integrated.commandsToSkipShell": &#91;
+      "-workbench.action.quickOpen",
+      "-workbench.action.quickOpenView"
+]</code></pre>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>Code Signing Certificate for your application</title>
 		<link>https://jameswsullivan.github.io/code-signing-certificate-for-your-application/</link>
 		
@@ -86,6 +224,36 @@ set PATH=&lt;full-path-to-your-signtool.exe>;%PATH%</code></pre>
 
 
 <p>5 &#8211; Deploy the certificate and the signed exe file to client workstations.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>SSH: no matching cipher found</title>
+		<link>https://jameswsullivan.github.io/ssh-no-matching-cipher-found/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Tue, 23 May 2023 03:20:43 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Cisco]]></category>
+		<category><![CDATA[Cisco 2951]]></category>
+		<category><![CDATA[Cisco IOS]]></category>
+		<category><![CDATA[Networking]]></category>
+		<category><![CDATA[System Administration]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2555</guid>
+
+					<description><![CDATA[SSH: no matching cipher found]]></description>
+										<content:encoded><![CDATA[
+<p>When connecting to older Cisco routers and switches (e.g. Cisco 2951, Cisco C3750G), it&#8217;s likely that you&#8217;ll encounter this error when initiating an SSH connection: <code>SSH: no matching cipher found</code> and the device will display a list of offered ciphers. e.g. <code>Their offer: aes128-cbc,3des-cbc,aes192-cbc,aes256-cbc</code></p>
+
+
+
+<p>To connect, run the SSH command with the -c flag plus one of the offered ciphers:</p>
+
+
+
+<pre class="wp-block-code"><code>ssh -c aes256-cbc USERNAME@IP</code></pre>
 ]]></content:encoded>
 					
 		
@@ -986,280 +1154,6 @@ Default login password: password</code></pre>
 
 <figure class="wp-block-image size-large"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD08-scaled.jpg"><img decoding="async" width="1024" height="576" data-id="2377"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD08-1024x576.jpg" alt="" class="wp-image-2377" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD08-1024x576.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD08-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD08-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD08-1536x864.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD08-2048x1152.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD08-700x394.jpg 700w" sizes="(max-width: 1024px) 100vw, 1024px" /></a></figure>
 </figure>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Use LineageOS on Pixel 3a XL</title>
-		<link>https://jameswsullivan.github.io/use-lineageos-on-pixel-3a-xl/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Sat, 22 Apr 2023 16:31:17 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[notes]]></category>
-		<category><![CDATA[ADB]]></category>
-		<category><![CDATA[Android]]></category>
-		<category><![CDATA[bootloader]]></category>
-		<category><![CDATA[Custom ROM]]></category>
-		<category><![CDATA[fastboot]]></category>
-		<category><![CDATA[LineageOS]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2326</guid>
-
-					<description><![CDATA[Install LineageOS 19.1 on Pixel 3a XL.]]></description>
-										<content:encoded><![CDATA[
-<p>It&#8217;s been a while since I flashed a custom ROM on an Android phone a few years back. Recently I needed to get an old Pixel 3a XL to work for a project and I have to say that installing custom ROMs has become much easier than before.</p>
-
-
-
-<h2 class="wp-block-heading">Steps</h2>
-
-
-
-<ol>
-<li>Get your computer and phone ready for ADB. <a href="https://wiki.lineageos.org/adb_fastboot_guide">https://wiki.lineageos.org/adb_fastboot_guide</a></li>
-
-
-
-<li>Follow the steps here provided by LineageOS: <a href="https://wiki.lineageos.org/devices/crosshatch/">https://wiki.lineageos.org/devices/crosshatch/</a></li>
-</ol>
-
-
-
-<h2 class="wp-block-heading">Common Issues</h2>
-
-
-
-<ul>
-<li>If your device is not showing when running the <code>adb devices</code> command, 9 out 10 times it&#8217;s either a driver issue or <code>USB Debugging</code> not properly enabled. When installing the driver, you have to make sure that you manually install the correct &#8220;<code>Android Composite ADB Interface</code>&#8221; rather than letting Windows automatically pick the driver.<br><br>e.g. in <code>Device Manager</code>, right click on your phone, select <code>Update driver</code> &#8211;&gt; <code>Browse my computer for drivers</code> &#8211;&gt; browse to the USB driver folder you just downloaded and choose: <code>Let me pick from a list of available drivers on my computer</code>, and pick <code>Android Composite ADB Interface</code>.<br><br>Upon successful installation, your phone should appear in Device Manager as <code>Android Device - Android Composite ADB Interface</code> instead of under <code>Portable Devices</code> or <code>Universal Serial Bus controllers</code>.</li>
-</ul>
-
-
-
-<ul>
-<li>Additionally, <code>fastboot flashing unlock</code> doesn&#8217;t unlock the bootloader, make sure that <code>Stay awake</code> and <code>OEM Unlocking</code> are enabled under <code>Developer options</code>.</li>
-</ul>
-
-
-
-<p>Other useful troubleshooting commands if your device is not showing under <code>adb devices</code> :</p>
-
-
-
-<pre class="wp-block-code"><code>net stop winnat
-net start winnat
-
-adb kill-server
-adb start-server</code></pre>
-
-
-
-<h2 class="wp-block-heading">ADB Commands</h2>
-
-
-
-<pre class="wp-block-code"><code>adb reboot bootloader
-fastboot devices
-fastboot flashing unlock
-adb reboot bootloader
-fastboot flash boot boot.img
-adb sideload lineage-19.1-20230415-nightly-bonito-signed.zip
-adb sideload MindTheGapps-12.1.0-arm64-20220605_112439.zip
-</code></pre>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Set up Docker host with Ubuntu Server and mount disks</title>
-		<link>https://jameswsullivan.github.io/set-up-docker-host-with-ubuntu-server-and-mount-disks/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Tue, 11 Apr 2023 02:19:44 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[Docker]]></category>
-		<category><![CDATA[Hosting]]></category>
-		<category><![CDATA[Self-Hosting]]></category>
-		<category><![CDATA[System Administration]]></category>
-		<category><![CDATA[Ubuntu]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2307</guid>
-
-					<description><![CDATA[Install Docker on Ubuntu Server, attach disks to the Docker host VM and configure mounts.]]></description>
-										<content:encoded><![CDATA[
-<p>In order to run and test things I set up multiple Hyper-V VMs as Docker hosts to run my containers. This blog documents the Docker installation and disk mounting on Ubuntu Server.</p>
-
-
-
-<p>First, if you have installed Docker or any packages along with Ubuntu Server, it&#8217;s likely installed via snap. There is nothing wrong with using snap, but most of the directory paths will be different and it makes it harder to tweak certain configs in the future, so it&#8217;s recommended to remove them before the rest of the steps.</p>
-
-
-
-<pre class="wp-block-code"><code>sudo snap remove docker
-sudo reboot 
-
-# Reboot is needed, otherwise you'll get "bash: /snap/bin/docker: No such file or directory" error.</code></pre>
-
-
-
-<p>Second, install Docker:</p>
-
-
-
-<pre class="wp-block-code"><code># Install using the apt repository:
-# https://docs.docker.com/engine/install/ubuntu/
-apt-get update -y
-apt-get upgrade -y
-apt-get install ca-certificates curl gnupg lsb-release -y
-mkdir -m 0755 -p /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
-    | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-
-echo "deb &#91;arch=$(dpkg --print-architecture) \
-    signed-by=/etc/apt/keyrings/docker.gpg] \
-    https://download.docker.com/linux/ubuntu \
-    $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
-
-apt-get update -y
-apt-get upgrade -y
-apt-get install docker-ce \
-        docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-
-# After installing docker-ce, other dependencies are usually automatically installed.
-
-# OPTIONAL: List and verify installed packages.
-
-apt list --installed</code></pre>
-
-
-
-<p>Third, mount physical or virtual disks one by one to the VM so that you can identify the disks by UUID and configure the mount one at a time, especially when you have multiple disks of the same size, because the devices are usually not attached in order when booting, the only way to quickly and accurately identify the disks is by UUID. Use the following commands to format and configure the mounts.</p>
-
-
-
-<pre class="wp-block-code"><code># List devices.
-fdisk -l
-
-# Cross reference with:
-blkid
-blkid | grep /dev/sd
-
-# Use lsscsi if needed.
-apt-get install lsscsi -y
-
-# Create partition:
-gdisk /dev/sda
-
-# Enter ? for help. Enter n and accept all default parameters to use the entire disk capacity.
-# Enter w to write changes to disk.
-
-# Format disk to ext4 file system.
-mkfs.ext4 /dev/sda
-
-# Then run:
-fdisk -l
-blkid | grep /dev/sd
-# again to grab the device name and UUID.
-
-# Create mount locations:
-mkdir /mnt/directory_name
-mount /dev/sda /mnt/directory_name
-
-# Copy the UUID and add entries in /etc/fstab to configure mounts at boot time.
-nano /etc/fstab
-
-# Add entries, e.g., mount 100GB to /mnt/my_folder:
-UUID="dcd8c5ac-db76-435e-ab3c-48570190c7d8" /mnt/my_folder ext4 defaults 0 1
-
-# Verify the mounts after a reboot.</code></pre>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Self-hosted Nextcloud with Docker</title>
-		<link>https://jameswsullivan.github.io/self-hosted-nextcloud-with-docker/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Tue, 11 Apr 2023 01:24:00 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[Docker]]></category>
-		<category><![CDATA[Hosting]]></category>
-		<category><![CDATA[Nextcloud]]></category>
-		<category><![CDATA[Self-Hosting]]></category>
-		<category><![CDATA[Web Hosting]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2303</guid>
-
-					<description><![CDATA[Spin up self-hosted Nextcloud with MySQL using Docker.]]></description>
-										<content:encoded><![CDATA[
-<p>My <a href="https://jameswsullivan.github.io/self-host-nextcloud/">previous attempt</a> to spin up a self-hosted Nextcloud was directly on a Ubuntu VM, but its virtual disks were not configured in a way that&#8217;s easily expandable as data grows. This time I&#8217;m using Docker and have addressed the issues.</p>
-
-
-
-<h2 class="wp-block-heading">Components:</h2>
-
-
-
-<ul>
-<li>The Docker host is a dedicated Hyper-V VM running Ubuntu Server in Windows Server 2022.</li>
-
-
-
-<li><a href="https://hub.docker.com/_/nextcloud" target="_blank" rel="noreferrer noopener">Nextcloud</a> Docker image.</li>
-
-
-
-<li><a href="https://hub.docker.com/r/ubuntu/mysql" target="_blank" rel="noreferrer noopener">Ubuntu/MySQL</a> Docker image.</li>
-
-
-
-<li>A storage pool consisting of 6 x 500GB 2.5&#8221; HDDs and a virtual disk in Parity mode with 2 disks set as redundant, bringing total capacity to 1.35TB. This virtual disk will be mounted to Nextcloud&#8217;s <code>/var/www/html</code> path to store persistent data.</li>
-
-
-
-<li>An 100GB virtual disk for MySQL persistent data (<code>/var/lib/mysql</code>).</li>
-</ul>
-
-
-
-<h2 class="wp-block-heading">Nextcloud Dockerfile:</h2>
-
-
-
-<pre class="wp-block-code"><code>FROM nextcloud
-
-# Configure PHP parameters via environment variables.
-ENV PHP_MEMORY_LIMIT=4096M
-ENV PHP_UPLOAD_LIMIT=4096M
-
-# Install packages and configure timezone.
-RUN apt-get update -y &amp;&amp; \
-    apt-get upgrade -y &amp;&amp; \
-    apt-get install nano -y &amp;&amp; \
-    apt-get install tzdata -y &amp;&amp; \
-    ln -fs /usr/share/zoneinfo/US/Central /etc/localtime &amp;&amp; \
-    dpkg-reconfigure -f noninteractive tzdata
-
-EXPOSE 80 443</code></pre>
-
-
-
-<h2 class="wp-block-heading">Containers:</h2>
-
-
-
-<pre class="wp-block-code"><code># Build Nextcloud image
-docker image build --tag nextcloud:1.0 --progress plain --no-cache . 2&gt;&amp;1 | tee build.log
-
-# Start Nextcloud container.
-# The drive for Nextcloud's persistent data is mounted to /mnt/nextcloud_data .
-docker run -dit --name MY-NEXTCLOUD-CONTAINER --ip IP-ADDRESS --network DOCKER-NETWORK --restart=unless-stopped --hostname=MY_NEXTCLOUD_CONTAINER_HOSTNAME -v /mnt/nextcloud_data:/var/www/html nextcloud:1.0
-
-# Start a MySQL container for Nextcloud.
-# The virtual disk for MySQL's persistent data is mounted to /mnt/nextcloud_db .
-docker run -dit --name MY-NEXTCLOUD-DB-CONTAINER --ip IP-ADDRESS --network DOCKER-NETWORK --hostname=MY_NEXTCLOUD_DB_CONTAINER_HOSTNAME --restart=unless-stopped -v /mnt/nextcloud_db:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=MY-ROOT-PASSWORD ubuntu/mysql</code></pre>
 ]]></content:encoded>
 					
 		
