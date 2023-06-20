@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/windows-customization/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Sun, 18 Jun 2023 14:43:26 +0000</lastBuildDate>
+	<lastBuildDate>Tue, 20 Jun 2023 17:16:10 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -20,6 +20,100 @@
 	1	</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=6.2.2</generator>
 	<item>
+		<title>让手机变为电脑的遥控器</title>
+		<link>https://jameswsullivan.github.io/use-phone-as-your-computers-remote/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sat, 21 Nov 2009 16:08:00 +0000</pubDate>
+				<category><![CDATA[archive]]></category>
+		<category><![CDATA[System Administration]]></category>
+		<category><![CDATA[Windows Customization]]></category>
+		<category><![CDATA[Windows Systems Administration]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2604</guid>
+
+					<description><![CDATA[用Salling Clicker和Connectify将手机变为电脑的遥控器]]></description>
+										<content:encoded><![CDATA[
+<blockquote class="wp-block-quote">
+<p>此文系早年博客的备份，仅用于参考学习。<br>This article is an archival copy of my early years&#8217; blog posts.</p>
+</blockquote>
+
+
+
+<p>虽说现在只要有钱有设备，电脑可以实现的功能是无穷的，可是对于我们一般用户来说，影视作品里那种遥控操作计算机、各种电子设备无线互联的技术离我们还是很遥远。但是，我们没有尖端设备不要紧，我们有基础的蓝牙和Wi-Fi，再配上合适的软件，让手机变成电脑的遥控器，在会议或Party中潇洒一下还是不成问题的。</p>
+
+
+
+<p><strong>硬件需求：</strong>支持Java的手机（支持Wi-Fi最好，但至少要支持蓝牙），笔记本电脑需带有Wi-Fi或蓝牙<br><strong>软件需求：</strong>Salling Clicker，Connectify</p>
+
+
+
+<p>这里先对这两款软件进行一下简单的介绍。Salling Clicker 是一款用于手机遥控电脑的软件，它可以在线更新以支持绝大部分最新的机型，当手机端与电脑端通过蓝牙或Wi-Fi建立连接之后，便可以通过手机控制iTunes，PPT，和Windows Media Player等，也可以控制电脑的鼠标移动、音量和关机等操作。它是通过编写好的脚本来对电脑端软件进行操控的，在它的官方网站上还提供了用于操控其他软件的脚本，但可惜的是大多数都是针对多媒体播放的，比如Winamp和PowerDVD。</p>
+
+
+
+<p>Connectify其实是一款用于共享上网的软件，它可以将带有Wi-Fi功能的笔记本变成一个无线热点，使得其他设备可以像使用路由一样通过该热点组成局域网或实现共享上网。在这里使用它的意义是，蓝牙的通信距离比Wi-Fi要小，那么用这款软件将要控制的笔记本变成一个热点，再用手机端的Salling Clicker通过该热点以Wi-Fi方式连接，那么其实就实现了电脑与手机不需通过无线路由的Wi-Fi直连，而且这种方法也为没有蓝牙的笔记本实现遥控提供了可能。</p>
+
+
+
+<p>由于蓝牙连接相对比较简单，我在这里主要说明如何实现Wi-Fi直连。我的配置环境是：windows 7英文版, Salling Clicker 3.5, Connectify, 手机是索爱P1i。下面是实现的步骤：</p>
+
+
+
+<h2 class="wp-block-heading">Salling Clicker：</h2>
+
+
+
+<p>安装好Salling Clicker后，首次运行会弹出Device Setup Assistant，在这里可以选择手机的型号，选好后软件会自动提供给你适用于该手机的手机端软件，点击Copy to Desktop，然后将其拷入手机进行安装。如果你的手机型号并未列入其中，可以点击Update List后再试，如果仍未出现，则可以选择另一款与你的手机具有相同操作系统的手机。（图一）</p>
+
+
+
+<figure class="wp-block-image size-full"><img decoding="async" width="436" height="399" src="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogUsePhoneAsComputerRemote01.jpg" alt="" class="wp-image-2605" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogUsePhoneAsComputerRemote01.jpg 436w, https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogUsePhoneAsComputerRemote01-300x275.jpg 300w" sizes="(max-width: 436px) 100vw, 436px" /></figure>
+
+
+
+<p>在下一个界面里它会询问你是否以蓝牙方式连接，可以在Select Phone中选择已开启蓝牙的手机，这一步我们直接跳过。再下一步里，它会设置Wi-Fi连接，并且要求你的手机与电脑同时存在于一个无线网络中。选中I want to use this feature，并填写连接密码（相当于蓝牙配对密码）。（图二）</p>
+
+
+
+<figure class="wp-block-image size-full"><img decoding="async" width="436" height="399" src="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogUsePhoneAsComputerRemote02.jpg" alt="" class="wp-image-2606" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogUsePhoneAsComputerRemote02.jpg 436w, https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogUsePhoneAsComputerRemote02-300x275.jpg 300w" sizes="(max-width: 436px) 100vw, 436px" /></figure>
+
+
+
+<p>关闭设置界面，电脑端Salling Clicker的设置就完成了。</p>
+
+
+
+<h2 class="wp-block-heading">Connectify：</h2>
+
+
+
+<p>Connectify是一款傻瓜软件，安装后界面如下：（图三）</p>
+
+
+
+<figure class="wp-block-image size-full"><img decoding="async" width="314" height="374" src="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogUsePhoneAsComputerRemote03.jpg" alt="" class="wp-image-2607" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogUsePhoneAsComputerRemote03.jpg 314w, https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogUsePhoneAsComputerRemote03-252x300.jpg 252w" sizes="(max-width: 314px) 100vw, 314px" /></figure>
+
+
+
+<p>在WiFi Name与Passphrase里分别填写无线热点的名称与连接密码，在Internet中选择是否共享上网，因为我们主要用来实现Wi-Fi直连，所以只需选择No Internet Sharing，最后点击Start Hotspot即可，注意它要求密码为8-12位。</p>
+
+
+
+<h2 class="wp-block-heading">手机端：</h2>
+
+
+
+<p>用手机搜索该Wi-Fi热点并连接，打开Salling Clicker，选择Connect with WiFi…， 它会自动搜索电脑端，然后选择你的笔记本名称进行连接，成功连接之后，你就可以潇洒的用手机操控电脑了，如果你的手机有一个足够大的触屏，那么效果会更上一层楼。</p>
+
+
+
+<p>Salling Clicker手机端的使用很简单，笔者在这里只在PPT操作方面简单罗嗦一句：数字键可以直接切换到特定幻灯片，比如按22即切换到第22张幻灯。</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>编辑鼠标指针图标</title>
 		<link>https://jameswsullivan.github.io/make-left-hand-mouse-cursor/</link>
 		

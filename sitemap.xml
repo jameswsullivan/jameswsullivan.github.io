@@ -1,52 +1,56 @@
 <?xml version='1.0' encoding='UTF-8'?><?xml-stylesheet type='text/xsl' href='https://jameswsullivan.github.io/wp-content/plugins/google-sitemap-generator/sitemap.xsl'?><!-- sitemap-generator-url='http://www.arnebrachhold.de/' sitemap-generator-version='4.1.11' -->
-<!-- generated-on='2023-06-18 22:56' -->
+<!-- generated-on='2023-06-20 17:44' -->
 <sitemapindex xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/siteindex.xsd' xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>	<sitemap>
 		<loc>https://jameswsullivan.github.io/sitemap-misc.xml</loc>
-		<lastmod>2023-06-18T22:55:25+00:00</lastmod>
+		<lastmod>2023-06-20T17:40:18+00:00</lastmod>
 	</sitemap>
 	<sitemap>
 		<loc>https://jameswsullivan.github.io/sitemap-tax-post_tag-1.xml</loc>
-		<lastmod>2023-06-18T22:55:25+00:00</lastmod>
+		<lastmod>2023-06-20T17:40:18+00:00</lastmod>
 	</sitemap>
 	<sitemap>
 		<loc>https://jameswsullivan.github.io/sitemap-tax-post_tag-2.xml</loc>
-		<lastmod>2023-06-18T22:55:25+00:00</lastmod>
+		<lastmod>2023-06-20T17:40:18+00:00</lastmod>
 	</sitemap>
 	<sitemap>
 		<loc>https://jameswsullivan.github.io/sitemap-tax-post_tag-3.xml</loc>
-		<lastmod>2023-06-18T22:55:25+00:00</lastmod>
+		<lastmod>2023-06-20T17:40:18+00:00</lastmod>
 	</sitemap>
 	<sitemap>
 		<loc>https://jameswsullivan.github.io/sitemap-tax-post_tag-4.xml</loc>
-		<lastmod>2023-06-18T22:55:25+00:00</lastmod>
+		<lastmod>2023-06-20T17:40:18+00:00</lastmod>
 	</sitemap>
 	<sitemap>
 		<loc>https://jameswsullivan.github.io/sitemap-tax-post_tag-5.xml</loc>
-		<lastmod>2023-06-18T22:55:25+00:00</lastmod>
+		<lastmod>2023-06-20T17:40:18+00:00</lastmod>
 	</sitemap>
 	<sitemap>
 		<loc>https://jameswsullivan.github.io/sitemap-tax-post_tag-6.xml</loc>
-		<lastmod>2023-06-18T22:55:25+00:00</lastmod>
+		<lastmod>2023-06-20T17:40:18+00:00</lastmod>
 	</sitemap>
 	<sitemap>
 		<loc>https://jameswsullivan.github.io/sitemap-tax-post_tag-7.xml</loc>
-		<lastmod>2023-06-18T22:55:25+00:00</lastmod>
+		<lastmod>2023-06-20T17:40:18+00:00</lastmod>
 	</sitemap>
 	<sitemap>
 		<loc>https://jameswsullivan.github.io/sitemap-tax-post_tag-8.xml</loc>
-		<lastmod>2023-06-18T22:55:25+00:00</lastmod>
+		<lastmod>2023-06-20T17:40:18+00:00</lastmod>
 	</sitemap>
 	<sitemap>
 		<loc>https://jameswsullivan.github.io/sitemap-tax-post_tag-9.xml</loc>
-		<lastmod>2023-06-18T22:55:25+00:00</lastmod>
+		<lastmod>2023-06-20T17:40:18+00:00</lastmod>
+	</sitemap>
+	<sitemap>
+		<loc>https://jameswsullivan.github.io/sitemap-tax-post_tag-10.xml</loc>
+		<lastmod>2023-06-20T17:40:18+00:00</lastmod>
 	</sitemap>
 	<sitemap>
 		<loc>https://jameswsullivan.github.io/sitemap-tax-category-1.xml</loc>
-		<lastmod>2023-06-18T22:55:25+00:00</lastmod>
+		<lastmod>2023-06-20T17:40:18+00:00</lastmod>
 	</sitemap>
 	<sitemap>
 		<loc>https://jameswsullivan.github.io/sitemap-pt-post-p1-2023-06.xml</loc>
-		<lastmod>2023-06-18T14:29:36+00:00</lastmod>
+		<lastmod>2023-06-20T15:25:33+00:00</lastmod>
 	</sitemap>
 	<sitemap>
 		<loc>https://jameswsullivan.github.io/sitemap-pt-post-p1-2023-05.xml</loc>
@@ -89,8 +93,16 @@
 		<lastmod>2023-04-03T03:26:52+00:00</lastmod>
 	</sitemap>
 	<sitemap>
+		<loc>https://jameswsullivan.github.io/sitemap-pt-post-p1-2010-08.xml</loc>
+		<lastmod>2023-06-20T17:40:18+00:00</lastmod>
+	</sitemap>
+	<sitemap>
 		<loc>https://jameswsullivan.github.io/sitemap-pt-post-p1-2010-02.xml</loc>
 		<lastmod>2023-03-27T02:52:06+00:00</lastmod>
+	</sitemap>
+	<sitemap>
+		<loc>https://jameswsullivan.github.io/sitemap-pt-post-p1-2009-11.xml</loc>
+		<lastmod>2023-06-20T17:16:10+00:00</lastmod>
 	</sitemap>
 	<sitemap>
 		<loc>https://jameswsullivan.github.io/sitemap-pt-post-p1-2009-08.xml</loc>
@@ -109,7 +121,11 @@
 		<lastmod>2023-06-18T14:43:26+00:00</lastmod>
 	</sitemap>
 	<sitemap>
-		<loc>https://jameswsullivan.github.io/sitemap-archives.xml</loc>
-		<lastmod>2023-06-18T22:55:25+00:00</lastmod>
+		<loc>https://jameswsullivan.github.io/sitemap-pt-post-p1-2008-11.xml</loc>
+		<lastmod>2023-06-20T17:01:42+00:00</lastmod>
 	</sitemap>
-</sitemapindex><!-- Request ID: c0871babacbe2044d829735271e6497f; Queries for sitemap: 12; Total queries: 25; Seconds: $end_time; Memory for sitemap: 0MB; Total memory: 4MB -->
+	<sitemap>
+		<loc>https://jameswsullivan.github.io/sitemap-archives.xml</loc>
+		<lastmod>2023-06-20T17:40:18+00:00</lastmod>
+	</sitemap>
+</sitemapindex><!-- Request ID: bc7dffdb54dfdd3346ad78fdfbc11cee; Queries for sitemap: 12; Total queries: 25; Seconds: $end_time; Memory for sitemap: 0MB; Total memory: 4MB -->

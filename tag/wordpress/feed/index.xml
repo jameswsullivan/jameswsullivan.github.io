@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/wordpress/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Sun, 18 Jun 2023 22:55:25 +0000</lastBuildDate>
+	<lastBuildDate>Tue, 20 Jun 2023 17:01:42 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -410,6 +410,57 @@ Google书签:
 
 
 <p>至此，对Wordpress主题几个部分的修改已经全部完成。</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>WordPress中为特定的Category、Tag添加RSS</title>
+		<link>https://jameswsullivan.github.io/add-rss-to-wordpress-categories-and-tags/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sat, 08 Nov 2008 01:41:00 +0000</pubDate>
+				<category><![CDATA[archive]]></category>
+		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[php]]></category>
+		<category><![CDATA[Web Hosting]]></category>
+		<category><![CDATA[WordPress]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2601</guid>
+
+					<description><![CDATA[Wordpress中为特定的Category、Tag添加RSS]]></description>
+										<content:encoded><![CDATA[
+<blockquote class="wp-block-quote">
+<p>此文系早年博客的备份，仅用于参考学习。<br>This article is an archival copy of my early years&#8217; blog posts.</p>
+</blockquote>
+
+
+
+<p>用Wordpress做独立博客的人，有时候一定会发现他人的博客上有RSS分类订阅，可是我们只知道Wordpress提供内容订阅的feed，那么分类订阅是如何实现的呢？</p>
+
+
+
+<p>其实wordpress已经为我们准备好了实现分类和标签订阅的工具，我们只需要将它稍微应用一下即可，这里以 <code>www.yourdomain.com</code> 为例：</p>
+
+
+
+<p>特定Category：</p>
+
+
+
+<p>在页面上点击你的<code>Category</code>，然后在地址栏中地址末尾加上<code>"feed/"</code>，回车即可得到该分类的feed。例如：<code>http://www.yourdomain.com/category/category-name/feed/</code><br>其中category-name为你的分类名。</p>
+
+
+
+<p>这种方法依然可以用于Tag，例如：<code>http://www.yourdomain.net/tag/tag-name/feed/</code><br>其中tag-name为你的tag名称。</p>
+
+
+
+<p>这样生成分类和标签的feed很简单，可是不足之处在于，这样生成的feed中，文章内容都是没有排版的，所以我建议大家把上述种子用feedburner这样的烧录器烧录一下，这样便于统计和种子优化。</p>
+
+
+
+<p>关键字：wordpress分类RSS，标签RSS，wordpress怎样实现category分类RSS， Tag标签RSS，wordpress分类订阅，标签订阅，how to add/create category/tag feed/rss to wordpress</p>
 ]]></content:encoded>
 					
 		

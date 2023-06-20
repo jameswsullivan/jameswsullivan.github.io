@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>VPN &#8211; howdy</title>
+	<atom:link href="https://jameswsullivan.github.io/tag/vpn/feed/" rel="self" type="application/rss+xml" />
+	<link>https://jameswsullivan.github.io/</link>
+	<description></description>
+	<lastBuildDate>Tue, 20 Jun 2023 17:40:18 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.2.2</generator>
+	<item>
+		<title>用Google App Engine部署OPM镜像</title>
+		<link>https://jameswsullivan.github.io/deploy-opera-mini-server-mirror-with-google-app-engine/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Tue, 24 Aug 2010 23:20:00 +0000</pubDate>
+				<category><![CDATA[archive]]></category>
+		<category><![CDATA[DevOps]]></category>
+		<category><![CDATA[Google App Engine]]></category>
+		<category><![CDATA[Java]]></category>
+		<category><![CDATA[Proxy]]></category>
+		<category><![CDATA[Software Development]]></category>
+		<category><![CDATA[VPN]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2612</guid>
+
+					<description><![CDATA[用Google App Engine部署OPM(Opera Mini Server Mirror)镜像用于翻墙]]></description>
+										<content:encoded><![CDATA[
+<blockquote class="wp-block-quote">
+<p>此文系早年博客的备份，仅用于参考学习。<br>This article is an archival copy of my early years&#8217; blog posts.</p>
+</blockquote>
+
+
+
+<p>这个教程网上已经有很多了，写在这里一来为了方便大众，二来给自己当作笔记。</p>
+
+
+
+<p>下载文后的opm压缩包和 Google App Engine SDK for Java 1.3.5 ，将二者解压至某目录。如，将解压后的java-sdk文件夹命名为sdk放在D盘根目录下，然后将解压后的opm文件夹放入<code>d:\sdk</code>。</p>
+
+
+
+<p>用任何文本编辑器打开&nbsp; <code>opm/war/WEB-INF/appengine-web.xml</code>&nbsp; 文件，找到一行<code>your-application-id</code>把<code>your-application-id</code>改成你对应的Google App的名称，修改后保存。</p>
+
+
+
+<p>进入命令行（运行cmd）</p>
+
+
+
+<p>进入刚才的d:\sdk目录，再cd进入bin目录，在提示符下输入如下命令：</p>
+
+
+
+<p><code>appcfg.cmd update d:\sdk\opm\war</code></p>
+
+
+
+<p>其中update之后即为刚才的opm文件夹。</p>
+
+
+
+<p>接下来会有提示输入Gmail地址和密码，注意，输入密码时屏幕上什么都不提示。</p>
+
+
+
+<p>最后，等待上传完成，当出现下面一行提示时则上传成功：<code>Update completed successfully</code></p>
+
+
+
+<p>上传好后测试一下，浏览</p>
+
+
+
+<pre class="wp-block-code"><code>http:&#47;&#47;your-application-id.appspot.com/opm
+http://your-application-id.appspot.com/ucweb</code></pre>
+
+
+
+<p>如果跳到Google首页，表示成功了。</p>
+
+
+
+<p>接下来若有需要请参照此教程修改Android版的Opera Mini的服务器地址为上面的地址（UCWeb修改方法请自行Google）。</p>
+
+
+
+<p>这里下载opm镜像文件包：<a rel="noreferrer noopener" href="https://code.google.com/archive/p/opm-server-mirror/" target="_blank">opm-mirror</a></p>
+
+
+
+<p>关键字：用Google app engine搭建opm服务器，用GAE搭建opera mini镜像服务器</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>修改Android版Opera Mini的服务器实现翻墙</title>
+		<link>https://jameswsullivan.github.io/modify-opera-mini-android-apk-to-use-with-your-own-opm-mirror-on-gae/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sat, 14 Aug 2010 04:28:00 +0000</pubDate>
+				<category><![CDATA[archive]]></category>
+		<category><![CDATA[DevOps]]></category>
+		<category><![CDATA[Java]]></category>
+		<category><![CDATA[Proxy]]></category>
+		<category><![CDATA[Software Development]]></category>
+		<category><![CDATA[VPN]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2616</guid>
+
+					<description><![CDATA[修改Android版Opera Mini的服务器以实现用自搭建的GAE OPM服务器来翻墙]]></description>
+										<content:encoded><![CDATA[
+<blockquote class="wp-block-quote">
+<p>此文系早年博客的备份，仅用于参考学习。<br>This article is an archival copy of my early years&#8217; blog posts.</p>
+</blockquote>
+
+
+
+<h2 class="wp-block-heading">修改Android版Opera Mini 4.2:</h2>
+
+
+
+<p>注：本文所用文本编辑器为UltraEdit。</p>
+
+
+
+<ol>
+<li>先此处下载并安装JRE：<br><code>http://www.java.com/en/download/index.jsp<br></code>如果你已经安装了<code>JRE</code>或者<code>JDK</code>，请跳过此步。</li>
+
+
+
+<li>点击此处下载我打包的<code>opm4</code>修改包，将其解压至某目录，这里以D盘根目录为例，解压后的目录为：<code>D:\opm4</code>。</li>
+
+
+
+<li>用文本编辑器打开<code>D:\opm4\opm\Code.smali</code>，将 <code>http://server4.operamini.com:80/</code> 和 <code>socket://server4.operamini.com:1080</code> 都改成你自己架设的OPM服务器地址，<a href="https://jameswsullivan.github.io/deploy-opera-mini-server-mirror-with-google-app-engine/">如这篇文章介绍的利用GAE搭建的Opera Mini服务器地址</a>。修改后保存。（用UltraEdit编辑的话，保存后删除自动生成的bak文件，否则一会儿影响编译）</li>
+
+
+
+<li>打开命令行<code>cmd</code>，进入<code>D:\opm4</code>，执行如下命令：<code>java -jar smali.jar -o D:\opm4\classes.dex D:\opm4\opm</code>（此行命令的意思是将<code>opm</code>文件夹打包成<code>classes.dex</code>文件）</li>
+</ol>
+
+
+
+<ol start="5">
+<li>到此处下载Android版OPM的安装包：<br><code>http://opm-server-mirror.googlecode.com/files/opm4.apk<br></code>下载后放入<code>opm4</code>文件夹。</li>
+
+
+
+<li>将<code>opm4.apk</code>改名为<code>opm4.zip</code>，用任意压缩工具打开（是打开，不是解包），删除里面的<code>META-INF</code>文件夹，并把刚刚生成好的 <code>D:\opm4\classes.dex</code> 拖进<code>opm4.zip</code>替换掉原始的<code>classes.dex</code>。</li>
+
+
+
+<li>把修改过的<code>opm4.zip</code>放入修改包中的<code>Auto-Sign</code>的目录下，运行里面的<code>sign.bat</code>。</li>
+
+
+
+<li>如果你在<code>Auto-Sign</code>的目录里面看见<code>your_app_signed.apk</code>的话，则证明已经修改工作已经完成了。在手机中安装前记得卸载先前的版本。</li>
+
+
+
+<li>若修改包中有文件出现异样，请到如下网址下载：<br>下载smali： <code>http://smali.googlecode.com/files/smali.jar</code><br>下载反编译过的的Android版OPM源代码： <code>http://opm-server-mirror.googlecode.com/files/android_opera_classes.zip</code></li>
+</ol>
+
+
+
+<h2 class="wp-block-heading">修改Android版Opera mini 5.1：</h2>
+
+
+
+<ol>
+<li>点击这里下载修改包，解压至某目录，这里以<code>D:\opm5</code>为例。</li>
+
+
+
+<li>打开命令行<code>cmd</code>，进入<code>D:\opm5</code>，执行<code>apktool d opera-mini-51.apk opm</code>（此命令意思是将你的<code>apk</code>文件解包到<code>opm</code>目录下，<code>apk</code>文件名和<code>opm</code>目录名是随意的）</li>
+</ol>
+
+
+
+<ol start="3">
+<li>用文本编辑工具修改修改 <code>opm\smali\f.smali</code> 中的<br><code>http://mini5.opera-mini.net:80/<br>socket://mini5.opera-mini.net:1080</code></li>
+
+
+
+<li>为自己搭建的Opera mini服务器地址，比如这里所示的用GAE搭建的镜像服务器。修改后保存。若用UltraEdit编辑，同样请删掉生成的<code>bak</code>文件。再在同目录下运行：<code>apktool b opm opm51.apk</code>（此命令意思是将<code>opm</code>文件夹打包成<code>opm51.apk</code>文件，同样，目录名和文件名可以随意）</li>
+</ol>
+
+
+
+<ol start="5">
+<li>将得到的<code>opm51.apk</code>重命名为<code>opm51.zip</code>，并拖放到<code>Auto-Sign</code>文件夹内，运行<code>sign.bat</code>来签名，得到<code>your_app_signed.apk</code>，即可以拷入手机安装了。</li>
+</ol>
+
+
+
+<p></p>
+
+
+
+<p>关键字：自定义Android版opera mini服务器，android版opera mini翻墙，自定义安卓版opera mini服务器，安卓版opera mini翻墙</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+	</channel>
+</rss>

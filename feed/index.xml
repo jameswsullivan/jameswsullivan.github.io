@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Sun, 18 Jun 2023 14:30:04 +0000</lastBuildDate>
+	<lastBuildDate>Tue, 20 Jun 2023 15:25:33 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -20,6 +20,214 @@
 	1	</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=6.2.2</generator>
 	<item>
+		<title>Configure VLAN and InterVLAN Routing on Cisco Router and Switch</title>
+		<link>https://jameswsullivan.github.io/configure-vlan-and-intervlan-routing-on-cisco-router-and-switch/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Tue, 20 Jun 2023 15:25:19 +0000</pubDate>
+				<category><![CDATA[notes]]></category>
+		<category><![CDATA[Cisco]]></category>
+		<category><![CDATA[Cisco 2951]]></category>
+		<category><![CDATA[Cisco C3750G]]></category>
+		<category><![CDATA[InterVLAN Routing]]></category>
+		<category><![CDATA[Network Administration]]></category>
+		<category><![CDATA[Networking]]></category>
+		<category><![CDATA[router-on-a-stick]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2574</guid>
+
+					<description><![CDATA[Configure VLAN and InterVLAN routing on Cisco router and switch using router-on-a-stick and SVI.]]></description>
+										<content:encoded><![CDATA[
+<h2 class="wp-block-heading">Environment &amp; Requirement</h2>
+
+
+
+<ul>
+<li>Router: Cisco 2951</li>
+
+
+
+<li>Switch: Cisco C3750G PoE</li>
+
+
+
+<li>2 VLANs</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading">Method 1: router-on-a-stick</h2>
+
+
+
+<pre class="wp-block-code"><code>Topology: C3750G (GigabitEthernet3/0/1) -- CISCO2951(GigabitEthernet0/1) -- INTERNET(GigabitEthernet0/0)</code></pre>
+
+
+
+<h4 class="wp-block-heading">On CISCO2951:</h4>
+
+
+
+<pre class="wp-block-code"><code>CISCO2951(config)#interface GigabitEthernet 0/0
+CISCO2951(config-if)#no shutdown
+CISCO2951(config-if)#speed 1000
+CISCO2951(config-if)#duplex full
+CISCO2951(config-if)#exit
+
+CISCO2951(config)#interface GigabitEthernet 0/0.10
+CISCO2951(config-subif)#encapsulation dot1Q 10
+CISCO2951(config-subif)#ip address 192.168.10.1 255.255.255.0
+CISCO2951(config-subif)#exit
+
+CISCO2951(config)#interface GigabitEthernet 0/0.20
+CISCO2951(config-subif)#encapsulation dot1Q 20                 
+CISCO2951(config-subif)#ip address 192.168.20.1 255.255.255.0</code></pre>
+
+
+
+<h4 class="wp-block-heading">On C3750G:</h4>
+
+
+
+<pre class="wp-block-code"><code>C3750G(config)#interface GigabitEthernet 3/0/1
+C3750G(config-if)#switchport mode trunk
+C3750G(config-if)#switchport trunk encapsulation dot1q
+C3750G(config-if)#no shutdown
+C3750G(config-if)#speed 1000
+C3750G(config-if)#duplex full
+C3750G(config-if)#exit
+
+C3750G(config)#vlan 10
+C3750G(config-vlan)#name VLAN10
+C3750G(config-vlan)#exit
+C3750G(config)#vlan 20
+C3750G(config-vlan)#name VLAN20
+C3750G(config-vlan)#exit
+
+# Assign ports to the VLANs as needed:
+C3750G(config)#interface GigabitEthernet 3/0/2
+C3750G(config-if)#switchport mode access
+C3750G(config-if)#switchport access vlan 10
+C3750G(config-if)#no shutdown
+C3750G(config-if)#speed 1000
+C3750G(config-if)#duplex full
+C3750G(config-if)#exit
+
+C3750G(config)#interface GigabitEthernet 3/0/3
+C3750G(config-if)#switchport mode access
+C3750G(config-if)#switchport access vlan 20
+C3750G(config-if)#no shutdown
+C3750G(config-if)#speed 1000
+C3750G(config-if)#duplex full
+C3750G(config-if)#exit</code></pre>
+
+
+
+<h2 class="wp-block-heading">Method 2: SVI (Switch Virtual Interface) and InterVLAN routing on C3750G switch.</h2>
+
+
+
+<pre class="wp-block-code"><code>Topology: C3750G (GigabitEthernet3/0/1) -- CISCO2951(GigabitEthernet0/1) -- INTERNET(GigabitEthernet0/0)</code></pre>
+
+
+
+<h4 class="wp-block-heading">CISCO2951 Configs:</h4>
+
+
+
+<pre class="wp-block-code"><code># Configure GigabitEthernet 0/0 (connected to cable modem from ISP) to use DHCP.
+CISCO2951(config)#interface GigabitEthernet 0/0
+CISCO2951(config-if)#ip address dhcp
+CISCO2951(config-if)#ip nat outside
+CISCO2951(config-if)#ip virtual-reassembly in
+CISCO2951(config-if)#no shutdown
+CISCO2951(config-if)#speed 1000
+CISCO2951(config-if)#duplex full
+CISCO2951(config-if)#exit
+
+# Configure GigabitEthernet0/1 (connected to C3750G).
+CISCO2951(config)#interface GigabitEthernet 0/1
+CISCO2951(config-if)#ip address 192.168.0.1 255.255.255.0
+CISCO2951(config-if)#ip access-group NAT_ACL in
+CISCO2951(config-if)#ip nat inside
+CISCO2951(config-if)#ip virtual-reassembly in
+CISCO2951(config-if)#no shutdown
+CISCO2951(config-if)#speed 1000
+CISCO2951(config-if)#duplex full
+CISCO2951(config-if)#exit
+
+# Configure ACL and NAT.
+CISCO2951(config)#ip dns server
+CISCO2951(config)#ip access-list extended NAT_ACL
+CISCO2951-K9(config-ext-nacl)#permit ip 192.168.0.0 0.255.255.255 any
+CISCO2951-K9(config-ext-nacl)#exit
+CISCO2951(config)#ip nat inside source list NAT_ACL interface GigabitEthernet0/0 overload
+
+# Enable routing and configure EIGRP (optional, depending on your configs)
+CISCO2951(config)#ip routing
+CISCO2951(config)#router eigrp 100
+CISCO2951(config-router)#network 192.168.0.0 0.255.255.255</code></pre>
+
+
+
+<h4 class="wp-block-heading">C3750G Configs:</h4>
+
+
+
+<pre class="wp-block-code"><code># Enable routing.
+C3750G(config)#ip routing
+# Disable "ip cef optimize neighbor resolution" to get rid of excessive warning/error logs.
+C3750G(config)#no ip cef optimize neighbor resolution
+C3750G(config)#no ip domain-lookup
+
+# Enable spanning-tree protocol.
+C3750G(config)#spanning-tree mode pvst
+
+# Configure VLANs
+C3750G(config)#vlan 10
+C3750G(config-vlan)#name VLAN10
+C3750G(config-vlan)#exit
+C3750G(config)#vlan 20
+C3750G(config-vlan)#name VLAN20
+C3750G(config-vlan)#exit
+
+C3750G(config)#interface vlan 10
+C3750G(config-if)#ip address 192.168.10.1 255.255.255.0
+C3750G(config-if)#ip helper-address 192.168.0.1
+C3750G(config)#interface vlan 20
+C3750G(config-if)#ip address 192.168.20.1 255.255.255.0
+C3750G(config-if)#ip helper-address 192.168.0.1
+
+# Configure trunk port
+C3750G(config)#interface GigabitEthernet 3/0/1
+C3750G(config-if)#no switchport
+C3750G(config-if)#ip address 192.168.0.2 255.255.255.0
+C3750G(config-if)#no shutdown
+C3750G(config-if)#speed 1000
+C3750G(config-if)#duplex full
+
+# Configure default route.
+C3750G(config)#ip route 0.0.0.0 0.0.0.0 GigabitEthernet 3/0/1
+
+# Assign ports to VLANs
+C3750G(config)#interface range GigabitEthernet 3/0/2 - 5
+C3750G(config-if-range)#switch port access vlan 10
+C3750G(config-if-range)#switchport mode access
+C3750G(config-if-range)#speed 1000
+C3750G(config-if-range)#duplex full
+C3750G(config-if-range)#no shut
+
+C3750G(config)#interface range GigabitEthernet 3/0/6 - 12
+C3750G(config-if-range)#switch port access vlan 20
+C3750G(config-if-range)#switchport mode access
+C3750G(config-if-range)#speed 1000
+C3750G(config-if-range)#duplex full
+C3750G(config-if-range)#no shut</code></pre>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>Flash Cisco IOS on a C3750G Switch</title>
 		<link>https://jameswsullivan.github.io/flash-cisco-ios-on-a-c3750g-switch/</link>
 		
@@ -826,213 +1034,6 @@ echo -e "\n\nKoha Password: $koha_password"</code></pre>
 
 
 <p>Keywords: Install Koha ILS on Ubuntu 22.04 LTS, Install Koha ILS on Docker, Dockerizing Koha ILS, Containerizing Koha ILS</p>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Set up self-hosted BookStack</title>
-		<link>https://jameswsullivan.github.io/set-up-self-hosted-bookstack/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Mon, 01 May 2023 00:23:40 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[notes]]></category>
-		<category><![CDATA[BookStack]]></category>
-		<category><![CDATA[Docker]]></category>
-		<category><![CDATA[Hosting]]></category>
-		<category><![CDATA[Linux]]></category>
-		<category><![CDATA[Self-Hosting]]></category>
-		<category><![CDATA[Ubuntu]]></category>
-		<category><![CDATA[Web Hosting]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2353</guid>
-
-					<description><![CDATA[Self-host BookStack with Docker.]]></description>
-										<content:encoded><![CDATA[
-<p>As I venture more and more into software development and homelab building, I found that I&#8217;m in need of a better way for my documentation because OneNote just doesn&#8217;t natively support all my needs. After a bit research I found BookStack to be a good choice. Since <a href="https://github.com/jameswsullivan/selfhosted/tree/main/BookStack">this project</a> is on GitHub as part of my <a href="https://github.com/jameswsullivan/selfhosted">self-hosted application suite</a>, this article only serves as a documentation.</p>
-
-
-
-<h2 class="wp-block-heading">Dockerfile:</h2>
-
-
-
-<pre class="wp-block-code"><code>FROM ubuntu
-
-ARG APACHE_DIR=/var/www
-ARG BOOKSTACK_DIR=/var/www/bookstack
-ARG DEBIAN_FRONTEND=noninteractive
-
-ENV LC_ALL en_US.UTF-8
-ENV LANG en_US.UTF-8
-
-RUN apt-get update -y &amp;&amp; \
-    apt-get upgrade -y &amp;&amp; \
-    apt-get install wget -y &amp;&amp; \
-    apt-get install iproute2 -y &amp;&amp; \
-    apt-get install nano -y &amp;&amp; \
-    apt-get install tzdata -y &amp;&amp; \
-    ln -fs /usr/share/zoneinfo/US/Central /etc/localtime &amp;&amp; \
-    dpkg-reconfigure -f noninteractive tzdata &amp;&amp; \
-    apt-get install locales -y &amp;&amp; \
-    locale-gen en_US.UTF-8 &amp;&amp; \
-    update-locale LANG=en_US.UTF-8 &amp;&amp; \
-    apt-get install -y git unzip apache2 php8.1 curl php8.1-curl \
-    php8.1-mbstring php8.1-ldap php8.1-xml php8.1-zip php8.1-gd \
-    php8.1-mysql libapache2-mod-php8.1 &amp;&amp; \
-    curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
-WORKDIR $APACHE_DIR
-
-RUN git clone https://github.com/BookStackApp/BookStack.git --branch release --single-branch &amp;&amp; \       
-    mv BookStack/ bookstack/ &amp;&amp; \
-    chown -R www-data:www-data $BOOKSTACK_DIR
-
-WORKDIR $BOOKSTACK_DIR
-
-COPY ./config.sh ./config.sh
-
-RUN composer install --no-dev &amp;&amp; \
-    mv $BOOKSTACK_DIR/public/.htaccess $BOOKSTACK_DIR/public/.htaccess.bk &amp;&amp; \
-    mv /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/000-default.conf.bk &amp;&amp; \
-    mv /etc/apache2/sites-available/default-ssl.conf /etc/apache2/sites-available/default-ssl.conf.bk &amp;&amp; \
-    chmod +x config.sh
-
-ENTRYPOINT &#91;"/var/www/bookstack/config.sh"]</code></pre>
-
-
-
-<h2 class="wp-block-heading">Post-setup configuration script:</h2>
-
-
-
-<pre class="wp-block-code"><code>#!/bin/bash
-BOOKSTACK_DIR="/var/www/bookstack"
-
-service apache2 start
-a2ensite bookstack.conf
-a2enmod rewrite
-a2enmod headers
-
-cd "$BOOKSTACK_DIR"
-
-php artisan key:generate --no-interaction --force
-php artisan migrate --no-interaction --force
-
-service apache2 restart
-
-exec "$@"
-tail -f /var/log/apache2/access.log</code></pre>
-
-
-
-<h2 class="wp-block-heading">BookStack Virtual Host file:</h2>
-
-
-
-<pre class="wp-block-code"><code>&lt;VirtualHost *:80&gt;
-
-        ServerName bookstack.example.com
-        DocumentRoot /var/www/bookstack/public/
-
-        &lt;Directory /var/www/bookstack/public/&gt;
-                Options Indexes FollowSymLinks
-                AllowOverride None
-                Require all granted
-                &lt;IfModule mod_rewrite.c&gt;
-                        &lt;IfModule mod_negotiation.c&gt;
-                                Options -MultiViews -Indexes
-                        &lt;/IfModule&gt;
-
-                        RewriteEngine On
-
-                        # Handle Authorization Header
-                        RewriteCond %{HTTP:Authorization} .
-                        RewriteRule .* - &#91;E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
-
-                        # Redirect Trailing Slashes If Not A Folder...
-                        RewriteCond %{REQUEST_FILENAME} !-d
-                        RewriteCond %{REQUEST_URI} (.+)/$
-                        RewriteRule ^ %1 &#91;L,R=301]
-
-                        # Handle Front Controller...
-                        RewriteCond %{REQUEST_FILENAME} !-d
-                        RewriteCond %{REQUEST_FILENAME} !-f
-                        RewriteRule ^ index.php &#91;L]
-                &lt;/IfModule&gt;
-        &lt;/Directory&gt;
-
-        ErrorLog ${APACHE_LOG_DIR}/error.log
-        CustomLog ${APACHE_LOG_DIR}/access.log combined
-
-&lt;/VirtualHost&gt;</code></pre>
-
-
-
-<p>BookStack .env file:</p>
-
-
-
-<pre class="wp-block-code"><code>APP_KEY=SomeRandomString
-
-APP_URL=http://example.com/
-
-# Database details
-DB_HOST=YOUR_DB_URL
-DB_DATABASE=YOUR_DB_NAME
-DB_USERNAME=YOUR_DB_USER
-DB_PASSWORD=YOUR_DB_PASS
-
-# Mail system to use
-# Can be 'smtp' or 'sendmail'
-MAIL_DRIVER=smtp
-
-# Mail sender details
-MAIL_FROM_NAME="BookStack"
-MAIL_FROM=bookstack@example.com
-
-# SMTP mail options
-# These settings can be checked using the "Send a Test Email"
-# feature found in the "Settings &gt; Maintenance" area of the system.
-MAIL_HOST=localhost
-MAIL_PORT=1025
-MAIL_USERNAME=null
-MAIL_PASSWORD=null
-MAIL_ENCRYPTION=null</code></pre>
-
-
-
-<h2 class="wp-block-heading"><em>docker image build</em> and <em>docker run</em> commands:</h2>
-
-
-
-<pre class="wp-block-code"><code># Linux build:
-docker image build --file bookstack.dockerfile --tag bookstack:1.0 --progress plain --no-cache . 2&gt;&amp;1 | tee bookstack_build.log
-
-# Windows build using PowerShell
-docker image build --file bookstack.dockerfile --tag bookstack:1.0 --progress plain --no-cache . 2&gt;&amp;1 | Tee-Object bookstack_build.log
-
-# Start a container:
-docker run -dit \
-    --name MY_BOOKSTACK_CONTAINER_NAME \
-    --ip IP_ADDRESS --network DOCKER_NETWORK \
-    --hostname=MY_HOSTNAME \
-    --restart=unless-stopped \
-    --mount type=bind,source=SOURCE_DIRECTORY/.env,target=/var/www/bookstack/.env \
-    --mount type=bind,source=SOURCE_DIRECTORY/bookstack.conf,target=/etc/apache2/sites-available/bookstack.conf \
-    -v SOURCE_DIRECTORY:/var/www/bookstack/public/uploads \
-    -v SOURCE_DIRECTORY:/var/www/bookstack/storage/uploads \
-    bookstack:1.0</code></pre>
-
-
-
-<h2 class="wp-block-heading">Default login:</h2>
-
-
-
-<pre class="wp-block-code"><code>Default login email: admin@admin.com
-Default login password: password</code></pre>
 ]]></content:encoded>
 					
 		
