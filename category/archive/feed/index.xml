@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/category/archive/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Tue, 20 Jun 2023 17:40:18 +0000</lastBuildDate>
+	<lastBuildDate>Wed, 05 Jul 2023 00:43:30 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -216,6 +216,138 @@ http://your-application-id.appspot.com/ucweb</code></pre>
 		
 			</item>
 		<item>
+		<title>iTouch使用OpenVpn方法</title>
+		<link>https://jameswsullivan.github.io/configure-itouch-to-use-openvpn/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Thu, 17 Jun 2010 21:22:00 +0000</pubDate>
+				<category><![CDATA[archive]]></category>
+		<category><![CDATA[DevOps]]></category>
+		<category><![CDATA[Linux]]></category>
+		<category><![CDATA[OpenVPN]]></category>
+		<category><![CDATA[Proxy]]></category>
+		<category><![CDATA[Software Development]]></category>
+		<category><![CDATA[System Administration]]></category>
+		<category><![CDATA[VPN]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2632</guid>
+
+					<description><![CDATA[iPod Touch上使用OpenVPN翻墙。]]></description>
+										<content:encoded><![CDATA[
+<blockquote class="wp-block-quote">
+<p>此文系早年博客的备份，仅用于参考学习。<br>This article is an archival copy of my early years&#8217; blog posts.</p>
+</blockquote>
+
+
+
+<p>本人购置iPod Touch 3rd Generation已经有一段时间了，由于一直没什么时间折腾，所以破解后一系列强大的功能都没有时间来一一实现。然而，由于伟大的GFW的存在，使得iTouch的很多我能用到的正常功能无法正常工作，于是抽出一天下午来完成了iTouch上OpenVPN的配置，期间调试、安装有不少波折，在这里记录下来，方便日后自己和他人使用。</p>
+
+
+
+<h2 class="wp-block-heading">前期准备：</h2>
+
+
+
+<ol>
+<li>破解iTouch，什么版本的破解都可以，确保能访问Cydia。我的是Spirit破解，iTouch版本三代3.1.3。</li>
+
+
+
+<li>在电脑上安装WinSCP，PuTTY。<br>前者是为了从电脑上往iTouch上传文件，后者是命令行程序。有关WinSCP的安装和与iTouch的连接，方法网上一搜一大片，我只简单说一下：安装WinSCP，到iTouch上查看其ip地址，然后在WinSCP的session里以 <code>用户名/密码</code> 为 <code>root/alpine</code> 来登录iTouch。PuTTY则可以直接在WinSCP的<code>Commands</code>里调用。另外，网上文章说用WinSCP连接iTouch需要安装<code>BSD Subsystem</code>，但是我在Cydia里没找到，iTouch上也没有默认安装，可依旧能够正常连接。</li>
+
+
+
+<li>准备好OpenVPN的相关文件，收费的免费的都可以。我的文件是<code>ca.crt, client.crt, client.key, XXXX.ovpn</code>。</li>
+
+
+
+<li>一个临时的免费或收费VPN，可以直接在iTouch上设置并使用的。这个环节我是用到了，但是不一定所有人都要用到，因为我这里不知为何访问Cydia时十分卡，还有<code>host unreachable</code>的问题，好多必要的工具软件无法正常下载安装，连上VPN之后得以解决，所以我想本身使用Cydia正常的人应该可以略去此步。</li>
+</ol>
+
+
+
+<p>至于好用的免费VPN，现在比较难找，因为天朝为了牠的和谐和稳定，屏蔽了很多VPN服务。我这里低调推荐一个：macrovpn.com。它提供7天2G的免费VPN服务，对于我们折腾iTouch是足够用了。注册的过程我不赘述，在iTouch上设置方法如下:</p>
+
+
+
+<pre class="wp-block-code"><code>Settings -- General -- Network -- VPN -- Add VPN Configuration -- PPTP
+Description -- 随便填写
+Server -- 目前似乎只有fr1.macrovpn.com是可用的
+Account -- 注册的用户名
+Password -- 密码</code></pre>
+
+
+
+<h2 class="wp-block-heading">设置步骤：</h2>
+
+
+
+<ol>
+<li>连接找到的免费VPN，在Cydia里搜索并安装<code>OpenSSL, OpenSSH, SBSettings, OpenVPN Toggle for SBSettings</code>。</li>
+
+
+
+<li>准备好OpenVPN的文件，将展名为<code>.ovpn</code>的文件命名为：<code>conf.ovpn</code>，然后用任意文本编辑器打开<code>conf.ovpn</code>，确认 <code>ca ca.crt, key client.key, cert client.crt</code> 三行中 <code>ca, key, cert</code> 后面对应的文件名与你的文件名相符。<br>注意：若在后面的命令行操作中，提示说<code>“Cannot load certificate file”</code>，则在此步骤需将上述三行后面的文件名更改为绝对路径，如下：<br><code>ca /var/mobile/Library/OpenVpn/ca.crt<br>key /var/mobile/Library/OpenVpn/client.key<br>cert /var/mobile/Library/OpenVpn/client.crt</code></li>
+
+
+
+<li>用WinSCP将准备好的OpenVPN文件传入iTouch的 <code>/var/mobile/Library/OpenVPN/</code> 目录下。并在WinSCP里将OpenVPN的属性中，<code>“组”和“所有者”（"Group"与"Owner"）</code>设置为<code>mobile</code>。</li>
+
+
+
+<li>打开 <code>/var/mobile/Library/SBSettings/Commands/com.offinf.openvpnup</code> 并将内容编辑为：</li>
+</ol>
+
+
+
+<pre class="wp-block-code"><code>!/bin/sh
+/bin/rm /var/mobile/Library/SBSettings/Toggles/OpenVpn/OFF
+cd /var/mobile/Library/OpenVpn/
+/usr/bin/openvpn-iphone --script-security 2 --config /var/mobile/Library/OpenVpn/conf.ovpn &amp;</code></pre>
+
+
+
+<p><s>可以直接在此下载我编辑好的该文件：</s></p>
+
+
+
+<ol start="5">
+<li>打开PuTTY，以用户名root，密码alpine登录。在命令行输入：<code>cd /var/mobile/Library/OpenVPN/</code><br>转到OpenVPN文件夹。</li>
+</ol>
+
+
+
+<pre class="wp-block-code"><code>如果你的.key文件中有密码，则输入：
+cp my.key my.key.orig
+openssl rsa -in my.key.orig -out my.key
+其中“my”换成你的密匙文件名</code></pre>
+
+
+
+<p>键入以下命令测试可否正常连接：<code>openvpn-iphone --script-security 2 --config conf.ovpn</code></p>
+
+
+
+<p>如果经过一系列连接操作后提示：<code>Initialization Sequence Completed</code>，则连接成功，若连接不成功，请检查上述步骤是否有漏洞，或者重启iTouch后再试。</p>
+
+
+
+<ol start="6">
+<li>完成上述操作后，重启iTouch，在屏幕最上方状态栏上划一下，出现设置Toggle的界面，点击More，将OpenVPN设置为On，然后回到主界面后，在Toggle界面里点击该按钮，等一会儿之后，就可以实现翻墙了。</li>
+
+
+
+<li>也有人说直接在iTouch上安装<code>mobileterminal</code>来完成上述命令行的操作，但是很不幸，我用<code>mobileterminal</code>键入测试命令后OpenVPN无法连接成功，不知为何。</li>
+</ol>
+
+
+
+<p>我的这篇文章省略了网上其他文章里冗长的说明，我想对于一般玩家，不需要知道这些东西都是啥，知道怎么用就行了，所以我只罗列了步骤，如果有人发现当中的错误或遇到某种问题，欢迎留言或联系我。</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>Dell N-Series 激活SLIC2.0/模拟BIOS激活系统会烧毁主板么？</title>
 		<link>https://jameswsullivan.github.io/dell-n-series-laptop-slic20-bios/</link>
 		
@@ -341,6 +473,101 @@ http://your-application-id.appspot.com/ucweb</code></pre>
 
 
 <p>关键字：dell n-series 机器激活slic2.0，模拟bios会不会烧毁主板，用loader激活oem系统会不会烧毁主板，模拟bios激活系统烧毁主板</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>用自己的Google账户自建Twitter代理</title>
+		<link>https://jameswsullivan.github.io/deploy-twitter-proxy-using-google-app-engine/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Thu, 26 Nov 2009 17:49:00 +0000</pubDate>
+				<category><![CDATA[archive]]></category>
+		<category><![CDATA[DevOps]]></category>
+		<category><![CDATA[Google App Engine]]></category>
+		<category><![CDATA[Proxy]]></category>
+		<category><![CDATA[Python]]></category>
+		<category><![CDATA[Software Development]]></category>
+		<category><![CDATA[System Administration]]></category>
+		<category><![CDATA[Twitter]]></category>
+		<category><![CDATA[Windows Systems Administration]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2629</guid>
+
+					<description><![CDATA[用自己的Google账户(Google App Engine)自建Twitter代理]]></description>
+										<content:encoded><![CDATA[
+<blockquote class="wp-block-quote">
+<p>此文系早年博客的备份，仅用于参考学习。<br>This article is an archival copy of my early years&#8217; blog posts.</p>
+</blockquote>
+
+
+
+<p><strong>为了达到让菜鸟也能按步骤完成搭建的目的，本文只尽可能简便的罗列步骤：</strong></p>
+
+
+
+<ol>
+<li>首先，你需要有一个Google账户，如果没有，<s>请到这里注册</s>。</li>
+
+
+
+<li><s>访问这里</s>，点击右边侧栏的“使用入门”中的“注册”。</li>
+
+
+
+<li>在接下来的界面中，用刚刚的Google账户登录。从这一界面开始下面将会是英文。</li>
+
+
+
+<li>点击Create an Application。</li>
+
+
+
+<li>下一步将会进行短信验证。<code>Country and Carrier</code>选择<code>Other</code>，<code>Mobile Number</code>填写你的手机号，注意前面加 <code>+86</code> ，例如，<code>+8613501234567</code>。注意，这里每一个手机号码只能验证一个账户，收到验证码后在下一个画面填入。</li>
+
+
+
+<li>接着来到<code>Create an Application</code>页面，在<code>Application Identifier</code>填入你想要的程序名称，以后你访问该程序的地址就是: <code>your-identifier.appspot.com</code>。<code>Application Title</code>可以随喜好填写。选中<code>I accept these terms</code>，然后<code>Save</code>。</li>
+
+
+
+<li>下一个页面会显示<code>Application Registered Successfully</code>。</li>
+
+
+
+<li><s>点击这里下载</s>BirdNest，这是一个网友已经打包好的版本，原地址请访问：<s>http://cid-b25292e8d4856480.skydrive.live.com/self.aspx/.Public/gae.zip</s>。下载后解压，默认解压为<code>gae</code>目录，进入目录，用任何文本编辑工具打开<code>app.yaml</code>文件（推荐使用写字板），将第一行<code>application:nest</code>中的<code>nest</code>改为上文中你注册的<code>your-identifier</code>。</li>
+
+
+
+<li>下载以下这两个工具，并安装：<br><code>Google App Engine：http://code.google.com/intl/zh-CN/appengine/downloads.html</code>，下载<code>Windows</code>平台的<code>GoogleAppEngine_1.2.7.msi</code>。<br><code>Python：http://www.python.org/download/releases/2.5.4/</code>，如果该地址无法访问，请直接在本站下载：（本站只提供x86版本的下载，如果你需要别的版本，请自行到上述地址下载）</li>
+
+
+
+<li>安装完成后，到开始菜单里运行<code>Google App Engine Launcher</code>。初次运行它可能会出现警告界面，提示找不到<code>Python</code>，不要紧，点击<code>OK</code>，然后选择<code> Edit - Preferences</code>，在其中<code>Python Path</code>里，选择你所安装的<code>Python</code>路径，通常情况下默认为<code>C:\Python25\python.exe</code>。设置完成后下次运行就不会再提示了。</li>
+
+
+
+<li>选择<code>File - Add Existing Application</code>，然后选择你刚才解压后的<code>gae</code>目录，点击<code>add</code>。然后你的窗口中会得到一个<code>name</code>为<code>your-identifier</code>，端口为<code>8080</code>的<code>App</code>。选中该<code>App</code>，点击工具栏上的<code>Deploy</code>，在弹出的对话框中填入你的<code>Gmail</code>地址和密码，点击<code>OK</code>后会出现一个<code>DOS</code>窗口，等待一小段时间，上传成功后会出现一个提示窗口，如果最后一行写着：<code>Process exited with code 0</code>，则证明你的<code>App</code>上传无误可以正确使用。如果提示不是<code>code 0</code>，则说明你的某处操作有误，请参照上文改正。</li>
+
+
+
+<li>最后，访问<code>your-identifier.appspot.com/api/</code>，即出现Twitter首页。</li>
+</ol>
+
+
+
+<p><strong>下面是如何通过twhirl使用自己搭建的API来访问Twitter：</strong></p>
+
+
+
+<ol>
+<li><code>Twhirl</code>需要<code>adobe air</code>支持，请先下载安装<code>adobe air:http://get.adobe.com/air/</code>，然后到这里下载<code>twhirl：http://www.twhirl.org/download</code></li>
+
+
+
+<li>安装好<code>Twhirl</code>后，在它的<code>Accounts</code>界面，左下角的菜单里选择<code>laconi.ca</code>,在旁边的输入框中填写：<code>your-twitter-id@your-identifier.appspot.com</code>,<code>your-twitter-id</code>是你的twitter用户名，<code>@</code>之后则是你的<code>Google App</code>地址。然后在上面的方框中就会出现你的帐户名，选择它，点击右边的<code>Connect</code>，输入密码即可使用了。</li>
+</ol>
 ]]></content:encoded>
 					
 		
@@ -483,90 +710,6 @@ http://your-application-id.appspot.com/ucweb</code></pre>
 		
 			</item>
 		<item>
-		<title>多台vista机器组建小型局域网</title>
-		<link>https://jameswsullivan.github.io/lan-setup-with-multiple-vista-machines/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Sun, 02 Aug 2009 17:42:00 +0000</pubDate>
-				<category><![CDATA[archive]]></category>
-		<category><![CDATA[Networking]]></category>
-		<category><![CDATA[System Administration]]></category>
-		<category><![CDATA[Windows Systems Administration]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2347</guid>
-
-					<description><![CDATA[多台Vista机器组件小型局域网]]></description>
-										<content:encoded><![CDATA[
-<blockquote class="wp-block-quote">
-<p>此文系早年博客的备份，仅用于参考学习。<br>This article is an archival copy of my early years&#8217; blog posts.</p>
-</blockquote>
-
-
-
-<p>Tag: 多台vista机器组建局域网 vista笔记本组建无线局域网 vista系统组建无线局域网 vista局域网文件共享 vista“网络发现”无法启动 在“网络”里能看见对方机器但无法访问（windows无法访问）</p>
-
-
-
-<p>1 &#8211; 在vista “网络和共享中心”中启用 “网络发现”和“文件共享”。若发现“网络发现”无法设置为“启用”，或无论怎样开启“网络发现”，都只显示“自定义”时，参考以下设置：</p>
-
-
-
-<p>右键计算机 →管理→服务和应用程序→服务，将下述服务设置为启动：</p>
-
-
-
-<pre class="wp-block-code"><code>Computer Browser<br>DHCP Client<br>DNS Client<br>Function Discovery Resource Publication<br>Remote Procedure Call（RPC）<br>Remote Procedure Call（RPC）Locator<br>Server<br>SSDP Discovery<br>TCP/IP NetBIOS Helper<br>UPnP Device Host</code></pre>
-
-
-
-<p>设置完后 “网络发现”就可以设置为“启动”了。</p>
-
-
-
-<p>2 &#8211; 将多台机器均进行上述操作后，在“网络”里应该已经能看见彼此的计算机名，但这时可能还无法访问对方共享的资源。继续进行如下设置：</p>
-
-
-
-<ul>
-<li>运行→gpedit.msc→计算机配置→Windows设置→安全设置→本地策略→用户权限分配：</li>
-
-
-
-<li>确保“从网络访问此计算机”内包含“everyone”</li>
-
-
-
-<li>“拒绝从网络访问这台计算机”中将“Guest”删除</li>
-
-
-
-<li>再进入“本地策略→安全选项”, 将“帐户：来宾帐户状态”设置为“已启用”</li>
-</ul>
-
-
-
-<p>3 &#8211; 确保“Windows防火墙”的设置中，在“例外”中已经勾选“网络发现”和“文件和打印机共享”，并且其他的防火墙工具都没有对相关的操作进行限制。</p>
-
-
-
-<p>进行过上述操作，同一工作组内的计算机应该可以彼此互相访问了。</p>
-
-
-
-<p>4 &#8211; 补充：文件夹及驱动器的共享设置</p>
-
-
-
-<p>在共享文件夹时，要在下面的菜单内添加授权访问的用户，一般添加“everyone”，并设置其为“读者”，其具有只读权限。</p>
-
-
-
-<p>若想共享整个驱动器，设置方法和共享文件夹略有不同，打开驱动器（如D盘）属性→在“安全”→“组或用户名”中添加“Guest”用户，设置其权限；然后切换至“共享”选项卡→高级共享→选中“共享此文件夹”后确定，即可完成驱动器的共享。</p>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
 		<title>将DVD制作成压缩视频</title>
 		<link>https://jameswsullivan.github.io/dvd-rip-and-subtitle-extraction/</link>
 		
@@ -657,6 +800,90 @@ http://your-application-id.appspot.com/ucweb</code></pre>
 		
 			</item>
 		<item>
+		<title>多台vista机器组建小型局域网</title>
+		<link>https://jameswsullivan.github.io/lan-setup-with-multiple-vista-machines/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sun, 02 Aug 2009 17:42:00 +0000</pubDate>
+				<category><![CDATA[archive]]></category>
+		<category><![CDATA[Networking]]></category>
+		<category><![CDATA[System Administration]]></category>
+		<category><![CDATA[Windows Systems Administration]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2347</guid>
+
+					<description><![CDATA[多台Vista机器组件小型局域网]]></description>
+										<content:encoded><![CDATA[
+<blockquote class="wp-block-quote">
+<p>此文系早年博客的备份，仅用于参考学习。<br>This article is an archival copy of my early years&#8217; blog posts.</p>
+</blockquote>
+
+
+
+<p>Tag: 多台vista机器组建局域网 vista笔记本组建无线局域网 vista系统组建无线局域网 vista局域网文件共享 vista“网络发现”无法启动 在“网络”里能看见对方机器但无法访问（windows无法访问）</p>
+
+
+
+<p>1 &#8211; 在vista “网络和共享中心”中启用 “网络发现”和“文件共享”。若发现“网络发现”无法设置为“启用”，或无论怎样开启“网络发现”，都只显示“自定义”时，参考以下设置：</p>
+
+
+
+<p>右键计算机 →管理→服务和应用程序→服务，将下述服务设置为启动：</p>
+
+
+
+<pre class="wp-block-code"><code>Computer Browser<br>DHCP Client<br>DNS Client<br>Function Discovery Resource Publication<br>Remote Procedure Call（RPC）<br>Remote Procedure Call（RPC）Locator<br>Server<br>SSDP Discovery<br>TCP/IP NetBIOS Helper<br>UPnP Device Host</code></pre>
+
+
+
+<p>设置完后 “网络发现”就可以设置为“启动”了。</p>
+
+
+
+<p>2 &#8211; 将多台机器均进行上述操作后，在“网络”里应该已经能看见彼此的计算机名，但这时可能还无法访问对方共享的资源。继续进行如下设置：</p>
+
+
+
+<ul>
+<li>运行→gpedit.msc→计算机配置→Windows设置→安全设置→本地策略→用户权限分配：</li>
+
+
+
+<li>确保“从网络访问此计算机”内包含“everyone”</li>
+
+
+
+<li>“拒绝从网络访问这台计算机”中将“Guest”删除</li>
+
+
+
+<li>再进入“本地策略→安全选项”, 将“帐户：来宾帐户状态”设置为“已启用”</li>
+</ul>
+
+
+
+<p>3 &#8211; 确保“Windows防火墙”的设置中，在“例外”中已经勾选“网络发现”和“文件和打印机共享”，并且其他的防火墙工具都没有对相关的操作进行限制。</p>
+
+
+
+<p>进行过上述操作，同一工作组内的计算机应该可以彼此互相访问了。</p>
+
+
+
+<p>4 &#8211; 补充：文件夹及驱动器的共享设置</p>
+
+
+
+<p>在共享文件夹时，要在下面的菜单内添加授权访问的用户，一般添加“everyone”，并设置其为“读者”，其具有只读权限。</p>
+
+
+
+<p>若想共享整个驱动器，设置方法和共享文件夹略有不同，打开驱动器（如D盘）属性→在“安全”→“组或用户名”中添加“Guest”用户，设置其权限；然后切换至“共享”选项卡→高级共享→选中“共享此文件夹”后确定，即可完成驱动器的共享。</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>创新Creative SoundBlaster Vibra128 声卡驱动（ForXP）</title>
 		<link>https://jameswsullivan.github.io/install-creative-soundblaster-virbra128-driver-on-windows-xp/</link>
 		
@@ -689,152 +916,6 @@ http://your-application-id.appspot.com/ucweb</code></pre>
 
 
 <p>Tag: 创新Creative Vibra128声卡xp驱动，Creative SoundBlaster Vibra128 driver for xp，vibra128声卡xp驱动下载，EV1938声卡芯片xp驱动，EV1938 driver for xp</p>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Word出现“无法创建工作文件，请检查临时环境变量”的解决方法</title>
-		<link>https://jameswsullivan.github.io/word-unable-to-create-working-file-check-environment-variables/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Sun, 02 Aug 2009 17:40:00 +0000</pubDate>
-				<category><![CDATA[archive]]></category>
-		<category><![CDATA[Office]]></category>
-		<category><![CDATA[RamDisk]]></category>
-		<category><![CDATA[System Administration]]></category>
-		<category><![CDATA[Windows Systems Administration]]></category>
-		<category><![CDATA[Word]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2331</guid>
-
-					<description><![CDATA[修复Word“无法创建工作文件，请检查临时环境变量”的错误。]]></description>
-										<content:encoded><![CDATA[
-<blockquote class="wp-block-quote">
-<p>此文系早年博客的备份，仅用于参考学习。<br>This article is an archival copy of my early years&#8217; blog posts.</p>
-</blockquote>
-
-
-
-<p>某天帮一同学安装office，安完后打开word使用时却发现提示<code>“无法创建工作文件，请检查临时环境变量”</code>，将对话框关闭后虽能输入字符，但无法保存文件，剪切、粘贴等操作也会收到错误提示。自己判断加上再Google一下，总结以下解决方法：</p>
-
-
-
-<p>1 &#8211; 我的电脑 &#8211; 属性 &#8211; 高级 &#8211; 环境变量 &#8211; 在 ”用户变量” 里, 将 TEMP 和 TMP 的值改为 <code>%USERPROFILE%\Local Settings\Temp</code> ; 在 ”系统变量” 里, 将 TEMP 和 TMP 设置为：<code>%SystemRoot%\TEMP</code></p>
-
-
-
-<p>2 &#8211; 将IE的缓存文件目录更改回默认位置, 操作如下:<br>工具 &#8211; Internet选项 &#8211; 浏览历史 &#8211; 设置 &#8211; 将 现在位置 改为 <code>C:/Document and settings/</code></p>
-
-
-
-<p>更改完上述设置后，该问题应该已经解决了。这里顺便说一下，造成这个问题的原因似乎是安装了RamDisk，如果不会用或者不想用它的话，可以直接将其卸载，然后按照上述方法修改设置即可。如果RamDisk没有出现在添加/删除程序里，可以先去网上搜一个RamDisk安装后再卸载。</p>
-
-
-
-<p>关键字：ramdisk的卸载，ramdisk导致word无法工作，ramdisk导致word无法创建工作文件/请检查临时环境变量</p>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Vista下添加法语输入法</title>
-		<link>https://jameswsullivan.github.io/add-french-keyboard-in-vista/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Sun, 02 Aug 2009 17:39:00 +0000</pubDate>
-				<category><![CDATA[archive]]></category>
-		<category><![CDATA[French]]></category>
-		<category><![CDATA[System Administration]]></category>
-		<category><![CDATA[Windows Systems Administration]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2321</guid>
-
-					<description><![CDATA[Vista下添加法语输入法
-Add French Keyboard in Vista.]]></description>
-										<content:encoded><![CDATA[
-<p>French Keyboard/input language/input method in Vista</p>
-
-
-
-<blockquote class="wp-block-quote">
-<p>此文系早年博客的备份，仅用于参考学习。<br>This article is an archival copy of my early years&#8217; blog posts.</p>
-</blockquote>
-
-
-
-<p>由于学法语的需要，有时要在word中做一些知识的整理，因此需要打法语字母。虽然大多数法语字母和英文字母相同，但毕竟还是有诸如 ê,è,ü,ï  之类怪异的字母出现，所以需要一个专门用来打法语的输入法。Google了一下，似乎并没有一种单独的法语输入法存在，因此只能用windows自己的装备了。</p>
-
-
-
-<p>Ordinary Chinese or English keyboard can support most French letters, but we will meet problems while trying to type in letters as “ê,è,ü,ï”. I searched Google, but didn’t find any third-party input methods/input aid tools, so I added a French Keyboard to solve the problem.</p>
-
-
-
-<p>Vista系统为例添加法语键盘输入法，其他系统类似：</p>
-
-
-
-<pre class="wp-block-code"><code>控制面板 —— 区域和语言选项 —— 键盘和语言 —— 更改键盘 —— 添加 —— 选择 法语(加拿大)，键盘选择“加拿大法语”，最后添加即可。</code></pre>
-
-
-
-<p>输入法添加完成后，在输入法状态栏中切换到法语键盘，即可输入法文字母了。这里把各个奇异字母的输入方法简单写一下：</p>
-
-
-
-<p>上面带有“ ¨ ”的字母，用 shift+] 来输入。比如，输入“ ü ”，则先按 shift+] ，再按u；若想输入大写“ Ü ”，则先按 shift+] ，再按 shift+u 即可。</p>
-
-
-
-<p>“ ^ ”为 [+字母 ，如先按 [ 再按 e，则输入 ê 。大小写方式同上。</p>
-
-
-
-<p>“ ` ”（下撇）为 ‘ (即引号) + 字母，按键顺序同上。 “ ¸ ” 为 ] + 字母 ，其实最常用也不过就是 ç ，大小写同上。 由于é的使用频率最高，法语键盘给了它一个单独按键 “ / ”.</p>
-
-
-
-<p>I take Windows Vista as the example, if you’re using other OS, the steps are similar:</p>
-
-
-
-<pre class="wp-block-code"><code>Control panel ---- Regional and Language Options ---- Keyboards and Languages ---- Change Keyboards… ---- add ---- French(Canada) ---- Keyboard ---- Canadian French</code></pre>
-
-
-
-<p>After adding the input language, please switch to French Keyboard, and use the following key combinations to insert those funny letters: Letters with “ ¨ ” can be inputted with <code>shift+]</code>. For example, if you want to input “ ü “, press <code>shift+]</code>, then press <code>u</code>; and if you want to input the capital letter, press <code>shift+u</code> after <code>shift+]</code>. </p>
-
-
-
-<p>“ ^ ”: first press <code>[</code> , then press <code>e</code>, you can get <code>“ ê “</code><br>. ” : first press <code>‘</code> , then letter <code>e</code>, you get <code>“ è ”</code>.<br>“ ¸ ” : first press <code>]</code>, then letter <code>c</code>, you get <code>“ ç ”</code>.</p>
-
-
-
-<p>Because letter “ é ” is frequently in use, so the French keyboard provides it with a sole key: “ / ” .</p>
-
-
-
-<p>补充：由于法语的特殊字符占用了一些我们通常使用的字符的位置，因此在输入诸如 <code>/,[,]</code>这类符号时遇到了困难，最近发现了这个问题，在这里再补充一下：</p>
-
-
-
-<p>Update: In the French input language, some special French characters take place of some symbols that we often use, like <code>[ , ] , /</code> etc. So now I add information below, hope it may help:</p>
-
-
-
-<pre class="wp-block-code"><code>? : shift + 6
-: ~
-&lt; : \
-| : shift + ~
-'&nbsp;: shift + 2
-,&nbsp;: shift + ,
-&#91; and ]&nbsp;: ctrl + alt + &#91; and ctrl + alt + ]
-/&nbsp;: shift + 3</code></pre>
-
-
-
-<p>Tag：法语输入法，如何输入法语字符，法语特殊字符输入，安装法语键盘，windows添加法语键盘，法语键盘组合键，how to input French letters, French input method/input language, key combinations on French keyboard</p>
 ]]></content:encoded>
 					
 		

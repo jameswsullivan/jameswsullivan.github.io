@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Python &#8211; howdy</title>
+	<atom:link href="https://jameswsullivan.github.io/tag/python/feed/" rel="self" type="application/rss+xml" />
+	<link>https://jameswsullivan.github.io/</link>
+	<description></description>
+	<lastBuildDate>Tue, 04 Jul 2023 21:01:49 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.2.2</generator>
+	<item>
+		<title>用自己的Google账户自建Twitter代理</title>
+		<link>https://jameswsullivan.github.io/deploy-twitter-proxy-using-google-app-engine/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Thu, 26 Nov 2009 17:49:00 +0000</pubDate>
+				<category><![CDATA[archive]]></category>
+		<category><![CDATA[DevOps]]></category>
+		<category><![CDATA[Google App Engine]]></category>
+		<category><![CDATA[Proxy]]></category>
+		<category><![CDATA[Python]]></category>
+		<category><![CDATA[Software Development]]></category>
+		<category><![CDATA[System Administration]]></category>
+		<category><![CDATA[Twitter]]></category>
+		<category><![CDATA[Windows Systems Administration]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2629</guid>
+
+					<description><![CDATA[用自己的Google账户(Google App Engine)自建Twitter代理]]></description>
+										<content:encoded><![CDATA[
+<blockquote class="wp-block-quote">
+<p>此文系早年博客的备份，仅用于参考学习。<br>This article is an archival copy of my early years&#8217; blog posts.</p>
+</blockquote>
+
+
+
+<p><strong>为了达到让菜鸟也能按步骤完成搭建的目的，本文只尽可能简便的罗列步骤：</strong></p>
+
+
+
+<ol>
+<li>首先，你需要有一个Google账户，如果没有，<s>请到这里注册</s>。</li>
+
+
+
+<li><s>访问这里</s>，点击右边侧栏的“使用入门”中的“注册”。</li>
+
+
+
+<li>在接下来的界面中，用刚刚的Google账户登录。从这一界面开始下面将会是英文。</li>
+
+
+
+<li>点击Create an Application。</li>
+
+
+
+<li>下一步将会进行短信验证。<code>Country and Carrier</code>选择<code>Other</code>，<code>Mobile Number</code>填写你的手机号，注意前面加 <code>+86</code> ，例如，<code>+8613501234567</code>。注意，这里每一个手机号码只能验证一个账户，收到验证码后在下一个画面填入。</li>
+
+
+
+<li>接着来到<code>Create an Application</code>页面，在<code>Application Identifier</code>填入你想要的程序名称，以后你访问该程序的地址就是: <code>your-identifier.appspot.com</code>。<code>Application Title</code>可以随喜好填写。选中<code>I accept these terms</code>，然后<code>Save</code>。</li>
+
+
+
+<li>下一个页面会显示<code>Application Registered Successfully</code>。</li>
+
+
+
+<li><s>点击这里下载</s>BirdNest，这是一个网友已经打包好的版本，原地址请访问：<s>http://cid-b25292e8d4856480.skydrive.live.com/self.aspx/.Public/gae.zip</s>。下载后解压，默认解压为<code>gae</code>目录，进入目录，用任何文本编辑工具打开<code>app.yaml</code>文件（推荐使用写字板），将第一行<code>application:nest</code>中的<code>nest</code>改为上文中你注册的<code>your-identifier</code>。</li>
+
+
+
+<li>下载以下这两个工具，并安装：<br><code>Google App Engine：http://code.google.com/intl/zh-CN/appengine/downloads.html</code>，下载<code>Windows</code>平台的<code>GoogleAppEngine_1.2.7.msi</code>。<br><code>Python：http://www.python.org/download/releases/2.5.4/</code>，如果该地址无法访问，请直接在本站下载：（本站只提供x86版本的下载，如果你需要别的版本，请自行到上述地址下载）</li>
+
+
+
+<li>安装完成后，到开始菜单里运行<code>Google App Engine Launcher</code>。初次运行它可能会出现警告界面，提示找不到<code>Python</code>，不要紧，点击<code>OK</code>，然后选择<code> Edit - Preferences</code>，在其中<code>Python Path</code>里，选择你所安装的<code>Python</code>路径，通常情况下默认为<code>C:\Python25\python.exe</code>。设置完成后下次运行就不会再提示了。</li>
+
+
+
+<li>选择<code>File - Add Existing Application</code>，然后选择你刚才解压后的<code>gae</code>目录，点击<code>add</code>。然后你的窗口中会得到一个<code>name</code>为<code>your-identifier</code>，端口为<code>8080</code>的<code>App</code>。选中该<code>App</code>，点击工具栏上的<code>Deploy</code>，在弹出的对话框中填入你的<code>Gmail</code>地址和密码，点击<code>OK</code>后会出现一个<code>DOS</code>窗口，等待一小段时间，上传成功后会出现一个提示窗口，如果最后一行写着：<code>Process exited with code 0</code>，则证明你的<code>App</code>上传无误可以正确使用。如果提示不是<code>code 0</code>，则说明你的某处操作有误，请参照上文改正。</li>
+
+
+
+<li>最后，访问<code>your-identifier.appspot.com/api/</code>，即出现Twitter首页。</li>
+</ol>
+
+
+
+<p><strong>下面是如何通过twhirl使用自己搭建的API来访问Twitter：</strong></p>
+
+
+
+<ol>
+<li><code>Twhirl</code>需要<code>adobe air</code>支持，请先下载安装<code>adobe air:http://get.adobe.com/air/</code>，然后到这里下载<code>twhirl：http://www.twhirl.org/download</code></li>
+
+
+
+<li>安装好<code>Twhirl</code>后，在它的<code>Accounts</code>界面，左下角的菜单里选择<code>laconi.ca</code>,在旁边的输入框中填写：<code>your-twitter-id@your-identifier.appspot.com</code>,<code>your-twitter-id</code>是你的twitter用户名，<code>@</code>之后则是你的<code>Google App</code>地址。然后在上面的方框中就会出现你的帐户名，选择它，点击右边的<code>Connect</code>，输入密码即可使用了。</li>
+</ol>
+]]></content:encoded>
+					
+		
+		
+			</item>
+	</channel>
+</rss>
