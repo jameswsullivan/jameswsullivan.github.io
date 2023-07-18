@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/category/blog/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Sun, 18 Jun 2023 14:30:04 +0000</lastBuildDate>
+	<lastBuildDate>Sun, 16 Jul 2023 21:12:23 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -20,6 +20,61 @@
 	1	</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=6.2.2</generator>
 	<item>
+		<title>Repair ProForm 505 CST Treadmill</title>
+		<link>https://jameswsullivan.github.io/repair-proform-505-cst-treadmill/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sun, 16 Jul 2023 21:08:14 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Electronics]]></category>
+		<category><![CDATA[MOSFET]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2637</guid>
+
+					<description><![CDATA[Repair ProForm 505 CST Treadmill.]]></description>
+										<content:encoded><![CDATA[
+<p>I recently picked up a used, broken ProForm 505 CST Treadmill from someone at a really cheap price and decided to experiment with a repair myself, because the symptoms didn&#8217;t sound like it&#8217;s irreparable.</p>
+
+
+
+<p><strong>And I was right</strong> &#8211; the only thing I needed to replace was an IRFP250 MOSFET.</p>
+
+
+
+<blockquote class="wp-block-quote">
+<p><strong>Symptom:</strong> The control panel turns on fine, but the motor will run for a fraction of a second and then immediately stop.</p>
+</blockquote>
+
+
+
+<p>The repair is very easy: de-solder the bad MOSFET and replace it with a new one.</p>
+
+
+
+<p>The bad MOSFET was shot, you can diagnose with a multimeter:</p>
+
+
+
+<ul>
+<li>Put the multimeter in continuity or diode testing mode, you should see a voltage drop between the pins on a good MOSFET and the pins shouldn&#8217;t be directly connected to each other.</li>
+
+
+
+<li>On the bad one, all three pins were directly connected and the multimeter beeps in continuity mode (meaning the MOSFET is shot).</li>
+</ul>
+
+
+
+<figure class="wp-block-image size-large is-resized"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-scaled.jpg"><img decoding="async" src="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-1024x576.jpg" alt="Motor Control Board" class="wp-image-2639" width="768" height="432" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-1024x576.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-1536x864.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-2048x1152.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-700x394.jpg 700w" sizes="(max-width: 768px) 100vw, 768px" /></a></figure>
+
+
+
+<figure class="wp-block-image size-large is-resized"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-scaled.jpg"><img decoding="async" src="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-1024x576.jpg" alt="IRFP250 MOSFET" class="wp-image-2641" width="768" height="432" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-1024x576.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-1536x864.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-2048x1152.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-700x394.jpg 700w" sizes="(max-width: 768px) 100vw, 768px" /></a></figure>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>Flash Cisco IOS on a C3750G Switch</title>
 		<link>https://jameswsullivan.github.io/flash-cisco-ios-on-a-c3750g-switch/</link>
 		
@@ -1003,157 +1058,6 @@ docker run -dit \
 
 <pre class="wp-block-code"><code>Default login email: admin@admin.com
 Default login password: password</code></pre>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Silence the Cisco CISCO2951/K9 Router</title>
-		<link>https://jameswsullivan.github.io/silence-the-cisco-cisco2951-k9-router/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Mon, 01 May 2023 00:01:19 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[Cisco 2951]]></category>
-		<category><![CDATA[Engineering]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2351</guid>
-
-					<description><![CDATA[Silencing the Cisco 2951 router by replacing its stock high speed fans with Noctua quiet fans and adding active CPU cooler.]]></description>
-										<content:encoded><![CDATA[
-<p>Recently I came to the need for a quieter environment for audiovisual production and my Cisco 2951 router is producing noticeable background noise in my recordings, so I decided to do some surgery on it and make it quieter. <a href="https://www.mattmillman.com/silencing-a-cisco-2951-for-where-ever-silence-may-be-required/" target="_blank" rel="noreferrer noopener">This article</a> gave me a lot of insights and I highly recommend using it as a reference, my method is slightly modified and improved to fit my needs.</p>
-
-
-
-<h2 class="wp-block-heading">Overview:</h2>
-
-
-
-<h3 class="wp-block-heading">The project has two parts:</h3>
-
-
-
-<ol>
-<li>Swapping the four stock high speed fans with quiet fans from Noctua.</li>
-
-
-
-<li>Since the quiet fans have significantly less power, we&#8217;ll need to change the CPU&#8217;s passive cooling to active cooling.</li>
-</ol>
-
-
-
-<h2 class="wp-block-heading">Parts involved:</h2>
-
-
-
-<h3 class="wp-block-heading">Original Parts:</h3>
-
-
-
-<ol>
-<li>4 x SUNON PSD1206PMB1-A, 4-pin PWM, DC12V &#8211; 9.8W. Dimension: 60mm x 60mm x 38mm. (<a href="https://github.com/jameswsullivan/blog-file-share/blob/main/Sunon_PSD1206PMBX-A(2)_DataSheet.pdf" target="_blank" rel="noreferrer noopener">datasheet</a>)</li>
-
-
-
-<li>60mm x 60mm passive CPU heatsink.</li>
-</ol>
-
-
-
-<h3 class="wp-block-heading">Replacement Parts:</h3>
-
-
-
-<ol>
-<li>4 x <a rel="noreferrer noopener" href="https://www.amazon.com/Noctua-NF-A6x25-PWM-Premium-Quiet/dp/B00VXTANZ4" target="_blank">Noctua NF-A6x25 PWM</a>, 4-pin, 12V &#8211; 0.96W. Dimension: 60mm x 60mm x 25mm. (<a href="https://github.com/jameswsullivan/blog-file-share/blob/main/Noctua-A6x25_DataSheet.pdf" target="_blank" rel="noreferrer noopener">datasheet</a>)</li>
-
-
-
-<li><a rel="noreferrer noopener" href="https://www.amazon.com/dp/B07PMDX99G" target="_blank">Intel PGA988/989 CPU active cooler</a>.</li>
-</ol>
-
-
-
-<h2 class="wp-block-heading">Important Info:</h2>
-
-
-
-<p><strong>SUNON PSD1206PMB1-A Pinout:<br></strong>RED &#8212; +12V<br>BLACK &#8212; GND<br>YELLOW &#8212; TACH<br>BLUE &#8212; PWM<br><br><strong>Noctua NF-A6x25 Pinout:<br></strong>BLACK &#8212; GND<br>YELLOW &#8212; +12V<br>GREEN &#8212; TACH<br>BLUE &#8212; PWM<br><br><strong>Intel PGA988/989 CPU active cooler 3-wire fan pinout:<br></strong>BLACK &#8212; GND<br>RED &#8212; 12V<br>YELLOW &#8212; TACH</p>
-
-
-
-<p>In terms of the steps, I think if you&#8217;re already thinking about doing this type of mod, you must be already savvy with electronics and handy with tools, so I feel like illustrating the steps might be redundant and will only note a few important things.</p>
-
-
-
-<ul>
-<li>The active CPU cooler will have to be disassembled and have the mounting screws removed and replaced with the mounting clips from the original passive heatsink, and you&#8217;ll need a 3mm drill bit to enlarge the mounting holes on the heatsink of the active cooler for the original mounting clips to fit. The copper heatsink is very soft so you should be able to hand drill it with very little efforts.</li>
-
-
-
-<li>The mounting bracket that comes with the active CPU cooler won&#8217;t fit on the 2951&#8217;s motherboard, and the soft padding on the mating surface of the active cooler heatsink will have to be removed as well. I used acetone to give it a good cleaning.</li>
-
-
-
-<li>In terms of wiring and routing of the wires, it&#8217;s completely arbitrary as long as the correct pinout is followed. And in this case since we&#8217;re replacing the stock fans with quiet fans with much less power and RPM and tapping an active CPU cooler into one of the four fans, the PWM/TACH signals won&#8217;t make a difference anymore, we can ignore them and only connect the 12V and GND and let them run at full power.</li>
-
-
-
-<li>After the mod&#8217;s been finished, use <code>show env</code> to monitor the temperatures. Mine stays around 49 degrees Celsius for the CPU and 67 degrees for the power supply, which is pretty much identical to the temperatures before the mod.</li>
-</ul>
-
-
-
-<h2 class="wp-block-heading">After thought:</h2>
-
-
-
-<ul>
-<li>If your room is well air conditioned and your server rack/cabinet well ventilated, you probably won&#8217;t need the active CPU cooler. Although the four Noctua fans are significantly weaker than the original ones, if your router is not under heavy load and your rack/cabinet has enough air flow, the four fans are probably enough to keep the router cool. My room is not always air conditioned and has other equipment producing heat and I see the CPU temperature slowly creep up to around 75 degrees Celsius, which was why I added the active cooler.</li>
-
-
-
-<li>If you have or have access to better tools &#8211; such as a laser cutter, you can probably create more ventilation by slotting the upper panel around the heatsink areas without adding an active cooler. I thought about doing it this way but my access to a proper cutter is limited so I changed course. Nevertheless, it&#8217;s cooling after all, as long as the temperature is under control there are plenty of room for innovation.</li>
-</ul>
-
-
-
-<h2 class="wp-block-heading">Pictures:</h2>
-
-
-
-<figure class="wp-block-gallery has-nested-images columns-default is-cropped wp-block-gallery-1 is-layout-flex">
-<figure class="wp-block-image size-large is-style-default"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD01-scaled.jpg"><img decoding="async" width="1024" height="306" data-id="2370"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD01-1024x306.jpg" alt="" class="wp-image-2370" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD01-1024x306.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD01-300x90.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD01-768x229.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD01-1536x459.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD01-2048x612.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD01-700x209.jpg 700w" sizes="(max-width: 1024px) 100vw, 1024px" /></a></figure>
-
-
-
-<figure class="wp-block-image size-large"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD02-scaled.jpg"><img decoding="async" width="1024" height="576" data-id="2371"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD02-1024x576.jpg" alt="" class="wp-image-2371" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD02-1024x576.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD02-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD02-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD02-1536x864.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD02-2048x1152.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD02-700x394.jpg 700w" sizes="(max-width: 1024px) 100vw, 1024px" /></a></figure>
-
-
-
-<figure class="wp-block-image size-large"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD03-scaled.jpg"><img decoding="async" width="1024" height="576" data-id="2375"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD03-1024x576.jpg" alt="" class="wp-image-2375" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD03-1024x576.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD03-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD03-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD03-1536x864.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD03-2048x1152.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD03-700x394.jpg 700w" sizes="(max-width: 1024px) 100vw, 1024px" /></a></figure>
-
-
-
-<figure class="wp-block-image size-large"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD04-scaled.jpg"><img decoding="async" width="1024" height="576" data-id="2373"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD04-1024x576.jpg" alt="" class="wp-image-2373" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD04-1024x576.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD04-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD04-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD04-1536x864.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD04-2048x1152.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD04-700x394.jpg 700w" sizes="(max-width: 1024px) 100vw, 1024px" /></a></figure>
-
-
-
-<figure class="wp-block-image size-large"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD05-scaled.jpg"><img decoding="async" width="1024" height="576" data-id="2372"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD05-1024x576.jpg" alt="" class="wp-image-2372" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD05-1024x576.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD05-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD05-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD05-1536x864.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD05-2048x1152.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD05-700x394.jpg 700w" sizes="(max-width: 1024px) 100vw, 1024px" /></a></figure>
-
-
-
-<figure class="wp-block-image size-large"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD06-scaled.jpg"><img decoding="async" width="1024" height="576" data-id="2374"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD06-1024x576.jpg" alt="" class="wp-image-2374" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD06-1024x576.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD06-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD06-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD06-1536x864.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD06-2048x1152.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD06-700x394.jpg 700w" sizes="(max-width: 1024px) 100vw, 1024px" /></a></figure>
-
-
-
-<figure class="wp-block-image size-large"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD07-scaled.jpg"><img decoding="async" width="1024" height="576" data-id="2376"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD07-1024x576.jpg" alt="" class="wp-image-2376" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD07-1024x576.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD07-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD07-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD07-1536x864.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD07-2048x1152.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD07-700x394.jpg 700w" sizes="(max-width: 1024px) 100vw, 1024px" /></a></figure>
-
-
-
-<figure class="wp-block-image size-large"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD08-scaled.jpg"><img decoding="async" width="1024" height="576" data-id="2377"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD08-1024x576.jpg" alt="" class="wp-image-2377" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD08-1024x576.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD08-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD08-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD08-1536x864.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD08-2048x1152.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD08-700x394.jpg 700w" sizes="(max-width: 1024px) 100vw, 1024px" /></a></figure>
-</figure>
 ]]></content:encoded>
 					
 		

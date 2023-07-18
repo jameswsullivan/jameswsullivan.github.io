@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?><?xml-stylesheet type='text/xsl' href='https://jameswsullivan.github.io/wp-content/plugins/google-sitemap-generator/sitemap.xsl'?><!-- sitemap-generator-url='http://www.arnebrachhold.de/' sitemap-generator-version='4.1.11' -->
-<!-- generated-on='2023-07-05 01:43' -->
+<!-- generated-on='2023-07-18 04:10' -->
 <urlset xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd' xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>	<url>
 		<loc>https://jameswsullivan.github.io/tag/diskpart/</loc>
 		<changefreq>daily</changefreq>
@@ -12,6 +12,11 @@
 	</url>
 	<url>
 		<loc>https://jameswsullivan.github.io/tag/dockerizing/</loc>
+		<changefreq>daily</changefreq>
+		<priority>0.3</priority>
+	</url>
+	<url>
+		<loc>https://jameswsullivan.github.io/tag/electronics/</loc>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
 	</url>
@@ -45,9 +50,4 @@
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
 	</url>
-	<url>
-		<loc>https://jameswsullivan.github.io/tag/goldwave/</loc>
-		<changefreq>daily</changefreq>
-		<priority>0.3</priority>
-	</url>
-</urlset><!-- Request ID: fcc744d890aed967f72b6fddb0544362; Queries for sitemap: 6; Total queries: 19; Seconds: $end_time; Memory for sitemap: 0MB; Total memory: 6MB -->
+</urlset><!-- Request ID: 6179281523c9400d2f9edbe5c6fb3a98; Queries for sitemap: 6; Total queries: 19; Seconds: $end_time; Memory for sitemap: 0MB; Total memory: 4MB -->
