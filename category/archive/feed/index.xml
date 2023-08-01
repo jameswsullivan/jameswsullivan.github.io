@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/category/archive/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Wed, 05 Jul 2023 00:43:30 +0000</lastBuildDate>
+	<lastBuildDate>Tue, 01 Aug 2023 20:18:22 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -20,6 +20,173 @@
 	1	</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=6.2.2</generator>
 	<item>
+		<title>MediaWiki Initial Config</title>
+		<link>https://jameswsullivan.github.io/mediawiki-initial-config/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sun, 08 Jan 2012 04:57:00 +0000</pubDate>
+				<category><![CDATA[archive]]></category>
+		<category><![CDATA[DevOps]]></category>
+		<category><![CDATA[MediaWiki]]></category>
+		<category><![CDATA[php]]></category>
+		<category><![CDATA[Software Development]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2688</guid>
+
+					<description><![CDATA[MediaWiki initial config.]]></description>
+										<content:encoded><![CDATA[
+<p>此文系早年博客的备份，仅用于参考学习。<br>This article is an archival copy of my early years&#8217; blog posts.</p>
+
+
+
+<h4 class="wp-block-heading">Enable File Upload Function:</h4>
+
+
+
+<p>Edit file <code>LocalSettings.php</code> in the Mediawiki root directory, change <code>$wgEnableUploads</code> to <code>true</code>, then you&#8217;ll see that a <code>Upload File</code> link appear under <code>Toolbox</code> on the sidebar. You also have to change the properties of the default upload directory &#8220;image&#8221; to allow it to be read/write.</p>
+
+
+
+<h4 class="wp-block-heading">Edit php.ini file:</h4>
+
+
+
+<p>Edit your <code>php.ini</code> file to make sure the file size limit fits your needs. If you have full access to your hosting server, you can just edit it yourself, if not, you can simply ask your technical support to change it for you.</p>
+
+
+
+<h4 class="wp-block-heading">Make Mediawiki allow more file extensions:</h4>
+
+
+
+<p>Edit <code>includes/DefaultSettings.php</code>, add more file extensions in the array:</p>
+
+
+
+<pre class="wp-block-code"><code>$wgFileExtensions = array( 'png', 'gif', 'jpg', 'jpeg','xls' );</code></pre>
+
+
+
+<p>Also, change <code>$wgVerifyMimeType= false;</code> to <code>true</code>.</p>
+
+
+
+<p></p>
+
+
+
+<h4 class="wp-block-heading">Edit sidebar:</h4>
+
+
+
+<p>Search for <code>mediawiki:sidebar</code> and edit it.</p>
+
+
+
+<h4 class="wp-block-heading">Change mediawiki&#8217;s default logo:</h4>
+
+
+
+<p>The logo&#8217;s default file path is at: <code>/skins/common/images/wiki.png</code></p>
+
+
+
+<h4 class="wp-block-heading">Limit anonymous users&#8217; rights:</h4>
+
+
+
+<p>Change the following configs to <code>false</code>:</p>
+
+
+
+<pre class="wp-block-code"><code>$wgGroupPermissions&#91;'<em>']&#91;'createaccount'] = false;</em>
+$wgGroupPermissions&#91;'']&#91;'edit'] = false;</code></pre>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>How to calculate your Internet connection speed and your hard drive capacity</title>
+		<link>https://jameswsullivan.github.io/how-to-calculate-your-internet-connection-speed-and-your-hard-drive-capacity/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Thu, 03 Mar 2011 23:31:00 +0000</pubDate>
+				<category><![CDATA[archive]]></category>
+		<category><![CDATA[DevOps]]></category>
+		<category><![CDATA[System Administration]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2685</guid>
+
+					<description><![CDATA[How to calculate your real internet speed and hard drive capacity.]]></description>
+										<content:encoded><![CDATA[
+<blockquote class="wp-block-quote">
+<p>此文系早年博客的备份，仅用于参考学习。<br>This article is an archival copy of my early years&#8217; blog posts.</p>
+</blockquote>
+
+
+
+<p>I write those two issues here in the same article because they share a similarity, which is the conversion between the units used in computer system. To be specific, it is a matter of converting bit, Byte, KB, MB, GB, etc, to each other. Now let&#8217;s see the problems.</p>
+
+
+
+<h2 class="wp-block-heading">Internet Connection Speed</h2>
+
+
+
+<p>We often find that the connection speed of our broadband which the service provider tells us is not as fast as we think, for example, we setup a 2M ADSL broadband at home and only find that the maximum download speed is just around 250 KB/s, far less than 2MB.</p>
+
+
+
+<p>Before I explain why, I have to say that there is a misunderstanding in this issue, that is, we just take it for granted that the &#8220;2M&#8221; here is equivalent to the &#8220;2MB (2M Byte)&#8221; which we use to describe the size of an ordinary file, such as JPG or DOC.</p>
+
+
+
+<p>However, this is not the case here. When it comes to the speed of the broadband, &#8220;2M&#8221; actually means 2M bit/s, not 2M Byte/s. So if you know some essentials of how our computers work, you may already know that the two units are different and it needs a calculation to convert 2M Bit to Byte. Here I give you some information on this and how to calculate it right:</p>
+
+
+
+<pre class="wp-block-code"><code>8bit = 1Byte ==> 1024Byte = 1KB ==> 1024KB = 1MB ==> 1024MB = 1GB, and so forth.</code></pre>
+
+
+
+<p>so,</p>
+
+
+
+<pre class="wp-block-code"><code>2M bit/s = 2,000,000 bit/s = 2,000,000/8 Byte/s = 2,000,000/(8*1024) KB/s = 244.14 KB/s</code></pre>
+
+
+
+<p>(This calculation is just theoretically correct, but the real speed will be a little bit faster/slower than the number you calculate.)</p>
+
+
+
+<p>So, next time you setup a broadband, you just do the calculation yourself and you&#8217;ll know how fast your broadband is.</p>
+
+
+
+<h2 class="wp-block-heading">The real capacity of your Hard Drive</h2>
+
+
+
+<p>Similar to the speed of your broadband, the printed capacity of your hard drive is also not the real capacity than you can actually use. The actual capacity will be a little bit less than the printed one.</p>
+
+
+
+<p>This is because the manufacturer uses &#8220;1000&#8221; instead of &#8220;1024&#8221; to convert Byte, KB, MB, etc, to each other, which means &#8220;1KB&#8221; here is not &#8220;1024 Byte&#8221; but &#8220;1000 Byte&#8221;. However, our computers still use &#8220;1024&#8221; to calculate the capacity, so the actual capacity you can use need to be re-calculated like this (take a 320G hard drive as an example):</p>
+
+
+
+<pre class="wp-block-code"><code>320,000,000,000 Byte = 320,000,000,000 / (1024 * 1024 * 1024) GB = 298.02 GB</code></pre>
+
+
+
+<p>So, here you know why your actual hard drive capacity is always less than the one printed outside its cover.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>用Google App Engine部署OPM镜像</title>
 		<link>https://jameswsullivan.github.io/deploy-opera-mini-server-mirror-with-google-app-engine/</link>
 		
@@ -100,6 +267,68 @@ http://your-application-id.appspot.com/ucweb</code></pre>
 
 
 <p>关键字：用Google app engine搭建opm服务器，用GAE搭建opera mini镜像服务器</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>HTC G3 Hero 5键工程机刷Recovery，Radio和ROM</title>
+		<link>https://jameswsullivan.github.io/htc-g3-hero-5%e9%94%ae%e5%b7%a5%e7%a8%8b%e6%9c%ba%e5%88%b7recovery%ef%bc%8cradio%e5%92%8crom/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Tue, 24 Aug 2010 03:25:00 +0000</pubDate>
+				<category><![CDATA[archive]]></category>
+		<category><![CDATA[Android]]></category>
+		<category><![CDATA[Linux]]></category>
+		<category><![CDATA[System Administration]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2680</guid>
+
+					<description><![CDATA[HTC G3 Hero - 5键工程机刷Recovery，Radio和ROM.]]></description>
+										<content:encoded><![CDATA[
+<blockquote class="wp-block-quote">
+<p>此文系早年博客的备份，仅用于参考学习。<br>This article is an archival copy of my early years&#8217; blog posts.</p>
+</blockquote>
+
+
+
+<p>其实这种教程已经遍地都是了，虽然大多数针对的是G3的上市版机型，但是因为5键工程机和上市机的配置基本一样，所以流程也一样。这篇文章是为了帮助群里的两个兄弟刷机。</p>
+
+
+
+<p>1 &#8211; 安装Android SDK。不过貌似Android的官网被墙了，而且对于只想刷机的同志们，安装SDK有点儿浪费，所以请点击这里下载这个压缩包，解压到任何一个文件夹即可，我这里以<code>d:\sdk</code>为例。</p>
+
+
+
+<p>2 &#8211; <s>到这里</s>下载<code>Recovery-1.6.2</code>，解压出img文件，名字随便命，比如recovery.img，然后将之拷入SD卡。</p>
+
+
+
+<p>3 &#8211; <s>到这里</s>下载Radio，下载完后不用解包，直接将zip文件命名为radio.zip，放入SD卡根目录。要想顺便刷ROM的话，也把ROM的zip文件拷贝到SD卡根目录，命名为rom.zip。（名字都是可以随便命的）</p>
+
+
+
+<p>4 &#8211; 打开命令行，进入<code>d:\sdk</code>。按下图命令执行：（在执行下述命令前，手机不要处于“装载”状态）</p>
+
+
+
+<figure class="wp-block-image size-full"><img decoding="async" width="677" height="442" src="https://jameswsullivan.github.io/wp-content/uploads/2023/08/htc-g3-hero-flashrom-01.png" alt="" class="wp-image-2681" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/08/htc-g3-hero-flashrom-01.png 677w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/htc-g3-hero-flashrom-01-300x196.png 300w" sizes="(max-width: 677px) 100vw, 677px" /></figure>
+
+
+
+<p>6 &#8211; 如果上述过程执行无误，关机，按 小房子+开机 键开机，即可进入Recovery界面了。</p>
+
+
+
+<p>7 &#8211; 再下一步，无论是刷Radio还是rom，进入recovery后选择<code>Flash zip from sdcard</code>即可，下一个界面里会列出所有的zip文件，所以不必非得命名成<code>update.zip</code>。</p>
+
+
+
+<p>8 &#8211; 最后，在5键工程机的recovery界面里，音量键是上下，拨号键是确定；此刷机过程也可以用手机上的超级终端来完成，方法与本文类似，若遇到问题请自行Google。</p>
+
+
+
+<p>关键字：HTC G3 Hero 工程机 刷机 刷recovery 刷radio</p>
 ]]></content:encoded>
 					
 		
@@ -210,6 +439,266 @@ http://your-application-id.appspot.com/ucweb</code></pre>
 
 
 <p>关键字：自定义Android版opera mini服务器，android版opera mini翻墙，自定义安卓版opera mini服务器，安卓版opera mini翻墙</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Dell Latitude D830拆机清灰</title>
+		<link>https://jameswsullivan.github.io/dell-latitude-d830-teardown-and-cleaning/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Mon, 09 Aug 2010 03:41:00 +0000</pubDate>
+				<category><![CDATA[archive]]></category>
+		<category><![CDATA[Repair]]></category>
+		<category><![CDATA[Teardown]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2665</guid>
+
+					<description><![CDATA[Dell Latitude D830拆机清灰。]]></description>
+										<content:encoded><![CDATA[
+<blockquote class="wp-block-quote">
+<p>此文系早年博客的备份，仅用于参考学习。<br>This article is an archival copy of my early years&#8217; blog posts.</p>
+</blockquote>
+
+
+
+<p>我的D830散热不良已经有好长一段时间了，每次若不加散热器使用一个小时左右，风扇便全功率运行，而机器底面依旧烫手。早先一直想拆机清理下，一来没时间，二来本子没过保修期不敢乱拆，现在机子已经过保，假期也正好有时间，就大干一场了。</p>
+
+
+
+<p>因为没有摄像机，所以我只在这里简单叙述一下拆机过程，再附上几个我拆机过程中用以记录接线位置的照片。</p>
+
+
+
+<ol>
+<li>用起子（我直接用的螺丝刀）从电源、硬盘、Wi-Fi指示灯旁的缺口处开始，起下这一排按钮和指示灯的面板。</li>
+
+
+
+<li>卸下左中右三颗固定键盘的螺丝，注意键盘左右两侧靠近音箱的地方有卡扣，用起子轻轻别一下将键盘掀起，注意键盘底部有排线，将排线插头从主板上垂直拔起，取下键盘。</li>
+
+
+
+<li>拔下显示器与主板的两根连接线，其中有两根线与Wi-Fi卡相连，可以直接将卡拔下，拔时注意Wi-Fi卡后方有两个小的金属卡扣。然后即可将屏幕整个取下。</li>
+
+
+
+<li>拧下固定机壳的螺丝，正面有三四个螺丝，底面有N个螺丝，全都拧下后即可掀起正面的机壳。同样，四周都有卡扣，用起子轻轻掀起，并注意触摸板的连线，最后将机壳向左方抽拉一下即可取下（右侧音箱处有两个横向卡扣）。</li>
+
+
+
+<li>此时风扇和散热片已经一目了然了，拧下相应的螺丝即可取下风扇和散热片进行清理了。这里需要注意，CPU和显卡芯片与散热片的接触面均涂有导热硅脂，若之前的硅脂已经完全硬化，不妨将其取下，将散热片与芯片擦净（注意不要划伤芯片），在装回散热片时再均匀涂上新的导热硅脂即可。若对于导热硅脂方面的问题有疑问，请自行Google，已经有很多现成的教程了。</li>
+</ol>
+
+
+
+<p>下面是一些图片，和我拆机过程中借鉴的D630拆机清灰的视频。</p>
+
+
+
+<p>Dell Latitude D630拆机清灰视频：</p>
+
+
+
+<ul>
+<li>http://v.youku.com/v_show/id_XMTI1Mzc4Mzgw.html</li>
+
+
+
+<li>http://v.youku.com/v_show/id_XMTcyNzkwMDEy.html</li>
+</ul>
+
+
+
+<figure class="wp-block-gallery has-nested-images columns-4 is-cropped wp-block-gallery-1 is-layout-flex">
+<figure class="wp-block-image size-full"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-01.jpg"><img decoding="async" loading="lazy" width="2560" height="1712" data-id="2666"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-01.jpg" alt="" class="wp-image-2666" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-01.jpg 2560w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-01-300x201.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-01-1024x685.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-01-768x514.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-01-1536x1027.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-01-2048x1370.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-01-450x300.jpg 450w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-01-700x468.jpg 700w" sizes="(max-width: 2560px) 100vw, 2560px" /></a></figure>
+
+
+
+<figure class="wp-block-image size-full"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-02.jpg"><img decoding="async" loading="lazy" width="2560" height="1712" data-id="2667"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-02.jpg" alt="" class="wp-image-2667" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-02.jpg 2560w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-02-300x201.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-02-1024x685.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-02-768x514.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-02-1536x1027.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-02-2048x1370.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-02-450x300.jpg 450w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-02-700x468.jpg 700w" sizes="(max-width: 2560px) 100vw, 2560px" /></a></figure>
+
+
+
+<figure class="wp-block-image size-full"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-03.jpg"><img decoding="async" loading="lazy" width="1712" height="2560" data-id="2669"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-03.jpg" alt="" class="wp-image-2669" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-03.jpg 1712w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-03-201x300.jpg 201w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-03-685x1024.jpg 685w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-03-768x1148.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-03-1027x1536.jpg 1027w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-03-1370x2048.jpg 1370w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-03-401x600.jpg 401w" sizes="(max-width: 1712px) 100vw, 1712px" /></a></figure>
+
+
+
+<figure class="wp-block-image size-full"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-04.jpg"><img decoding="async" loading="lazy" width="2560" height="1712" data-id="2670"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-04.jpg" alt="" class="wp-image-2670" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-04.jpg 2560w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-04-300x201.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-04-1024x685.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-04-768x514.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-04-1536x1027.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-04-2048x1370.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-04-450x300.jpg 450w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-04-700x468.jpg 700w" sizes="(max-width: 2560px) 100vw, 2560px" /></a></figure>
+
+
+
+<figure class="wp-block-image size-full"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-05.jpg"><img decoding="async" loading="lazy" width="1712" height="2560" data-id="2668"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-05.jpg" alt="" class="wp-image-2668" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-05.jpg 1712w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-05-201x300.jpg 201w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-05-685x1024.jpg 685w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-05-768x1148.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-05-1027x1536.jpg 1027w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-05-1370x2048.jpg 1370w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-05-401x600.jpg 401w" sizes="(max-width: 1712px) 100vw, 1712px" /></a></figure>
+
+
+
+<figure class="wp-block-image size-full"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-06.jpg"><img decoding="async" loading="lazy" width="2560" height="1712" data-id="2671"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-06.jpg" alt="" class="wp-image-2671" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-06.jpg 2560w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-06-300x201.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-06-1024x685.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-06-768x514.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-06-1536x1027.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-06-2048x1370.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-06-450x300.jpg 450w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-06-700x468.jpg 700w" sizes="(max-width: 2560px) 100vw, 2560px" /></a></figure>
+
+
+
+<figure class="wp-block-image size-full"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-07.jpg"><img decoding="async" loading="lazy" width="2560" height="1712" data-id="2673"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-07.jpg" alt="" class="wp-image-2673" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-07.jpg 2560w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-07-300x201.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-07-1024x685.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-07-768x514.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-07-1536x1027.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-07-2048x1370.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-07-450x300.jpg 450w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-07-700x468.jpg 700w" sizes="(max-width: 2560px) 100vw, 2560px" /></a></figure>
+
+
+
+<figure class="wp-block-image size-full"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-08.jpg"><img decoding="async" loading="lazy" width="2560" height="1712" data-id="2672"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-08.jpg" alt="" class="wp-image-2672" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-08.jpg 2560w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-08-300x201.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-08-1024x685.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-08-768x514.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-08-1536x1027.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-08-2048x1370.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-08-450x300.jpg 450w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-08-700x468.jpg 700w" sizes="(max-width: 2560px) 100vw, 2560px" /></a></figure>
+
+
+
+<figure class="wp-block-image size-full"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-09.jpg"><img decoding="async" loading="lazy" width="1712" height="2560" data-id="2674"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-09.jpg" alt="" class="wp-image-2674" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-09.jpg 1712w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-09-201x300.jpg 201w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-09-685x1024.jpg 685w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-09-768x1148.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-09-1027x1536.jpg 1027w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-09-1370x2048.jpg 1370w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-09-401x600.jpg 401w" sizes="(max-width: 1712px) 100vw, 1712px" /></a></figure>
+
+
+
+<figure class="wp-block-image size-full"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-10.jpg"><img decoding="async" loading="lazy" width="1712" height="2560" data-id="2675"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-10.jpg" alt="" class="wp-image-2675" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-10.jpg 1712w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-10-201x300.jpg 201w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-10-685x1024.jpg 685w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-10-768x1148.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-10-1027x1536.jpg 1027w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-10-1370x2048.jpg 1370w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-10-401x600.jpg 401w" sizes="(max-width: 1712px) 100vw, 1712px" /></a></figure>
+</figure>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Windows7引导修复</title>
+		<link>https://jameswsullivan.github.io/windows-7-boot-repair/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Wed, 04 Aug 2010 00:57:00 +0000</pubDate>
+				<category><![CDATA[archive]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2662</guid>
+
+					<description><![CDATA[Windows 7引导修复。]]></description>
+										<content:encoded><![CDATA[
+<blockquote class="wp-block-quote">
+<p>此文系早年博客的备份，仅用于参考学习。<br>This article is an archival copy of my early years&#8217; blog posts.</p>
+</blockquote>
+
+
+
+<p>其实这已经不是一个什么新问题了，之前也遇到过，只不过为了省时间，直接Ghost恢复系统 了。这次则不然，一开始打算安装Windows7 + Android X86 + Ubuntu Netbook Edition三系统，所以调整了系统分区，结果后来发现Android X86对于1024×600的分辨率不能默认支持，而修正这个问题又比较费时费力（主要是我根本不会Android编程-_-!!），所以最终再次调整分区，只安装Ubuntu和Win7。可是，由于Win7PE启动U盘中的分区工具不太好，导致首次分区失败，待二次分区修复问题之后，用Ghost将 Win7恢复至新分的C盘后出现系统无法引导的状况，开机提示<code>Error 15</code>。而这次如果再全新安装Win7纯属舍近求远，于是Google了一下修复Windows7引导的相关内容，将三个命令记录如下（注意空格）：（其实对于这三个命令，还有很多其他的参数可用，熟练的兄弟们直接参看help，或者自行Google即可，我只记录这三个命令的最常用形式）：</p>
+
+
+
+<pre class="wp-block-code"><code>bootrec /fixmbr<br>bootsect /nt60 sys /mbr<br>bcdboot c:\windows /s c:</code></pre>
+
+
+
+<p>其中这三个命令对应的可执行文件可以从Windows7的安装光盘中得到，若使用Win7PE的话，通常其PE启动U盘内会自带。</p>
+
+
+
+<p><br>关键字：Windows 7 引导修复，Windows7开机错误Error 15，Windows7启动修复</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>在HTC G3 Hero上配置OpenVPN</title>
+		<link>https://jameswsullivan.github.io/configure-openvpn-on-htc-g3-hero/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Mon, 02 Aug 2010 19:44:00 +0000</pubDate>
+				<category><![CDATA[archive]]></category>
+		<category><![CDATA[Android]]></category>
+		<category><![CDATA[DevOps]]></category>
+		<category><![CDATA[Linux]]></category>
+		<category><![CDATA[OpenVPN]]></category>
+		<category><![CDATA[Proxy]]></category>
+		<category><![CDATA[Software Development]]></category>
+		<category><![CDATA[System Administration]]></category>
+		<category><![CDATA[VPN]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2651</guid>
+
+					<description><![CDATA[在HTC G3 Hero工程样机上配置OpenVPN。]]></description>
+										<content:encoded><![CDATA[
+<blockquote class="wp-block-quote">
+<p>此文系早年博客的备份，仅用于参考学习。<br>This article is an archival copy of my early years&#8217; blog posts.</p>
+</blockquote>
+
+
+
+<p>前阵子从<a href="http://shop62214290.taobao.com/?asker=wangwang">小毛球</a>手里买到了一个HTC G3 Hero的工程样机，此机器与<a href="http://detail.zol.com.cn/191/190896/param.shtml">零售版的Hero</a>略有不同，它没有轨迹球，ROM和RAM的容量也比零售版要小，并且只支持Android1.5版的ROM，俗称“5键版”（还有一种工程机为3键版）。</p>
+
+
+
+<p>好了，回归正题。我的设备，只要是能联网的，都免不了要为其添加翻墙的功能。起初在网上看到很多朋友是下载了各种必须的文件之后，通过命令行一步步 手动执行的，可是我执行了多次都没能奏效，可能是手机系统的个体差异，再加上我对Android命令行操作也不太了解，所以最总没有成功。后来搜到一个可 以直接通过软件安装的方法，再借助<a href="http://forum.xda-developers.com/">xda-developers</a>论坛和<a href="http://code.google.com/p/android-openvpn-installer/">android-openvpn-installer</a>项目里外国大牛们的指点，最后成功解决，下面是详细的步骤：</p>
+
+
+
+<ul>
+<li>我的ROM版本是：3.2-update-hero-modacocustomrom-core-signed.zip （1.5固件）</li>
+
+
+
+<li>Recovery 版本是： Recovery-RA-hero-v1.6.2-blue</li>
+</ul>
+
+
+
+<p>1 &#8211; 你需要有一个Google账户，用来登录Android Market。</p>
+
+
+
+<p>2 &#8211; 在Market里面搜索<code>OpenVPN</code>，找到<code>OpenVPN Installer</code>和<code>OpenVPN Settings</code>，安装之（最好是用WiFi来装，快，省流量）。</p>
+
+
+
+<p>3 &#8211; 安装完毕后，运行<code>OpenVPN Installer</code>，在第一个画面选择Install ，路径选择<code>/system/bin/</code>，下一个弹出界面，路径选择<code>/system/xbin/bb</code>。</p>
+
+
+
+<p>4 &#8211; 将手机用USB连接电脑（G3 Hero用USB连接如果出现问题，通常插上USB线再重启即可，若还有其它问题，请自行Google解决），打开提示栏，选择“装载”。</p>
+
+
+
+<p>5 &#8211; 在SD卡根目录创建<code>openvpn</code>文件夹，拷入<code>OpenVPN</code>的四个必须的文件（通常收费的VPN会有两个<code>.crt</code>，一个<code>.key</code>，一个<code>.ovpn</code>）。</p>
+
+
+
+<p>6 &#8211; 若你的电脑上还没有Android SDK，<s>下载下面的压缩包</s>，将<code>adb.exe</code>和<code>AdbWinApi.dll</code>放入<code>c:\Windows\system32\</code>下，然后用<code>Win+R</code>组合键打开运行<code>cmd</code>打开命令行，便可执行下述命令。</p>
+
+
+
+<p>7 &#8211; 下述命令比较重要，与网上多数版本命令略有不同，请根据自己的情况仔细输入：</p>
+
+
+
+<pre class="wp-block-code"><code>确保手机连接正常，并且最好不处于“装载”状态，输入（注意空格）
+
+adb remount
+adb shell mkdir /system/xbin/bb
+adb shell ln -s /system/xbin/ifconfig /system/xbin/bb/ifconfig
+adb shell ln -s /system/xbin/route /system/xbin/bb/route</code></pre>
+
+
+
+<p>8 &#8211; 然后，运行 adb shell 命令，在 # 提示符下，输入cd /sdcard/openvpn/进入SD卡中存有OpenVPN文件的目录，再执行openvpn –config xxxx.ovpn以测试连接是否成功。此过程必须保证你的手机联网正常（我测试过WiFi，GPRS和3G我没测试，但应该好用），其中xxxx为你的.ovpn文件名。</p>
+
+
+
+<p>如果最终出现<code>Initialization Sequence Completed</code>则表明连接成功，以后的操作即可直接在OpenVPN Settings中连接了。</p>
+
+
+
+<p>9 &#8211; 如果出现错误<code>Linux ifconfig failed: could not execute external program</code>，在其他步骤都执行正确的情况下，通常是ifconfig和route的路径问题，请参照第7步自行修改。当然，ifconfig的路径可以通过命令which来查看，我的路径如下：</p>
+
+
+
+<pre class="wp-block-code"><code>D:\android&gt;adb shell
+# which ifconfig
+which ifconfig
+/system/xbin/ifconfig
+#</code></pre>
+
+
+
+<p>所以第7步所对应的路径便如上所示。我不知道是不是在所有的Android手机中路径都如此，大家在使用的时候根据自己的情况更改第7步中后两个命令的第一个路径即可，第二个路径<code>/system/xbin/bb/ifconfig</code>和<code>/system/xbin/bb/route</code>）应该都是相同的，因为<code>OpenVPN Installer</code>就是这么安装的。</p>
+
+
+
+<p>10 &#8211; 最后，再说说<code>OpenVPN Settings</code>。如果初次运行<code>OpenVPN Settings</code>时在主界面看不到你的<code>.ovpn</code>文件名，一般重启后即可解决。另外，如果有连接不上的问题，可能属于DNS污染，需要做如下操作：<br><code>MENU键 –&nbsp; Fix DNS &nbsp;–&nbsp; Reset DNS</code>，等一会儿，如果弹出需要root权限则点击Allow，完成后它会自动将DNS设置为8.8.8.8，再次打开Fix DNS即可看见Current DNS已经被修改。最后，相继勾选OpenVPN和你的.ovpn文件名，等待一会儿之后应该就会提示链接成功了，在你的<code>.ovpn</code>下面显示<code>connected to xx.xx.xx.xx as xx.xx.xx.xx</code>。<br>&nbsp;<br>补充：要想成功配置OpenVPN，还跟一个名叫<code>tun.ko</code>的底层驱动有关，我之前刷的一个ROM需要手动安装驱动，而这个驱动似乎又有版本之 分，或者跟ROM的版本相关，我弄不太明白，也没弄成功。另外还需要安装<code>busybox</code>，我起初也弄得不明不白，当然，还有手机取得ROOT权限等等琐碎的问题。所以我推荐大家如果希望避免后期的麻烦，在前期刷ROM的阶段，不妨参照下ROM发布者提供的reference，找一个已经安装好<code>tun.ko</code>和<code>busybox</code>的ROM，并且参照论坛里的刷机和ROOT教程，将自己的手机配置好，这样能给后期的操作省很多力气。</p>
+
+
+
+<p>注：由于我自己的工程机只能支持1.5的ROM版本，其它版本我也无从测试，所以使用其他版本的系统的朋友请自行“随机应变”。若在操作过程中遇到什么问题，或者我有哪一步写的有问题，欢迎留言讨论。以下是操作过程中可能用到的文件打包：<br><s>工具包：HTC-Hero-Package<br>ROM:&nbsp; Modaco 3.2</s><br>&nbsp;<br>参考资料：<br>中文：<br>http://14551.org/2010/05/g3-connect-to-openvpn.html<br>http://www.hiapk.com/bbs/thread-214667-1-1.html<br>http://bbs.gfan.com/android-39617-1-1.html<br>http://www.xinlogs.com/HTC-Hero-Openvpn/<br>英文：<br>http://code.google.com/p/android-openvpn-installer/issues/detail?id=2<br>http://forum.xda-developers.com/showpost.php?p=7132889&amp;postcount=56<br>&nbsp;<br>关键字：Android手机配置OpenVPN，HTC手机安装OpenVPN，HTC G3 Hero安装OpenVPN</p>
 ]]></content:encoded>
 					
 		
@@ -473,449 +962,6 @@ openssl rsa -in my.key.orig -out my.key
 
 
 <p>关键字：dell n-series 机器激活slic2.0，模拟bios会不会烧毁主板，用loader激活oem系统会不会烧毁主板，模拟bios激活系统烧毁主板</p>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>用自己的Google账户自建Twitter代理</title>
-		<link>https://jameswsullivan.github.io/deploy-twitter-proxy-using-google-app-engine/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Thu, 26 Nov 2009 17:49:00 +0000</pubDate>
-				<category><![CDATA[archive]]></category>
-		<category><![CDATA[DevOps]]></category>
-		<category><![CDATA[Google App Engine]]></category>
-		<category><![CDATA[Proxy]]></category>
-		<category><![CDATA[Python]]></category>
-		<category><![CDATA[Software Development]]></category>
-		<category><![CDATA[System Administration]]></category>
-		<category><![CDATA[Twitter]]></category>
-		<category><![CDATA[Windows Systems Administration]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2629</guid>
-
-					<description><![CDATA[用自己的Google账户(Google App Engine)自建Twitter代理]]></description>
-										<content:encoded><![CDATA[
-<blockquote class="wp-block-quote">
-<p>此文系早年博客的备份，仅用于参考学习。<br>This article is an archival copy of my early years&#8217; blog posts.</p>
-</blockquote>
-
-
-
-<p><strong>为了达到让菜鸟也能按步骤完成搭建的目的，本文只尽可能简便的罗列步骤：</strong></p>
-
-
-
-<ol>
-<li>首先，你需要有一个Google账户，如果没有，<s>请到这里注册</s>。</li>
-
-
-
-<li><s>访问这里</s>，点击右边侧栏的“使用入门”中的“注册”。</li>
-
-
-
-<li>在接下来的界面中，用刚刚的Google账户登录。从这一界面开始下面将会是英文。</li>
-
-
-
-<li>点击Create an Application。</li>
-
-
-
-<li>下一步将会进行短信验证。<code>Country and Carrier</code>选择<code>Other</code>，<code>Mobile Number</code>填写你的手机号，注意前面加 <code>+86</code> ，例如，<code>+8613501234567</code>。注意，这里每一个手机号码只能验证一个账户，收到验证码后在下一个画面填入。</li>
-
-
-
-<li>接着来到<code>Create an Application</code>页面，在<code>Application Identifier</code>填入你想要的程序名称，以后你访问该程序的地址就是: <code>your-identifier.appspot.com</code>。<code>Application Title</code>可以随喜好填写。选中<code>I accept these terms</code>，然后<code>Save</code>。</li>
-
-
-
-<li>下一个页面会显示<code>Application Registered Successfully</code>。</li>
-
-
-
-<li><s>点击这里下载</s>BirdNest，这是一个网友已经打包好的版本，原地址请访问：<s>http://cid-b25292e8d4856480.skydrive.live.com/self.aspx/.Public/gae.zip</s>。下载后解压，默认解压为<code>gae</code>目录，进入目录，用任何文本编辑工具打开<code>app.yaml</code>文件（推荐使用写字板），将第一行<code>application:nest</code>中的<code>nest</code>改为上文中你注册的<code>your-identifier</code>。</li>
-
-
-
-<li>下载以下这两个工具，并安装：<br><code>Google App Engine：http://code.google.com/intl/zh-CN/appengine/downloads.html</code>，下载<code>Windows</code>平台的<code>GoogleAppEngine_1.2.7.msi</code>。<br><code>Python：http://www.python.org/download/releases/2.5.4/</code>，如果该地址无法访问，请直接在本站下载：（本站只提供x86版本的下载，如果你需要别的版本，请自行到上述地址下载）</li>
-
-
-
-<li>安装完成后，到开始菜单里运行<code>Google App Engine Launcher</code>。初次运行它可能会出现警告界面，提示找不到<code>Python</code>，不要紧，点击<code>OK</code>，然后选择<code> Edit - Preferences</code>，在其中<code>Python Path</code>里，选择你所安装的<code>Python</code>路径，通常情况下默认为<code>C:\Python25\python.exe</code>。设置完成后下次运行就不会再提示了。</li>
-
-
-
-<li>选择<code>File - Add Existing Application</code>，然后选择你刚才解压后的<code>gae</code>目录，点击<code>add</code>。然后你的窗口中会得到一个<code>name</code>为<code>your-identifier</code>，端口为<code>8080</code>的<code>App</code>。选中该<code>App</code>，点击工具栏上的<code>Deploy</code>，在弹出的对话框中填入你的<code>Gmail</code>地址和密码，点击<code>OK</code>后会出现一个<code>DOS</code>窗口，等待一小段时间，上传成功后会出现一个提示窗口，如果最后一行写着：<code>Process exited with code 0</code>，则证明你的<code>App</code>上传无误可以正确使用。如果提示不是<code>code 0</code>，则说明你的某处操作有误，请参照上文改正。</li>
-
-
-
-<li>最后，访问<code>your-identifier.appspot.com/api/</code>，即出现Twitter首页。</li>
-</ol>
-
-
-
-<p><strong>下面是如何通过twhirl使用自己搭建的API来访问Twitter：</strong></p>
-
-
-
-<ol>
-<li><code>Twhirl</code>需要<code>adobe air</code>支持，请先下载安装<code>adobe air:http://get.adobe.com/air/</code>，然后到这里下载<code>twhirl：http://www.twhirl.org/download</code></li>
-
-
-
-<li>安装好<code>Twhirl</code>后，在它的<code>Accounts</code>界面，左下角的菜单里选择<code>laconi.ca</code>,在旁边的输入框中填写：<code>your-twitter-id@your-identifier.appspot.com</code>,<code>your-twitter-id</code>是你的twitter用户名，<code>@</code>之后则是你的<code>Google App</code>地址。然后在上面的方框中就会出现你的帐户名，选择它，点击右边的<code>Connect</code>，输入密码即可使用了。</li>
-</ol>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>让手机变为电脑的遥控器</title>
-		<link>https://jameswsullivan.github.io/use-phone-as-your-computers-remote/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Sat, 21 Nov 2009 16:08:00 +0000</pubDate>
-				<category><![CDATA[archive]]></category>
-		<category><![CDATA[System Administration]]></category>
-		<category><![CDATA[Windows Customization]]></category>
-		<category><![CDATA[Windows Systems Administration]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2604</guid>
-
-					<description><![CDATA[用Salling Clicker和Connectify将手机变为电脑的遥控器]]></description>
-										<content:encoded><![CDATA[
-<blockquote class="wp-block-quote">
-<p>此文系早年博客的备份，仅用于参考学习。<br>This article is an archival copy of my early years&#8217; blog posts.</p>
-</blockquote>
-
-
-
-<p>虽说现在只要有钱有设备，电脑可以实现的功能是无穷的，可是对于我们一般用户来说，影视作品里那种遥控操作计算机、各种电子设备无线互联的技术离我们还是很遥远。但是，我们没有尖端设备不要紧，我们有基础的蓝牙和Wi-Fi，再配上合适的软件，让手机变成电脑的遥控器，在会议或Party中潇洒一下还是不成问题的。</p>
-
-
-
-<p><strong>硬件需求：</strong>支持Java的手机（支持Wi-Fi最好，但至少要支持蓝牙），笔记本电脑需带有Wi-Fi或蓝牙<br><strong>软件需求：</strong>Salling Clicker，Connectify</p>
-
-
-
-<p>这里先对这两款软件进行一下简单的介绍。Salling Clicker 是一款用于手机遥控电脑的软件，它可以在线更新以支持绝大部分最新的机型，当手机端与电脑端通过蓝牙或Wi-Fi建立连接之后，便可以通过手机控制iTunes，PPT，和Windows Media Player等，也可以控制电脑的鼠标移动、音量和关机等操作。它是通过编写好的脚本来对电脑端软件进行操控的，在它的官方网站上还提供了用于操控其他软件的脚本，但可惜的是大多数都是针对多媒体播放的，比如Winamp和PowerDVD。</p>
-
-
-
-<p>Connectify其实是一款用于共享上网的软件，它可以将带有Wi-Fi功能的笔记本变成一个无线热点，使得其他设备可以像使用路由一样通过该热点组成局域网或实现共享上网。在这里使用它的意义是，蓝牙的通信距离比Wi-Fi要小，那么用这款软件将要控制的笔记本变成一个热点，再用手机端的Salling Clicker通过该热点以Wi-Fi方式连接，那么其实就实现了电脑与手机不需通过无线路由的Wi-Fi直连，而且这种方法也为没有蓝牙的笔记本实现遥控提供了可能。</p>
-
-
-
-<p>由于蓝牙连接相对比较简单，我在这里主要说明如何实现Wi-Fi直连。我的配置环境是：windows 7英文版, Salling Clicker 3.5, Connectify, 手机是索爱P1i。下面是实现的步骤：</p>
-
-
-
-<h2 class="wp-block-heading">Salling Clicker：</h2>
-
-
-
-<p>安装好Salling Clicker后，首次运行会弹出Device Setup Assistant，在这里可以选择手机的型号，选好后软件会自动提供给你适用于该手机的手机端软件，点击Copy to Desktop，然后将其拷入手机进行安装。如果你的手机型号并未列入其中，可以点击Update List后再试，如果仍未出现，则可以选择另一款与你的手机具有相同操作系统的手机。（图一）</p>
-
-
-
-<figure class="wp-block-image size-full"><img decoding="async" width="436" height="399" src="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogUsePhoneAsComputerRemote01.jpg" alt="" class="wp-image-2605" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogUsePhoneAsComputerRemote01.jpg 436w, https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogUsePhoneAsComputerRemote01-300x275.jpg 300w" sizes="(max-width: 436px) 100vw, 436px" /></figure>
-
-
-
-<p>在下一个界面里它会询问你是否以蓝牙方式连接，可以在Select Phone中选择已开启蓝牙的手机，这一步我们直接跳过。再下一步里，它会设置Wi-Fi连接，并且要求你的手机与电脑同时存在于一个无线网络中。选中I want to use this feature，并填写连接密码（相当于蓝牙配对密码）。（图二）</p>
-
-
-
-<figure class="wp-block-image size-full"><img decoding="async" width="436" height="399" src="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogUsePhoneAsComputerRemote02.jpg" alt="" class="wp-image-2606" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogUsePhoneAsComputerRemote02.jpg 436w, https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogUsePhoneAsComputerRemote02-300x275.jpg 300w" sizes="(max-width: 436px) 100vw, 436px" /></figure>
-
-
-
-<p>关闭设置界面，电脑端Salling Clicker的设置就完成了。</p>
-
-
-
-<h2 class="wp-block-heading">Connectify：</h2>
-
-
-
-<p>Connectify是一款傻瓜软件，安装后界面如下：（图三）</p>
-
-
-
-<figure class="wp-block-image size-full"><img decoding="async" width="314" height="374" src="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogUsePhoneAsComputerRemote03.jpg" alt="" class="wp-image-2607" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogUsePhoneAsComputerRemote03.jpg 314w, https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogUsePhoneAsComputerRemote03-252x300.jpg 252w" sizes="(max-width: 314px) 100vw, 314px" /></figure>
-
-
-
-<p>在WiFi Name与Passphrase里分别填写无线热点的名称与连接密码，在Internet中选择是否共享上网，因为我们主要用来实现Wi-Fi直连，所以只需选择No Internet Sharing，最后点击Start Hotspot即可，注意它要求密码为8-12位。</p>
-
-
-
-<h2 class="wp-block-heading">手机端：</h2>
-
-
-
-<p>用手机搜索该Wi-Fi热点并连接，打开Salling Clicker，选择Connect with WiFi…， 它会自动搜索电脑端，然后选择你的笔记本名称进行连接，成功连接之后，你就可以潇洒的用手机操控电脑了，如果你的手机有一个足够大的触屏，那么效果会更上一层楼。</p>
-
-
-
-<p>Salling Clicker手机端的使用很简单，笔者在这里只在PPT操作方面简单罗嗦一句：数字键可以直接切换到特定幻灯片，比如按22即切换到第22张幻灯。</p>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>用Goldwave改变音频文件的播放速度</title>
-		<link>https://jameswsullivan.github.io/change-audio-playback-speed-with-goldwave/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Sun, 02 Aug 2009 17:56:00 +0000</pubDate>
-				<category><![CDATA[archive]]></category>
-		<category><![CDATA[Audio]]></category>
-		<category><![CDATA[Goldwave]]></category>
-		<category><![CDATA[Podcast]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2578</guid>
-
-					<description><![CDATA[用Goldwave改变音频文件的播放速度]]></description>
-										<content:encoded><![CDATA[
-<blockquote class="wp-block-quote">
-<p>此文系早年博客的备份，仅用于参考学习。<br>This article is an archival copy of my early years&#8217; blog posts.</p>
-</blockquote>
-
-
-
-<p>经常听英语听力的同学有时可能会觉得自己下载的听力音频的速度不是很合适，希望将它们调快或调慢1～2倍速来播放，可是我们常用的音频播放器均不支持快放或慢放功能，而且即使有个别的播放器支持此功能，其调整后的音频音色改变也很大，听起来效果很不理想。那么，到底用什么方法能既避免严重的失真，又达到我们需要的效果呢？今天，我们就用Goldwave来实现这个目的（本文以将多个文件批量调快1.5倍速为例）。<br> <br>在调整过程中，我们要用到Goldwave的“时间弯曲”效果和“批处理”功能。首先，打开一个待处理的音频文件，选择“效果”—“时间弯曲”，切换到“类似”选项，并从下方的“预置”中选择“默认”（在“预置”菜单中，Goldwave已经为我们提供了几个预置选项，此处选择“默认”是为了将我们用于批处理的效果存入其中）。<br> <br>然后，将“变化”一栏改为150（加快1.5倍速），此时可以点击“预置”旁边的播放键试听，对效果满意则点击旁边的加号，将此设置存入“默认”中。如图：</p>
-
-
-
-<figure class="wp-block-image size-full"><img decoding="async" width="332" height="309" src="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogGoldWave01.jpg" alt="" class="wp-image-2580" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogGoldWave01.jpg 332w, https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogGoldWave01-300x279.jpg 300w" sizes="(max-width: 332px) 100vw, 332px" /></figure>
-
-
-
-<p>最后，打开“文件”—“批处理”，向其中添加需要批量更改的文件，再切换至“处理”选项卡，从“添加效果”中选择上一步中设定好的“时间弯曲 — 默认”并将其添加，最后在“文件夹”里设置修改后的文件的保存方式，就可以点击“开始”来进行批处理了。</p>
-
-
-
-<figure class="wp-block-image size-full is-style-default"><img decoding="async" width="340" height="332" src="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogGoldWave02.jpg" alt="" class="wp-image-2581" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogGoldWave02.jpg 340w, https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogGoldWave02-300x293.jpg 300w" sizes="(max-width: 340px) 100vw, 340px" /></figure>
-
-
-
-<p>用此方法改变音频的播放速度，只要更改的范围合理，对一般音频的音色不会产生太大的影响，因此对于英语听力或品质要求不高的音乐伴奏来说，这是一个快速而简便的技巧。</p>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>将DVD制作成压缩视频</title>
-		<link>https://jameswsullivan.github.io/dvd-rip-and-subtitle-extraction/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Sun, 02 Aug 2009 17:42:00 +0000</pubDate>
-				<category><![CDATA[archive]]></category>
-		<category><![CDATA[Video Editing]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2385</guid>
-
-					<description><![CDATA[DVD压缩以及字母提取]]></description>
-										<content:encoded><![CDATA[
-<blockquote class="wp-block-quote">
-<p>此文系早年博客的备份，仅用于参考学习。<br>This article is an archival copy of my early years&#8217; blog posts.</p>
-</blockquote>
-
-
-
-<p>日前从老姐那儿借来一套纪录片儿——《动物王国》，7张DVD，里面有很多有关哈士奇的内容，我想收藏，可直接拷贝又无奈DVD文件实在太大，复刻DVD光盘又觉得不太值。于是开始着手研究DVD的压缩转换，希望能做出和verycd中的资源相类似的压缩视频。</p>
-
-
-
-<h2 class="wp-block-heading">多个VOB文件的合并：</h2>
-
-
-
-<p>DVD光盘中经常一段影片被分为几个vob文件，这时可能需要将这几个文件合并成一个大文件后再进行压缩。这里我使用的是：<a href="https://www.videohelp.com/software/VOBMerge" target="_blank" rel="noreferrer noopener">VOBMerge</a>。它的操作很简便，上手即会，合并速度也很快。</p>
-
-
-
-<h2 class="wp-block-heading">视频文件的压缩：</h2>
-
-
-
-<p>回想我以前用过的几个视频压缩转换工具，功能均不全面并且压缩速度很慢，不适合如今的批量转换。经过在网上的不懈搜索，我发现一个叫<a href="https://www.erightsoft.com/home.html" target="_blank" rel="noreferrer noopener">SUPER（点击链接至官网）</a>的工具，它是一款国外免费软件，除了没有对中文的支持外，近乎没什么缺点。它支持大多数的常见音视频编码方式，转换速度快，压缩比大，只要设置得当，几乎不损失视频质量。</p>
-
-
-
-<p>软件下载页（拖至页面最下方download SUPER setup file）：<a href="https://www.erightsoft.com/home.html" target="_blank" rel="noreferrer noopener">https://www.erightsoft.com/home.html</a></p>
-
-
-
-<p>说起选项的设置，我在这里想简单提一提使用中遇到的几个问题（以转换成mpeg-4编码的avi文件为例）。</p>
-
-
-
-<ol>
-<li>编码器选择FFmpeg，不要选择MEncoder，因为选择MEncoder后压缩出来的视频有很严重的横纹。上网查了一下，说是这种问题是由于场的设置而导致的，但在软件里我没有找到相关设置，而我对音视频方面的专业知识也知之甚少，所以无法给出确切的答案。选择FFmpeg则无横纹出现了。&nbsp;</li>
-
-
-
-<li>在output audio codec选项里，如果DVD本身的音轨并不特殊，那么选择mp3是比较安全的。我试过AC3和AAC，压缩出来的文件音视均不同步，而且不知何故画面跳帧现象十分严重。至于这个现象的原因，我还没弄清楚，我们一起学习吧。&nbsp;</li>
-
-
-
-<li>根据源视频的清晰度，可以适当改变码率来调整清晰度。</li>
-
-
-
-<li>如果想只保留音频或只保留视频，可将音频流或视频流选择Disable，这样也可以用来做音视频的提取工作。</li>
-</ol>
-
-
-
-<h2 class="wp-block-heading">DVD字幕的提取：</h2>
-
-
-
-<p>完成了视频的压缩，还需要解决字幕问题，即提取DVD光盘中的字幕，并将其转换成idx/sub字幕。当然，转换成了sub字幕之后，再利用ocr工具制作srt等类型的字幕也就好办了。这里我用到的工具是：<a href="https://www.softpedia.com/get/Multimedia/Video/Other-VIDEO-Tools/VobSub-Ripper-Wizard.shtml" target="_blank" rel="noreferrer noopener">VobSub Ripper Wizard</a>。打开软件后，只需选定DVD中相应的IFO文件，选择目的文件夹，按下一步即可开始生成sub文件。</p>
-
-
-
-<p>这里做一点补充：如此生成的字幕文件，和DVD光盘当中源文件的时间线是相同的，即在合并vob文件时要和源光盘中的影片段落划分一致；还有，如果对视频文件进行了合并、分割、剪辑等操作，注意要对字幕文件做调整。</p>
-
-
-
-<p>在做这件事情的时候，我回想起了当年在学校时做简单的视频采编工作的情景，也想起了几款经典的软件，在这里补一笔：TMPGEnc（俗称小日本儿），Canopus Procoder，EDIUS 5（强大的非线编工具）。</p>
-
-
-
-<p>注：本文纯粹面向菜鸟，旨在将视频压缩的实际经验与方法发上来分享。本人不太清楚音视频方面的知识，所以文中有很多东西一定讲的都不清楚不专业，音视频编码等方面一定也都有很多错误的用词，请明白的读者加以指正。</p>
-
-
-
-<p>Tag: DVD光盘压缩，DVD电影压缩，DVD压缩，DVD转换成avi，DVD视频转换，DVD音频提取，DVD视频提取，批量转换电影格式，批量压缩电影，制作压缩视频，dvd文件合并，vob文件合并，dvd字幕提取，dvd字幕转换，sub字幕制作，SUPER下载，SUPER压缩后音视频不同步，压缩后视频出现横纹</p>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>多台vista机器组建小型局域网</title>
-		<link>https://jameswsullivan.github.io/lan-setup-with-multiple-vista-machines/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Sun, 02 Aug 2009 17:42:00 +0000</pubDate>
-				<category><![CDATA[archive]]></category>
-		<category><![CDATA[Networking]]></category>
-		<category><![CDATA[System Administration]]></category>
-		<category><![CDATA[Windows Systems Administration]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2347</guid>
-
-					<description><![CDATA[多台Vista机器组件小型局域网]]></description>
-										<content:encoded><![CDATA[
-<blockquote class="wp-block-quote">
-<p>此文系早年博客的备份，仅用于参考学习。<br>This article is an archival copy of my early years&#8217; blog posts.</p>
-</blockquote>
-
-
-
-<p>Tag: 多台vista机器组建局域网 vista笔记本组建无线局域网 vista系统组建无线局域网 vista局域网文件共享 vista“网络发现”无法启动 在“网络”里能看见对方机器但无法访问（windows无法访问）</p>
-
-
-
-<p>1 &#8211; 在vista “网络和共享中心”中启用 “网络发现”和“文件共享”。若发现“网络发现”无法设置为“启用”，或无论怎样开启“网络发现”，都只显示“自定义”时，参考以下设置：</p>
-
-
-
-<p>右键计算机 →管理→服务和应用程序→服务，将下述服务设置为启动：</p>
-
-
-
-<pre class="wp-block-code"><code>Computer Browser<br>DHCP Client<br>DNS Client<br>Function Discovery Resource Publication<br>Remote Procedure Call（RPC）<br>Remote Procedure Call（RPC）Locator<br>Server<br>SSDP Discovery<br>TCP/IP NetBIOS Helper<br>UPnP Device Host</code></pre>
-
-
-
-<p>设置完后 “网络发现”就可以设置为“启动”了。</p>
-
-
-
-<p>2 &#8211; 将多台机器均进行上述操作后，在“网络”里应该已经能看见彼此的计算机名，但这时可能还无法访问对方共享的资源。继续进行如下设置：</p>
-
-
-
-<ul>
-<li>运行→gpedit.msc→计算机配置→Windows设置→安全设置→本地策略→用户权限分配：</li>
-
-
-
-<li>确保“从网络访问此计算机”内包含“everyone”</li>
-
-
-
-<li>“拒绝从网络访问这台计算机”中将“Guest”删除</li>
-
-
-
-<li>再进入“本地策略→安全选项”, 将“帐户：来宾帐户状态”设置为“已启用”</li>
-</ul>
-
-
-
-<p>3 &#8211; 确保“Windows防火墙”的设置中，在“例外”中已经勾选“网络发现”和“文件和打印机共享”，并且其他的防火墙工具都没有对相关的操作进行限制。</p>
-
-
-
-<p>进行过上述操作，同一工作组内的计算机应该可以彼此互相访问了。</p>
-
-
-
-<p>4 &#8211; 补充：文件夹及驱动器的共享设置</p>
-
-
-
-<p>在共享文件夹时，要在下面的菜单内添加授权访问的用户，一般添加“everyone”，并设置其为“读者”，其具有只读权限。</p>
-
-
-
-<p>若想共享整个驱动器，设置方法和共享文件夹略有不同，打开驱动器（如D盘）属性→在“安全”→“组或用户名”中添加“Guest”用户，设置其权限；然后切换至“共享”选项卡→高级共享→选中“共享此文件夹”后确定，即可完成驱动器的共享。</p>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>创新Creative SoundBlaster Vibra128 声卡驱动（ForXP）</title>
-		<link>https://jameswsullivan.github.io/install-creative-soundblaster-virbra128-driver-on-windows-xp/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Sun, 02 Aug 2009 17:41:00 +0000</pubDate>
-				<category><![CDATA[archive]]></category>
-		<category><![CDATA[Creative SoundBlaster]]></category>
-		<category><![CDATA[System Administration]]></category>
-		<category><![CDATA[Windows Systems Administration]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2336</guid>
-
-					<description><![CDATA[在XP上安装Creative SoundBlaster Vibra128驱动。]]></description>
-										<content:encoded><![CDATA[
-<blockquote class="wp-block-quote">
-<p>此文系早年博客的备份，仅用于参考学习。<br>This article is an archival copy of my early years&#8217; blog posts.</p>
-</blockquote>
-
-
-
-<p>昨天在家把旧机器进行一番整修让其重新运作，可是在一切都弄好之后发现板载声卡（AC97）的音频输出接口有问题，无论怎么插都只有一个声道出声。由于以前一直在使用创新的SoundBlaster Vibra128独立声卡，所以直到现在才发现这个毛病。无奈，将先前的独立声卡再插回去，启动系统安装驱动，却猛然发现手头所有关于它的驱动全都只支持到Win2000，而上网搜索，也都没找到该驱动的更新。冷静了一下，想想以前遇到类似的系统问题，当用中文搜索无法找到答案时，用英文搜索时问题便迎刃而解，于是试了一下，果然最终在一个外国论坛里找到了下载。看到网上也有诸多兄弟苦苦寻找此驱动而无果，我就在这里提供以下下载了：<a href="https://github.com/jameswsullivan/blog-file-share/blob/main/EV1938_Driver_XP.zip">Download</a> (This file contains drivers downloaded from the internet, use at your own risk).</p>
-
-
-
-<p>安装这个驱动的时候注意，使用其自带的setup安装的话，有可能安装程序提示“找不到任何SoundBlaster声卡”，或者安装后弹出“发现新硬件”时无法自动找到其驱动。我建议在系统弹出“发现新硬件”时，手动指向驱动目录 <code>Common\ECTDrivers\WdmDrv</code> 来进行安装，这样完成后即刻好用。</p>
-
-
-
-<p>如果安装的朋友也和我这种情况一样，既有板载声卡又有独立声卡，在安装独立声卡的驱动之前须在BIOS中将AC97设置为Disabled，这样才不会引起冲突。我遇到的情况是WinXP启动条卡死不动，无法进入系统的情况。</p>
-
-
-
-<p>Tag: 创新Creative Vibra128声卡xp驱动，Creative SoundBlaster Vibra128 driver for xp，vibra128声卡xp驱动下载，EV1938声卡芯片xp驱动，EV1938 driver for xp</p>
 ]]></content:encoded>
 					
 		

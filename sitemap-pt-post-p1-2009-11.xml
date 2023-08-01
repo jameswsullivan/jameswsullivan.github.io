@@ -1,8 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?><?xml-stylesheet type='text/xsl' href='https://jameswsullivan.github.io/wp-content/plugins/google-sitemap-generator/sitemap.xsl'?><!-- sitemap-generator-url='http://www.arnebrachhold.de/' sitemap-generator-version='4.1.11' -->
-<!-- generated-on='2023-07-18 04:11' -->
+<!-- generated-on='2023-08-01 21:00' -->
 <urlset xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd' xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>	<url>
+		<loc>https://jameswsullivan.github.io/clean-and-repair-sony-ericsson-p1i-wheel/</loc>
+		<lastmod>2023-08-01T20:44:12+00:00</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.6</priority>
+	</url>
+	<url>
 		<loc>https://jameswsullivan.github.io/deploy-twitter-proxy-using-google-app-engine/</loc>
 		<lastmod>2023-07-04T21:01:49+00:00</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.6</priority>
+	</url>
+	<url>
+		<loc>https://jameswsullivan.github.io/configure-bluetooth-on-windows-7/</loc>
+		<lastmod>2023-08-01T18:52:53+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.6</priority>
 	</url>
@@ -12,4 +24,4 @@
 		<changefreq>daily</changefreq>
 		<priority>0.6</priority>
 	</url>
-</urlset><!-- Request ID: 0b29436a10c5f6bc2708b17a42578a9a; Queries for sitemap: 2; Total queries: 15; Seconds: $end_time; Memory for sitemap: 0MB; Total memory: 4MB -->
+</urlset><!-- Request ID: 742cf807aec3fa034b827e93ba400e00; Queries for sitemap: 2; Total queries: 17; Seconds: $end_time; Memory for sitemap: 0MB; Total memory: 4MB -->

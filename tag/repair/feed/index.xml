@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Repair &#8211; howdy</title>
+	<atom:link href="https://jameswsullivan.github.io/tag/repair/feed/" rel="self" type="application/rss+xml" />
+	<link>https://jameswsullivan.github.io/</link>
+	<description></description>
+	<lastBuildDate>Tue, 01 Aug 2023 20:44:12 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.2.2</generator>
+	<item>
+		<title>Dell Latitude D830拆机清灰</title>
+		<link>https://jameswsullivan.github.io/dell-latitude-d830-teardown-and-cleaning/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Mon, 09 Aug 2010 03:41:00 +0000</pubDate>
+				<category><![CDATA[archive]]></category>
+		<category><![CDATA[Repair]]></category>
+		<category><![CDATA[Teardown]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2665</guid>
+
+					<description><![CDATA[Dell Latitude D830拆机清灰。]]></description>
+										<content:encoded><![CDATA[
+<blockquote class="wp-block-quote">
+<p>此文系早年博客的备份，仅用于参考学习。<br>This article is an archival copy of my early years&#8217; blog posts.</p>
+</blockquote>
+
+
+
+<p>我的D830散热不良已经有好长一段时间了，每次若不加散热器使用一个小时左右，风扇便全功率运行，而机器底面依旧烫手。早先一直想拆机清理下，一来没时间，二来本子没过保修期不敢乱拆，现在机子已经过保，假期也正好有时间，就大干一场了。</p>
+
+
+
+<p>因为没有摄像机，所以我只在这里简单叙述一下拆机过程，再附上几个我拆机过程中用以记录接线位置的照片。</p>
+
+
+
+<ol>
+<li>用起子（我直接用的螺丝刀）从电源、硬盘、Wi-Fi指示灯旁的缺口处开始，起下这一排按钮和指示灯的面板。</li>
+
+
+
+<li>卸下左中右三颗固定键盘的螺丝，注意键盘左右两侧靠近音箱的地方有卡扣，用起子轻轻别一下将键盘掀起，注意键盘底部有排线，将排线插头从主板上垂直拔起，取下键盘。</li>
+
+
+
+<li>拔下显示器与主板的两根连接线，其中有两根线与Wi-Fi卡相连，可以直接将卡拔下，拔时注意Wi-Fi卡后方有两个小的金属卡扣。然后即可将屏幕整个取下。</li>
+
+
+
+<li>拧下固定机壳的螺丝，正面有三四个螺丝，底面有N个螺丝，全都拧下后即可掀起正面的机壳。同样，四周都有卡扣，用起子轻轻掀起，并注意触摸板的连线，最后将机壳向左方抽拉一下即可取下（右侧音箱处有两个横向卡扣）。</li>
+
+
+
+<li>此时风扇和散热片已经一目了然了，拧下相应的螺丝即可取下风扇和散热片进行清理了。这里需要注意，CPU和显卡芯片与散热片的接触面均涂有导热硅脂，若之前的硅脂已经完全硬化，不妨将其取下，将散热片与芯片擦净（注意不要划伤芯片），在装回散热片时再均匀涂上新的导热硅脂即可。若对于导热硅脂方面的问题有疑问，请自行Google，已经有很多现成的教程了。</li>
+</ol>
+
+
+
+<p>下面是一些图片，和我拆机过程中借鉴的D630拆机清灰的视频。</p>
+
+
+
+<p>Dell Latitude D630拆机清灰视频：</p>
+
+
+
+<ul>
+<li>http://v.youku.com/v_show/id_XMTI1Mzc4Mzgw.html</li>
+
+
+
+<li>http://v.youku.com/v_show/id_XMTcyNzkwMDEy.html</li>
+</ul>
+
+
+
+<figure class="wp-block-gallery has-nested-images columns-4 is-cropped wp-block-gallery-1 is-layout-flex">
+<figure class="wp-block-image size-full"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-01.jpg"><img decoding="async" width="2560" height="1712" data-id="2666"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-01.jpg" alt="" class="wp-image-2666" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-01.jpg 2560w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-01-300x201.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-01-1024x685.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-01-768x514.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-01-1536x1027.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-01-2048x1370.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-01-450x300.jpg 450w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-01-700x468.jpg 700w" sizes="(max-width: 2560px) 100vw, 2560px" /></a></figure>
+
+
+
+<figure class="wp-block-image size-full"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-02.jpg"><img decoding="async" loading="lazy" width="2560" height="1712" data-id="2667"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-02.jpg" alt="" class="wp-image-2667" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-02.jpg 2560w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-02-300x201.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-02-1024x685.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-02-768x514.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-02-1536x1027.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-02-2048x1370.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-02-450x300.jpg 450w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-02-700x468.jpg 700w" sizes="(max-width: 2560px) 100vw, 2560px" /></a></figure>
+
+
+
+<figure class="wp-block-image size-full"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-03.jpg"><img decoding="async" loading="lazy" width="1712" height="2560" data-id="2669"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-03.jpg" alt="" class="wp-image-2669" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-03.jpg 1712w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-03-201x300.jpg 201w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-03-685x1024.jpg 685w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-03-768x1148.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-03-1027x1536.jpg 1027w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-03-1370x2048.jpg 1370w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-03-401x600.jpg 401w" sizes="(max-width: 1712px) 100vw, 1712px" /></a></figure>
+
+
+
+<figure class="wp-block-image size-full"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-04.jpg"><img decoding="async" loading="lazy" width="2560" height="1712" data-id="2670"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-04.jpg" alt="" class="wp-image-2670" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-04.jpg 2560w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-04-300x201.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-04-1024x685.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-04-768x514.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-04-1536x1027.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-04-2048x1370.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-04-450x300.jpg 450w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-04-700x468.jpg 700w" sizes="(max-width: 2560px) 100vw, 2560px" /></a></figure>
+
+
+
+<figure class="wp-block-image size-full"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-05.jpg"><img decoding="async" loading="lazy" width="1712" height="2560" data-id="2668"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-05.jpg" alt="" class="wp-image-2668" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-05.jpg 1712w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-05-201x300.jpg 201w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-05-685x1024.jpg 685w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-05-768x1148.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-05-1027x1536.jpg 1027w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-05-1370x2048.jpg 1370w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-05-401x600.jpg 401w" sizes="(max-width: 1712px) 100vw, 1712px" /></a></figure>
+
+
+
+<figure class="wp-block-image size-full"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-06.jpg"><img decoding="async" loading="lazy" width="2560" height="1712" data-id="2671"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-06.jpg" alt="" class="wp-image-2671" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-06.jpg 2560w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-06-300x201.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-06-1024x685.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-06-768x514.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-06-1536x1027.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-06-2048x1370.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-06-450x300.jpg 450w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-06-700x468.jpg 700w" sizes="(max-width: 2560px) 100vw, 2560px" /></a></figure>
+
+
+
+<figure class="wp-block-image size-full"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-07.jpg"><img decoding="async" loading="lazy" width="2560" height="1712" data-id="2673"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-07.jpg" alt="" class="wp-image-2673" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-07.jpg 2560w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-07-300x201.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-07-1024x685.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-07-768x514.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-07-1536x1027.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-07-2048x1370.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-07-450x300.jpg 450w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-07-700x468.jpg 700w" sizes="(max-width: 2560px) 100vw, 2560px" /></a></figure>
+
+
+
+<figure class="wp-block-image size-full"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-08.jpg"><img decoding="async" loading="lazy" width="2560" height="1712" data-id="2672"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-08.jpg" alt="" class="wp-image-2672" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-08.jpg 2560w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-08-300x201.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-08-1024x685.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-08-768x514.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-08-1536x1027.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-08-2048x1370.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-08-450x300.jpg 450w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-08-700x468.jpg 700w" sizes="(max-width: 2560px) 100vw, 2560px" /></a></figure>
+
+
+
+<figure class="wp-block-image size-full"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-09.jpg"><img decoding="async" loading="lazy" width="1712" height="2560" data-id="2674"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-09.jpg" alt="" class="wp-image-2674" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-09.jpg 1712w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-09-201x300.jpg 201w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-09-685x1024.jpg 685w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-09-768x1148.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-09-1027x1536.jpg 1027w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-09-1370x2048.jpg 1370w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-09-401x600.jpg 401w" sizes="(max-width: 1712px) 100vw, 1712px" /></a></figure>
+
+
+
+<figure class="wp-block-image size-full"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-10.jpg"><img decoding="async" loading="lazy" width="1712" height="2560" data-id="2675"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-10.jpg" alt="" class="wp-image-2675" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-10.jpg 1712w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-10-201x300.jpg 201w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-10-685x1024.jpg 685w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-10-768x1148.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-10-1027x1536.jpg 1027w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-10-1370x2048.jpg 1370w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/d830-teardown-10-401x600.jpg 401w" sizes="(max-width: 1712px) 100vw, 1712px" /></a></figure>
+</figure>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>自拆索爱P1i维修滚轮</title>
+		<link>https://jameswsullivan.github.io/clean-and-repair-sony-ericsson-p1i-wheel/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Thu, 26 Nov 2009 18:31:00 +0000</pubDate>
+				<category><![CDATA[archive]]></category>
+		<category><![CDATA[Repair]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2692</guid>
+
+					<description><![CDATA[维修索爱p1i滚轮。]]></description>
+										<content:encoded><![CDATA[
+<blockquote class="wp-block-quote">
+<p>此文系早年博客的备份，仅用于参考学习。<br>This article is an archival copy of my early years&#8217; blog posts.</p>
+</blockquote>
+
+
+
+<p>题目看着吓人，但其实维修的过程实在是太简单 —— 将手机主板拆出后，用针管吸一些无水酒精，边往滚轮上滴边滚动滚轮，反复清洗几遍即可。唯一的困难就是往下拆外壳的过程，没有辅助工具，全靠螺丝刀与手指甲，实在是很困难。下面是步骤以及一些图片，图片只是拆卸过程中为了记录拆卸过程的，有些不太清楚。</p>
+
+
+
+<ol>
+<li>打开手机后盖，取出电池和SIM卡，在打开盖子后的左下角、右下角和右上角各有一颗螺丝，右上角那颗可能被保修贴挡住，再将镜头左上角那个嵌入物取下，即可拿掉后盖。</li>
+
+
+
+<li>打开后再将左上、右上两个螺丝卸掉即可拿下前盖。</li>
+
+
+
+<li>拿下前盖之后，可见键盘，小心掀开键盘后还有一层保护用的铁壳，铁壳左右下角有两颗螺丝，取下后将铁壳拿下。在以后的步骤中注意保护液晶屏。</li>
+
+
+
+<li>拿下铁壳之后可以轻轻的用手指甲或镊子将键盘接口取下，将屏幕翻过来，同样方式取下屏幕。</li>
+
+
+
+<li>卸下主板上的螺丝，轻轻将主板取出，注意这里不可用力过猛，背面还连着一根线，用同上的方式取下，即可完全取下主板。</li>
+
+
+
+<li>最后就可以用无水酒精对滚轮进行清洗了，完成后再按原步骤小心装回即可，以下是图片：</li>
+</ol>
+
+
+
+<figure class="wp-block-gallery has-nested-images columns-4 is-cropped wp-block-gallery-3 is-layout-flex">
+<figure class="wp-block-image size-full"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-01.jpg"><img decoding="async" loading="lazy" width="800" height="600" data-id="2693"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-01.jpg" alt="" class="wp-image-2693" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-01.jpg 800w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-01-300x225.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-01-768x576.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-01-700x525.jpg 700w" sizes="(max-width: 800px) 100vw, 800px" /></a></figure>
+
+
+
+<figure class="wp-block-image size-full"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-02.jpg"><img decoding="async" loading="lazy" width="800" height="600" data-id="2694"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-02.jpg" alt="" class="wp-image-2694" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-02.jpg 800w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-02-300x225.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-02-768x576.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-02-700x525.jpg 700w" sizes="(max-width: 800px) 100vw, 800px" /></a></figure>
+
+
+
+<figure class="wp-block-image size-full"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-03.jpg"><img decoding="async" loading="lazy" width="800" height="600" data-id="2695"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-03.jpg" alt="" class="wp-image-2695" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-03.jpg 800w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-03-300x225.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-03-768x576.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-03-700x525.jpg 700w" sizes="(max-width: 800px) 100vw, 800px" /></a></figure>
+
+
+
+<figure class="wp-block-image size-full"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-04.jpg"><img decoding="async" loading="lazy" width="800" height="600" data-id="2696"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-04.jpg" alt="" class="wp-image-2696" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-04.jpg 800w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-04-300x225.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-04-768x576.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-04-700x525.jpg 700w" sizes="(max-width: 800px) 100vw, 800px" /></a></figure>
+
+
+
+<figure class="wp-block-image size-full"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-06.jpg"><img decoding="async" loading="lazy" width="800" height="600" data-id="2698"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-06.jpg" alt="" class="wp-image-2698" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-06.jpg 800w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-06-300x225.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-06-768x576.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-06-700x525.jpg 700w" sizes="(max-width: 800px) 100vw, 800px" /></a></figure>
+
+
+
+<figure class="wp-block-image size-full"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-05.jpg"><img decoding="async" loading="lazy" width="800" height="600" data-id="2697"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-05.jpg" alt="" class="wp-image-2697" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-05.jpg 800w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-05-300x225.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-05-768x576.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-05-700x525.jpg 700w" sizes="(max-width: 800px) 100vw, 800px" /></a></figure>
+
+
+
+<figure class="wp-block-image size-full"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-07.jpg"><img decoding="async" loading="lazy" width="800" height="600" data-id="2699"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-07.jpg" alt="" class="wp-image-2699" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-07.jpg 800w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-07-300x225.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-07-768x576.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-07-700x525.jpg 700w" sizes="(max-width: 800px) 100vw, 800px" /></a></figure>
+
+
+
+<figure class="wp-block-image size-full"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-08.jpg"><img decoding="async" loading="lazy" width="800" height="600" data-id="2700"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-08.jpg" alt="" class="wp-image-2700" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-08.jpg 800w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-08-300x225.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-08-768x576.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-08-700x525.jpg 700w" sizes="(max-width: 800px) 100vw, 800px" /></a></figure>
+
+
+
+<figure class="wp-block-image size-full"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-10.jpg"><img decoding="async" loading="lazy" width="800" height="600" data-id="2702"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-10.jpg" alt="" class="wp-image-2702" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-10.jpg 800w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-10-300x225.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-10-768x576.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-10-700x525.jpg 700w" sizes="(max-width: 800px) 100vw, 800px" /></a></figure>
+
+
+
+<figure class="wp-block-image size-full"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-09.jpg"><img decoding="async" loading="lazy" width="800" height="600" data-id="2701"  src="https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-09.jpg" alt="" class="wp-image-2701" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-09.jpg 800w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-09-300x225.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-09-768x576.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/sonyericsson-p1i-wheel-repair-09-700x525.jpg 700w" sizes="(max-width: 800px) 100vw, 800px" /></a></figure>
+</figure>
+]]></content:encoded>
+					
+		
+		
+			</item>
+	</channel>
+</rss>

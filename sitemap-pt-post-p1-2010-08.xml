@@ -1,8 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?><?xml-stylesheet type='text/xsl' href='https://jameswsullivan.github.io/wp-content/plugins/google-sitemap-generator/sitemap.xsl'?><!-- sitemap-generator-url='http://www.arnebrachhold.de/' sitemap-generator-version='4.1.11' -->
-<!-- generated-on='2023-07-18 04:11' -->
+<!-- generated-on='2023-08-01 21:00' -->
 <urlset xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd' xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>	<url>
 		<loc>https://jameswsullivan.github.io/deploy-opera-mini-server-mirror-with-google-app-engine/</loc>
 		<lastmod>2023-06-20T17:27:33+00:00</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.6</priority>
+	</url>
+	<url>
+		<loc>https://jameswsullivan.github.io/htc-g3-hero-5%e9%94%ae%e5%b7%a5%e7%a8%8b%e6%9c%ba%e5%88%b7recovery%ef%bc%8cradio%e5%92%8crom/</loc>
+		<lastmod>2023-08-01T20:01:44+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.6</priority>
 	</url>
@@ -12,4 +18,28 @@
 		<changefreq>daily</changefreq>
 		<priority>0.6</priority>
 	</url>
-</urlset><!-- Request ID: 6e5e2cdc7d6a3b1b030a3ddbf76f9740; Queries for sitemap: 2; Total queries: 15; Seconds: $end_time; Memory for sitemap: 0MB; Total memory: 4MB -->
+	<url>
+		<loc>https://jameswsullivan.github.io/dell-latitude-d830-teardown-and-cleaning/</loc>
+		<lastmod>2023-08-01T19:54:22+00:00</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.6</priority>
+	</url>
+	<url>
+		<loc>https://jameswsullivan.github.io/windows-7-boot-repair/</loc>
+		<lastmod>2023-08-01T19:45:58+00:00</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.6</priority>
+	</url>
+	<url>
+		<loc>https://jameswsullivan.github.io/install-ubuntu-netbook-10-04-on-latitude-2100/</loc>
+		<lastmod>2023-08-01T19:40:43+00:00</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.6</priority>
+	</url>
+	<url>
+		<loc>https://jameswsullivan.github.io/configure-openvpn-on-htc-g3-hero/</loc>
+		<lastmod>2023-08-01T19:36:23+00:00</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.6</priority>
+	</url>
+</urlset><!-- Request ID: c9d451c5407e6cccbc689b699ec5d362; Queries for sitemap: 2; Total queries: 17; Seconds: $end_time; Memory for sitemap: 0MB; Total memory: 4MB -->

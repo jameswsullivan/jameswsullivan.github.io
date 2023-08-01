@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/mediawiki/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Wed, 12 Apr 2023 03:09:17 +0000</lastBuildDate>
+	<lastBuildDate>Tue, 01 Aug 2023 20:18:22 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -60,6 +60,92 @@ Fatal error: require(): Failed opening required '/yourhostingpath/includes/htmlf
 
 
 <p>Honestly I still didn&#8217;t understand why this happened and didn&#8217;t do further research either, but maybe someone will come across a similar issue and this might save you some time trying to bird-dog the cause.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>MediaWiki Initial Config</title>
+		<link>https://jameswsullivan.github.io/mediawiki-initial-config/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sun, 08 Jan 2012 04:57:00 +0000</pubDate>
+				<category><![CDATA[archive]]></category>
+		<category><![CDATA[DevOps]]></category>
+		<category><![CDATA[MediaWiki]]></category>
+		<category><![CDATA[php]]></category>
+		<category><![CDATA[Software Development]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2688</guid>
+
+					<description><![CDATA[MediaWiki initial config.]]></description>
+										<content:encoded><![CDATA[
+<p>此文系早年博客的备份，仅用于参考学习。<br>This article is an archival copy of my early years&#8217; blog posts.</p>
+
+
+
+<h4 class="wp-block-heading">Enable File Upload Function:</h4>
+
+
+
+<p>Edit file <code>LocalSettings.php</code> in the Mediawiki root directory, change <code>$wgEnableUploads</code> to <code>true</code>, then you&#8217;ll see that a <code>Upload File</code> link appear under <code>Toolbox</code> on the sidebar. You also have to change the properties of the default upload directory &#8220;image&#8221; to allow it to be read/write.</p>
+
+
+
+<h4 class="wp-block-heading">Edit php.ini file:</h4>
+
+
+
+<p>Edit your <code>php.ini</code> file to make sure the file size limit fits your needs. If you have full access to your hosting server, you can just edit it yourself, if not, you can simply ask your technical support to change it for you.</p>
+
+
+
+<h4 class="wp-block-heading">Make Mediawiki allow more file extensions:</h4>
+
+
+
+<p>Edit <code>includes/DefaultSettings.php</code>, add more file extensions in the array:</p>
+
+
+
+<pre class="wp-block-code"><code>$wgFileExtensions = array( 'png', 'gif', 'jpg', 'jpeg','xls' );</code></pre>
+
+
+
+<p>Also, change <code>$wgVerifyMimeType= false;</code> to <code>true</code>.</p>
+
+
+
+<p></p>
+
+
+
+<h4 class="wp-block-heading">Edit sidebar:</h4>
+
+
+
+<p>Search for <code>mediawiki:sidebar</code> and edit it.</p>
+
+
+
+<h4 class="wp-block-heading">Change mediawiki&#8217;s default logo:</h4>
+
+
+
+<p>The logo&#8217;s default file path is at: <code>/skins/common/images/wiki.png</code></p>
+
+
+
+<h4 class="wp-block-heading">Limit anonymous users&#8217; rights:</h4>
+
+
+
+<p>Change the following configs to <code>false</code>:</p>
+
+
+
+<pre class="wp-block-code"><code>$wgGroupPermissions&#91;'<em>']&#91;'createaccount'] = false;</em>
+$wgGroupPermissions&#91;'']&#91;'edit'] = false;</code></pre>
 ]]></content:encoded>
 					
 		
