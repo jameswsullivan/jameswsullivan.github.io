@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/android/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Tue, 01 Aug 2023 20:01:44 +0000</lastBuildDate>
+	<lastBuildDate>Tue, 01 Aug 2023 21:57:52 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -102,7 +102,7 @@ adb sideload MindTheGapps-12.1.0-arm64-20220605_112439.zip
 			</item>
 		<item>
 		<title>HTC G3 Hero 5键工程机刷Recovery，Radio和ROM</title>
-		<link>https://jameswsullivan.github.io/htc-g3-hero-5%e9%94%ae%e5%b7%a5%e7%a8%8b%e6%9c%ba%e5%88%b7recovery%ef%bc%8cradio%e5%92%8crom/</link>
+		<link>https://jameswsullivan.github.io/flash-recovery-radio-and-rom-on-an-htc-g3-hero-5-key-engineering-prototype/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Tue, 24 Aug 2010 03:25:00 +0000</pubDate>
