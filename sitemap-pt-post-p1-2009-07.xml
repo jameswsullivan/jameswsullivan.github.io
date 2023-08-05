@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?><?xml-stylesheet type='text/xsl' href='https://jameswsullivan.github.io/wp-content/plugins/google-sitemap-generator/sitemap.xsl'?><!-- sitemap-generator-url='http://www.arnebrachhold.de/' sitemap-generator-version='4.1.13' -->
-<!-- generated-on='2023-08-05 17:23' -->
+<!-- generated-on='2023-08-05 21:24' -->
 <urlset xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd' xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>	<url>
 		<loc>https://jameswsullivan.github.io/graphics-card-dust-accumulation-causes-reboot-loop/</loc>
 		<lastmod>2023-05-07T21:31:31+00:00</lastmod>
@@ -14,8 +14,8 @@
 	</url>
 	<url>
 		<loc>https://jameswsullivan.github.io/asus-n81e87vg-laptop/</loc>
-		<lastmod>2023-06-18T14:47:47+00:00</lastmod>
+		<lastmod>2023-08-05T17:40:18+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.6</priority>
 	</url>
-</urlset><!-- Request ID: f0d189304a7bbe78c5977750808b2bf5; Queries for sitemap: 2; Total queries: 17; Seconds: $end_time; Memory for sitemap: 0MB; Total memory: 4MB -->
+</urlset><!-- Request ID: 057e137c98ea9e47f5e82c62d2e7a4c7; Queries for sitemap: 2; Total queries: 17; Seconds: $end_time; Memory for sitemap: 0MB; Total memory: 4MB -->
