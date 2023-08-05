@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/docker/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Tue, 23 May 2023 03:10:45 +0000</lastBuildDate>
+	<lastBuildDate>Sat, 05 Aug 2023 17:00:20 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -20,6 +20,72 @@
 	1	</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=6.2.2</generator>
 	<item>
+		<title>Expand LVM in Ubuntu (22.04 LTS)</title>
+		<link>https://jameswsullivan.github.io/expand-lvm-in-ubuntu-22-04-lts/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sat, 05 Aug 2023 16:06:41 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Linux]]></category>
+		<category><![CDATA[System Administration]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2710</guid>
+
+					<description><![CDATA[Expand LVM in Ubuntu 22.04 LTS.]]></description>
+										<content:encoded><![CDATA[
+<p>This Ubuntu server (Hyper-V VM) in question is a Docker host that was partitioned using the default layout (50/50 split of available disk space) when Ubuntu was installed. After a few month one of the logic volumes <code>/dev/mapper/ubuntu--vg-ubuntu--lv</code> ran out of space. Since there is no GUI for partition management, a few steps will be needed to properly expand the volume size.</p>
+
+
+
+<h2 class="wp-block-heading">Solution:</h2>
+
+
+
+<p>1. Expand the virtual disk size in Hyper-V manager.</p>
+
+
+
+<p>2. On the Ubuntu server, use <code>fdisk -l</code> to identify the disk and df -h to check the disk usage, here we use <code>/dev/sdf</code> (disk) and <code>/dev/mapper/ubuntu--vg-ubuntu--lv</code> (logic volume) as an example.</p>
+
+
+
+<p>3. Run <code>parted /dev/sdf print</code> to view partition layout. You&#8217;ll probably get a warning message like this. Which one you choose doesn&#8217;t really matter because we&#8217;re doing the process manually.</p>
+
+
+
+<pre class="wp-block-code"><code>Warning: Not all of the space available to /dev/sdf appears to be used, you can fix the GPT to use all of the space (an extra ______ blocks) or continue with the current setting?
+Fix/Ignore?</code></pre>
+
+
+
+<p>4. After you see the list of partitions, run this command on the partition that you need to expand to resize the partition to use the additional space, here we use partition 3 as an example: <code>parted /dev/sdf resizepart 3 100%</code></p>
+
+
+
+<p>5. Resize the Physical Volume using command: <code>pvresize /dev/sdf3</code></p>
+
+
+
+<p>6. Now that if you run <code>vgdisplay</code> , you should see the free space listed under <code>Free PE / Size</code>. And make sure you have your volume group name <code>ubuntu-vg</code> ready.</p>
+
+
+
+<p>7. Run <code>lvdisplay</code> to identify the logical volume we need to expand, as we discussed above, the one needs expanding is the <code>/dev/ubuntu-vg/ubuntu-lv</code> volume.</p>
+
+
+
+<p>8. Run <code>lvextend -l +100%FREE -r /dev/ubuntu-vg/ubuntu-lv</code> to expand the volume.</p>
+
+
+
+<p>9. Now run <code>vgdisplay</code> , <code>lvdisplay</code>, and <code>df -h</code> again to verify that the <code>/dev/mapper/ubuntu--vg-ubuntu--lv</code> volume has been successfully expanded. Reboot the system if needed.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>Self-host iredmail</title>
 		<link>https://jameswsullivan.github.io/self-host-iredmail/</link>
 		
@@ -1238,189 +1304,6 @@ service restart apache2</code></pre>
 
 
 <p>Adding this entry in <strong>/etc/hosts</strong> file also resolves Simply Static&#8217;s <em>&#8220;Checking if WordPress can make requests to itself from your_IP&#8221;</em> FAIL issue.</p>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Configure Apache Web Server and Name-based Virtual Hosting with Ubuntu</title>
-		<link>https://jameswsullivan.github.io/configure-apache-web-server-and-name-based-virtual-hosting-with-ubuntu/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Fri, 03 Feb 2023 20:19:00 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[Apache]]></category>
-		<category><![CDATA[Docker]]></category>
-		<category><![CDATA[Hosting]]></category>
-		<category><![CDATA[Self-Hosting]]></category>
-		<category><![CDATA[Ubuntu]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=18</guid>
-
-					<description><![CDATA[This is the fourth installment of the Name-based Virtual Hosting Series.]]></description>
-										<content:encoded><![CDATA[
-<blockquote class="wp-block-quote">
-<p>2023-05-21 UPDATE:</p>
-
-
-
-<p>This project has been optimized and containerized. See this <a href="https://github.com/jameswsullivan/selfhosted/tree/main/UbuntuLAMP" target="_blank" rel="noreferrer noopener">UbuntuLAMP project</a> on my github.</p>
-</blockquote>
-
-
-
-<p>This is the final installment of my dev environment setup which documents the process of setting up Apache web server and name-based virtual hosting. My setup has CIFS/Samba volume <em>my_smb_vol</em> and an ipvlan network <em>docker_dev_net</em>.</p>
-
-
-
-<h2 class="wp-block-heading">Spin up a Ubuntu Docker container:</h2>
-
-
-
-<pre class="wp-block-code"><code>docker run -dit --name WEB_SERVER --network docker_dev_net --ip 192.168.1.103 --mount source=my_smb_vol,destination=/SharedVolume ubuntu
-
-# -p 443:443 -p 80:80 -p 22:22
-# Port exposure is optional because the containers will be part of the same network that my other machines are in.</code></pre>
-
-
-
-<p>Install necessary packages:</p>
-
-
-
-<pre class="wp-block-code"><code># Install network utilities for troubleshooting:
-apt-get install iputils-ping -y
-apt-get install iproute2 -y
-apt-get install traceroute -y
-
-# Install SSH:
-apt-get install openssh-client -y
-apt-get install openssh-server -y
-
-# Install sudo and other utilities:
-apt-get install sudo -y
-apt-get install nano -y
-
-# Install apache, php, and php-mysql:
-apt-get install apache2 -y
-apt-get install php8.1 -y
-apt-get install php-mysql -y
-apt-get install libapache2-mod-php -y</code></pre>
-
-
-
-<p>Verify services are running and start the them if not:</p>
-
-
-
-<pre class="wp-block-code"><code># ssh and apache2 service status
-service ssh status
-service apache2 status
-
-# start the services:
-service ssh start
-service apache2 start</code></pre>
-
-
-
-<p>Hostname and name server (optional):</p>
-
-
-
-<pre class="wp-block-code"><code># Depending on your setup, you might need to specify the --hostname when creating your container:
-
---hostname=your_hostname</code></pre>
-
-
-
-<p>Verify php version:</p>
-
-
-
-<pre class="wp-block-code"><code># Create a info.php file under the /var/www/html directory with the following content:
-
-&lt;?php phpinfo();?&gt;</code></pre>
-
-
-
-<p>Now that you should be able to visit the Apache server&#8217;s default landing page and the info.php page to verify that the Apache server is running and view your php version.</p>
-
-
-
-<h2 class="wp-block-heading">Set up name-based virtual hosting:</h2>
-
-
-
-<pre class="wp-block-code"><code># The example websites I'm using are: example.mydomain, example1.mydomain, example2.mydomain.
-
-# Create directories:
-# example.mydomain will reside under /var/www/html as the "main" website.
-
-mkdir /var/www/html/example1.mydomain
-mkdir /var/www/html/example2.mydomain
-
-# Change ownership of the directories. I simply changed the entire html directory and its subdirectories' ownership to www-data for my convenience.
-
-chown -R www-data:www-data /var/www/html
-
-# Create Virtual Host configuration files for your sites.
-touch /etc/apache2/sites-available/example.mydomain.conf
-touch /etc/apache2/sites-available/example1.mydomain.conf
-touch /etc/apache2/sites-available/example2.mydomain.conf
-
-# Use nano to add the corresponding content to your site config files. Edit the ServerName and DocumentRoot as needed to point to the your domains and directories:
-
-# example.mydomain.conf or use the 000-default.conf:
-&lt;VirtualHost *:80&gt;
-    ServerAdmin webmaster@example.mydomain
-    ServerName example.mydomain
-    DocumentRoot /var/www/html
-    DirectoryIndex index.html
-    ErrorLog ${APACHE_LOG_DIR}/example.mydomain_error.log
-    CustomLog ${APACHE_LOG_DIR}/example.mydomain_access.log combined
-&lt;/VirtualHost&gt;
-
-# example1.mydomain.conf:
-&lt;VirtualHost *:80&gt;
-    ServerAdmin webmaster@example1.mydomain
-    ServerName example1.mydomain
-    DocumentRoot /var/www/html/example1.mydomain
-    DirectoryIndex index.php
-    ErrorLog ${APACHE_LOG_DIR}/example1.mydomain_error.log
-    CustomLog ${APACHE_LOG_DIR}/example1.mydomain_access.log combined
-&lt;/VirtualHost&gt;
-
-# Enable the configuration files for the sites:
-a2ensite example1.mydomain
-a2ensite example2.mydomain
-
-# Restart apache2 service and verify that apache2 is running:
-service apache2 reload
-service apache2 status
-
-# Of course, you will need to add your own index.html or index.php files under the sites' directories.</code></pre>
-
-
-
-<p>Configure your router or DNS server records:</p>
-
-
-
-<pre class="wp-block-code"><code># I'm using my Cisco router as an example:
-
-ip host example.mydomain 192.168.1.103
-ip host example1.mydomain 192.168.1.103
-ip host example2.mydomain 192.168.1.103</code></pre>
-
-
-
-<p>Now that you should be able to visit the sites by going to:</p>
-
-
-
-<pre class="wp-block-code"><code>http:&#47;&#47;example.mydomain
-http://example1.mydomain/
-http://example2.mydomain/</code></pre>
 ]]></content:encoded>
 					
 		

@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Sun, 16 Jul 2023 21:12:23 +0000</lastBuildDate>
+	<lastBuildDate>Sat, 05 Aug 2023 17:00:20 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -20,6 +20,72 @@
 	1	</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=6.2.2</generator>
 	<item>
+		<title>Expand LVM in Ubuntu (22.04 LTS)</title>
+		<link>https://jameswsullivan.github.io/expand-lvm-in-ubuntu-22-04-lts/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sat, 05 Aug 2023 16:06:41 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Linux]]></category>
+		<category><![CDATA[System Administration]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2710</guid>
+
+					<description><![CDATA[Expand LVM in Ubuntu 22.04 LTS.]]></description>
+										<content:encoded><![CDATA[
+<p>This Ubuntu server (Hyper-V VM) in question is a Docker host that was partitioned using the default layout (50/50 split of available disk space) when Ubuntu was installed. After a few month one of the logic volumes <code>/dev/mapper/ubuntu--vg-ubuntu--lv</code> ran out of space. Since there is no GUI for partition management, a few steps will be needed to properly expand the volume size.</p>
+
+
+
+<h2 class="wp-block-heading">Solution:</h2>
+
+
+
+<p>1. Expand the virtual disk size in Hyper-V manager.</p>
+
+
+
+<p>2. On the Ubuntu server, use <code>fdisk -l</code> to identify the disk and df -h to check the disk usage, here we use <code>/dev/sdf</code> (disk) and <code>/dev/mapper/ubuntu--vg-ubuntu--lv</code> (logic volume) as an example.</p>
+
+
+
+<p>3. Run <code>parted /dev/sdf print</code> to view partition layout. You&#8217;ll probably get a warning message like this. Which one you choose doesn&#8217;t really matter because we&#8217;re doing the process manually.</p>
+
+
+
+<pre class="wp-block-code"><code>Warning: Not all of the space available to /dev/sdf appears to be used, you can fix the GPT to use all of the space (an extra ______ blocks) or continue with the current setting?
+Fix/Ignore?</code></pre>
+
+
+
+<p>4. After you see the list of partitions, run this command on the partition that you need to expand to resize the partition to use the additional space, here we use partition 3 as an example: <code>parted /dev/sdf resizepart 3 100%</code></p>
+
+
+
+<p>5. Resize the Physical Volume using command: <code>pvresize /dev/sdf3</code></p>
+
+
+
+<p>6. Now that if you run <code>vgdisplay</code> , you should see the free space listed under <code>Free PE / Size</code>. And make sure you have your volume group name <code>ubuntu-vg</code> ready.</p>
+
+
+
+<p>7. Run <code>lvdisplay</code> to identify the logical volume we need to expand, as we discussed above, the one needs expanding is the <code>/dev/ubuntu-vg/ubuntu-lv</code> volume.</p>
+
+
+
+<p>8. Run <code>lvextend -l +100%FREE -r /dev/ubuntu-vg/ubuntu-lv</code> to expand the volume.</p>
+
+
+
+<p>9. Now run <code>vgdisplay</code> , <code>lvdisplay</code>, and <code>df -h</code> again to verify that the <code>/dev/mapper/ubuntu--vg-ubuntu--lv</code> volume has been successfully expanded. Reboot the system if needed.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>Repair ProForm 505 CST Treadmill</title>
 		<link>https://jameswsullivan.github.io/repair-proform-505-cst-treadmill/</link>
 		
@@ -773,139 +839,6 @@ GO
 
 
 <p></p>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Self-host Passbolt</title>
-		<link>https://jameswsullivan.github.io/self-host-passbolt/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Mon, 08 May 2023 02:57:53 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[notes]]></category>
-		<category><![CDATA[Docker]]></category>
-		<category><![CDATA[Hosting]]></category>
-		<category><![CDATA[Linux]]></category>
-		<category><![CDATA[Nginx]]></category>
-		<category><![CDATA[Passbolt]]></category>
-		<category><![CDATA[Password Manager]]></category>
-		<category><![CDATA[Self-Hosting]]></category>
-		<category><![CDATA[Web Hosting]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2427</guid>
-
-					<description><![CDATA[Self-host the Passbolt password manager using self-signed certificate.]]></description>
-										<content:encoded><![CDATA[
-<h2 class="wp-block-heading">Background:</h2>
-
-
-
-<ul>
-<li>The Passbolt instance is locally hosted and only available in my homelab&#8217;s LAN environment. It&#8217;s not exposed to the internet.</li>
-
-
-
-<li>The instance uses a self-signed certificate. See <a href="https://help.passbolt.com/faq/hosting/mobile-faq" target="_blank" rel="noreferrer noopener">official FAQ here</a>.</li>
-
-
-
-<li>My test environment: Windows, Ubuntu Server 22.04 LTS, Pixel 5 phone with the Passbolt app. (<a href="https://help.passbolt.com/faq/hosting/how-to-import-ssl-certificate-on-mobile" target="_blank" rel="noreferrer noopener">Install self-signed certificate on Android</a>.)</li>
-</ul>
-
-
-
-<h2 class="wp-block-heading">Setup:</h2>
-
-
-
-<pre class="wp-block-code"><code># Passbolt Docker image.
-
-pull passbolt/passbolt
-
-
-# Start the container.
-
-docker run -dit \
-    --name=YOUR_CONTAINER_NAME \
-    --ip IP_ADDRESS --network YOUR_DOCKER_NETWORK \
-    --hostname=YOUR_PASSBOLT_HOSTNAME \
-    --restart=unless-stopped \
-    -e DATASOURCES_DEFAULT_HOST=YOUR_DATABASE_SERVER \
-    -e DATASOURCES_DEFAULT_PASSWORD=YOUR_DB_PASSWORD \
-    -e DATASOURCES_DEFAULT_USERNAME=YOUR_DB_USER \
-    -e DATASOURCES_DEFAULT_DATABASE=YOUR_PASSBOLT_DB_NAME \
-    -e APP_FULL_BASE_URL=https://YOUR_PASSBOLT_APP_URL/ \
-    passbolt/passbolt
-
-
-# Generate self-signed certificate
-
-openssl req -x509 \
-    -newkey rsa:4096 \
-    -days SPECIFY_YOUR_OWN \
-    -subj "/C=YOUR_COUNTRY/ST=YOUR_STATE/L=YOUR_CITY/O=YOUR_ORG/OU=YOUR_OU/CN=YOUR_PASSBOLT_APP_URL/" \
-    -nodes \
-    -addext "subjectAltName = DNS:YOUR_PASSBOLT_APP_URL" \
-    -keyout passbolt_self_signed_key.pem \
-    -out passbolt_self_signed_cert.pem
-
-
-# Create your first admin user
-
-docker exec -it YOUR_CONTAINER_NAME bash
-
-su -m -c "/usr/share/php/passbolt/bin/cake passbolt register_user -u YOUR_ADMIN_USER@YOUR_DOMAIN.COM -f YOUR_FIRSTNAME -l YOUR_LASTNAME -r admin" -s /bin/sh www-data
-
-
-# Edit <em><strong>/etc/nginx/snippets/passbolt-ssl.conf</strong></em> to point to your self-generated certificates.
-
-apt-get install nano -y
-nano /etc/nginx/snippets/passbolt-ssl.conf
-
-
-# Restart nginx
-
-service nginx restart</code></pre>
-
-
-
-<h2 class="wp-block-heading">Install the certificates:</h2>
-
-
-
-<ul>
-<li>Import the <code>passbolt_self_signed_cert.pem</code> certificate into Windows&#8217; <code>Trusted Root Certification Authorities</code>.</li>
-
-
-
-<li>On Android devices, go to<br><code>Security &amp; privacy - Encryption &amp; credentials - Install a certificate - CA certificate - Install anyway</code><br>Browse to the passbolt_self_signed_cert.pem cert file and install it.</li>
-
-
-
-<li><a href="https://help.passbolt.com/faq/hosting/mobile-faq">Official FAQ on generating self-signed cert.</a></li>
-
-
-
-<li><a href="https://help.passbolt.com/faq/hosting/how-to-import-ssl-certificate-on-mobile">Official FAQ on installing cert on Android devices.</a></li>
-
-
-
-<li>Browser&#8217;s cache &amp; cookies might need to be cleared for the new cert to take effect.</li>
-</ul>
-
-
-
-<h2 class="wp-block-heading">Troubleshooting:</h2>
-
-
-
-<p>When generating the self-signed certificate, the <code>subjectAltName</code> must be specified, otherwise you&#8217;ll likely encounter this error when scanning the QR code. (<a href="https://community.passbolt.com/t/error-setting-up-mobile-app/5875" target="_blank" rel="noreferrer noopener">See this post.</a>)</p>
-
-
-
-<pre class="wp-block-code"><code>There was an error during transfer update(Something went wrong!)</code></pre>
 ]]></content:encoded>
 					
 		
