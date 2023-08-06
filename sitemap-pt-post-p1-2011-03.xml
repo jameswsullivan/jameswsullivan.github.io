@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?><?xml-stylesheet type='text/xsl' href='https://jameswsullivan.github.io/wp-content/plugins/google-sitemap-generator/sitemap.xsl'?><!-- sitemap-generator-url='http://www.arnebrachhold.de/' sitemap-generator-version='4.1.13' -->
-<!-- generated-on='2023-08-06 18:38' -->
+<!-- generated-on='2023-08-06 19:13' -->
 <urlset xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd' xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>	<url>
 		<loc>https://jameswsullivan.github.io/how-to-calculate-your-internet-connection-speed-and-your-hard-drive-capacity/</loc>
 		<lastmod>2023-08-01T20:08:59+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.6</priority>
 	</url>
-</urlset><!-- Request ID: c9309c0d515a0eaf21a89ccb6cccd8cd; Queries for sitemap: 2; Total queries: 17; Seconds: $end_time; Memory for sitemap: 0MB; Total memory: 4MB -->
+</urlset><!-- Request ID: ec3d847b3db56e6b7a5ed96be87decd3; Queries for sitemap: 2; Total queries: 17; Seconds: $end_time; Memory for sitemap: 0MB; Total memory: 4MB -->
