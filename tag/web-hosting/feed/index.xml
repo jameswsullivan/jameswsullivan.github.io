@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/web-hosting/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Tue, 23 May 2023 03:10:45 +0000</lastBuildDate>
+	<lastBuildDate>Sun, 06 Aug 2023 18:34:11 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -139,7 +139,6 @@ MYSQL_ROOT_PASSWORD=&lt;YOUR_MYSQL_ROOT_PASSWORD></code></pre>
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Wed, 10 May 2023 02:16:01 +0000</pubDate>
 				<category><![CDATA[blog]]></category>
-		<category><![CDATA[notes]]></category>
 		<category><![CDATA[Bitwarden]]></category>
 		<category><![CDATA[Docker]]></category>
 		<category><![CDATA[Hosting]]></category>
@@ -252,7 +251,6 @@ GO
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Mon, 08 May 2023 02:57:53 +0000</pubDate>
 				<category><![CDATA[blog]]></category>
-		<category><![CDATA[notes]]></category>
 		<category><![CDATA[Docker]]></category>
 		<category><![CDATA[Hosting]]></category>
 		<category><![CDATA[Linux]]></category>
@@ -385,7 +383,6 @@ service nginx restart</code></pre>
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sun, 07 May 2023 20:30:25 +0000</pubDate>
 				<category><![CDATA[blog]]></category>
-		<category><![CDATA[notes]]></category>
 		<category><![CDATA[Apache]]></category>
 		<category><![CDATA[Containerization]]></category>
 		<category><![CDATA[Docker]]></category>
@@ -568,7 +565,6 @@ echo -e "\n\nKoha Password: $koha_password"</code></pre>
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Mon, 01 May 2023 00:23:40 +0000</pubDate>
 				<category><![CDATA[blog]]></category>
-		<category><![CDATA[notes]]></category>
 		<category><![CDATA[BookStack]]></category>
 		<category><![CDATA[Docker]]></category>
 		<category><![CDATA[Hosting]]></category>
@@ -1158,6 +1154,80 @@ docker run -dit --name PostgreSQL_DEV --network docker_dev_net --ip 192.168.1.10
 		
 			</item>
 		<item>
+		<title>Nextcloud Performance</title>
+		<link>https://jameswsullivan.github.io/nextcloud-performance/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Mon, 20 Sep 2021 07:28:07 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Apache]]></category>
+		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[Linux]]></category>
+		<category><![CDATA[Nextcloud]]></category>
+		<category><![CDATA[Self-Hosting]]></category>
+		<category><![CDATA[System Administration]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+		<category><![CDATA[Web Hosting]]></category>
+		<guid isPermaLink="false">https://www.alexchen.net/?p=1633</guid>
+
+					<description><![CDATA[Nextcloud performance optimization.]]></description>
+										<content:encoded><![CDATA[
+<p>After about two days&#8217; troubleshooting and and testing, Nextcloud is successfully running in my homelab. This article documents a few performance tweaking.</p>
+
+
+
+<p>1. PHP <code>max_input_time</code> and <code>max_execution_time</code>. (I was getting 504 Gateway Timeout when uploading larger files.)</p>
+
+
+
+<pre class="wp-block-code"><code># Modify php.ini under /etc/php/8.0/fpm/ and /etc/php/8.0/apache2/
+max_input_time 86400
+max_execution_time 86400
+
+upload_max_filesize 50G
+post_max_size 51G
+
+# Restart PHP and Apache
+service apache2 restart
+service php8.0-fpm restart</code></pre>
+
+
+
+<p>2. Disable file locking. This potentially will cause problems when you have multiple users collaborating on file editing/syncing, but in my single-user setup this was not a concern. I needed to do this when I synced some large files and the client froze, and after a force restart/resync, the Nextcloud client reported <code>423 Locked</code> to <code>PUT https://...../</code> .</p>
+
+
+
+<pre class="wp-block-code"><code># Add
+'filelocking.enabled' => false,
+# to nextcloud's config.php, and clear the locked files.
+
+# Add
+'maintenance' => true,
+# to config.php
+
+# Get into MariaDB and run the following
+DELETE FROM oc_file_locks WHERE 1;
+
+# Revert maintenance mode
+'maintenance' => false,
+
+# Restart PHP and Apache
+service apache2 restart
+service php8.0-fpm restart</code></pre>
+
+
+
+<p>3. Overall performance.</p>
+
+
+
+<p>Nextcloud&#8217;s overall syncing speed has a lot to do with your Nextcloud server&#8217;s performance, the more smooth your server runs the better syncing performance you&#8217;ll get (more RAM, SSD, etc.). I was able to get roughly 25MB upload speed and 65MB download speed with a Hyper-V VM running Ubuntu Desktop.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>Self-host Nextcloud</title>
 		<link>https://jameswsullivan.github.io/self-host-nextcloud/</link>
 		
@@ -1372,71 +1442,6 @@ SHOW DATABASES;</code></pre>
 <pre class="wp-block-code"><code># In file /var/www/html/nextcloud/config/config.php, change the following.
 
 ‘twofactor_enforced’ =&gt; ‘false’</code></pre>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>nginx, net-tools, and cifs-utils</title>
-		<link>https://jameswsullivan.github.io/nginx-net-tools-and-cifs-utils/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Thu, 16 Sep 2021 12:25:36 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[Docker]]></category>
-		<category><![CDATA[Hosting]]></category>
-		<category><![CDATA[Linux]]></category>
-		<category><![CDATA[Self-Hosting]]></category>
-		<category><![CDATA[Ubuntu]]></category>
-		<category><![CDATA[Web Hosting]]></category>
-		<guid isPermaLink="false">https://www.alexchen.net/?p=1651</guid>
-
-					<description><![CDATA[Install nginx, net-tools, and cifs-utils on Ubuntu Server. Mount shared folders in Ubuntu Server 20.04.]]></description>
-										<content:encoded><![CDATA[
-<p>During the course of setting up Nextcloud and Standard Notes, I needed to use some tools for troubleshooting along the way, here is the documentation for future refresher.</p>
-
-
-
-<p>Nginx installation and common paths.</p>
-
-
-
-<pre class="wp-block-code"><code>apt update -y
-apt install nginx -y
-
-# /etc/nginx/sites-available
-# /etc/nginx/sites-enabled
-
-unlink /etc/nginx/sites-enabled/default
-
-ln -s /etc/nginx/sites-available/YourConfigFile /etc/nginx/sites-enabled/YourConfigFile</code></pre>
-
-
-
-<p>Mount network shares in Ubuntu Server.</p>
-
-
-
-<pre class="wp-block-code"><code># I needed to share files between my Windows servers and Ubuntu servers. The shared folders were created and managed on Windows Server 2019.
-
-apt update -y
-apt install cifs-utils -y
-
-mkdir /mnt/my-folder
-
-mount -t cifs //server-name/share-name /mnt/my-folder -o username=username,password=password,domain=domain
-
-# use mount command to see all mount points</code></pre>
-
-
-
-<p>net-tools for ifconfig.</p>
-
-
-
-<pre class="wp-block-code"><code>apt update -y
-apt install net-tools -y</code></pre>
 ]]></content:encoded>
 					
 		

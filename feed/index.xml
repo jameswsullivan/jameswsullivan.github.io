@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Sat, 05 Aug 2023 17:00:20 +0000</lastBuildDate>
+	<lastBuildDate>Sun, 06 Aug 2023 18:24:00 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -20,6 +20,208 @@
 	1	</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=6.2.2</generator>
 	<item>
+		<title>Flash LSI SAS Adapters to HBA IT MODE</title>
+		<link>https://jameswsullivan.github.io/flash-lsi-sas-adapters-to-hba-it-mode/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sat, 05 Aug 2023 23:33:28 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Firmware]]></category>
+		<category><![CDATA[HBA]]></category>
+		<category><![CDATA[LSI HBA Adapters]]></category>
+		<category><![CDATA[MegaCLI]]></category>
+		<category><![CDATA[MegaRec]]></category>
+		<category><![CDATA[NAS]]></category>
+		<category><![CDATA[SAS2FLASH.EFI]]></category>
+		<category><![CDATA[SAS2FLSH]]></category>
+		<category><![CDATA[Storage]]></category>
+		<category><![CDATA[TrueNAS]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2205</guid>
+
+					<description><![CDATA[Flash LSI SAS Adapters to IT MODE with MegaRec, SAS2FLASH.EFI.]]></description>
+										<content:encoded><![CDATA[
+<p>In the past year of so I&#8217;ve acquired a few SAS Adapters for my NAS and other server builds and needed to flash them to IT mode to use with TrueNAS and Windows storage pool. The following steps were performed on a PIKE 2008 card that came with an ASUS Z9PA-D8 motherboard.</p>
+
+
+
+<p>I did quite some research on this matter and found that a lot of the tutorials have over complicated the issue if the only goal here is to flash the SAS adapter to IT mode, so here I&#8217;ll provide a simplified process.</p>
+
+
+
+<h2 class="wp-block-heading">Tools needed:</h2>
+
+
+
+<ul>
+<li>The firmware <code>.bin</code> file of your adapter. Most of the firmware files can be downloaded directly from Broadcom&#8217;s website. (Here we&#8217;re using the <code>2118it.bin</code> file extracted from the <code>9211-8i_Package_P20_IR_IT_FW_BIOS_for_MSDOS_Windows</code> package.</li>
+
+
+
+<li>You <strong>do not</strong> necessarily need the full suite of the LSI command line toolkit, you only need three files: <code>MegaRec.exe</code>, <code>DOS4GW.EXE</code>, and <code>sas2flash.efi</code> . <code>MegaCli</code> is optional, I used it on one machine and it provides a lot of powerful functions but on the machine with PIKE 2008, it wasn&#8217;t able to detect any hardware.</li>
+
+
+
+<li>The <code>sbrempty.bin</code> file.</li>
+
+
+
+<li>A flash drive (a small one is enough, the files needed are only a few MBs) formatted to FAT32.</li>
+
+
+
+<li>A copy of the EFI bootloader (<code>efi\boot\bootx64.efi</code>) to boot into the EFI shell.</li>
+
+
+
+<li><a rel="noreferrer noopener" href="https://rufus.ie/en/" target="_blank">Rufus</a>, to make the flash drive DOS bootable.</li>
+
+
+
+<li>Optional: If you want to be able to boot into the card&#8217;s BIOS utility, you can flash the <code>mptsas2.rom</code> as well (not provided), but if you only want your adapter to function like extra SATA ports in passthrough mode, you can ignore this one.</li>
+</ul>
+
+
+
+<p>Note: You can probably perform the firmware flash without the EFI shell, the sas2flash tool has a DOS version, but from my experience the EFI version has the best compatibility and I&#8217;ve had the most success with it. All the files needed can be downloaded here: <a rel="noreferrer noopener" href="https://github.com/jameswsullivan/blog-file-share/blob/main/SAS-Adapters-IT-Mode.zip" target="_blank">SAS-Adapters-IT-Mode.zip</a> .</p>
+
+
+
+<h2 class="wp-block-heading">Steps:</h2>
+
+
+
+<p>1. Use Rufus to make a MS-DOS bootable flash drive. Add all files from the zip file to the root directory of the flash drive. The root directory should look like this:</p>
+
+
+
+<pre class="wp-block-code"><code>LOCALE
+efi
+autorun.inf
+autorun.ico
+MegaRec.exe
+DOS4GW.EXE
+2118it.bin
+sbrempty.bin
+sas2flash.efi</code></pre>
+
+
+
+<p>2. Configure your boot options in BIOS as needed (legacy and UEFI), and boot into EFI first.</p>
+
+
+
+<p>3. At the EFI shell prompt, move to the flash drive (mine is <code>fs0:</code> ), and execute the following commands:</p>
+
+
+
+<pre class="wp-block-code"><code># List your boards. If you only have one adapter, the index should be 0.
+sas2flash.efi -listall
+
+# Get the adapter's SAS address.
+sas2flash.efi -c 0 -list
+
+# You can pipe your output to a text file if you want to keep a record of it, and you can use the "edit" command in the EFI shell to view/edit the files, very much like how you use "nano" on Linux. e.g.:
+
+sas2flash.efi -listall > myadapters.txt
+sas2flash.efi -c 0 -list > adapter0info.txt
+edit adapter0info.txt</code></pre>
+
+
+
+<p>4. Exit out of the EFI shell and boot into DOS. At the DOS prompt, move to your flash drive and execute the following <code>MegaRec</code> commands:</p>
+
+
+
+<pre class="wp-block-code"><code># Show adapters, which we already know from step 3 that our adapter is at "0".
+megarec -adplist
+
+# &#91;Optional]: Make a backup of your SBR and SPD.
+megarec -readsbr 0 file_name.sbr
+megarec -readspd 0 file_name.spd
+
+# Write the sbrempty.bin file.
+megarec -writesbr 0 sbrempty.bin
+
+# Clean the flash. This step might take a few minutes.
+megarec -cleanflash 0
+
+# Note: You can also pipe the output of these commands to a text file for documentation.</code></pre>
+
+
+
+<p>5. Boot into the EFI shell again and flash the <code>2118it.bin</code> firmware.</p>
+
+
+
+<pre class="wp-block-code"><code># Flash the 2118it.bin firmware:
+sas2flash.efi -c 0 -o -f 2118it.bin
+OR
+sas2flash.efi -c 0 -o -f 2118it.bin -b mptsas2.rom
+
+# Grab the SAS address from step 3 and set the address.
+# Note, the SAS address displayed in step 3 contains dashes, but when you enter it here you need to enter the 16 digits address without dashes.
+sas2flash.efi -c 0 -o -sasadd 12345600000000AB
+
+# Verify your adapter
+sas2flash.efi -listall
+sas2flash.efi -c 0 -list</code></pre>
+
+
+
+<p>If all the steps finished without errors, your SAS adapter should be working in IT Mode now. As a reference, I have the following cards on my servers: one PIKE 2008, one 9200-8i (or maybe a 9220-8i), and two IBM ServeRAID M1015 that came off some x3690 X5 servers.</p>
+
+
+
+<div style="height:50px" aria-hidden="true" class="wp-block-spacer"></div>
+
+
+
+<h2 class="wp-block-heading">Reference: MegaREC Command Usage:</h2>
+
+
+
+<pre class="wp-block-code"><code>
+MegaRAID HWR Contoller Recovery tool. Version 01.02-007 August 03, 2011
+Copyright (c) 2006-2010 LSI Corp.
+Supports 1078 controller and its Successors.
+
+Usage:
+MegaRec -help                  : Display the list of options
+MegaRec -adpList               : Display identified MR controller(s)
+MegaRec -corruptInfo           : Display corruption information of controller
+MegaRec -m0flash &lt;n&gt; &lt;image&gt;   : Flash controller
+                               : where &lt;n&gt; is the controller index
+                               : and &lt;image&gt; is the image file to flash
+MegaRec -cleanflash &lt;n&gt; &lt;image&gt;: Erase Flash. Programs if image is Provided.
+                               : where &lt;n&gt; is the controller index
+                               : and &lt;image&gt; is the image file to flash
+MegaRec -readspd &lt;n&gt; &lt;image&gt;   : Read controller SPD to specified file
+                               : where &lt;n&gt; is the controller index
+                               : and &lt;image&gt; is the specified file name
+MegaRec -writespd &lt;n&gt; &lt;image&gt;  : Write controller SPD from specified file
+                               : where &lt;n&gt; is the controller index
+                               : and &lt;image&gt; is the specified file name
+MegaRec -readsbr &lt;n&gt; &lt;image&gt; &#91;&lt;byteCount&gt;] : Read controller SBR to specified 
+                               : file where &lt;n&gt; is the controller index,
+                               : &lt;byteCount&gt; is the number of bytes of SBR 
+                               : to be read and is optional to specify
+                               : and &lt;image&gt; is the specified file name
+MegaRec -writesbr &lt;n&gt; &lt;image&gt;  : Write controller SBR from specified file
+                               : where &lt;n&gt; is the controller index
+                               : and &lt;image&gt; is the specified file name
+MegaRec -m0flash &lt;n&gt; &lt;image&gt; &lt;-i2o/-fusion&gt;     : Flash controller in I2O/FUSION mode
+MegaRec -cleanflash &lt;n&gt; &lt;image&gt; &lt;-i2o/-fusion&gt;  : Erase Flash. Programs if image is Provided in I2O/FUSION mode.
+MegaRec -readspd &lt;n&gt; &lt;image&gt; &lt;-i2o/-fusion&gt;     : Read controller SPD to specified file in I2O/FUSION mode
+MegaRec -writespd &lt;n&gt; &lt;image&gt; &lt;-i2o/-fusion&gt;    : Write controller SPD from specified file in I2O/FUSION mode
+MegaRec -readsbr &lt;n&gt; &lt;image&gt; &#91;&lt;byteCount&gt;] &lt;-i2o/-fusion&gt; : Read controller SBR to specified file in I2O/FUSION mode
+MegaRec -writesbr &lt;n&gt; &lt;image&gt; &lt;-i2o/-fusion&gt;    : Write controller SBR from specified file in I2O/FUSION mode
+</code></pre>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>Expand LVM in Ubuntu (22.04 LTS)</title>
 		<link>https://jameswsullivan.github.io/expand-lvm-in-ubuntu-22-04-lts/</link>
 		
@@ -146,7 +348,7 @@ Fix/Ignore?</code></pre>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Tue, 20 Jun 2023 15:25:19 +0000</pubDate>
-				<category><![CDATA[notes]]></category>
+				<category><![CDATA[blog]]></category>
 		<category><![CDATA[Cisco]]></category>
 		<category><![CDATA[Cisco 2951]]></category>
 		<category><![CDATA[Cisco C3750G]]></category>
@@ -452,7 +654,7 @@ reload</code></pre>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sat, 17 Jun 2023 19:51:05 +0000</pubDate>
-				<category><![CDATA[notes]]></category>
+				<category><![CDATA[blog]]></category>
 		<category><![CDATA[Network Administration]]></category>
 		<category><![CDATA[Networking]]></category>
 		<category><![CDATA[System Administration]]></category>
@@ -726,119 +928,6 @@ MYSQL_ROOT_PASSWORD=&lt;YOUR_MYSQL_ROOT_PASSWORD></code></pre>
 </ul>
 </li>
 </ul>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Self-host Bitwarden</title>
-		<link>https://jameswsullivan.github.io/self-host-bitwarden/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Wed, 10 May 2023 02:16:01 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[notes]]></category>
-		<category><![CDATA[Bitwarden]]></category>
-		<category><![CDATA[Docker]]></category>
-		<category><![CDATA[Hosting]]></category>
-		<category><![CDATA[MSSQL]]></category>
-		<category><![CDATA[Password Manager]]></category>
-		<category><![CDATA[Self-Hosting]]></category>
-		<category><![CDATA[Ubuntu]]></category>
-		<category><![CDATA[Web Hosting]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2436</guid>
-
-					<description><![CDATA[Self-host Bitwarden using self-signed certificate and "hack" the database to manually verify emails without a live SMTP server.]]></description>
-										<content:encoded><![CDATA[
-<h2 class="wp-block-heading">Background:</h2>
-
-
-
-<p>I chose Bitwarden over Passbolt because Bitwarden stores a cached copy of your vault to allow offline access (read-only) on mobile devices while I&#8217;m away from my home lab or don&#8217;t have internet connection. I&#8217;m also using KeePass so it would be sufficient for my need.</p>
-
-
-
-<p>My Bitwarden instance runs on a Hyper-V VM running Ubuntu Server 22.04 LTS.</p>
-
-
-
-<h2 class="wp-block-heading">Project:</h2>
-
-
-
-<ul>
-<li>This project is documented on <a rel="noreferrer noopener" href="https://github.com/jameswsullivan/selfhosted" target="_blank">my GitHub</a>. (<a href="https://github.com/jameswsullivan/selfhosted/blob/main/bitwarden.md" target="_blank" rel="noreferrer noopener">instruction</a>, <a href="https://github.com/jameswsullivan/selfhosted/blob/main/bitwarden.sh" data-type="URL" data-id="https://github.com/jameswsullivan/selfhosted/blob/main/bitwarden.sh" target="_blank" rel="noreferrer noopener">installation script</a>)</li>
-
-
-
-<li>Bitwarden&#8217;s <a rel="noreferrer noopener" href="https://bitwarden.com/help/install-on-premise-linux/" data-type="URL" data-id="https://bitwarden.com/help/install-on-premise-linux/" target="_blank">official installation guide</a>.</li>
-
-
-
-<li><a href="https://frdmtoplay.com/self-hosting-bitwarden-without-smtp/" target="_blank" rel="noreferrer noopener">Reference article</a>.</li>
-</ul>
-
-
-
-<h2 class="wp-block-heading">Customization:</h2>
-
-
-
-<h4 class="wp-block-heading"><strong>Manually &#8220;verify&#8221; emails without an SMTP server.</strong></h4>
-
-
-
-<pre class="wp-block-code"><code># On the bitwarden host machine: (assuming that you're using the bitwarden user and in the /opt/bitwarden directory)
-
-
-# Retrieve the database password:
-cat bwdata/env/mssql.override.env
-
-
-# You'll get:
-SA_PASSWORD=YOUR_DB_PASS
-
-# Connect to the bitwarden-mssql container:
-docker exec -it bitwarden-mssql bash
-
-# While in the bitwarden-mssql container, do the following:
-# Connect to the DB instance:
-cd /opt/mssql-tools/bin
-./sqlcmd -S 127.0.0.1 -U sa -P YOUR_DB_PASS
-
-# List all databases:
-SELECT name, database_id, create_date  
-FROM sys.databases;  
-GO
-
-# Find the database name (your database name was specified during this installation step: Enter the database name for your Bitwarden instance (ex. vault): YOUR_DB_NAME):
-USE YOUR_DB_NAME
-GO
-SELECT Name, Email, EmailVerified FROM &#91;User]
-GO
-
-# Change "admin" to the user that you need to modify.
-UPDATE &#91;User] SET EmailVerified = 1 WHERE &#91;User].Name="admin";
-GO
-
-# The EmailVerified field (0 = not verified, 1 = verified) is what you need to change.</code></pre>
-
-
-
-<h4 class="wp-block-heading"><strong>Self-signed certificate:</strong></h4>
-
-
-
-<p>If you use a self-signed certificate, refer to the <em>Install the certificates:</em> section <a rel="noreferrer noopener" href="https://jameswsullivan.github.io/self-host-passbolt/" target="_blank">in this article</a>.</p>
-
-
-
-<p>Fun fact: Bitwarden&#8217;s self-signed certificate is valid for 100 years.</p>
-
-
-
-<p></p>
 ]]></content:encoded>
 					
 		

@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/php/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Tue, 01 Aug 2023 20:18:22 +0000</lastBuildDate>
+	<lastBuildDate>Sat, 05 Aug 2023 21:31:27 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -112,7 +112,6 @@ $wgGroupPermissions&#91;'']&#91;'edit'] = false;</code></pre>
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Thu, 30 Jul 2009 00:29:00 +0000</pubDate>
 				<category><![CDATA[archive]]></category>
-		<category><![CDATA[blog]]></category>
 		<category><![CDATA[Apache]]></category>
 		<category><![CDATA[Linux]]></category>
 		<category><![CDATA[php]]></category>

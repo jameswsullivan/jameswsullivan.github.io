@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/docker/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Sat, 05 Aug 2023 17:00:20 +0000</lastBuildDate>
+	<lastBuildDate>Sat, 05 Aug 2023 21:33:22 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -205,7 +205,6 @@ MYSQL_ROOT_PASSWORD=&lt;YOUR_MYSQL_ROOT_PASSWORD></code></pre>
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Wed, 10 May 2023 02:16:01 +0000</pubDate>
 				<category><![CDATA[blog]]></category>
-		<category><![CDATA[notes]]></category>
 		<category><![CDATA[Bitwarden]]></category>
 		<category><![CDATA[Docker]]></category>
 		<category><![CDATA[Hosting]]></category>
@@ -318,7 +317,6 @@ GO
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Mon, 08 May 2023 02:57:53 +0000</pubDate>
 				<category><![CDATA[blog]]></category>
-		<category><![CDATA[notes]]></category>
 		<category><![CDATA[Docker]]></category>
 		<category><![CDATA[Hosting]]></category>
 		<category><![CDATA[Linux]]></category>
@@ -451,7 +449,6 @@ service nginx restart</code></pre>
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sun, 07 May 2023 20:30:25 +0000</pubDate>
 				<category><![CDATA[blog]]></category>
-		<category><![CDATA[notes]]></category>
 		<category><![CDATA[Apache]]></category>
 		<category><![CDATA[Containerization]]></category>
 		<category><![CDATA[Docker]]></category>
@@ -634,7 +631,6 @@ echo -e "\n\nKoha Password: $koha_password"</code></pre>
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Mon, 01 May 2023 00:23:40 +0000</pubDate>
 				<category><![CDATA[blog]]></category>
-		<category><![CDATA[notes]]></category>
 		<category><![CDATA[BookStack]]></category>
 		<category><![CDATA[Docker]]></category>
 		<category><![CDATA[Hosting]]></category>
@@ -1033,7 +1029,7 @@ docker run -dit --name MY-NEXTCLOUD-DB-CONTAINER --ip IP-ADDRESS --network DOCKE
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Wed, 29 Mar 2023 02:18:34 +0000</pubDate>
-				<category><![CDATA[notes]]></category>
+				<category><![CDATA[blog]]></category>
 		<category><![CDATA[Docker]]></category>
 		<category><![CDATA[Software Development]]></category>
 		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2249</guid>

@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/nginx/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Mon, 08 May 2023 03:16:14 +0000</lastBuildDate>
+	<lastBuildDate>Sat, 05 Aug 2023 21:32:53 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -26,7 +26,6 @@
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Mon, 08 May 2023 02:57:53 +0000</pubDate>
 				<category><![CDATA[blog]]></category>
-		<category><![CDATA[notes]]></category>
 		<category><![CDATA[Docker]]></category>
 		<category><![CDATA[Hosting]]></category>
 		<category><![CDATA[Linux]]></category>

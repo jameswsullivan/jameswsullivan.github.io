@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/category/blog/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Sat, 05 Aug 2023 17:00:20 +0000</lastBuildDate>
+	<lastBuildDate>Sun, 06 Aug 2023 18:24:00 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -20,6 +20,208 @@
 	1	</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=6.2.2</generator>
 	<item>
+		<title>Flash LSI SAS Adapters to HBA IT MODE</title>
+		<link>https://jameswsullivan.github.io/flash-lsi-sas-adapters-to-hba-it-mode/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sat, 05 Aug 2023 23:33:28 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Firmware]]></category>
+		<category><![CDATA[HBA]]></category>
+		<category><![CDATA[LSI HBA Adapters]]></category>
+		<category><![CDATA[MegaCLI]]></category>
+		<category><![CDATA[MegaRec]]></category>
+		<category><![CDATA[NAS]]></category>
+		<category><![CDATA[SAS2FLASH.EFI]]></category>
+		<category><![CDATA[SAS2FLSH]]></category>
+		<category><![CDATA[Storage]]></category>
+		<category><![CDATA[TrueNAS]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2205</guid>
+
+					<description><![CDATA[Flash LSI SAS Adapters to IT MODE with MegaRec, SAS2FLASH.EFI.]]></description>
+										<content:encoded><![CDATA[
+<p>In the past year of so I&#8217;ve acquired a few SAS Adapters for my NAS and other server builds and needed to flash them to IT mode to use with TrueNAS and Windows storage pool. The following steps were performed on a PIKE 2008 card that came with an ASUS Z9PA-D8 motherboard.</p>
+
+
+
+<p>I did quite some research on this matter and found that a lot of the tutorials have over complicated the issue if the only goal here is to flash the SAS adapter to IT mode, so here I&#8217;ll provide a simplified process.</p>
+
+
+
+<h2 class="wp-block-heading">Tools needed:</h2>
+
+
+
+<ul>
+<li>The firmware <code>.bin</code> file of your adapter. Most of the firmware files can be downloaded directly from Broadcom&#8217;s website. (Here we&#8217;re using the <code>2118it.bin</code> file extracted from the <code>9211-8i_Package_P20_IR_IT_FW_BIOS_for_MSDOS_Windows</code> package.</li>
+
+
+
+<li>You <strong>do not</strong> necessarily need the full suite of the LSI command line toolkit, you only need three files: <code>MegaRec.exe</code>, <code>DOS4GW.EXE</code>, and <code>sas2flash.efi</code> . <code>MegaCli</code> is optional, I used it on one machine and it provides a lot of powerful functions but on the machine with PIKE 2008, it wasn&#8217;t able to detect any hardware.</li>
+
+
+
+<li>The <code>sbrempty.bin</code> file.</li>
+
+
+
+<li>A flash drive (a small one is enough, the files needed are only a few MBs) formatted to FAT32.</li>
+
+
+
+<li>A copy of the EFI bootloader (<code>efi\boot\bootx64.efi</code>) to boot into the EFI shell.</li>
+
+
+
+<li><a rel="noreferrer noopener" href="https://rufus.ie/en/" target="_blank">Rufus</a>, to make the flash drive DOS bootable.</li>
+
+
+
+<li>Optional: If you want to be able to boot into the card&#8217;s BIOS utility, you can flash the <code>mptsas2.rom</code> as well (not provided), but if you only want your adapter to function like extra SATA ports in passthrough mode, you can ignore this one.</li>
+</ul>
+
+
+
+<p>Note: You can probably perform the firmware flash without the EFI shell, the sas2flash tool has a DOS version, but from my experience the EFI version has the best compatibility and I&#8217;ve had the most success with it. All the files needed can be downloaded here: <a rel="noreferrer noopener" href="https://github.com/jameswsullivan/blog-file-share/blob/main/SAS-Adapters-IT-Mode.zip" target="_blank">SAS-Adapters-IT-Mode.zip</a> .</p>
+
+
+
+<h2 class="wp-block-heading">Steps:</h2>
+
+
+
+<p>1. Use Rufus to make a MS-DOS bootable flash drive. Add all files from the zip file to the root directory of the flash drive. The root directory should look like this:</p>
+
+
+
+<pre class="wp-block-code"><code>LOCALE
+efi
+autorun.inf
+autorun.ico
+MegaRec.exe
+DOS4GW.EXE
+2118it.bin
+sbrempty.bin
+sas2flash.efi</code></pre>
+
+
+
+<p>2. Configure your boot options in BIOS as needed (legacy and UEFI), and boot into EFI first.</p>
+
+
+
+<p>3. At the EFI shell prompt, move to the flash drive (mine is <code>fs0:</code> ), and execute the following commands:</p>
+
+
+
+<pre class="wp-block-code"><code># List your boards. If you only have one adapter, the index should be 0.
+sas2flash.efi -listall
+
+# Get the adapter's SAS address.
+sas2flash.efi -c 0 -list
+
+# You can pipe your output to a text file if you want to keep a record of it, and you can use the "edit" command in the EFI shell to view/edit the files, very much like how you use "nano" on Linux. e.g.:
+
+sas2flash.efi -listall > myadapters.txt
+sas2flash.efi -c 0 -list > adapter0info.txt
+edit adapter0info.txt</code></pre>
+
+
+
+<p>4. Exit out of the EFI shell and boot into DOS. At the DOS prompt, move to your flash drive and execute the following <code>MegaRec</code> commands:</p>
+
+
+
+<pre class="wp-block-code"><code># Show adapters, which we already know from step 3 that our adapter is at "0".
+megarec -adplist
+
+# &#91;Optional]: Make a backup of your SBR and SPD.
+megarec -readsbr 0 file_name.sbr
+megarec -readspd 0 file_name.spd
+
+# Write the sbrempty.bin file.
+megarec -writesbr 0 sbrempty.bin
+
+# Clean the flash. This step might take a few minutes.
+megarec -cleanflash 0
+
+# Note: You can also pipe the output of these commands to a text file for documentation.</code></pre>
+
+
+
+<p>5. Boot into the EFI shell again and flash the <code>2118it.bin</code> firmware.</p>
+
+
+
+<pre class="wp-block-code"><code># Flash the 2118it.bin firmware:
+sas2flash.efi -c 0 -o -f 2118it.bin
+OR
+sas2flash.efi -c 0 -o -f 2118it.bin -b mptsas2.rom
+
+# Grab the SAS address from step 3 and set the address.
+# Note, the SAS address displayed in step 3 contains dashes, but when you enter it here you need to enter the 16 digits address without dashes.
+sas2flash.efi -c 0 -o -sasadd 12345600000000AB
+
+# Verify your adapter
+sas2flash.efi -listall
+sas2flash.efi -c 0 -list</code></pre>
+
+
+
+<p>If all the steps finished without errors, your SAS adapter should be working in IT Mode now. As a reference, I have the following cards on my servers: one PIKE 2008, one 9200-8i (or maybe a 9220-8i), and two IBM ServeRAID M1015 that came off some x3690 X5 servers.</p>
+
+
+
+<div style="height:50px" aria-hidden="true" class="wp-block-spacer"></div>
+
+
+
+<h2 class="wp-block-heading">Reference: MegaREC Command Usage:</h2>
+
+
+
+<pre class="wp-block-code"><code>
+MegaRAID HWR Contoller Recovery tool. Version 01.02-007 August 03, 2011
+Copyright (c) 2006-2010 LSI Corp.
+Supports 1078 controller and its Successors.
+
+Usage:
+MegaRec -help                  : Display the list of options
+MegaRec -adpList               : Display identified MR controller(s)
+MegaRec -corruptInfo           : Display corruption information of controller
+MegaRec -m0flash &lt;n&gt; &lt;image&gt;   : Flash controller
+                               : where &lt;n&gt; is the controller index
+                               : and &lt;image&gt; is the image file to flash
+MegaRec -cleanflash &lt;n&gt; &lt;image&gt;: Erase Flash. Programs if image is Provided.
+                               : where &lt;n&gt; is the controller index
+                               : and &lt;image&gt; is the image file to flash
+MegaRec -readspd &lt;n&gt; &lt;image&gt;   : Read controller SPD to specified file
+                               : where &lt;n&gt; is the controller index
+                               : and &lt;image&gt; is the specified file name
+MegaRec -writespd &lt;n&gt; &lt;image&gt;  : Write controller SPD from specified file
+                               : where &lt;n&gt; is the controller index
+                               : and &lt;image&gt; is the specified file name
+MegaRec -readsbr &lt;n&gt; &lt;image&gt; &#91;&lt;byteCount&gt;] : Read controller SBR to specified 
+                               : file where &lt;n&gt; is the controller index,
+                               : &lt;byteCount&gt; is the number of bytes of SBR 
+                               : to be read and is optional to specify
+                               : and &lt;image&gt; is the specified file name
+MegaRec -writesbr &lt;n&gt; &lt;image&gt;  : Write controller SBR from specified file
+                               : where &lt;n&gt; is the controller index
+                               : and &lt;image&gt; is the specified file name
+MegaRec -m0flash &lt;n&gt; &lt;image&gt; &lt;-i2o/-fusion&gt;     : Flash controller in I2O/FUSION mode
+MegaRec -cleanflash &lt;n&gt; &lt;image&gt; &lt;-i2o/-fusion&gt;  : Erase Flash. Programs if image is Provided in I2O/FUSION mode.
+MegaRec -readspd &lt;n&gt; &lt;image&gt; &lt;-i2o/-fusion&gt;     : Read controller SPD to specified file in I2O/FUSION mode
+MegaRec -writespd &lt;n&gt; &lt;image&gt; &lt;-i2o/-fusion&gt;    : Write controller SPD from specified file in I2O/FUSION mode
+MegaRec -readsbr &lt;n&gt; &lt;image&gt; &#91;&lt;byteCount&gt;] &lt;-i2o/-fusion&gt; : Read controller SBR to specified file in I2O/FUSION mode
+MegaRec -writesbr &lt;n&gt; &lt;image&gt; &lt;-i2o/-fusion&gt;    : Write controller SBR from specified file in I2O/FUSION mode
+</code></pre>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>Expand LVM in Ubuntu (22.04 LTS)</title>
 		<link>https://jameswsullivan.github.io/expand-lvm-in-ubuntu-22-04-lts/</link>
 		
@@ -141,6 +343,214 @@ Fix/Ignore?</code></pre>
 		
 			</item>
 		<item>
+		<title>Configure VLAN and InterVLAN Routing on Cisco Router and Switch</title>
+		<link>https://jameswsullivan.github.io/configure-vlan-and-intervlan-routing-on-cisco-router-and-switch/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Tue, 20 Jun 2023 15:25:19 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Cisco]]></category>
+		<category><![CDATA[Cisco 2951]]></category>
+		<category><![CDATA[Cisco C3750G]]></category>
+		<category><![CDATA[InterVLAN Routing]]></category>
+		<category><![CDATA[Network Administration]]></category>
+		<category><![CDATA[Networking]]></category>
+		<category><![CDATA[router-on-a-stick]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2574</guid>
+
+					<description><![CDATA[Configure VLAN and InterVLAN routing on Cisco router and switch using router-on-a-stick and SVI.]]></description>
+										<content:encoded><![CDATA[
+<h2 class="wp-block-heading">Environment &amp; Requirement</h2>
+
+
+
+<ul>
+<li>Router: Cisco 2951</li>
+
+
+
+<li>Switch: Cisco C3750G PoE</li>
+
+
+
+<li>2 VLANs</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading">Method 1: router-on-a-stick</h2>
+
+
+
+<pre class="wp-block-code"><code>Topology: C3750G (GigabitEthernet3/0/1) -- CISCO2951(GigabitEthernet0/1) -- INTERNET(GigabitEthernet0/0)</code></pre>
+
+
+
+<h4 class="wp-block-heading">On CISCO2951:</h4>
+
+
+
+<pre class="wp-block-code"><code>CISCO2951(config)#interface GigabitEthernet 0/0
+CISCO2951(config-if)#no shutdown
+CISCO2951(config-if)#speed 1000
+CISCO2951(config-if)#duplex full
+CISCO2951(config-if)#exit
+
+CISCO2951(config)#interface GigabitEthernet 0/0.10
+CISCO2951(config-subif)#encapsulation dot1Q 10
+CISCO2951(config-subif)#ip address 192.168.10.1 255.255.255.0
+CISCO2951(config-subif)#exit
+
+CISCO2951(config)#interface GigabitEthernet 0/0.20
+CISCO2951(config-subif)#encapsulation dot1Q 20                 
+CISCO2951(config-subif)#ip address 192.168.20.1 255.255.255.0</code></pre>
+
+
+
+<h4 class="wp-block-heading">On C3750G:</h4>
+
+
+
+<pre class="wp-block-code"><code>C3750G(config)#interface GigabitEthernet 3/0/1
+C3750G(config-if)#switchport mode trunk
+C3750G(config-if)#switchport trunk encapsulation dot1q
+C3750G(config-if)#no shutdown
+C3750G(config-if)#speed 1000
+C3750G(config-if)#duplex full
+C3750G(config-if)#exit
+
+C3750G(config)#vlan 10
+C3750G(config-vlan)#name VLAN10
+C3750G(config-vlan)#exit
+C3750G(config)#vlan 20
+C3750G(config-vlan)#name VLAN20
+C3750G(config-vlan)#exit
+
+# Assign ports to the VLANs as needed:
+C3750G(config)#interface GigabitEthernet 3/0/2
+C3750G(config-if)#switchport mode access
+C3750G(config-if)#switchport access vlan 10
+C3750G(config-if)#no shutdown
+C3750G(config-if)#speed 1000
+C3750G(config-if)#duplex full
+C3750G(config-if)#exit
+
+C3750G(config)#interface GigabitEthernet 3/0/3
+C3750G(config-if)#switchport mode access
+C3750G(config-if)#switchport access vlan 20
+C3750G(config-if)#no shutdown
+C3750G(config-if)#speed 1000
+C3750G(config-if)#duplex full
+C3750G(config-if)#exit</code></pre>
+
+
+
+<h2 class="wp-block-heading">Method 2: SVI (Switch Virtual Interface) and InterVLAN routing on C3750G switch.</h2>
+
+
+
+<pre class="wp-block-code"><code>Topology: C3750G (GigabitEthernet3/0/1) -- CISCO2951(GigabitEthernet0/1) -- INTERNET(GigabitEthernet0/0)</code></pre>
+
+
+
+<h4 class="wp-block-heading">CISCO2951 Configs:</h4>
+
+
+
+<pre class="wp-block-code"><code># Configure GigabitEthernet 0/0 (connected to cable modem from ISP) to use DHCP.
+CISCO2951(config)#interface GigabitEthernet 0/0
+CISCO2951(config-if)#ip address dhcp
+CISCO2951(config-if)#ip nat outside
+CISCO2951(config-if)#ip virtual-reassembly in
+CISCO2951(config-if)#no shutdown
+CISCO2951(config-if)#speed 1000
+CISCO2951(config-if)#duplex full
+CISCO2951(config-if)#exit
+
+# Configure GigabitEthernet0/1 (connected to C3750G).
+CISCO2951(config)#interface GigabitEthernet 0/1
+CISCO2951(config-if)#ip address 192.168.0.1 255.255.255.0
+CISCO2951(config-if)#ip access-group NAT_ACL in
+CISCO2951(config-if)#ip nat inside
+CISCO2951(config-if)#ip virtual-reassembly in
+CISCO2951(config-if)#no shutdown
+CISCO2951(config-if)#speed 1000
+CISCO2951(config-if)#duplex full
+CISCO2951(config-if)#exit
+
+# Configure ACL and NAT.
+CISCO2951(config)#ip dns server
+CISCO2951(config)#ip access-list extended NAT_ACL
+CISCO2951-K9(config-ext-nacl)#permit ip 192.168.0.0 0.255.255.255 any
+CISCO2951-K9(config-ext-nacl)#exit
+CISCO2951(config)#ip nat inside source list NAT_ACL interface GigabitEthernet0/0 overload
+
+# Enable routing and configure EIGRP (optional, depending on your configs)
+CISCO2951(config)#ip routing
+CISCO2951(config)#router eigrp 100
+CISCO2951(config-router)#network 192.168.0.0 0.255.255.255</code></pre>
+
+
+
+<h4 class="wp-block-heading">C3750G Configs:</h4>
+
+
+
+<pre class="wp-block-code"><code># Enable routing.
+C3750G(config)#ip routing
+# Disable "ip cef optimize neighbor resolution" to get rid of excessive warning/error logs.
+C3750G(config)#no ip cef optimize neighbor resolution
+C3750G(config)#no ip domain-lookup
+
+# Enable spanning-tree protocol.
+C3750G(config)#spanning-tree mode pvst
+
+# Configure VLANs
+C3750G(config)#vlan 10
+C3750G(config-vlan)#name VLAN10
+C3750G(config-vlan)#exit
+C3750G(config)#vlan 20
+C3750G(config-vlan)#name VLAN20
+C3750G(config-vlan)#exit
+
+C3750G(config)#interface vlan 10
+C3750G(config-if)#ip address 192.168.10.1 255.255.255.0
+C3750G(config-if)#ip helper-address 192.168.0.1
+C3750G(config)#interface vlan 20
+C3750G(config-if)#ip address 192.168.20.1 255.255.255.0
+C3750G(config-if)#ip helper-address 192.168.0.1
+
+# Configure trunk port
+C3750G(config)#interface GigabitEthernet 3/0/1
+C3750G(config-if)#no switchport
+C3750G(config-if)#ip address 192.168.0.2 255.255.255.0
+C3750G(config-if)#no shutdown
+C3750G(config-if)#speed 1000
+C3750G(config-if)#duplex full
+
+# Configure default route.
+C3750G(config)#ip route 0.0.0.0 0.0.0.0 GigabitEthernet 3/0/1
+
+# Assign ports to VLANs
+C3750G(config)#interface range GigabitEthernet 3/0/2 - 5
+C3750G(config-if-range)#switch port access vlan 10
+C3750G(config-if-range)#switchport mode access
+C3750G(config-if-range)#speed 1000
+C3750G(config-if-range)#duplex full
+C3750G(config-if-range)#no shut
+
+C3750G(config)#interface range GigabitEthernet 3/0/6 - 12
+C3750G(config-if-range)#switch port access vlan 20
+C3750G(config-if-range)#switchport mode access
+C3750G(config-if-range)#speed 1000
+C3750G(config-if-range)#duplex full
+C3750G(config-if-range)#no shut</code></pre>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>Flash Cisco IOS on a C3750G Switch</title>
 		<link>https://jameswsullivan.github.io/flash-cisco-ios-on-a-c3750g-switch/</link>
 		
@@ -232,6 +642,36 @@ reload</code></pre>
 
 
 <pre class="wp-block-code"><code>ssh -oKexAlgorithms=+diffie-hellman-group1-sha1 -c aes256-cbc username@ip_address
+</code></pre>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Network Administration</title>
+		<link>https://jameswsullivan.github.io/network-administration/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sat, 17 Jun 2023 19:51:05 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Network Administration]]></category>
+		<category><![CDATA[Networking]]></category>
+		<category><![CDATA[System Administration]]></category>
+		<category><![CDATA[Windows Systems Administration]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2567</guid>
+
+					<description><![CDATA[Common network administration tools, commands, and notes.]]></description>
+										<content:encoded><![CDATA[
+<blockquote class="wp-block-quote">
+<p>In Construction</p>
+</blockquote>
+
+
+
+<pre class="wp-block-code"><code>Command requires cmd with administrative privilege.
+
+netsh wlan show wlanreport
 </code></pre>
 ]]></content:encoded>
 					
@@ -488,435 +928,6 @@ MYSQL_ROOT_PASSWORD=&lt;YOUR_MYSQL_ROOT_PASSWORD></code></pre>
 </ul>
 </li>
 </ul>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Self-host Bitwarden</title>
-		<link>https://jameswsullivan.github.io/self-host-bitwarden/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Wed, 10 May 2023 02:16:01 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[notes]]></category>
-		<category><![CDATA[Bitwarden]]></category>
-		<category><![CDATA[Docker]]></category>
-		<category><![CDATA[Hosting]]></category>
-		<category><![CDATA[MSSQL]]></category>
-		<category><![CDATA[Password Manager]]></category>
-		<category><![CDATA[Self-Hosting]]></category>
-		<category><![CDATA[Ubuntu]]></category>
-		<category><![CDATA[Web Hosting]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2436</guid>
-
-					<description><![CDATA[Self-host Bitwarden using self-signed certificate and "hack" the database to manually verify emails without a live SMTP server.]]></description>
-										<content:encoded><![CDATA[
-<h2 class="wp-block-heading">Background:</h2>
-
-
-
-<p>I chose Bitwarden over Passbolt because Bitwarden stores a cached copy of your vault to allow offline access (read-only) on mobile devices while I&#8217;m away from my home lab or don&#8217;t have internet connection. I&#8217;m also using KeePass so it would be sufficient for my need.</p>
-
-
-
-<p>My Bitwarden instance runs on a Hyper-V VM running Ubuntu Server 22.04 LTS.</p>
-
-
-
-<h2 class="wp-block-heading">Project:</h2>
-
-
-
-<ul>
-<li>This project is documented on <a rel="noreferrer noopener" href="https://github.com/jameswsullivan/selfhosted" target="_blank">my GitHub</a>. (<a href="https://github.com/jameswsullivan/selfhosted/blob/main/bitwarden.md" target="_blank" rel="noreferrer noopener">instruction</a>, <a href="https://github.com/jameswsullivan/selfhosted/blob/main/bitwarden.sh" data-type="URL" data-id="https://github.com/jameswsullivan/selfhosted/blob/main/bitwarden.sh" target="_blank" rel="noreferrer noopener">installation script</a>)</li>
-
-
-
-<li>Bitwarden&#8217;s <a rel="noreferrer noopener" href="https://bitwarden.com/help/install-on-premise-linux/" data-type="URL" data-id="https://bitwarden.com/help/install-on-premise-linux/" target="_blank">official installation guide</a>.</li>
-
-
-
-<li><a href="https://frdmtoplay.com/self-hosting-bitwarden-without-smtp/" target="_blank" rel="noreferrer noopener">Reference article</a>.</li>
-</ul>
-
-
-
-<h2 class="wp-block-heading">Customization:</h2>
-
-
-
-<h4 class="wp-block-heading"><strong>Manually &#8220;verify&#8221; emails without an SMTP server.</strong></h4>
-
-
-
-<pre class="wp-block-code"><code># On the bitwarden host machine: (assuming that you're using the bitwarden user and in the /opt/bitwarden directory)
-
-
-# Retrieve the database password:
-cat bwdata/env/mssql.override.env
-
-
-# You'll get:
-SA_PASSWORD=YOUR_DB_PASS
-
-# Connect to the bitwarden-mssql container:
-docker exec -it bitwarden-mssql bash
-
-# While in the bitwarden-mssql container, do the following:
-# Connect to the DB instance:
-cd /opt/mssql-tools/bin
-./sqlcmd -S 127.0.0.1 -U sa -P YOUR_DB_PASS
-
-# List all databases:
-SELECT name, database_id, create_date  
-FROM sys.databases;  
-GO
-
-# Find the database name (your database name was specified during this installation step: Enter the database name for your Bitwarden instance (ex. vault): YOUR_DB_NAME):
-USE YOUR_DB_NAME
-GO
-SELECT Name, Email, EmailVerified FROM &#91;User]
-GO
-
-# Change "admin" to the user that you need to modify.
-UPDATE &#91;User] SET EmailVerified = 1 WHERE &#91;User].Name="admin";
-GO
-
-# The EmailVerified field (0 = not verified, 1 = verified) is what you need to change.</code></pre>
-
-
-
-<h4 class="wp-block-heading"><strong>Self-signed certificate:</strong></h4>
-
-
-
-<p>If you use a self-signed certificate, refer to the <em>Install the certificates:</em> section <a rel="noreferrer noopener" href="https://jameswsullivan.github.io/self-host-passbolt/" target="_blank">in this article</a>.</p>
-
-
-
-<p>Fun fact: Bitwarden&#8217;s self-signed certificate is valid for 100 years.</p>
-
-
-
-<p></p>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Self-host Passbolt</title>
-		<link>https://jameswsullivan.github.io/self-host-passbolt/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Mon, 08 May 2023 02:57:53 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[notes]]></category>
-		<category><![CDATA[Docker]]></category>
-		<category><![CDATA[Hosting]]></category>
-		<category><![CDATA[Linux]]></category>
-		<category><![CDATA[Nginx]]></category>
-		<category><![CDATA[Passbolt]]></category>
-		<category><![CDATA[Password Manager]]></category>
-		<category><![CDATA[Self-Hosting]]></category>
-		<category><![CDATA[Web Hosting]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2427</guid>
-
-					<description><![CDATA[Self-host the Passbolt password manager using self-signed certificate.]]></description>
-										<content:encoded><![CDATA[
-<h2 class="wp-block-heading">Background:</h2>
-
-
-
-<ul>
-<li>The Passbolt instance is locally hosted and only available in my homelab&#8217;s LAN environment. It&#8217;s not exposed to the internet.</li>
-
-
-
-<li>The instance uses a self-signed certificate. See <a href="https://help.passbolt.com/faq/hosting/mobile-faq" target="_blank" rel="noreferrer noopener">official FAQ here</a>.</li>
-
-
-
-<li>My test environment: Windows, Ubuntu Server 22.04 LTS, Pixel 5 phone with the Passbolt app. (<a href="https://help.passbolt.com/faq/hosting/how-to-import-ssl-certificate-on-mobile" target="_blank" rel="noreferrer noopener">Install self-signed certificate on Android</a>.)</li>
-</ul>
-
-
-
-<h2 class="wp-block-heading">Setup:</h2>
-
-
-
-<pre class="wp-block-code"><code># Passbolt Docker image.
-
-pull passbolt/passbolt
-
-
-# Start the container.
-
-docker run -dit \
-    --name=YOUR_CONTAINER_NAME \
-    --ip IP_ADDRESS --network YOUR_DOCKER_NETWORK \
-    --hostname=YOUR_PASSBOLT_HOSTNAME \
-    --restart=unless-stopped \
-    -e DATASOURCES_DEFAULT_HOST=YOUR_DATABASE_SERVER \
-    -e DATASOURCES_DEFAULT_PASSWORD=YOUR_DB_PASSWORD \
-    -e DATASOURCES_DEFAULT_USERNAME=YOUR_DB_USER \
-    -e DATASOURCES_DEFAULT_DATABASE=YOUR_PASSBOLT_DB_NAME \
-    -e APP_FULL_BASE_URL=https://YOUR_PASSBOLT_APP_URL/ \
-    passbolt/passbolt
-
-
-# Generate self-signed certificate
-
-openssl req -x509 \
-    -newkey rsa:4096 \
-    -days SPECIFY_YOUR_OWN \
-    -subj "/C=YOUR_COUNTRY/ST=YOUR_STATE/L=YOUR_CITY/O=YOUR_ORG/OU=YOUR_OU/CN=YOUR_PASSBOLT_APP_URL/" \
-    -nodes \
-    -addext "subjectAltName = DNS:YOUR_PASSBOLT_APP_URL" \
-    -keyout passbolt_self_signed_key.pem \
-    -out passbolt_self_signed_cert.pem
-
-
-# Create your first admin user
-
-docker exec -it YOUR_CONTAINER_NAME bash
-
-su -m -c "/usr/share/php/passbolt/bin/cake passbolt register_user -u YOUR_ADMIN_USER@YOUR_DOMAIN.COM -f YOUR_FIRSTNAME -l YOUR_LASTNAME -r admin" -s /bin/sh www-data
-
-
-# Edit <em><strong>/etc/nginx/snippets/passbolt-ssl.conf</strong></em> to point to your self-generated certificates.
-
-apt-get install nano -y
-nano /etc/nginx/snippets/passbolt-ssl.conf
-
-
-# Restart nginx
-
-service nginx restart</code></pre>
-
-
-
-<h2 class="wp-block-heading">Install the certificates:</h2>
-
-
-
-<ul>
-<li>Import the <code>passbolt_self_signed_cert.pem</code> certificate into Windows&#8217; <code>Trusted Root Certification Authorities</code>.</li>
-
-
-
-<li>On Android devices, go to<br><code>Security &amp; privacy - Encryption &amp; credentials - Install a certificate - CA certificate - Install anyway</code><br>Browse to the passbolt_self_signed_cert.pem cert file and install it.</li>
-
-
-
-<li><a href="https://help.passbolt.com/faq/hosting/mobile-faq">Official FAQ on generating self-signed cert.</a></li>
-
-
-
-<li><a href="https://help.passbolt.com/faq/hosting/how-to-import-ssl-certificate-on-mobile">Official FAQ on installing cert on Android devices.</a></li>
-
-
-
-<li>Browser&#8217;s cache &amp; cookies might need to be cleared for the new cert to take effect.</li>
-</ul>
-
-
-
-<h2 class="wp-block-heading">Troubleshooting:</h2>
-
-
-
-<p>When generating the self-signed certificate, the <code>subjectAltName</code> must be specified, otherwise you&#8217;ll likely encounter this error when scanning the QR code. (<a href="https://community.passbolt.com/t/error-setting-up-mobile-app/5875" target="_blank" rel="noreferrer noopener">See this post.</a>)</p>
-
-
-
-<pre class="wp-block-code"><code>There was an error during transfer update(Something went wrong!)</code></pre>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Docker Containerization of Koha ILS Software</title>
-		<link>https://jameswsullivan.github.io/docker-containerization-of-koha-ils-software/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Sun, 07 May 2023 20:30:25 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[notes]]></category>
-		<category><![CDATA[Apache]]></category>
-		<category><![CDATA[Containerization]]></category>
-		<category><![CDATA[Docker]]></category>
-		<category><![CDATA[Dockerizing]]></category>
-		<category><![CDATA[Hosting]]></category>
-		<category><![CDATA[KOHA]]></category>
-		<category><![CDATA[KOHA ILS]]></category>
-		<category><![CDATA[Linux]]></category>
-		<category><![CDATA[Self-Hosting]]></category>
-		<category><![CDATA[Ubuntu]]></category>
-		<category><![CDATA[Web Hosting]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2389</guid>
-
-					<description><![CDATA[Docker Containerization of the Koha ILS Software using the latest Ubuntu 22.04 LTS image.]]></description>
-										<content:encoded><![CDATA[
-<h2 class="wp-block-heading">Background:</h2>
-
-
-
-<p>The majority of instructions I found so far have been installing Koha instances on VMs or standalone servers, <a rel="noreferrer noopener" href="https://bywatersolutions.com/education/koha-testing-docker" target="_blank">ByWater Solution&#8217;s solution</a> (<a rel="noreferrer noopener" href="https://gitlab.com/koha-community/koha-testing-docker" target="_blank">gitlab repo</a>) seem to be the only one out there that&#8217;s a decent attempt. I have been setting things up in my home lab recently and this was one of the test projects.</p>
-
-
-
-<h2 class="wp-block-heading">Environment:</h2>
-
-
-
-<ul>
-<li>My homelab uses a <code>.local</code> domain. The Koha DNS entries look like this: <code>koha-opac.example.local</code> and <code>koha-staff.example.local</code> .</li>
-
-
-
-<li>My containers have IP addresses statically assigned.</li>
-
-
-
-<li>An <code>ipvlan</code> Docker network named the same as my homelab&#8217;s domain. ( <code>example.local</code> )</li>
-
-
-
-<li>DNS resolution is done on both my core router (Cisco 2951) and on the two Domain Controllers.</li>
-</ul>
-
-
-
-<h2 class="wp-block-heading">Containerization</h2>
-
-
-
-<p>This project is documented on <a rel="noreferrer noopener" href="https://github.com/jameswsullivan/KohaContainerization" target="_blank">my GitHub</a>. This is only the first iteration and still has some improvements that I want to make in the future, such as setting it to use a remote MySQL server instead of a local MySQL/MariaDB instance and mounting some volumes for persistent data.</p>
-
-
-
-<h2 class="wp-block-heading">Troubleshooting</h2>
-
-
-
-<p>Since a Ubuntu container is slightly different than a standalone Ubuntu installation, Koha&#8217;s automatic configurations won&#8217;t work straight out of the box and I needed to make some tweaks.</p>
-
-
-
-<h4 class="wp-block-heading"><strong>Issue 1: MPM ITK Apache module warning</strong></h4>
-
-
-
-<p>The container has to be run with the <code>--cap-add=SYS_NICE --cap-add=DAC_READ_SEARCH</code> flags added, otherwise you&#8217;ll get this error in the <code>/var/log/apache2/error.log</code> and a 500 server error. (See full <a rel="noreferrer noopener" href="https://github.com/jameswsullivan/KohaContainerization" target="_blank">docker run</a> command.)</p>
-
-
-
-<pre class="wp-block-code"><code>&#91;mpm_itk:warn] &#91;pid 746] (itkmpm: pid=746 uid=33, gid=33) itk_post_perdir_config(): setgid(1000): Operation not permitted</code></pre>
-
-
-
-<h4 class="wp-block-heading"><strong>Issue 2: MySQL database connection problem.</strong></h4>
-
-
-
-<p><strong>In the Koha config file</strong>, <code>/etc/koha/sites/koha/koha-conf.xml</code>, change <code>&lt;hostname&gt;localhost&lt;/hostname&gt;</code> to <code>&lt;hostname&gt;YOUR_CONTAINERS_HOSTNAME&lt;/hostname&gt;</code>. For example, in my <code>docker run</code> command I specified the hostname to be <code>--hostname=koha-opac.YOURDOMAIN.COM</code> , then I&#8217;ll change my <code>&lt;hostname&gt;</code> element to <code>&lt;hostname&gt;koha-opac.YOURDOMAIN.COM&lt;/hostname&gt;</code> or <code>&lt;hostname&gt;<code>koha-opac</code>&lt;/hostname&gt;</code> .</p>
-
-
-
-<p><strong>In the MySQL config file</strong>, <code>/etc/mysql/mysql.conf.d/mysqld.cnf</code>, change the <code>bind-address</code> IP from 127.0.0.1 to 0.0.0.0 .</p>
-
-
-
-<p>You can manually change these configs or <a rel="noreferrer noopener" href="https://github.com/jameswsullivan/KohaContainerization/blob/main/docker-entrypoint.sh" target="_blank">use a script to programmatically change it</a> with Docker ENTRYPOINT.</p>
-
-
-
-<pre class="wp-block-code"><code>sed -i 's/^bind-address.*=.*/bind-address = 0.0.0.0/' /etc/mysql/mysql.conf.d/mysqld.cnf
-
-sed -i "s|&lt;hostname&gt;localhost&lt;/hostname&gt;|&lt;hostname&gt;${current_hostname}&lt;/hostname&gt;|" /etc/koha/sites/koha/koha-conf.xml</code></pre>
-
-
-
-<p><strong>Issue 3: Modify the database user.</strong></p>
-
-
-
-<p>I named my instance <strong>koha</strong>, so both of the database and the database user automatically created by Koha are named as <strong>koha_koha</strong> . By default, when running inside a container the Koha application can&#8217;t use the <code>'koha_koha'@'localhost'</code> user to connect to the database. A simple workaround is to create a user and use the wildcard as its host and grant all privileges to this user for the koha database.</p>
-
-
-
-<pre class="wp-block-code"><code>DROP USER 'koha_koha'@'localhost';
-
-CREATE USER 'koha_koha'@'%' IDENTIFIED WITH mysql_native_password BY 'YOUR_KOHA_USER_PASSWORD';
-
-GRANT ALL PRIVILEGES ON koha_koha.* TO 'koha_koha'@'%' WITH GRANT OPTION;
-
-FLUSH PRIVILEGES;
-
-SHOW GRANTS FOR 'koha_koha'@'%';</code></pre>
-
-
-
-<p>Pay attention to the <code>WITH mysql_native_password</code> option here, without it you&#8217;ll get the an <code>Authentication plugin 'caching_sha2_password' reported error: Authentication requires secure connection.</code> error like the one below.</p>
-
-
-
-<pre class="wp-block-code"><code>&#91;Sat May 06 15:08:46.361945 2023] &#91;cgi:error] &#91;pid 22303] &#91;client SOME_IP:4761] AH01215: DBIx::Class::Storage::DBI::catch {…} (): DBI Connection failed: DBI connect('database=koha_koha;host=YOUR_HOSTNAME;port=3306','koha_koha',…) failed: Authentication plugin 'caching_sha2_password' reported error: Authentication requires secure connection. at /usr/share/koha/lib/Koha/Database.pm line 91. at /usr/share/koha/lib/Koha/Database.pm line 139: /usr/share/koha/intranet/cgi-bin/errors/500.pl</code></pre>
-
-
-
-<p>Again, to do this automatically and programmatically with the <a href="https://github.com/jameswsullivan/KohaContainerization/blob/main/docker-entrypoint.sh" target="_blank" rel="noreferrer noopener">docker-entrypoint.sh</a> script, add the following:</p>
-
-
-
-<pre class="wp-block-code"><code>mysql -e "
-DROP USER 'koha_koha'@'localhost';
-CREATE USER 'koha_koha'@'%' IDENTIFIED WITH mysql_native_password BY '$koha_password';
-GRANT ALL PRIVILEGES ON koha_koha.* TO 'koha_koha'@'%' WITH GRANT OPTION;
-FLUSH PRIVILEGES;"</code></pre>
-
-
-
-<h4 class="wp-block-heading"><strong>Issue 4: Retrieve the auto generated Koha password.</strong></h4>
-
-
-
-<p>By default, with a manual installation you&#8217;d use the <code>koha-passwd koha</code> command to retrieve your initial password, but since we&#8217;re automating things with <a href="https://github.com/jameswsullivan/KohaContainerization/blob/main/koha_mysql_localhost.dockerfile" target="_blank" rel="noreferrer noopener">Dockerfile</a> and the <a href="https://github.com/jameswsullivan/KohaContainerization/blob/main/docker-entrypoint.sh">docker-entrypoint.sh</a> script, it would make sense to automate this one too.</p>
-
-
-
-<p>Since the password is stored in the<code> /etc/koha/sites/koha/koha-conf.xml</code> file in plain text, we can use a script to retrieve it and print it out to the container&#8217;s logs. (<strong>Danger, Will Robinson!</strong> &#8211; You should never do this on a production, publicly accessible container.)</p>
-
-
-
-<pre class="wp-block-code"><code>koha_password=$(grep "&lt;pass&gt;" /etc/koha/sites/koha/koha-conf.xml | awk -F'&#91;&lt;&gt;]' '{print $3}')
-
-echo -e "\n\nKoha Password: $koha_password"</code></pre>
-
-
-
-<p>Note that I also used this <code>$koha_password</code> variable in the SQL statements when creating the database user.</p>
-
-
-
-<p>The password can be viewed using the <code>docker logs YOUR_CONTAINER_NAME</code> command.</p>
-
-
-
-<h2 class="wp-block-heading">Conclusion</h2>
-
-
-
-<p>This project is designed to be used as a turnkey testing or dev environment to quickly spin up a Koha instance. As you might have noticed my configurations practically bear no security practices in mind, its use in production environment is strongly discouraged.</p>
-
-
-
-<p>Keywords: Install Koha ILS on Ubuntu 22.04 LTS, Install Koha ILS on Docker, Dockerizing Koha ILS, Containerizing Koha ILS</p>
 ]]></content:encoded>
 					
 		

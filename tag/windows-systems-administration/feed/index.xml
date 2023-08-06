@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/windows-systems-administration/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Sat, 17 Jun 2023 19:51:05 +0000</lastBuildDate>
+	<lastBuildDate>Sat, 05 Aug 2023 21:33:53 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -25,7 +25,7 @@
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sat, 17 Jun 2023 19:51:05 +0000</pubDate>
-				<category><![CDATA[notes]]></category>
+				<category><![CDATA[blog]]></category>
 		<category><![CDATA[Network Administration]]></category>
 		<category><![CDATA[Networking]]></category>
 		<category><![CDATA[System Administration]]></category>
@@ -55,7 +55,7 @@ netsh wlan show wlanreport
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sun, 26 Mar 2023 19:40:25 +0000</pubDate>
-				<category><![CDATA[notes]]></category>
+				<category><![CDATA[blog]]></category>
 		<category><![CDATA[Desktop Support]]></category>
 		<category><![CDATA[Registry]]></category>
 		<category><![CDATA[System Administration]]></category>
@@ -139,7 +139,7 @@ Deny	Off</code></pre>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sun, 26 Mar 2023 15:57:56 +0000</pubDate>
-				<category><![CDATA[notes]]></category>
+				<category><![CDATA[blog]]></category>
 		<category><![CDATA[PowerShell]]></category>
 		<category><![CDATA[Storage Pool]]></category>
 		<category><![CDATA[System Administration]]></category>
@@ -204,7 +204,7 @@ Get-VirtualDisk</code></pre>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sun, 26 Mar 2023 15:39:05 +0000</pubDate>
-				<category><![CDATA[notes]]></category>
+				<category><![CDATA[blog]]></category>
 		<category><![CDATA[KMS]]></category>
 		<category><![CDATA[System Administration]]></category>
 		<category><![CDATA[Windows Server]]></category>
@@ -457,8 +457,8 @@ DFSRDIAG POLLAD</code></pre>
 		<link>https://jameswsullivan.github.io/wsus-reset-server-node-error/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Sat, 04 Jul 2020 23:54:00 +0000</pubDate>
-				<category><![CDATA[notes]]></category>
+		<pubDate>Sun, 05 Jul 2020 04:54:00 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
 		<category><![CDATA[System Administration]]></category>
 		<category><![CDATA[Windows Systems Administration]]></category>
 		<guid isPermaLink="false">http://www.alexchen.net/?p=841</guid>

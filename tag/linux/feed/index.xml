@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/linux/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Sat, 05 Aug 2023 17:00:20 +0000</lastBuildDate>
+	<lastBuildDate>Sun, 06 Aug 2023 18:34:11 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -92,7 +92,6 @@ Fix/Ignore?</code></pre>
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Mon, 08 May 2023 02:57:53 +0000</pubDate>
 				<category><![CDATA[blog]]></category>
-		<category><![CDATA[notes]]></category>
 		<category><![CDATA[Docker]]></category>
 		<category><![CDATA[Hosting]]></category>
 		<category><![CDATA[Linux]]></category>
@@ -225,7 +224,6 @@ service nginx restart</code></pre>
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sun, 07 May 2023 20:30:25 +0000</pubDate>
 				<category><![CDATA[blog]]></category>
-		<category><![CDATA[notes]]></category>
 		<category><![CDATA[Apache]]></category>
 		<category><![CDATA[Containerization]]></category>
 		<category><![CDATA[Docker]]></category>
@@ -408,7 +406,6 @@ echo -e "\n\nKoha Password: $koha_password"</code></pre>
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Mon, 01 May 2023 00:23:40 +0000</pubDate>
 				<category><![CDATA[blog]]></category>
-		<category><![CDATA[notes]]></category>
 		<category><![CDATA[BookStack]]></category>
 		<category><![CDATA[Docker]]></category>
 		<category><![CDATA[Hosting]]></category>
@@ -1112,6 +1109,80 @@ docker version</code></pre>
 		
 			</item>
 		<item>
+		<title>Nextcloud Performance</title>
+		<link>https://jameswsullivan.github.io/nextcloud-performance/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Mon, 20 Sep 2021 07:28:07 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Apache]]></category>
+		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[Linux]]></category>
+		<category><![CDATA[Nextcloud]]></category>
+		<category><![CDATA[Self-Hosting]]></category>
+		<category><![CDATA[System Administration]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+		<category><![CDATA[Web Hosting]]></category>
+		<guid isPermaLink="false">https://www.alexchen.net/?p=1633</guid>
+
+					<description><![CDATA[Nextcloud performance optimization.]]></description>
+										<content:encoded><![CDATA[
+<p>After about two days&#8217; troubleshooting and and testing, Nextcloud is successfully running in my homelab. This article documents a few performance tweaking.</p>
+
+
+
+<p>1. PHP <code>max_input_time</code> and <code>max_execution_time</code>. (I was getting 504 Gateway Timeout when uploading larger files.)</p>
+
+
+
+<pre class="wp-block-code"><code># Modify php.ini under /etc/php/8.0/fpm/ and /etc/php/8.0/apache2/
+max_input_time 86400
+max_execution_time 86400
+
+upload_max_filesize 50G
+post_max_size 51G
+
+# Restart PHP and Apache
+service apache2 restart
+service php8.0-fpm restart</code></pre>
+
+
+
+<p>2. Disable file locking. This potentially will cause problems when you have multiple users collaborating on file editing/syncing, but in my single-user setup this was not a concern. I needed to do this when I synced some large files and the client froze, and after a force restart/resync, the Nextcloud client reported <code>423 Locked</code> to <code>PUT https://...../</code> .</p>
+
+
+
+<pre class="wp-block-code"><code># Add
+'filelocking.enabled' => false,
+# to nextcloud's config.php, and clear the locked files.
+
+# Add
+'maintenance' => true,
+# to config.php
+
+# Get into MariaDB and run the following
+DELETE FROM oc_file_locks WHERE 1;
+
+# Revert maintenance mode
+'maintenance' => false,
+
+# Restart PHP and Apache
+service apache2 restart
+service php8.0-fpm restart</code></pre>
+
+
+
+<p>3. Overall performance.</p>
+
+
+
+<p>Nextcloud&#8217;s overall syncing speed has a lot to do with your Nextcloud server&#8217;s performance, the more smooth your server runs the better syncing performance you&#8217;ll get (more RAM, SSD, etc.). I was able to get roughly 25MB upload speed and 65MB download speed with a Hyper-V VM running Ubuntu Desktop.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>Self-signed SSL Certificate, Apache, and Nextcloud</title>
 		<link>https://jameswsullivan.github.io/self-signed-ssl-certificate-apache-and-nextcloud/</link>
 		
@@ -1288,226 +1359,6 @@ SSLCertificateKeyFile Your-Cert-Key-File-Path</code></pre>
 
 
 <p>You can choose either to use default-ssl.conf or nextcloud.conf, or a combination of both and use them for different purposes. I disabled default-ssl.conf by renaming it to default-ssl.conf.bak, and left nextcloud.conf active which has all my configs.</p>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Self-host Nextcloud</title>
-		<link>https://jameswsullivan.github.io/self-host-nextcloud/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Sat, 18 Sep 2021 11:43:43 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[Apache]]></category>
-		<category><![CDATA[Docker]]></category>
-		<category><![CDATA[Hosting]]></category>
-		<category><![CDATA[Linux]]></category>
-		<category><![CDATA[Nextcloud]]></category>
-		<category><![CDATA[Self-Hosting]]></category>
-		<category><![CDATA[Ubuntu]]></category>
-		<category><![CDATA[Web Hosting]]></category>
-		<guid isPermaLink="false">https://www.alexchen.net/?p=1597</guid>
-
-					<description><![CDATA[Take back control of your privacy with self-hosted Nextcloud.]]></description>
-										<content:encoded><![CDATA[
-<p><em>I used to trust Google more when they were under the leadership of Larry Page and Sergey Brin and held up their &#8220;Don&#8217;t Do Evil&#8221; motto, and I used to admire them more when they had the balls to stand up against China&#8217;s censorship. But nowadays Google has become more of a censorship giant itself by implementing the radical left&#8217;s communist political agenda, and its ever increasing intrusion to our privacy is just too concerning. Luckily, there are plenty open source alternatives.</em></p>
-
-
-
-<h2 class="wp-block-heading">Installation:</h2>
-
-
-
-<p><strong>Environment:</strong> Windows Server 2019 + Hyper-V</p>
-
-
-
-<p><strong>Linux version:</strong> Ubuntu 20.04 LTS</p>
-
-
-
-<p><strong>LAMP Stack:</strong> PHP8.0, MariaDB, Apache</p>
-
-
-
-<p>My main reference sources are from <a rel="noreferrer noopener" href="https://docs.nextcloud.com/server/latest/admin_manual/installation/example_ubuntu.html" data-type="URL" data-id="https://docs.nextcloud.com/server/latest/admin_manual/installation/example_ubuntu.html" target="_blank">this article</a> and <a rel="noreferrer noopener" href="https://www.itzgeek.com/how-tos/linux/debian/how-to-install-apache-mariadb-php-lamp-stack-on-debian-11.html" data-type="URL" data-id="https://www.itzgeek.com/how-tos/linux/debian/how-to-install-apache-mariadb-php-lamp-stack-on-debian-11.html" target="_blank">this article</a>, however, some commands are slightly modified to fit my needs.</p>
-
-
-
-<pre class="wp-block-code"><code># Become root
-sudo -i
-
-# Install Apache
-apt-get update -y
-apt-get install -y apache2 apache2-utils
-systemctl status apache2
-# After installation, visit http://localhost/ to verify that Apache is running.
-
-# Install MariaDB
-apt-get install -y mariadb-server mariadb-client
-systemctl status mariadb
-mysql_secure_installation
-
-# Install PHP8.0 (the default PHP version might be PHP7.4, I completely skipped what was in the original article and went with PHP8.0)
-apt-get install software-properties-common -y
-add-apt-repository ppa:ondrej/php
-apt-get update -y
-apt-get install php8.0 libapache2-mod-php8.0 -y
-systemctl restart apache2
-
-apt-get update -y
-apt-get install php8.0-fpm libapache2-mod-fcgid -y
-a2enmod proxy_fcgi setenvif
-a2enconf php8.0-fpm
-systemctl restart apache2
-
-# Install other modules for Nextcloud
-apt-get install -y php8.0-gd php8.0-mysql php8.0-curl php8.0-mbstring php8.0-intl
-apt-get install -y php8.0-gmp php8.0-bcmath php-imagick php8.0-xml php8.0-zip
-
-
-# Create MySQL database
-sudo /etc/init.d/mysql start
-mysql -u root -p
-
-CREATE USER 'username'@'localhost' IDENTIFIED BY 'password';
-
-# In the next query, you'll need to remove all the dashes because WordPress's code block editor has problems with the the charset portion of the query by giving a "Publishing failed. The response is not a valid JSON response." error.
-
-CREATE DATABASE IF NOT EXISTS nextcloud CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-
-GRANT ALL PRIVILEGES ON nextcloud.* TO 'username'@'localhost';
-FLUSH PRIVILEGES;
-
-quit;</code></pre>
-
-
-
-<p>Download Nextcloud server package from <a rel="noreferrer noopener" href="https://nextcloud.com/install/" target="_blank" data-type="URL" data-id="https://nextcloud.com/install/">here</a>.</p>
-
-
-
-<pre class="wp-block-code"><code># My Downloads folder path is /home/*username*/Downloads, and the current version Nextcloud build I use is nextcloud-22.1.1.zip .
-cd /home/*username*/Downloads
-unzip nextcloud-22.1.1.zip
-
-# Copy to Apache document root
-cp -r nextcloud /var/www/html</code></pre>
-
-
-
-<p>Next, configure the Apache web server. <a rel="noreferrer noopener" href="https://docs.nextcloud.com/server/latest/admin_manual/installation/source_installation.html#apache-configuration-label" data-type="URL" data-id="https://docs.nextcloud.com/server/latest/admin_manual/installation/source_installation.html#apache-configuration-label" target="_blank">Reference article</a>.</p>
-
-
-
-<pre class="wp-block-code"><code># Use your favorite text editor in Linux to create the nextcloud.conf file under /etc/apache2/sites-available/nextcloud.conf .
-
-# I used directory based installation, so I added the following in nextcloud.conf
-
-Alias /nextcloud "/var/www/html/nextcloud/"
-
-&lt;Directory /var/www/html/nextcloud/>
-  Require all granted
-  AllowOverride All
-  Options FollowSymLinks MultiViews
-
-  &lt;IfModule mod_dav.c>
-    Dav off
-  &lt;/IfModule>
-&lt;/Directory>
-
-
-# Enable modules and sites
-a2ensite nextcloud.conf
-a2enmod rewrite
-a2enmod headers
-a2enmod env
-a2enmod dir
-a2enmod mime
-a2enmod setenvif
-systemctl reload apache2
-
-
-# Enable SSL
-a2enmod ssl
-a2ensite default-ssl
-systemctl reload apache2
-
-# Change directory permission
-chown -R www-data:www-data /var/www/html/nextcloud/</code></pre>
-
-
-
-<p>Now, Nextcloud should be working, the next few steps are very straightforward through Nextcloud&#8217;s setup page.</p>
-
-
-
-<h2 class="wp-block-heading">Post-setup configs and troubleshooting:</h2>
-
-
-
-<ol>
-<li>Add Trusted Domain in Nextcloud&#8217;s config files. <a rel="noreferrer noopener" href="https://help.nextcloud.com/t/howto-add-a-new-trusted-domain/26" data-type="URL" data-id="https://help.nextcloud.com/t/howto-add-a-new-trusted-domain/26" target="_blank">Ref.</a></li>
-
-
-
-<li>Increase PHP memory_limit.</li>
-
-
-
-<li>View phpinfo.</li>
-</ol>
-
-
-
-<pre class="wp-block-code"><code># 1. In your nextcloud directory, /var/www/html/nextcloud/config , find the config.php file and edit the line with 'trusted_domain'. Assuming you'll access your nextcloud using 'localhost', '192.168.0.2', and 'my_nextcloud' , write the trusted_domain like below.
-
-  'trusted_domains' =&gt;
-  array (
-    0 =&gt; 'localhost',
-    1 =&gt; '192.168.0.29',
-    2 =&gt; 'my_nextcloud',
-  ),
-
-# 2. Change line memory_limit to a desired value in both /etc/php/8.0/fpm/php.ini and /etc/php/8.0/apache2/php.ini , e.g. memory_limit=512M, and then restart the services.
-
-service php8.0-fpm restart
-service apache2 restart
-
-# 3. Create a info.php file in document root to verify php info.
-
-cd /var/www/html/
-touch info.php
-
-# Add the following to info.php using your favorite text editor.
-
-&lt;?php phpinfo(); ?&gt;
-
-# Visit info.php in a browser to view phpinfo.</code></pre>
-
-
-
-<p>Useful MariaDB/MySQL commands:</p>
-
-
-
-<pre class="wp-block-code"><code># Find out usernames, databases, ports
-mysql -u root -p
-SELECT User FROM mysql.user;
-SHOW GLOBAL VARIABLES IKE 'PORT';
-SHOW DATABASES;</code></pre>
-
-
-
-<p>Disable (to not enforce) 2FA in Nextcloud:</p>
-
-
-
-<pre class="wp-block-code"><code># In file /var/www/html/nextcloud/config/config.php, change the following.
-
-‘twofactor_enforced’ =&gt; ‘false’</code></pre>
 ]]></content:encoded>
 					
 		
