@@ -18,7 +18,7 @@
 	hourly	</sy:updatePeriod>
 	<sy:updateFrequency>
 	1	</sy:updateFrequency>
-	<generator>https://wordpress.org/?v=6.2.2</generator>
+	<generator>https://wordpress.org/?v=6.3</generator>
 	<item>
 		<title>Word出现“无法创建工作文件，请检查临时环境变量”的解决方法</title>
 		<link>https://jameswsullivan.github.io/word-unable-to-create-working-file-check-environment-variables/</link>

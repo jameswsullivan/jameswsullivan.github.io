@@ -12,14 +12,148 @@
 	<atom:link href="https://jameswsullivan.github.io/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Sun, 06 Aug 2023 18:24:00 +0000</lastBuildDate>
+	<lastBuildDate>Wed, 16 Aug 2023 03:47:14 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
 	<sy:updateFrequency>
 	1	</sy:updateFrequency>
-	<generator>https://wordpress.org/?v=6.2.2</generator>
+	<generator>https://wordpress.org/?v=6.3</generator>
 	<item>
+		<title>Migrate Windows 10 from SATA to USB</title>
+		<link>https://jameswsullivan.github.io/migrate-windows-10-from-sata-to-usb/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Wed, 16 Aug 2023 03:46:27 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Hardware]]></category>
+		<category><![CDATA[System Administration]]></category>
+		<category><![CDATA[Windows Customization]]></category>
+		<category><![CDATA[Windows Systems Administration]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2766</guid>
+
+					<description><![CDATA[Use Hasleo WinToUSB to migrate Windows 10 from a SATA installation onto a USB connected drive.]]></description>
+										<content:encoded><![CDATA[
+<h2 class="wp-block-heading">Background:</h2>
+
+
+
+<p>I have an older Lenovo M93p Tiny computer that I use for some file sharing work, it&#8217;s been running fine until I recently noticed some degradation of file transfer speed between this machine and my file server. It turned out that the PoE switch was the main culprit, probably due to exhausted RAM/buffer or high CPU usage, and a reboot resolved the network performance issue. However, the file transfer speed was still not ideal &#8211; under perfect condition, file transfer between two computers should hover around 100 &#8211; 113 MB/s, but I was only getting around 40 MB/s max.</p>
+
+
+
+<p>For better illustration, here are how the two drives are connected:</p>
+
+
+
+<ul>
+<li>a 120GB SSD is directly installed inside the unit, connected via the SATA (SATA 2, 3.0Gb/s) port. </li>
+
+
+
+<li>a 1TB old Apple HDD connected using the <a href="https://www.google.com/search?sca_esv=557322196&amp;rlz=1C1GCEA_enUS1010US1010&amp;q=12.7mm+DVD-ROM+Hard+Drive+Caddy&amp;tbm=shop&amp;source=lnms&amp;sa=X&amp;ved=2ahUKEwiAibG6mOCAAxVFlGoFHZUkDpcQ0pQJegQICxAB&amp;biw=1285&amp;bih=648&amp;dpr=1.88" data-type="link" data-id="https://www.google.com/search?sca_esv=557322196&amp;rlz=1C1GCEA_enUS1010US1010&amp;q=12.7mm+DVD-ROM+Hard+Drive+Caddy&amp;tbm=shop&amp;source=lnms&amp;sa=X&amp;ved=2ahUKEwiAibG6mOCAAxVFlGoFHZUkDpcQ0pQJegQICxAB&amp;biw=1285&amp;bih=648&amp;dpr=1.88" target="_blank" rel="noreferrer noopener">12.7mm DVD-ROM Hard Drive Caddy</a>, and connected to the computer via USB (with Lenovo&#8217;s optical drive VESA expansion bracket).</li>
+</ul>
+
+
+
+<p>After some experimentation, it appears that the drive caddy might be the bottleneck, so I decided to switch the two drives.</p>
+
+
+
+<p>However, since the OS was initially installed onto the SATA drive, switching to USB will cause boot issues and also due to driver mismatch, a simple BCD rebuild won&#8217;t work. But I managed to make it work with <a href="https://www.easyuefi.com/" target="_blank" rel="noreferrer noopener">Hasleo WinToUSB</a>, <strong>here are the steps</strong>:</p>
+
+
+
+<ol>
+<li>Clone the 120GB drive to another temporary drive, install (use the SATA port) and boot into Windows using the temporary drive (rebuild BCD if needed).</li>
+
+
+
+<li>Connect the 120GB drive to the optical drive caddy (USB).</li>
+
+
+
+<li>Use Hasleo WinToUSB&#8217;s <code>Windows To Go USB</code> function to clone your <code>Current Windows OS</code> to the 120GB drive that&#8217;s connected via USB.</li>
+
+
+
+<li>Remove the temporary drive, connect the 1TB HDD via SATA, boot into BIOS and change boot device to the USB device accordingly (mine shows as USB FDD).</li>
+</ol>
+
+
+
+<p>A second reboot might be needed for the machine to pickup the USB bootable device.</p>
+
+
+
+<h2 class="wp-block-heading">How to rebuild BCD (Windows 10 UEFI):</h2>
+
+
+
+<ul>
+<li>Use a WinPE or Windows installation USB to boot into a command prompt (or if you are able to enter command prompt using F8 or Advanced Boot Options).</li>
+
+
+
+<li>Use diskpart to assign a letter to the EFI partition:</li>
+</ul>
+
+
+
+<pre class="wp-block-code"><code>diskpart
+list disk
+sel disk X
+
+# X is your disk number
+
+list vol
+
+# find the volume that's FAT32 (the EFI partition).
+
+sel vol X
+assign letter=Z
+
+exit</code></pre>
+
+
+
+<ul>
+<li>Now switch to the Z drive, and run the following commands:</li>
+</ul>
+
+
+
+<pre class="wp-block-code"><code>cd EFI\Microsoft\Boot
+del BCD
+# or: ren BCD BCD.bk if you want to be safe.
+
+bootrec /rebuildbcd
+
+# if bootrec doesn't work, try
+bcdboot X:\windows /s Z: /f UEFI
+# where X is your windows installation's location.</code></pre>
+
+
+
+<h2 class="wp-block-heading">Afterthought:</h2>
+
+
+
+<p>There might be a way to inject/change the correct drivers (from SATA to USB) so that Windows can boot correctly, but I wasn&#8217;t successful with it.</p>
+
+
+
+<p>The reason a Windows To Go clone was needed is that after switching the drive directly from SATA to USB and try to boot, the drive would still be recognized as a SATA drive in BIOS, and attempting a normal boot (with or without BCD rebuild) would result in a blue screen with INACCESSIBLE_BOOT_DEVICE error. However, Windows was able to boot into Safe Mode, which indicates the driver mismatch being the culprit.</p>
+
+
+
+<p>Using Hasleo WinToUSB was a quicker solution, I might decided to experiment with the driver sometime in the future with a spare machine.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>Flash LSI SAS Adapters to HBA IT MODE</title>
 		<link>https://jameswsullivan.github.io/flash-lsi-sas-adapters-to-hba-it-mode/</link>
 		
@@ -332,11 +466,11 @@ Fix/Ignore?</code></pre>
 
 
 
-<figure class="wp-block-image size-large is-resized"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-scaled.jpg"><img decoding="async" src="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-1024x576.jpg" alt="Motor Control Board" class="wp-image-2639" width="768" height="432" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-1024x576.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-1536x864.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-2048x1152.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-700x394.jpg 700w" sizes="(max-width: 768px) 100vw, 768px" /></a></figure>
+<figure class="wp-block-image size-large is-resized"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-scaled.jpg"><img decoding="async" fetchpriority="high" src="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-1024x576.jpg" alt="Motor Control Board" class="wp-image-2639" width="768" height="432" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-1024x576.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-1536x864.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-2048x1152.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-700x394.jpg 700w" sizes="(max-width: 768px) 100vw, 768px" /></a></figure>
 
 
 
-<figure class="wp-block-image size-large is-resized"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-scaled.jpg"><img decoding="async" loading="lazy" src="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-1024x576.jpg" alt="IRFP250 MOSFET" class="wp-image-2641" width="768" height="432" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-1024x576.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-1536x864.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-2048x1152.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-700x394.jpg 700w" sizes="(max-width: 768px) 100vw, 768px" /></a></figure>
+<figure class="wp-block-image size-large is-resized"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-scaled.jpg"><img decoding="async" src="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-1024x576.jpg" alt="IRFP250 MOSFET" class="wp-image-2641" width="768" height="432" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-1024x576.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-1536x864.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-2048x1152.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-700x394.jpg 700w" sizes="(max-width: 768px) 100vw, 768px" /></a></figure>
 ]]></content:encoded>
 					
 		
@@ -815,119 +949,6 @@ set PATH=&lt;full-path-to-your-signtool.exe>;%PATH%</code></pre>
 
 
 <pre class="wp-block-code"><code>ssh -c aes256-cbc USERNAME@IP</code></pre>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Self-host iredmail</title>
-		<link>https://jameswsullivan.github.io/self-host-iredmail/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Tue, 23 May 2023 03:04:02 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[Docker]]></category>
-		<category><![CDATA[Hosting]]></category>
-		<category><![CDATA[iredmail]]></category>
-		<category><![CDATA[Mail Server]]></category>
-		<category><![CDATA[Self-Hosting]]></category>
-		<category><![CDATA[Web Hosting]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2549</guid>
-
-					<description><![CDATA[Set up self hosted iredmail mail server.]]></description>
-										<content:encoded><![CDATA[
-<h2 class="wp-block-heading">Environment:</h2>
-
-
-
-<ul>
-<li>Docker host running Ubuntu Server 22.04 LTS</li>
-
-
-
-<li><a href="https://hub.docker.com/r/iredmail/mariadb" target="_blank" rel="noreferrer noopener">iredmail Docker image</a></li>
-</ul>
-
-
-
-<h2 class="wp-block-heading">Set up:</h2>
-
-
-
-<p>Follow <a href="https://hub.docker.com/r/iredmail/mariadb" target="_blank" rel="noreferrer noopener">this instruction</a> and create the necessary folders and the default config file.</p>
-
-
-
-<p>Sample script:</p>
-
-
-
-<pre class="wp-block-code"><code>cd YOUR_DIRECTORY
-mkdir iredmail
-cd iredmail
-mkdir -p data/{backup-mysql,clamav,custom,imapsieve_copy,mailboxes,mlmmj,mlmmj-archive,mysql,sa_rules,ssl,postfix_queue}
-
-nano iredmail-docker.conf
-
-# Paste the following content into iredmail-docker.conf
-HOSTNAME=&lt;YOUR_HOSTNAME>
-FIRST_MAIL_DOMAIN=&lt;YOUR_DOMAIN>
-FIRST_MAIL_DOMAIN_ADMIN_PASSWORD=&lt;YOUR_ADMIN_PASSWORD>
-MLMMJADMIN_API_TOKEN=$(openssl rand -base64 32)
-ROUNDCUBE_DES_KEY=$(openssl rand -base64 24)
-MYSQL_ROOT_PASSWORD=&lt;YOUR_MYSQL_ROOT_PASSWORD></code></pre>
-
-
-
-<p>docker run command:</p>
-
-
-
-<pre class="wp-block-code"><code>docker run -dit \
-    --name YOUR_CONTAINER_NAME \
-    --env-file iredmail-docker.conf \
-    --network YOUR_DOCKER_NETWORK \
-    --hostname YOUR_HOSTNAME \
-    --ip IP_ADDRESS --restart=unless-stopped \
-    -v YOUR_DATA_DIRECTORY/iredmail/data/backup-mysql:/var/vmail/backup/mysql \
-    -v YOUR_DATA_DIRECTORY/iredmail/data/mailboxes:/var/vmail/vmail1 \
-    -v YOUR_DATA_DIRECTORY/iredmail/data/mlmmj:/var/vmail/mlmmj \
-    -v YOUR_DATA_DIRECTORY/iredmail/data/mlmmj-archive:/var/vmail/mlmmj-archive \
-    -v YOUR_DATA_DIRECTORY/iredmail/data/imapsieve_copy:/var/vmail/imapsieve_copy \
-    -v YOUR_DATA_DIRECTORY/iredmail/data/custom:/opt/iredmail/custom \
-    -v YOUR_DATA_DIRECTORY/iredmail/data/ssl:/opt/iredmail/ssl \
-    -v YOUR_DATA_DIRECTORY/iredmail/data/mysql:/var/lib/mysql \
-    -v YOUR_DATA_DIRECTORY/iredmail/data/clamav:/var/lib/clamav \
-    -v YOUR_DATA_DIRECTORY/iredmail/data/sa_rules:/var/lib/spamassassin \
-    -v YOUR_DATA_DIRECTORY/iredmail/data/postfix_queue:/var/spool/postfix \
-    iredmail/mariadb:nightly</code></pre>
-
-
-
-<h2 class="wp-block-heading">Issues:</h2>
-
-
-
-<ul>
-<li>Container first time startup takes some time, if the server is not responding after the container&#8217;s been started, wait for a few a minutes and try again.</li>
-
-
-
-<li>For some reason there is no &#8220;latest&#8221; tag, thus the <code>docker pull iredmail/mariadb</code> doesn&#8217;t work. You&#8217;ll have to use either <code>docker pull iredmail/mariadb:nightly</code> or <code>docker pull iredmail/mariadb:stable</code> .</li>
-
-
-
-<li>Default admin login:
-<ul>
-<li>username: postmaster@&lt;YOUR_DOMAIN></li>
-
-
-
-<li>password: your password specified in iredmail-docker.conf file. <code>FIRST_MAIL_DOMAIN_ADMIN_PASSWORD=&lt;YOUR_ADMIN_PASSWORD></code></li>
-</ul>
-</li>
-</ul>
 ]]></content:encoded>
 					
 		
