@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/engineering/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Thu, 04 May 2023 03:42:23 +0000</lastBuildDate>
+	<lastBuildDate>Tue, 22 Aug 2023 15:46:02 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -165,6 +165,57 @@
 
 <figure class="wp-block-image size-large"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD08-scaled.jpg"><img decoding="async" loading="lazy" width="1024" height="576" data-id="2377" src="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD08-1024x576.jpg" alt="" class="wp-image-2377" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD08-1024x576.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD08-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD08-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD08-1536x864.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD08-2048x1152.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/05/CISCO2951MOD08-700x394.jpg 700w" sizes="(max-width: 1024px) 100vw, 1024px" /></a></figure>
 </figure>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>制作了一个建筑平面图</title>
+		<link>https://jameswsullivan.github.io/drafting-house-layout-with-autocad/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Fri, 13 Aug 2010 04:15:00 +0000</pubDate>
+				<category><![CDATA[archive]]></category>
+		<category><![CDATA[AutoCAD]]></category>
+		<category><![CDATA[CAD]]></category>
+		<category><![CDATA[Drafting]]></category>
+		<category><![CDATA[Engineering]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2774</guid>
+
+					<description><![CDATA[用AutoCAD制作建筑平面图。]]></description>
+										<content:encoded><![CDATA[
+<blockquote class="wp-block-quote">
+<p>此文系早年博客的备份，仅用于参考学习。<br>This article is an archival copy of my early years&#8217; blog posts.</p>
+</blockquote>
+
+
+
+<p>由于所学专业在将来不可避免的要用到AutoCAD建模，所以利用假期时间做几个实例练练手，这是第一个工程——建筑平面图。下一个工程是绘制机械图。</p>
+
+
+
+<figure class="wp-block-image size-large"><img decoding="async" loading="lazy" width="1024" height="724" src="https://jameswsullivan.github.io/wp-content/uploads/2023/08/house-layout-autocad-01-1024x724.png" alt="" class="wp-image-2776" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/08/house-layout-autocad-01-1024x724.png 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/house-layout-autocad-01-300x212.png 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/house-layout-autocad-01-768x543.png 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/house-layout-autocad-01-1536x1086.png 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/house-layout-autocad-01-2048x1448.png 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/house-layout-autocad-01-700x495.png 700w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img decoding="async" loading="lazy" width="1024" height="724" src="https://jameswsullivan.github.io/wp-content/uploads/2023/08/house-layout-autocad-02-1024x724.png" alt="" class="wp-image-2777" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/08/house-layout-autocad-02-1024x724.png 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/house-layout-autocad-02-300x212.png 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/house-layout-autocad-02-768x543.png 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/house-layout-autocad-02-1536x1086.png 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/house-layout-autocad-02-2048x1448.png 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/house-layout-autocad-02-700x495.png 700w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<h4 class="wp-block-heading">后记：</h4>
+
+
+
+<p>在生成A4纸最终图像的时候，怎样将背景色打印为黑色的问题困扰了我很长时间，其间试过改变编辑界面背景色，用黑色方框衬托图形等方法均不奏效，最后在使用PS将生成的白色背景的图片进行“反向”操作时想到，何不在编辑时先将个图层对应的颜色设置为执行白 &#8212; 黑反向操作后所对应的颜色，再将生成的白色背景的图片执行反向操作，不就得到了我们最初所希望的黑色背景和图形颜色了么。</p>
+
+
+
+<p>AutoCAD可以直接输出图纸，但是我在本地操作，就将其打印为Adobe PDF格式了，要想得到图片文件，只需在Adobe PDF里导出为图片格式即可。</p>
+
+
+
+<p>关键字：AutoCAD建筑平面图，AutoCAD黑色背景建筑平面图</p>
 ]]></content:encoded>
 					
 		
