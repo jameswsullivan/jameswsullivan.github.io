@@ -18,7 +18,7 @@
 	hourly	</sy:updatePeriod>
 	<sy:updateFrequency>
 	1	</sy:updateFrequency>
-	<generator>https://wordpress.org/?v=6.3</generator>
+	<generator>https://wordpress.org/?v=6.3.1</generator>
 	<item>
 		<title>Expand LVM in Ubuntu (22.04 LTS)</title>
 		<link>https://jameswsullivan.github.io/expand-lvm-in-ubuntu-22-04-lts/</link>

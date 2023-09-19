@@ -18,7 +18,7 @@
 	hourly	</sy:updatePeriod>
 	<sy:updateFrequency>
 	1	</sy:updateFrequency>
-	<generator>https://wordpress.org/?v=6.3</generator>
+	<generator>https://wordpress.org/?v=6.3.1</generator>
 	<item>
 		<title>用Google App Engine部署OPM镜像</title>
 		<link>https://jameswsullivan.github.io/deploy-opera-mini-server-mirror-with-google-app-engine/</link>
