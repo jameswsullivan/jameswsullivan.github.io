@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/linux/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Sun, 06 Aug 2023 18:34:11 +0000</lastBuildDate>
+	<lastBuildDate>Mon, 02 Oct 2023 03:35:20 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -46,7 +46,7 @@
 
 
 
-<p>2. On the Ubuntu server, use <code>fdisk -l</code> to identify the disk and df -h to check the disk usage, here we use <code>/dev/sdf</code> (disk) and <code>/dev/mapper/ubuntu--vg-ubuntu--lv</code> (logic volume) as an example.</p>
+<p>2. On the Ubuntu server, use <code>fdisk -l</code> to identify the disk and <code>df -h</code> to check the disk usage, here we use <code>/dev/sdf</code> (disk) and <code>/dev/mapper/ubuntu--vg-ubuntu--lv</code> (logic volume) as an example.</p>
 
 
 

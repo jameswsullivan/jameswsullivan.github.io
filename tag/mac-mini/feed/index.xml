@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/mac-mini/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Mon, 02 Oct 2023 02:36:10 +0000</lastBuildDate>
+	<lastBuildDate>Mon, 02 Oct 2023 03:31:30 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -34,7 +34,7 @@
 		<category><![CDATA[Windows Systems Administration]]></category>
 		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2797</guid>
 
-					<description><![CDATA[Background: As detailed in the previous article, after the Mac Minis were restored (hardware wise), I decided to use one of them as a &#8220;media player&#8221; and mount it on the back of a monitor and place it in front of the treadmill to use while I work out. And since it&#8217;ll only be used [&#8230;]]]></description>
+					<description><![CDATA[Refurbish Mac Mini A1347 (late 2014, EMC 2840, 820-5509-A) - Part 2 - Install Windows 11 natively.]]></description>
 										<content:encoded><![CDATA[
 <h2 class="wp-block-heading">Background:</h2>
 
