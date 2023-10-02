@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>brigadier &#8211; howdy</title>
+	<atom:link href="https://jameswsullivan.github.io/tag/brigadier/feed/" rel="self" type="application/rss+xml" />
+	<link>https://jameswsullivan.github.io/</link>
+	<description></description>
+	<lastBuildDate>Mon, 02 Oct 2023 02:36:10 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.3.1</generator>
+	<item>
+		<title>Refurbish Mac Mini A1347 (Late 2014 ) – Part 2 &#8211; Install Windows 11</title>
+		<link>https://jameswsullivan.github.io/refurbish-mac-mini-a1347-late-2014-part-2-install-windows-11/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sun, 01 Oct 2023 21:04:59 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[brigadier]]></category>
+		<category><![CDATA[Mac Mini]]></category>
+		<category><![CDATA[Mac Mini A1347]]></category>
+		<category><![CDATA[macOS]]></category>
+		<category><![CDATA[System Administration]]></category>
+		<category><![CDATA[Windows Systems Administration]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2797</guid>
+
+					<description><![CDATA[Background: As detailed in the previous article, after the Mac Minis were restored (hardware wise), I decided to use one of them as a &#8220;media player&#8221; and mount it on the back of a monitor and place it in front of the treadmill to use while I work out. And since it&#8217;ll only be used [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<h2 class="wp-block-heading">Background:</h2>
+
+
+
+<p>As detailed in <a href="https://jameswsullivan.github.io/refurbish-mac-mini-a1347-late-2014-part-1/">the previous article</a>, after the Mac Minis were restored (hardware wise), I decided to use one of them as a &#8220;media player&#8221; and mount it on the back of a monitor and place it in front of the treadmill to use while I work out. And since it&#8217;ll only be used as a media player, installing Windows 11 on it won&#8217;t be a bad idea.</p>
+
+
+
+<p>I didn&#8217;t use BootCamp and didn&#8217;t have macOS and Windows dual OS, Windows 11 was installed natively. However, without going through the BootCamp process means that the Windows drivers issue won&#8217;t be automatically resolved.</p>
+
+
+
+<h2 class="wp-block-heading">Solution:</h2>
+
+
+
+<p>After installing Windows 11, use <a href="https://github.com/timsutton/brigadier">Brigadier</a> to download and install BootCamp and drivers, after the drivers are successfully installed, BootCamp and other Apple related software can be safely removed.</p>
+
+
+
+<p>Currently there is <a href="https://github.com/timsutton/brigadier/issues/37">a 7zip issue</a> (<a href="https://sourceforge.net/p/sevenzip/bugs/2414/">7zip bug</a>) when unpacking the payload with brigadier. The easiest way to avoid this issue is to install the <code>7-Zip 22.01 (2022-07-15)</code> version.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+	</channel>
+</rss>

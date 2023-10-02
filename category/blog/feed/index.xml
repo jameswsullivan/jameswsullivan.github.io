@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/category/blog/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Wed, 16 Aug 2023 03:47:14 +0000</lastBuildDate>
+	<lastBuildDate>Mon, 02 Oct 2023 02:36:10 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -20,6 +20,173 @@
 	1	</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=6.3.1</generator>
 	<item>
+		<title>Refurbish Mac Mini A1347 (Late 2014 ) – Part 2 &#8211; Install Windows 11</title>
+		<link>https://jameswsullivan.github.io/refurbish-mac-mini-a1347-late-2014-part-2-install-windows-11/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sun, 01 Oct 2023 21:04:59 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[brigadier]]></category>
+		<category><![CDATA[Mac Mini]]></category>
+		<category><![CDATA[Mac Mini A1347]]></category>
+		<category><![CDATA[macOS]]></category>
+		<category><![CDATA[System Administration]]></category>
+		<category><![CDATA[Windows Systems Administration]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2797</guid>
+
+					<description><![CDATA[Background: As detailed in the previous article, after the Mac Minis were restored (hardware wise), I decided to use one of them as a &#8220;media player&#8221; and mount it on the back of a monitor and place it in front of the treadmill to use while I work out. And since it&#8217;ll only be used [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<h2 class="wp-block-heading">Background:</h2>
+
+
+
+<p>As detailed in <a href="https://jameswsullivan.github.io/refurbish-mac-mini-a1347-late-2014-part-1/">the previous article</a>, after the Mac Minis were restored (hardware wise), I decided to use one of them as a &#8220;media player&#8221; and mount it on the back of a monitor and place it in front of the treadmill to use while I work out. And since it&#8217;ll only be used as a media player, installing Windows 11 on it won&#8217;t be a bad idea.</p>
+
+
+
+<p>I didn&#8217;t use BootCamp and didn&#8217;t have macOS and Windows dual OS, Windows 11 was installed natively. However, without going through the BootCamp process means that the Windows drivers issue won&#8217;t be automatically resolved.</p>
+
+
+
+<h2 class="wp-block-heading">Solution:</h2>
+
+
+
+<p>After installing Windows 11, use <a href="https://github.com/timsutton/brigadier">Brigadier</a> to download and install BootCamp and drivers, after the drivers are successfully installed, BootCamp and other Apple related software can be safely removed.</p>
+
+
+
+<p>Currently there is <a href="https://github.com/timsutton/brigadier/issues/37">a 7zip issue</a> (<a href="https://sourceforge.net/p/sevenzip/bugs/2414/">7zip bug</a>) when unpacking the payload with brigadier. The easiest way to avoid this issue is to install the <code>7-Zip 22.01 (2022-07-15)</code> version.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Refurbish Mac Mini A1347 (Late 2014 ) &#8211; Part 1</title>
+		<link>https://jameswsullivan.github.io/refurbish-mac-mini-a1347-late-2014-part-1/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sun, 01 Oct 2023 20:21:14 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Mac Mini]]></category>
+		<category><![CDATA[Mac Mini A1347]]></category>
+		<category><![CDATA[macOS]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2784</guid>
+
+					<description><![CDATA[Refurbish Mac Mini A1347 (late 2014, EMC 2840, 820-5509-A) - Part 1.]]></description>
+										<content:encoded><![CDATA[
+<h2 class="wp-block-heading">Background:</h2>
+
+
+
+<p>I&#8217;ve acquired a few Mac Mini A1347 (late 2014, EMC 2840, 820-5509-A) over the years for my projects due to their decent performance, low price, and the possibility of RAM and SSD upgrades (RAM upgrade will require soldering/de-soldering of the memory chips and reconfiguration of some resistors, which I&#8217;ll attempt at a later time). This first part of the series details the process of how I resolved the overheating issue and some OS installation hiccups.</p>
+
+
+
+<p>Machines and their specs:</p>
+
+
+
+<ul>
+<li>2 x i5, 4GB RAM models, with no HDD/SSD and accessories.</li>
+
+
+
+<li>1 x i5, 8GB RAM model, with original 1TB HDD.</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading">Problems:</h2>
+
+
+
+<ol>
+<li>One 4GB model repeatedly gets the 5101F error when attempting to reinstall macOS via Internet Recovery. Also, for some reason this particular machine would not enter its built-in Recovery Mode regardless which key combinations were used (<code>Command/Windows Key + R</code> should enter built-in Recovery Mode, <code>Command/Windows Key + Option/Alt + R</code> enters Internet Recovery), it would always automatically enter Internet Recovery and eventually fails with the 5101F error.</li>
+
+
+
+<li>The 8GB RAM model produces excessive heat compared to the rest of Mac Minis and received the &#8220;An error occurred while preparing the installation. try running this application again.&#8221; error while reinstalling macOS Sierra via built-in Recovery Mode.</li>
+</ol>
+
+
+
+<h2 class="wp-block-heading">Solution:</h2>
+
+
+
+<p><strong>1. The 5101F and unable to enter built-in Recovery Mode problem:</strong></p>
+
+
+
+<p>This error could have multiple causes (such as poor internet connection). In my case, resetting the PRAM/NVRAM resolved it. To reset the PRAM/NVRAM, follow these steps:</p>
+
+
+
+<ul>
+<li>Power off the Mac Mini.</li>
+
+
+
+<li>Power on the machine, press and hold <code>Option + Command + P + R (Windows Key + Alt + P + R)</code> when you hear the power-on chime. The machine will restart a few times, keep holding the keys until you hear the third chime (counting from the one when you first powered the machine on).</li>
+
+
+
+<li>Release the keys, your machine will reboot one more time and then boot normally.</li>
+</ul>
+
+
+
+<p>Note: you can also hold the keys for 20+ seconds. The number of chimes you hear is not a factor as to whether the reset is successful.</p>
+
+
+
+<p>After the NVRAM reset, shut down the machine, unplug the power cord, push and hold the power button for a few seconds and then power on the machine and use <code>Command/Windows Key + R</code> to enter built-in Recovery Mode.</p>
+
+
+
+<p>Upon successful boot up, I discovered that the OS Recovery was still at Yosemite (the other 4GB model was at Sierra). Without knowing the history of the machine, maybe being outdated had something to do with the errors.</p>
+
+
+
+<p>After reinstalling macOS Yosemite, macOS Sierra can be downloaded <a href="https://support.apple.com/en-us/HT211683#browser">here</a> and manually installed without further issues (Internet Recovery still produces 5101F error).</p>
+
+
+
+<p><strong>2. &#8220;An error occurred while preparing the installation. try running this application again.&#8221; while reinstalling macOS Sierra via built-in Recovery Mode.</strong></p>
+
+
+
+<p>For this one, resetting the NVRAM had no effect, but going straight to Internet Recovery was able to install macOS Monterey successfully. It seems that the built-in OS Recovery for Sierra was broken in <a href="https://www.reddit.com/r/MacOS/comments/1030a4g/need_help_with_this_an_error_occurred_while/">some cases</a>.</p>
+
+
+
+<p><strong>3. The excessive heat.</strong></p>
+
+
+
+<p>Assuming that the cooling fan and logic boards are all clean and intact and there is no excessive dust that blocks the cooling channels, reapplying the thermal paste on the CPU is usually the solution. I assume that if you&#8217;re already doing this level of repair, you would already be familiar with how to disassemble the Mac Mini and the heatsink, so I&#8217;ll only post a few pictures here for reference.</p>
+
+
+
+<figure class="wp-block-gallery has-nested-images columns-default is-cropped wp-block-gallery-1 is-layout-flex wp-block-gallery-is-layout-flex">
+<figure class="wp-block-image size-large"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-01-scaled.jpg"><img decoding="async" fetchpriority="high" width="1024" height="576" data-id="2788" src="https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-01-1024x576.jpg" alt="" class="wp-image-2788" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-01-1024x576.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-01-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-01-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-01-1536x864.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-01-2048x1152.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-01-700x394.jpg 700w" sizes="(max-width: 1024px) 100vw, 1024px" /></a></figure>
+
+
+
+<figure class="wp-block-image size-large"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-02-scaled.jpg"><img decoding="async" width="1024" height="576" data-id="2789" src="https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-02-1024x576.jpg" alt="" class="wp-image-2789" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-02-1024x576.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-02-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-02-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-02-1536x864.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-02-2048x1152.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-02-700x394.jpg 700w" sizes="(max-width: 1024px) 100vw, 1024px" /></a></figure>
+
+
+
+<figure class="wp-block-image size-large"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-03-scaled.jpg"><img decoding="async" width="1024" height="575" data-id="2790" src="https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-03-1024x575.jpg" alt="" class="wp-image-2790" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-03-1024x575.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-03-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-03-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-03-1536x863.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-03-2048x1151.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-03-700x393.jpg 700w" sizes="(max-width: 1024px) 100vw, 1024px" /></a></figure>
+</figure>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>Migrate Windows 10 from SATA to USB</title>
 		<link>https://jameswsullivan.github.io/migrate-windows-10-from-sata-to-usb/</link>
 		
@@ -466,11 +633,11 @@ Fix/Ignore?</code></pre>
 
 
 
-<figure class="wp-block-image size-large is-resized"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-scaled.jpg"><img decoding="async" fetchpriority="high" src="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-1024x576.jpg" alt="Motor Control Board" class="wp-image-2639" width="768" height="432" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-1024x576.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-1536x864.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-2048x1152.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-700x394.jpg 700w" sizes="(max-width: 768px) 100vw, 768px" /></a></figure>
+<figure class="wp-block-image size-large is-resized"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-scaled.jpg"><img decoding="async" loading="lazy" src="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-1024x576.jpg" alt="Motor Control Board" class="wp-image-2639" width="768" height="432" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-1024x576.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-1536x864.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-2048x1152.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-700x394.jpg 700w" sizes="(max-width: 768px) 100vw, 768px" /></a></figure>
 
 
 
-<figure class="wp-block-image size-large is-resized"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-scaled.jpg"><img decoding="async" src="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-1024x576.jpg" alt="IRFP250 MOSFET" class="wp-image-2641" width="768" height="432" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-1024x576.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-1536x864.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-2048x1152.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-700x394.jpg 700w" sizes="(max-width: 768px) 100vw, 768px" /></a></figure>
+<figure class="wp-block-image size-large is-resized"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-scaled.jpg"><img decoding="async" loading="lazy" src="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-1024x576.jpg" alt="IRFP250 MOSFET" class="wp-image-2641" width="768" height="432" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-1024x576.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-1536x864.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-2048x1152.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-700x394.jpg 700w" sizes="(max-width: 768px) 100vw, 768px" /></a></figure>
 ]]></content:encoded>
 					
 		
@@ -847,108 +1014,6 @@ And modify the corresponding section as follows:
       "-workbench.action.quickOpen",
       "-workbench.action.quickOpenView"
 ]</code></pre>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Code Signing Certificate for your application</title>
-		<link>https://jameswsullivan.github.io/code-signing-certificate-for-your-application/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Sat, 17 Jun 2023 18:56:18 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[Code Signing]]></category>
-		<category><![CDATA[CodeSigningCert]]></category>
-		<category><![CDATA[Software Development]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2561</guid>
-
-					<description><![CDATA[Sign your self-made applications with self-signed code signing certificate.]]></description>
-										<content:encoded><![CDATA[
-<p>Some organizations have self-made applications they use internally that are not signed with well-known code signing certificates, which Windows will prompt the follow Security Warning when the apps are being opened:</p>
-
-
-
-<pre class="wp-block-code"><code>Open File - Security Warning
-The publisher could not be verified. Are you sure you want to run this software?</code></pre>
-
-
-
-<p>This warning is typically benign and most sys admins know what they are doing when running such applications, but if an app is being distributed to client workstations and end users see this message, they might be deterred (which is a good thing) or cause unnecessary complaints to the help desk.</p>
-
-
-
-<p>Here is how you can generate self-signed code signing certificates and sign your application. After the cert is generated and signed, all you need to do is deploy the cert to your client machines (using GPO or other RMM tools).</p>
-
-
-
-<h2 class="wp-block-heading">Steps:</h2>
-
-
-
-<p>1 &#8211; Either use Visual Studio or install the <a href="https://developer.microsoft.com/en-us/windows/downloads/windows-sdk/">Windows SDK</a> which includes the <a href="https://learn.microsoft.com/en-us/windows/win32/seccrypto/signtool">Microsoft SignTool</a>.</p>
-
-
-
-<p>2 &#8211; Generate a certificate:</p>
-
-
-
-<pre class="wp-block-code"><code>$cert = New-SelfSignedCertificate -DNSName "www.yourdomain.com" -CertStoreLocation Cert:\LocalMachine\My -Type CodeSigningCert -Subject "YOUR_APPLICATION_NAME"</code></pre>
-
-
-
-<p>3 &#8211; Export the certificate into a .pfx certificate file using &#8220;Manage computer certificates&#8221; or the <a href="https://learn.microsoft.com/en-us/powershell/module/pki/export-pfxcertificate?view=windowsserver2022-ps">Export-PfxCertificate</a> cmdlet.</p>
-
-
-
-<p>4 &#8211; Use the SignTool to sign the exe file with the exported .pfx certificate.</p>
-
-
-
-<pre class="wp-block-code"><code>signtool sign /f YOUR_CERT_FILE.pfx /p YOUR_CERT_PASS /fd SHA256 "YOUR .EXE"
-
-
-If you encounter the following error, set the PATH to your signtool.exe file using the following command:
-
-<em>'Signtool' is not recognized as an internal or external command, operable program or batch file.</em>
-
-set PATH=&lt;full-path-to-your-signtool.exe>;%PATH%</code></pre>
-
-
-
-<p>5 &#8211; Deploy the certificate and the signed exe file to client workstations.</p>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>SSH: no matching cipher found</title>
-		<link>https://jameswsullivan.github.io/ssh-no-matching-cipher-found/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Tue, 23 May 2023 03:20:43 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[Cisco]]></category>
-		<category><![CDATA[Cisco 2951]]></category>
-		<category><![CDATA[Cisco IOS]]></category>
-		<category><![CDATA[Networking]]></category>
-		<category><![CDATA[System Administration]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2555</guid>
-
-					<description><![CDATA[SSH: no matching cipher found]]></description>
-										<content:encoded><![CDATA[
-<p>When connecting to older Cisco routers and switches (e.g. Cisco 2951, Cisco C3750G), it&#8217;s likely that you&#8217;ll encounter this error when initiating an SSH connection: <code>SSH: no matching cipher found</code> and the device will display a list of offered ciphers. e.g. <code>Their offer: aes128-cbc,3des-cbc,aes192-cbc,aes256-cbc</code></p>
-
-
-
-<p>To connect, run the SSH command with the -c flag plus one of the offered ciphers:</p>
-
-
-
-<pre class="wp-block-code"><code>ssh -c aes256-cbc USERNAME@IP</code></pre>
 ]]></content:encoded>
 					
 		

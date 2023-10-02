@@ -1,6 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?><?xml-stylesheet type='text/xsl' href='https://jameswsullivan.github.io/wp-content/plugins/google-sitemap-generator/sitemap.xsl'?><!-- sitemap-generator-url='http://www.arnebrachhold.de/' sitemap-generator-version='4.1.13' -->
-<!-- generated-on='2023-09-19 19:21' -->
+<!-- generated-on='2023-10-02 02:36' -->
 <urlset xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd' xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>	<url>
+		<loc>https://jameswsullivan.github.io/tag/intervlan-routing/</loc>
+		<changefreq>daily</changefreq>
+		<priority>0.3</priority>
+	</url>
+	<url>
 		<loc>https://jameswsullivan.github.io/tag/iredmail/</loc>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
@@ -45,9 +50,4 @@
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
 	</url>
-	<url>
-		<loc>https://jameswsullivan.github.io/tag/lsi-hba-adapters/</loc>
-		<changefreq>daily</changefreq>
-		<priority>0.3</priority>
-	</url>
-</urlset><!-- Request ID: a8c8068e346038df7fa3da2f04d6af3f; Queries for sitemap: 5; Total queries: 19; Seconds: $end_time; Memory for sitemap: 0MB; Total memory: 4MB -->
+</urlset><!-- Request ID: 5dbd1fd5b82678d91b5679211bc22dff; Queries for sitemap: 5; Total queries: 19; Seconds: $end_time; Memory for sitemap: 0MB; Total memory: 4MB -->
