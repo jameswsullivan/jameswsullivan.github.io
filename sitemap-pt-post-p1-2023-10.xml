@@ -1,6 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?><?xml-stylesheet type='text/xsl' href='https://jameswsullivan.github.io/wp-content/plugins/google-sitemap-generator/sitemap.xsl'?><!-- sitemap-generator-url='http://www.arnebrachhold.de/' sitemap-generator-version='4.1.13' -->
-<!-- generated-on='2023-10-02 03:35' -->
+<!-- generated-on='2023-10-03 18:54' -->
 <urlset xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd' xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>	<url>
+		<loc>https://jameswsullivan.github.io/refurbish-mac-mini-a1347-late-2014-part-3-remove-efi-bios-firmware-lock/</loc>
+		<lastmod>2023-10-03T18:35:08+00:00</lastmod>
+		<changefreq>daily</changefreq>
+		<priority>0.6</priority>
+	</url>
+	<url>
 		<loc>https://jameswsullivan.github.io/refurbish-mac-mini-a1347-late-2014-part-2-install-windows-11/</loc>
 		<lastmod>2023-10-02T03:31:30+00:00</lastmod>
 		<changefreq>daily</changefreq>
@@ -12,4 +18,4 @@
 		<changefreq>daily</changefreq>
 		<priority>0.6</priority>
 	</url>
-</urlset><!-- Request ID: 65644508bca7ca19ae7a4ae0d41418f3; Queries for sitemap: 2; Total queries: 16; Seconds: $end_time; Memory for sitemap: 0MB; Total memory: 4MB -->
+</urlset><!-- Request ID: 290f1548238039d764e3bd889ea55daa; Queries for sitemap: 2; Total queries: 16; Seconds: $end_time; Memory for sitemap: 0MB; Total memory: 4MB -->

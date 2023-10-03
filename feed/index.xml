@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Mon, 02 Oct 2023 03:35:20 +0000</lastBuildDate>
+	<lastBuildDate>Tue, 03 Oct 2023 18:35:08 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -20,6 +20,157 @@
 	1	</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=6.3.1</generator>
 	<item>
+		<title>Refurbish Mac Mini A1347 (Late 2014 ) – Part 3 &#8211; Remove EFI/BIOS Firmware Lock</title>
+		<link>https://jameswsullivan.github.io/refurbish-mac-mini-a1347-late-2014-part-3-remove-efi-bios-firmware-lock/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Tue, 03 Oct 2023 18:33:47 +0000</pubDate>
+				<category><![CDATA[notes]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2811</guid>
+
+					<description><![CDATA[Background: Two of the Mac Minis I bought on eBay were really cheap and had their HDD and accessories removed, everything&#8217;s been in working order (hardware wise) until I found that I was hit with a &#8220;lock&#8221; screen prompting for password and unable to enter Recovery Mode (Command/Windows Key + R). Solution: The solution is [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<h2 class="wp-block-heading">Background:</h2>
+
+
+
+<p>Two of the Mac Minis I bought on eBay were really cheap and had their HDD and accessories removed, everything&#8217;s been in working order (hardware wise) until I found that I was hit with a &#8220;lock&#8221; screen prompting for password and unable to enter Recovery Mode (Command/Windows Key + R).</p>
+
+
+
+<figure class="wp-block-image size-large"><img decoding="async" fetchpriority="high" width="1024" height="607" src="https://jameswsullivan.github.io/wp-content/uploads/2023/10/MacMiniEFILock-1024x607.png" alt="" class="wp-image-2812" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/10/MacMiniEFILock-1024x607.png 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/MacMiniEFILock-300x178.png 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/MacMiniEFILock-768x455.png 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/MacMiniEFILock-700x415.png 700w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/MacMiniEFILock.png 1326w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<h2 class="wp-block-heading">Solution:</h2>
+
+
+
+<p>The solution is quite straightforward with the right tools:</p>
+
+
+
+<ol>
+<li>Use a BIOS/Chip programmer to extract firmware data. The BIOS chips on my Mac Minis are: <code>MX25L6406E</code> and <code>N25Q064A</code>. NeoProgrammer was able to detect <code>N25Q064A</code> automatically, but for <code>MX25L6406E</code>, it was only able to detect the series and the specific chip needs to be selected manually.</li>
+
+
+
+<li>Open the extracted <code>.bin</code> file with a HEX editor (<a href="https://mh-nexus.de/en/hxd/">HxD</a> was what I used), search for <code>$SVS</code> , fill the section with <code>FF</code> . Save file.</li>
+
+
+
+<li>Wipe the BIOS chip, write the modified <code>.bin</code> file back to the chip.</li>
+
+
+
+<li>EFI/BIOS Firmware Lock is gone.</li>
+</ol>
+
+
+
+<p><strong>Tools needed:</strong></p>
+
+
+
+<ul>
+<li>CH341A programmer (with the SOP8 SOIC8 clip).</li>
+
+
+
+<li>NeoProgrammer V2.2.0.10</li>
+
+
+
+<li>HxD HEX Editor</li>
+
+
+
+<li>[Optional]: Multimeter with probes thin enough to test the connectivity/continuity between the clip and CH341A.</li>
+
+
+
+<li>[Optional]: Microscope. It&#8217;s gonna be really easy to see the chip&#8217;s part number with a microscope.</li>
+</ul>
+
+
+
+<p>There are a lot of alternatives that you could use to accomplish this task, for me the CH341A was the cheapest and easiest to come by. Here is a list of possible alternatives:</p>
+
+
+
+<ul>
+<li><strong>Programmer:</strong> <a href="http://www.xgecu.com/en/TL866_main.html">XGecu T48/T56</a> universal programmer. This is probably the best one out there if you want a tool that supports almost any chip available out there. It&#8217;s a little pricey for small jobs like this one, but it&#8217;s on my shopping list.</li>
+
+
+
+<li><strong>Software:</strong> AsProgrammer, Colibri (compatible with CH341A); Xgpro (comes with XGecu programmer, not sure if it&#8217;s compatible with CH341A).</li>
+</ul>
+
+
+
+<p>Colibri doesn&#8217;t seem to support as many chips as AsProgrammer and NeoProgrammer do, but all of them were fairly straightforward to use.</p>
+
+
+
+<p><strong>Pro Tips:</strong></p>
+
+
+
+<ul>
+<li>Datasheet: <a href="https://github.com/jameswsullivan/blog-file-share/blob/main/MX25L6406E-MacronixInternational.pdf">MX25L6406E</a> and <a href="https://github.com/jameswsullivan/blog-file-share/blob/main/N25Q064A-MicronTechnology.pdf">N25Q064A</a> .</li>
+
+
+
+<li>The CH341A programmer and the clip should theoretically work with any 24 and 25 series chips.</li>
+
+
+
+<li>See the closeup pictures from the gallery below, the purple wire should match PIN #1 on the chip, and when it&#8217;s clipped to CH341A, PIN #1 faces toward the lever, away from the USB port.</li>
+
+
+
+<li>Use a multimeter to test the continuity after fitting the clip onto the BIOS chip. It&#8217;s not absolutely necessary but it saved me a lot of time when trying to get a solid connection.</li>
+</ul>
+
+
+
+<p>A video will be provided at a later time to better illustrate the process.</p>
+
+
+
+<figure class="wp-block-gallery has-nested-images columns-2 is-cropped wp-block-gallery-1 is-layout-flex wp-block-gallery-is-layout-flex">
+<figure class="wp-block-image size-large"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-01-scaled.jpg"><img decoding="async" width="1024" height="576" data-id="2816" src="https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-01-1024x576.jpg" alt="" class="wp-image-2816" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-01-1024x576.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-01-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-01-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-01-1536x864.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-01-2048x1152.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-01-700x394.jpg 700w" sizes="(max-width: 1024px) 100vw, 1024px" /></a></figure>
+
+
+
+<figure class="wp-block-image size-large"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-02-scaled.jpg"><img decoding="async" width="1024" height="576" data-id="2817" src="https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-02-1024x576.jpg" alt="" class="wp-image-2817" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-02-1024x576.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-02-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-02-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-02-1536x864.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-02-2048x1152.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-02-700x394.jpg 700w" sizes="(max-width: 1024px) 100vw, 1024px" /></a></figure>
+
+
+
+<figure class="wp-block-image size-large"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-03-scaled.jpg"><img decoding="async" loading="lazy" width="1024" height="576" data-id="2815" src="https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-03-1024x576.jpg" alt="" class="wp-image-2815" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-03-1024x576.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-03-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-03-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-03-1536x864.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-03-2048x1152.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-03-700x394.jpg 700w" sizes="(max-width: 1024px) 100vw, 1024px" /></a></figure>
+
+
+
+<figure class="wp-block-image size-large"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-04-scaled.jpg"><img decoding="async" loading="lazy" width="1024" height="576" data-id="2814" src="https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-04-1024x576.jpg" alt="" class="wp-image-2814" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-04-1024x576.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-04-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-04-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-04-1536x864.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-04-2048x1152.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-04-700x394.jpg 700w" sizes="(max-width: 1024px) 100vw, 1024px" /></a></figure>
+
+
+
+<figure class="wp-block-image size-large"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-05.jpg"><img decoding="async" loading="lazy" width="1024" height="1024" data-id="2819" src="https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-05-1024x1024.jpg" alt="" class="wp-image-2819" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-05-1024x1024.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-05-300x300.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-05-150x150.jpg 150w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-05-768x768.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-05-1536x1536.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-05-2048x2048.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-05-140x140.jpg 140w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-05-380x380.jpg 380w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-05-600x600.jpg 600w" sizes="(max-width: 1024px) 100vw, 1024px" /></a></figure>
+
+
+
+<figure class="wp-block-image size-large"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-06-scaled.jpg"><img decoding="async" loading="lazy" width="1024" height="1024" data-id="2818" src="https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-06-1024x1024.jpg" alt="" class="wp-image-2818" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-06-1024x1024.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-06-300x300.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-06-150x150.jpg 150w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-06-768x768.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-06-1536x1536.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-06-2048x2048.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-06-140x140.jpg 140w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-06-380x380.jpg 380w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-06-600x600.jpg 600w" sizes="(max-width: 1024px) 100vw, 1024px" /></a></figure>
+</figure>
+
+
+
+<p></p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>Refurbish Mac Mini A1347 (Late 2014 ) – Part 2 &#8211; Install Windows 11</title>
 		<link>https://jameswsullivan.github.io/refurbish-mac-mini-a1347-late-2014-part-2-install-windows-11/</link>
 		
@@ -170,16 +321,16 @@
 
 
 
-<figure class="wp-block-gallery has-nested-images columns-default is-cropped wp-block-gallery-1 is-layout-flex wp-block-gallery-is-layout-flex">
-<figure class="wp-block-image size-large"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-01-scaled.jpg"><img decoding="async" fetchpriority="high" width="1024" height="576" data-id="2788" src="https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-01-1024x576.jpg" alt="" class="wp-image-2788" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-01-1024x576.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-01-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-01-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-01-1536x864.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-01-2048x1152.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-01-700x394.jpg 700w" sizes="(max-width: 1024px) 100vw, 1024px" /></a></figure>
+<figure class="wp-block-gallery has-nested-images columns-default is-cropped wp-block-gallery-3 is-layout-flex wp-block-gallery-is-layout-flex">
+<figure class="wp-block-image size-large"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-01-scaled.jpg"><img decoding="async" loading="lazy" width="1024" height="576" data-id="2788" src="https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-01-1024x576.jpg" alt="" class="wp-image-2788" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-01-1024x576.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-01-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-01-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-01-1536x864.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-01-2048x1152.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-01-700x394.jpg 700w" sizes="(max-width: 1024px) 100vw, 1024px" /></a></figure>
 
 
 
-<figure class="wp-block-image size-large"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-02-scaled.jpg"><img decoding="async" width="1024" height="576" data-id="2789" src="https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-02-1024x576.jpg" alt="" class="wp-image-2789" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-02-1024x576.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-02-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-02-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-02-1536x864.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-02-2048x1152.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-02-700x394.jpg 700w" sizes="(max-width: 1024px) 100vw, 1024px" /></a></figure>
+<figure class="wp-block-image size-large"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-02-scaled.jpg"><img decoding="async" loading="lazy" width="1024" height="576" data-id="2789" src="https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-02-1024x576.jpg" alt="" class="wp-image-2789" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-02-1024x576.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-02-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-02-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-02-1536x864.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-02-2048x1152.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-02-700x394.jpg 700w" sizes="(max-width: 1024px) 100vw, 1024px" /></a></figure>
 
 
 
-<figure class="wp-block-image size-large"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-03-scaled.jpg"><img decoding="async" width="1024" height="575" data-id="2790" src="https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-03-1024x575.jpg" alt="" class="wp-image-2790" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-03-1024x575.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-03-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-03-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-03-1536x863.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-03-2048x1151.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-03-700x393.jpg 700w" sizes="(max-width: 1024px) 100vw, 1024px" /></a></figure>
+<figure class="wp-block-image size-large"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-03-scaled.jpg"><img decoding="async" loading="lazy" width="1024" height="575" data-id="2790" src="https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-03-1024x575.jpg" alt="" class="wp-image-2790" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-03-1024x575.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-03-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-03-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-03-1536x863.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-03-2048x1151.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/macmini-thermal-paste-03-700x393.jpg 700w" sizes="(max-width: 1024px) 100vw, 1024px" /></a></figure>
 </figure>
 ]]></content:encoded>
 					
@@ -974,46 +1125,6 @@ reload</code></pre>
 
 netsh wlan show wlanreport
 </code></pre>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Skip Ctrl+P and Ctrl+Q in VS Code Shell/Terminal</title>
-		<link>https://jameswsullivan.github.io/vs-code-commands-to-skip-shell/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Sat, 17 Jun 2023 19:25:17 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[Software Development]]></category>
-		<category><![CDATA[Visual Studio Code]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2564</guid>
-
-					<description><![CDATA[Skip Ctrl+P and Ctrl+Q in VS Code Shell/Terminal using terminal.integrated.commandsToSkipShell in defaultSettings.json.]]></description>
-										<content:encoded><![CDATA[
-<p>Refer to this issue: <a href="https://github.com/microsoft/vscode/issues/94268">VS Code eats terminal keyboard shortcuts</a></p>
-
-
-
-<h2 class="wp-block-heading">Solution:</h2>
-
-
-
-<pre class="wp-block-code"><code>Go to VS Code - Manage - Settings (Ctrl + ,) - Features - Terminal - Integrated: commands To Skip Shell
-
-Or, open VS Code - Manage - Settings - Search settings - search for:
-
-terminal.integrated.commandsToSkipShell
-or 
-open the default settings JSON (defaultSettings.json)
-
-And modify the corresponding section as follows:
-
-"terminal.integrated.commandsToSkipShell": &#91;
-      "-workbench.action.quickOpen",
-      "-workbench.action.quickOpenView"
-]</code></pre>
 ]]></content:encoded>
 					
 		
