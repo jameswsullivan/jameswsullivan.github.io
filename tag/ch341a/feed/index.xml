@@ -8,8 +8,8 @@
 	>
 
 <channel>
-	<title>Electronics &#8211; howdy</title>
-	<atom:link href="https://jameswsullivan.github.io/tag/electronics/feed/" rel="self" type="application/rss+xml" />
+	<title>CH341A &#8211; howdy</title>
+	<atom:link href="https://jameswsullivan.github.io/tag/ch341a/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
 	<lastBuildDate>Tue, 03 Oct 2023 19:14:45 +0000</lastBuildDate>
@@ -176,61 +176,6 @@
 
 
 <p></p>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Repair ProForm 505 CST Treadmill</title>
-		<link>https://jameswsullivan.github.io/repair-proform-505-cst-treadmill/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Sun, 16 Jul 2023 21:08:14 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[Electronics]]></category>
-		<category><![CDATA[MOSFET]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2637</guid>
-
-					<description><![CDATA[Repair ProForm 505 CST Treadmill.]]></description>
-										<content:encoded><![CDATA[
-<p>I recently picked up a used, broken ProForm 505 CST Treadmill from someone at a really cheap price and decided to experiment with a repair myself, because the symptoms didn&#8217;t sound like it&#8217;s irreparable.</p>
-
-
-
-<p><strong>And I was right</strong> &#8211; the only thing I needed to replace was an IRFP250 MOSFET.</p>
-
-
-
-<blockquote class="wp-block-quote">
-<p><strong>Symptom:</strong> The control panel turns on fine, but the motor will run for a fraction of a second and then immediately stop.</p>
-</blockquote>
-
-
-
-<p>The repair is very easy: de-solder the bad MOSFET and replace it with a new one.</p>
-
-
-
-<p>The bad MOSFET was shot, you can diagnose with a multimeter:</p>
-
-
-
-<ul>
-<li>Put the multimeter in continuity or diode testing mode, you should see a voltage drop between the pins on a good MOSFET and the pins shouldn&#8217;t be directly connected to each other.</li>
-
-
-
-<li>On the bad one, all three pins were directly connected and the multimeter beeps in continuity mode (meaning the MOSFET is shot).</li>
-</ul>
-
-
-
-<figure class="wp-block-image size-large is-resized"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-scaled.jpg"><img decoding="async" loading="lazy" src="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-1024x576.jpg" alt="Motor Control Board" class="wp-image-2639" width="768" height="432" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-1024x576.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-1536x864.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-2048x1152.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-700x394.jpg 700w" sizes="(max-width: 768px) 100vw, 768px" /></a></figure>
-
-
-
-<figure class="wp-block-image size-large is-resized"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-scaled.jpg"><img decoding="async" loading="lazy" src="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-1024x576.jpg" alt="IRFP250 MOSFET" class="wp-image-2641" width="768" height="432" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-1024x576.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-1536x864.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-2048x1152.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-700x394.jpg 700w" sizes="(max-width: 768px) 100vw, 768px" /></a></figure>
 ]]></content:encoded>
 					
 		
