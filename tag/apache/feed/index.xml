@@ -18,7 +18,7 @@
 	hourly	</sy:updatePeriod>
 	<sy:updateFrequency>
 	1	</sy:updateFrequency>
-	<generator>https://wordpress.org/?v=6.3.1</generator>
+	<generator>https://wordpress.org/?v=6.4.1</generator>
 	<item>
 		<title>Docker Containerization of Koha ILS Software</title>
 		<link>https://jameswsullivan.github.io/docker-containerization-of-koha-ils-software/</link>
@@ -1600,7 +1600,7 @@ Google书签:
 
 
 
-<figure class="wp-block-image size-full"><img decoding="async" fetchpriority="high" width="613" height="520" src="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogWordPressTheming02.jpg" alt="" class="wp-image-2592" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogWordPressTheming02.jpg 613w, https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogWordPressTheming02-300x254.jpg 300w" sizes="(max-width: 613px) 100vw, 613px" /></figure>
+<figure class="wp-block-image size-full"><img fetchpriority="high" decoding="async" width="613" height="520" src="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogWordPressTheming02.jpg" alt="" class="wp-image-2592" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogWordPressTheming02.jpg 613w, https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogWordPressTheming02-300x254.jpg 300w" sizes="(max-width: 613px) 100vw, 613px" /></figure>
 
 
 

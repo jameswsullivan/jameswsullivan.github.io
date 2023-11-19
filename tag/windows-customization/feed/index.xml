@@ -18,7 +18,7 @@
 	hourly	</sy:updatePeriod>
 	<sy:updateFrequency>
 	1	</sy:updateFrequency>
-	<generator>https://wordpress.org/?v=6.3.1</generator>
+	<generator>https://wordpress.org/?v=6.4.1</generator>
 	<item>
 		<title>Migrate Windows 10 from SATA to USB</title>
 		<link>https://jameswsullivan.github.io/migrate-windows-10-from-sata-to-usb/</link>
@@ -201,7 +201,7 @@ bcdboot X:\windows /s Z: /f UEFI
 
 
 
-<figure class="wp-block-image size-full"><img decoding="async" fetchpriority="high" width="436" height="399" src="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogUsePhoneAsComputerRemote01.jpg" alt="" class="wp-image-2605" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogUsePhoneAsComputerRemote01.jpg 436w, https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogUsePhoneAsComputerRemote01-300x275.jpg 300w" sizes="(max-width: 436px) 100vw, 436px" /></figure>
+<figure class="wp-block-image size-full"><img fetchpriority="high" decoding="async" width="436" height="399" src="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogUsePhoneAsComputerRemote01.jpg" alt="" class="wp-image-2605" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogUsePhoneAsComputerRemote01.jpg 436w, https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogUsePhoneAsComputerRemote01-300x275.jpg 300w" sizes="(max-width: 436px) 100vw, 436px" /></figure>
 
 
 
@@ -308,7 +308,7 @@ bcdboot X:\windows /s Z: /f UEFI
 
 
 
-<figure class="wp-block-image size-large"><img decoding="async" loading="lazy" width="1024" height="616" src="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogMakeLeftMouseCursor01-1024x616.jpg" alt="" class="wp-image-2584" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogMakeLeftMouseCursor01-1024x616.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogMakeLeftMouseCursor01-300x180.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogMakeLeftMouseCursor01-768x462.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogMakeLeftMouseCursor01-700x421.jpg 700w, https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogMakeLeftMouseCursor01.jpg 1280w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+<figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="1024" height="616" src="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogMakeLeftMouseCursor01-1024x616.jpg" alt="" class="wp-image-2584" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogMakeLeftMouseCursor01-1024x616.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogMakeLeftMouseCursor01-300x180.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogMakeLeftMouseCursor01-768x462.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogMakeLeftMouseCursor01-700x421.jpg 700w, https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogMakeLeftMouseCursor01.jpg 1280w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
 
 
 

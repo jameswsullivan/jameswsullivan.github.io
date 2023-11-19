@@ -18,7 +18,7 @@
 	hourly	</sy:updatePeriod>
 	<sy:updateFrequency>
 	1	</sy:updateFrequency>
-	<generator>https://wordpress.org/?v=6.3.1</generator>
+	<generator>https://wordpress.org/?v=6.4.1</generator>
 	<item>
 		<title>Use LineageOS on Pixel 3a XL</title>
 		<link>https://jameswsullivan.github.io/use-lineageos-on-pixel-3a-xl/</link>
@@ -139,7 +139,7 @@ adb sideload MindTheGapps-12.1.0-arm64-20220605_112439.zip
 
 
 
-<figure class="wp-block-image size-full"><img decoding="async" fetchpriority="high" width="677" height="442" src="https://jameswsullivan.github.io/wp-content/uploads/2023/08/htc-g3-hero-flashrom-01.png" alt="" class="wp-image-2681" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/08/htc-g3-hero-flashrom-01.png 677w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/htc-g3-hero-flashrom-01-300x196.png 300w" sizes="(max-width: 677px) 100vw, 677px" /></figure>
+<figure class="wp-block-image size-full"><img fetchpriority="high" decoding="async" width="677" height="442" src="https://jameswsullivan.github.io/wp-content/uploads/2023/08/htc-g3-hero-flashrom-01.png" alt="" class="wp-image-2681" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/08/htc-g3-hero-flashrom-01.png 677w, https://jameswsullivan.github.io/wp-content/uploads/2023/08/htc-g3-hero-flashrom-01-300x196.png 300w" sizes="(max-width: 677px) 100vw, 677px" /></figure>
 
 
 

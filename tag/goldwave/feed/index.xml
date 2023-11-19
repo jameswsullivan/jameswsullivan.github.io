@@ -18,7 +18,7 @@
 	hourly	</sy:updatePeriod>
 	<sy:updateFrequency>
 	1	</sy:updateFrequency>
-	<generator>https://wordpress.org/?v=6.3.1</generator>
+	<generator>https://wordpress.org/?v=6.4.1</generator>
 	<item>
 		<title>用Goldwave改变音频文件的播放速度</title>
 		<link>https://jameswsullivan.github.io/change-audio-playback-speed-with-goldwave/</link>
@@ -43,7 +43,7 @@
 
 
 
-<figure class="wp-block-image size-full"><img decoding="async" fetchpriority="high" width="332" height="309" src="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogGoldWave01.jpg" alt="" class="wp-image-2580" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogGoldWave01.jpg 332w, https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogGoldWave01-300x279.jpg 300w" sizes="(max-width: 332px) 100vw, 332px" /></figure>
+<figure class="wp-block-image size-full"><img fetchpriority="high" decoding="async" width="332" height="309" src="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogGoldWave01.jpg" alt="" class="wp-image-2580" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogGoldWave01.jpg 332w, https://jameswsullivan.github.io/wp-content/uploads/2023/06/BlogGoldWave01-300x279.jpg 300w" sizes="(max-width: 332px) 100vw, 332px" /></figure>
 
 
 
