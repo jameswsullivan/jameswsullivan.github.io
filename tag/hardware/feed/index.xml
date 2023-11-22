@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/hardware/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Sun, 19 Nov 2023 20:12:33 +0000</lastBuildDate>
+	<lastBuildDate>Sun, 19 Nov 2023 22:05:32 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -191,6 +191,16 @@ Enable it and add the Hardware Ids you found from Device Manager.</code></pre>
 
 
 <p>Assuming there is nothing else blocking the reboot, it should go to the Advanced boot options menu upon restart.</p>
+
+
+
+<p>If you need to install anything while in Safe Mode, enable Windows Installer using the following commands in a command prompt:</p>
+
+
+
+<pre class="wp-block-code"><code>REG ADD “HKLM\SYSTEM\CurrentControlSet\Control\SafeBoot\Network\MSIServer” /VE /T REG_SZ /F /D “Service”
+
+net start msiserver</code></pre>
 ]]></content:encoded>
 					
 		

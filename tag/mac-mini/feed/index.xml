@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/mac-mini/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Sun, 19 Nov 2023 20:12:33 +0000</lastBuildDate>
+	<lastBuildDate>Wed, 22 Nov 2023 01:22:27 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -20,6 +20,229 @@
 	1	</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=6.4.1</generator>
 	<item>
+		<title>Refurbish Mac Mini A1347 (Late 2014) &#8211; Part 5 &#8211; Install openSUSE</title>
+		<link>https://jameswsullivan.github.io/refurbish-mac-mini-a1347-late-2014-part-4-install-opensuse/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Tue, 21 Nov 2023 22:21:20 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Boot Loader]]></category>
+		<category><![CDATA[Kubernetes]]></category>
+		<category><![CDATA[KubeSphere]]></category>
+		<category><![CDATA[Linux]]></category>
+		<category><![CDATA[Mac Mini]]></category>
+		<category><![CDATA[Mac Mini A1347]]></category>
+		<category><![CDATA[macOS]]></category>
+		<category><![CDATA[openSUSE]]></category>
+		<category><![CDATA[rEFInd]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2847</guid>
+
+					<description><![CDATA[Refurbish Mac Mini A1347 (Late 2014) - Part 5 - Install openSUSE and rEFInd.]]></description>
+										<content:encoded><![CDATA[
+<h2 class="wp-block-heading">Background:</h2>
+
+
+
+<p>One of the Mac Minis will be used for KubeSphere in a lab environment and I wanted to experiment with openSUSE. However, due to Macs handles the EFI slight differently, both openSUSE&#8217;s default GRUB2 for EFI and GRUB2 Boot Loader configs fail during installation. I&#8217;ve experimented with different combination of settings and openSUSE would not boot successfully once the USB drive is removed. Eventually, <a href="https://www.rodsbooks.com/refind/" target="_blank" rel="noreferrer noopener">rEFInd</a> resolved the problems.</p>
+
+
+
+<p>Setup:</p>
+
+
+
+<ul>
+<li>Mac Mini late-2014 (macmini7,1) with 4GB RAM, 256GB SSD.</li>
+
+
+
+<li>openSUSE Leap 15.5, with &#8220;Server&#8221; System Role, (installed natively via USB, without macOS)
+<ul>
+<li>Partition layout:
+<ul>
+<li>/dev/sda1 at /boot/eft</li>
+
+
+
+<li>/dev/sda2 for / with btrfs</li>
+
+
+
+<li>/dev/sda3 at swap</li>
+</ul>
+</li>
+
+
+
+<li>&#8220;Secure Boot&#8221; is disabled under Boot Loader Settings, with Secure Boot Support unchecked.</li>
+
+
+
+<li>&#8220;Protective MBR flag&#8221; set to &#8220;remove&#8221; under Boot Loader Settings.</li>
+</ul>
+</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading">Issue Details:</h2>
+
+
+
+<p>Installation using <code>GRUB2 for EFI</code> fails with the following error at around 93% when Boot Loader configs are being committed:</p>
+
+
+
+<pre class="wp-block-code"><code><strong>Error</strong>
+
+Execution of command "&#91;&#91;"/usr/sbin/grub2-install","--target=x86_64-efi","--force","--skip-fs-probe"]]" failed.
+Exit code: 1
+Error output: Installing for x86_64-efi platform.
+Could not prepare Boot variable: invalid argument
+/usr/sbin/grub2-install: error: efibootmgr failed to register the boot entry: input/output error.</code></pre>
+
+
+
+<p>The installation will finish successfully if &#8220;Update NVRAM Entry&#8221; is unchecked, or use GRUB2 Boot Loader (MBR). However, in both cases, openSUSE is unable to boot successfully without the help of the installation media, the Mac Mini will stuck at the following screen after power-on.</p>
+
+
+
+<figure class="wp-block-image size-large"><img fetchpriority="high" decoding="async" width="1024" height="818" src="https://jameswsullivan.github.io/wp-content/uploads/2023/11/mac-flashing-folder-with-question-mark-1024x818.jpg" alt="" class="wp-image-2850" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/11/mac-flashing-folder-with-question-mark-1024x818.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/11/mac-flashing-folder-with-question-mark-300x240.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/11/mac-flashing-folder-with-question-mark-768x614.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/11/mac-flashing-folder-with-question-mark-700x559.jpg 700w, https://jameswsullivan.github.io/wp-content/uploads/2023/11/mac-flashing-folder-with-question-mark.jpg 1100w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<h2 class="wp-block-heading">Solution:</h2>
+
+
+
+<p>The solution is fairly straightforward with the help of <a href="https://www.rodsbooks.com/refind/" target="_blank" rel="noreferrer noopener">rEFInd</a>.</p>
+
+
+
+<p>1. Install openSUSE using the following Boot Loader Settings:</p>
+
+
+
+<ul>
+<li>Boot Loader: <code>GRUB2 for EFI</code></li>
+
+
+
+<li>Uncheck <code>Secure Boot Support</code></li>
+
+
+
+<li>Uncheck <code>Update NVRAM Entry</code></li>
+
+
+
+<li><code>Protective MBR flag</code> set to <code>remove</code></li>
+
+
+
+<li>Partition layout:
+<ul>
+<li>/dev/sda1 at /boot/eft</li>
+
+
+
+<li>/dev/sda2 for / with btrfs</li>
+
+
+
+<li>/dev/sda3 at swap</li>
+</ul>
+</li>
+</ul>
+
+
+
+<p>2. After installation finishes, boot openSUSE using the installation media and select <code>More ... -- Boot Linux System</code> , accept default settings and boot to the shell prompt.</p>
+
+
+
+<blockquote class="wp-block-quote">
+<p>I ran into a minor issue here which my keyboard doesn&#8217;t get recognized, but you should be able to use SSH to connect to the machine and perform the remaining steps. I didn&#8217;t further troubleshoot the driver issue. Also, I had the Mac Mini hardwired for internet so that I don&#8217;t have to load any WiFi drivers, but if you&#8217;re performing the steps on a Mac that doesn&#8217;t have an RJ45 port, you might need to perform extra steps to load the drivers.</p>
+</blockquote>
+
+
+
+<p>3. Install rEFInd using the following commands:</p>
+
+
+
+<pre class="wp-block-code"><code># become root first to make things easy.
+
+cd /tmp
+
+zypper refresh
+
+zypper install -y wget unzip
+
+wget https://phoenixnap.dl.sourceforge.net/project/refind/0.14.0.2/refind-bin-0.14.0.2.zip
+
+unzip refind-bin-0.14.0.2.zip
+
+cd refind-bin-0.14.0.2
+
+./refind-install</code></pre>
+
+
+
+<p>After the installation finishes, you might see the following message:</p>
+
+
+
+<pre class="wp-block-code"><code>ShimSource is none
+Installing rEFInd on Linux....
+ESP was found at /boot/efi using vfat
+Installing driver for btrfs (btrfs_x64.efi)
+Copied rEFInd binary files
+
+Copying sample configuration file as refind.conf; edit this file to configure
+rEFInd.
+
+Creating new NVRAM entry
+
+ALERT: There were problems running the efibootmgr program! You may need to
+rename the refind_x64.efi binary to the default name (EFI/BOOT/bootx64.efi
+on x86-64 systems, EFI/BOOT/bootia32.efi on x86 systems, or
+EFI/BOOT/bootaa64.efi on ARM64 systems) to have it run!
+
+Creating //boot/refind_linux.conf; edit it to adjust kernel options.
+
+ALERT:
+Installation has completed, but problems were detected. Review the output for
+error messages and take corrective measures as necessary. You may need to
+re-run this script or install manually before rEFInd will work.</code></pre>
+
+
+
+<p>If that&#8217;s the case, perform the following steps:</p>
+
+
+
+<pre class="wp-block-code"><code>cd /boot/efi/EFI/
+
+cp -a refind/ BOOT
+
+cd BOOT/
+
+mv refind_x64.efi bootx64.efi</code></pre>
+
+
+
+<p>Additionally, if you need to, reset NVRAM using <code>Command/Windows Key + Option/Alt + P + R</code> keys.</p>
+
+
+
+<p>Now that you should be able to see the rEFInd boot screen after a reboot, with openSUSE installation media removed. This method should also work for dual boot with macOS, or on other Mac models.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>Refurbish Mac Mini A1347 (Late 2014 and Mid 2011) &#8211; Part 4</title>
 		<link>https://jameswsullivan.github.io/refurbish-mac-mini-a1347-late-2014-and-mid-2011-part-4/</link>
 		
@@ -191,6 +414,16 @@ Enable it and add the Hardware Ids you found from Device Manager.</code></pre>
 
 
 <p>Assuming there is nothing else blocking the reboot, it should go to the Advanced boot options menu upon restart.</p>
+
+
+
+<p>If you need to install anything while in Safe Mode, enable Windows Installer using the following commands in a command prompt:</p>
+
+
+
+<pre class="wp-block-code"><code>REG ADD “HKLM\SYSTEM\CurrentControlSet\Control\SafeBoot\Network\MSIServer” /VE /T REG_SZ /F /D “Service”
+
+net start msiserver</code></pre>
 ]]></content:encoded>
 					
 		
@@ -222,7 +455,7 @@ Enable it and add the Hardware Ids you found from Device Manager.</code></pre>
 
 
 
-<figure class="wp-block-image size-large"><img fetchpriority="high" decoding="async" width="1024" height="607" src="https://jameswsullivan.github.io/wp-content/uploads/2023/10/MacMiniEFILock-1024x607.png" alt="" class="wp-image-2812" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/10/MacMiniEFILock-1024x607.png 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/MacMiniEFILock-300x178.png 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/MacMiniEFILock-768x455.png 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/MacMiniEFILock-700x415.png 700w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/MacMiniEFILock.png 1326w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+<figure class="wp-block-image size-large"><img decoding="async" width="1024" height="607" src="https://jameswsullivan.github.io/wp-content/uploads/2023/10/MacMiniEFILock-1024x607.png" alt="" class="wp-image-2812" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/10/MacMiniEFILock-1024x607.png 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/MacMiniEFILock-300x178.png 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/MacMiniEFILock-768x455.png 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/MacMiniEFILock-700x415.png 700w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/MacMiniEFILock.png 1326w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
 
 
 
@@ -331,7 +564,7 @@ Enable it and add the Hardware Ids you found from Device Manager.</code></pre>
 
 
 
-<figure class="wp-block-image size-large"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-02-scaled.jpg"><img decoding="async" width="1024" height="576" data-id="2817" src="https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-02-1024x576.jpg" alt="" class="wp-image-2817" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-02-1024x576.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-02-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-02-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-02-1536x864.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-02-2048x1152.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-02-700x394.jpg 700w" sizes="(max-width: 1024px) 100vw, 1024px" /></a></figure>
+<figure class="wp-block-image size-large"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-02-scaled.jpg"><img loading="lazy" decoding="async" width="1024" height="576" data-id="2817" src="https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-02-1024x576.jpg" alt="" class="wp-image-2817" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-02-1024x576.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-02-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-02-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-02-1536x864.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-02-2048x1152.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-02-700x394.jpg 700w" sizes="(max-width: 1024px) 100vw, 1024px" /></a></figure>
 
 
 

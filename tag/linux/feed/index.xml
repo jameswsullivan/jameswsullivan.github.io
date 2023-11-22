@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/linux/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Mon, 02 Oct 2023 03:35:20 +0000</lastBuildDate>
+	<lastBuildDate>Wed, 22 Nov 2023 01:22:27 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -20,6 +20,229 @@
 	1	</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=6.4.1</generator>
 	<item>
+		<title>Refurbish Mac Mini A1347 (Late 2014) &#8211; Part 5 &#8211; Install openSUSE</title>
+		<link>https://jameswsullivan.github.io/refurbish-mac-mini-a1347-late-2014-part-4-install-opensuse/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Tue, 21 Nov 2023 22:21:20 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Boot Loader]]></category>
+		<category><![CDATA[Kubernetes]]></category>
+		<category><![CDATA[KubeSphere]]></category>
+		<category><![CDATA[Linux]]></category>
+		<category><![CDATA[Mac Mini]]></category>
+		<category><![CDATA[Mac Mini A1347]]></category>
+		<category><![CDATA[macOS]]></category>
+		<category><![CDATA[openSUSE]]></category>
+		<category><![CDATA[rEFInd]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2847</guid>
+
+					<description><![CDATA[Refurbish Mac Mini A1347 (Late 2014) - Part 5 - Install openSUSE and rEFInd.]]></description>
+										<content:encoded><![CDATA[
+<h2 class="wp-block-heading">Background:</h2>
+
+
+
+<p>One of the Mac Minis will be used for KubeSphere in a lab environment and I wanted to experiment with openSUSE. However, due to Macs handles the EFI slight differently, both openSUSE&#8217;s default GRUB2 for EFI and GRUB2 Boot Loader configs fail during installation. I&#8217;ve experimented with different combination of settings and openSUSE would not boot successfully once the USB drive is removed. Eventually, <a href="https://www.rodsbooks.com/refind/" target="_blank" rel="noreferrer noopener">rEFInd</a> resolved the problems.</p>
+
+
+
+<p>Setup:</p>
+
+
+
+<ul>
+<li>Mac Mini late-2014 (macmini7,1) with 4GB RAM, 256GB SSD.</li>
+
+
+
+<li>openSUSE Leap 15.5, with &#8220;Server&#8221; System Role, (installed natively via USB, without macOS)
+<ul>
+<li>Partition layout:
+<ul>
+<li>/dev/sda1 at /boot/eft</li>
+
+
+
+<li>/dev/sda2 for / with btrfs</li>
+
+
+
+<li>/dev/sda3 at swap</li>
+</ul>
+</li>
+
+
+
+<li>&#8220;Secure Boot&#8221; is disabled under Boot Loader Settings, with Secure Boot Support unchecked.</li>
+
+
+
+<li>&#8220;Protective MBR flag&#8221; set to &#8220;remove&#8221; under Boot Loader Settings.</li>
+</ul>
+</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading">Issue Details:</h2>
+
+
+
+<p>Installation using <code>GRUB2 for EFI</code> fails with the following error at around 93% when Boot Loader configs are being committed:</p>
+
+
+
+<pre class="wp-block-code"><code><strong>Error</strong>
+
+Execution of command "&#91;&#91;"/usr/sbin/grub2-install","--target=x86_64-efi","--force","--skip-fs-probe"]]" failed.
+Exit code: 1
+Error output: Installing for x86_64-efi platform.
+Could not prepare Boot variable: invalid argument
+/usr/sbin/grub2-install: error: efibootmgr failed to register the boot entry: input/output error.</code></pre>
+
+
+
+<p>The installation will finish successfully if &#8220;Update NVRAM Entry&#8221; is unchecked, or use GRUB2 Boot Loader (MBR). However, in both cases, openSUSE is unable to boot successfully without the help of the installation media, the Mac Mini will stuck at the following screen after power-on.</p>
+
+
+
+<figure class="wp-block-image size-large"><img fetchpriority="high" decoding="async" width="1024" height="818" src="https://jameswsullivan.github.io/wp-content/uploads/2023/11/mac-flashing-folder-with-question-mark-1024x818.jpg" alt="" class="wp-image-2850" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/11/mac-flashing-folder-with-question-mark-1024x818.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/11/mac-flashing-folder-with-question-mark-300x240.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/11/mac-flashing-folder-with-question-mark-768x614.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/11/mac-flashing-folder-with-question-mark-700x559.jpg 700w, https://jameswsullivan.github.io/wp-content/uploads/2023/11/mac-flashing-folder-with-question-mark.jpg 1100w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<h2 class="wp-block-heading">Solution:</h2>
+
+
+
+<p>The solution is fairly straightforward with the help of <a href="https://www.rodsbooks.com/refind/" target="_blank" rel="noreferrer noopener">rEFInd</a>.</p>
+
+
+
+<p>1. Install openSUSE using the following Boot Loader Settings:</p>
+
+
+
+<ul>
+<li>Boot Loader: <code>GRUB2 for EFI</code></li>
+
+
+
+<li>Uncheck <code>Secure Boot Support</code></li>
+
+
+
+<li>Uncheck <code>Update NVRAM Entry</code></li>
+
+
+
+<li><code>Protective MBR flag</code> set to <code>remove</code></li>
+
+
+
+<li>Partition layout:
+<ul>
+<li>/dev/sda1 at /boot/eft</li>
+
+
+
+<li>/dev/sda2 for / with btrfs</li>
+
+
+
+<li>/dev/sda3 at swap</li>
+</ul>
+</li>
+</ul>
+
+
+
+<p>2. After installation finishes, boot openSUSE using the installation media and select <code>More ... -- Boot Linux System</code> , accept default settings and boot to the shell prompt.</p>
+
+
+
+<blockquote class="wp-block-quote">
+<p>I ran into a minor issue here which my keyboard doesn&#8217;t get recognized, but you should be able to use SSH to connect to the machine and perform the remaining steps. I didn&#8217;t further troubleshoot the driver issue. Also, I had the Mac Mini hardwired for internet so that I don&#8217;t have to load any WiFi drivers, but if you&#8217;re performing the steps on a Mac that doesn&#8217;t have an RJ45 port, you might need to perform extra steps to load the drivers.</p>
+</blockquote>
+
+
+
+<p>3. Install rEFInd using the following commands:</p>
+
+
+
+<pre class="wp-block-code"><code># become root first to make things easy.
+
+cd /tmp
+
+zypper refresh
+
+zypper install -y wget unzip
+
+wget https://phoenixnap.dl.sourceforge.net/project/refind/0.14.0.2/refind-bin-0.14.0.2.zip
+
+unzip refind-bin-0.14.0.2.zip
+
+cd refind-bin-0.14.0.2
+
+./refind-install</code></pre>
+
+
+
+<p>After the installation finishes, you might see the following message:</p>
+
+
+
+<pre class="wp-block-code"><code>ShimSource is none
+Installing rEFInd on Linux....
+ESP was found at /boot/efi using vfat
+Installing driver for btrfs (btrfs_x64.efi)
+Copied rEFInd binary files
+
+Copying sample configuration file as refind.conf; edit this file to configure
+rEFInd.
+
+Creating new NVRAM entry
+
+ALERT: There were problems running the efibootmgr program! You may need to
+rename the refind_x64.efi binary to the default name (EFI/BOOT/bootx64.efi
+on x86-64 systems, EFI/BOOT/bootia32.efi on x86 systems, or
+EFI/BOOT/bootaa64.efi on ARM64 systems) to have it run!
+
+Creating //boot/refind_linux.conf; edit it to adjust kernel options.
+
+ALERT:
+Installation has completed, but problems were detected. Review the output for
+error messages and take corrective measures as necessary. You may need to
+re-run this script or install manually before rEFInd will work.</code></pre>
+
+
+
+<p>If that&#8217;s the case, perform the following steps:</p>
+
+
+
+<pre class="wp-block-code"><code>cd /boot/efi/EFI/
+
+cp -a refind/ BOOT
+
+cd BOOT/
+
+mv refind_x64.efi bootx64.efi</code></pre>
+
+
+
+<p>Additionally, if you need to, reset NVRAM using <code>Command/Windows Key + Option/Alt + P + R</code> keys.</p>
+
+
+
+<p>Now that you should be able to see the rEFInd boot screen after a reboot, with openSUSE installation media removed. This method should also work for dual boot with macOS, or on other Mac models.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>Expand LVM in Ubuntu (22.04 LTS)</title>
 		<link>https://jameswsullivan.github.io/expand-lvm-in-ubuntu-22-04-lts/</link>
 		
@@ -1177,188 +1400,6 @@ service php8.0-fpm restart</code></pre>
 
 
 <p>Nextcloud&#8217;s overall syncing speed has a lot to do with your Nextcloud server&#8217;s performance, the more smooth your server runs the better syncing performance you&#8217;ll get (more RAM, SSD, etc.). I was able to get roughly 25MB upload speed and 65MB download speed with a Hyper-V VM running Ubuntu Desktop.</p>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Self-signed SSL Certificate, Apache, and Nextcloud</title>
-		<link>https://jameswsullivan.github.io/self-signed-ssl-certificate-apache-and-nextcloud/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Sun, 19 Sep 2021 20:58:07 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[Apache]]></category>
-		<category><![CDATA[Docker]]></category>
-		<category><![CDATA[Hosting]]></category>
-		<category><![CDATA[Linux]]></category>
-		<category><![CDATA[Nextcloud]]></category>
-		<category><![CDATA[Self-Hosting]]></category>
-		<category><![CDATA[SSL]]></category>
-		<category><![CDATA[Ubuntu]]></category>
-		<guid isPermaLink="false">https://www.alexchen.net/?p=1622</guid>
-
-					<description><![CDATA[Perfecting SSL configuration on Nextcloud server.]]></description>
-										<content:encoded><![CDATA[
-<p>In my last blog post about bringing up a self-hosted Nextcloud setup, everything went well until it reached the SSL cert and configuration part. The instructions I found were all somehow missing some pieces or doing things a little bit differently than what I had expected, plus my own lack of in-depth understanding of SSL, I finally had my issues resolved with the help of these resources: <a rel="noreferrer noopener" href="https://stackoverflow.com/questions/46349459/chrome-neterr-cert-authority-invalid-error-on-self-signing-certificate-at-loca?rq=1" data-type="URL" data-id="https://stackoverflow.com/questions/46349459/chrome-neterr-cert-authority-invalid-error-on-self-signing-certificate-at-loca?rq=1" target="_blank">article 1</a>, <a rel="noreferrer noopener" href="https://alexanderzeitler.com/articles/Fixing-Chrome-missing_subjectAltName-selfsigned-cert-openssl/" data-type="URL" data-id="https://alexanderzeitler.com/articles/Fixing-Chrome-missing_subjectAltName-selfsigned-cert-openssl/" target="_blank">article 2</a>, <a rel="noreferrer noopener" href="https://superuser.com/questions/1631692/why-is-chrome-not-trusting-imported-self-signed-root-ca" data-type="URL" data-id="https://superuser.com/questions/1631692/why-is-chrome-not-trusting-imported-self-signed-root-ca" target="_blank">article 3</a>, <a rel="noreferrer noopener" href="https://www.youtube.com/watch?v=e8vMTlobW3c" data-type="URL" data-id="https://www.youtube.com/watch?v=e8vMTlobW3c" target="_blank">video</a>.</p>
-
-
-
-<h2 class="wp-block-heading">Issues<strong>:</strong></h2>
-
-
-
-<ul>
-<li>SSL/HTTPS won&#8217;t go into effect even if I&#8217;ve enabled SSL in Apache, generated the certs, and configured the config files.</li>
-
-
-
-<li>HTTPS goes into effect in Firefox but always said &#8220;Not Secure&#8221; or &#8220;Invalid&#8221; cert in Chrome.</li>
-
-
-
-<li>Chrome errors: &#8220;NET::ERR_CERT_AUTHORITY_INVALID&#8221;, &#8220;NET::ERR_CERT_COMMON_NAME_INVALID&#8221;</li>
-</ul>
-
-
-
-<h2 class="wp-block-heading">Solutions:</h2>
-
-
-
-<p>1. Originally, I followed this article to generate my certs, but the cert won&#8217;t get accepted by Chrome even if I&#8217;ve imported it into Trusted Root Certification Authorities store. The certificate generation procedures that worked are:</p>
-
-
-
-<pre class="wp-block-code"><code># Generate a Certificate Authority (CA)
-
-openssl genrsa -des3 -out nextcloudCA.key 2048
-# A password needs to be created after this command is run.
-
-openssl req -x509 -new -nodes -key nextcloudCA.key -sha256 -days 365 -out nextcloudCA.pem
-# A series of information will be asked after this command is run. You can customize your own or just follow whatever is in the &#91;dn] section below.
-
-openssl x509 -outform pem -in nextcloudCA.pem -out nextcloudCA.crt
-# Generate a crt file for future import. The pem file can also be used for import.
-
-# Prepare the v3.ext and config files.
-# cert.csr.cnf file
-&#91;req]
-default_bits = 2048
-prompt = no
-default_md = sha256
-distinguished_name = dn
-
-&#91;dn]
-C=Replace-with-Your-Info
-ST=Replace-with-Your-Info
-L=Replace-with-Your-Info
-O=Replace-with-Your-Info
-OU=Replace-with-Your-Info
-emailAddress=Replace-with-Your-Info
-CN=Replace-with-Your-Info
-
-# v3.ext file
-authorityKeyIdentifier=keyid,issuer
-basicConstraints=CA:FALSE
-keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
-subjectAltName = @alt_names
-
-&#91;alt_names]
-DNS.1 = Replace-with-Your-Info-Or-Delete-Line
-DNS.2 = Replace-with-Your-Info-Or-Delete-Line
-DNS.3 = Replace-with-Your-Info-Or-Delete-Line
-IP.1 = Replace-with-Your-Info-Or-Delete-Line
-IP.2 = Replace-with-Your-Info-Or-Delete-Line
-
-# Generate the domain name cert
-openssl req -new -sha256 -nodes -out nextcloudDNCert.csr -newkey rsa:2048 -keyout nextcloudDNCert.key -config cert.csr.cnf
-
-openssl x509 -req -in nextcloudDNCert.csr -CA nextcloudCA.crt -CAkey nextcloudCA.key -CAcreateserial -out nextcloudDNCert.crt -days 365 -sha256 -extfile v3.ext</code></pre>
-
-
-
-<p>2. Put your cert files (<strong>nextcloudDNCert.crt</strong> and <strong>nextcloudDNCert.key</strong>) in the directories that&#8217;s suitable for your setup, and modify your SSL config file or the nextcloud.conf file to point to the cert files. Sample config files can be downloaded here: <a rel="noreferrer noopener" href="https://github.com/jameswsullivan/blog-file-share/blob/main/sample.nextcloud.conf" target="_blank">sample.nextcloud.conf</a> .</p>
-
-
-
-<pre class="wp-block-code"><code># Under /etc/apache2/sites-available, modify nextcloud.conf .
-
-SSLCertificateFile Your-Cert-File-Path
-SSLCertificateKeyFile Your-Cert-Key-File-Path</code></pre>
-
-
-
-<p>3. Restart Apache service</p>
-
-
-
-<pre class="wp-block-code"><code>service apache2 restart</code></pre>
-
-
-
-<p>4. Import <strong>nextcloudCA.crt</strong> into your Trusted Root Certification Authorities store, clear your browser&#8217;s cookies, restart the browser and access your Nextcloud server again, this time the HTTPS padlock should be solid grey, no &#8220;Not Secure&#8221; and other errors.</p>
-
-
-
-<p>5. Explanation about the &#8220;NET::ERR_CERT_AUTHORITY_INVALID&#8221; and &#8220;NET::ERR_CERT_COMMON_NAME_INVALID&#8221; errors.</p>
-
-
-
-<p>&#8220;NET::ERR_CERT_AUTHORITY_INVALID&#8221; is due to how the certs were generated, when using <a rel="noreferrer noopener" href="https://betterprogramming.pub/how-to-create-trusted-ssl-certificates-for-your-local-development-13fd5aad29c6" data-type="URL" data-id="https://betterprogramming.pub/how-to-create-trusted-ssl-certificates-for-your-local-development-13fd5aad29c6" target="_blank">this method</a> to generate, I always got the error, but after I switched to the method written in #1 and the certs were properly imported, this error was gone.</p>
-
-
-
-<p>&#8220;NET::ERR_CERT_COMMON_NAME_INVALID&#8221; . Assuming you already put in the Common Name (which is your FQDN, e.g. nextcloud.mydomain.com) correctly when generating the certs and it still gave this error, check the @alt_names section above, make sure all the DNS.x and IP.x entries cover all your alt_name variants. Once I added stuff under the alt_names section correctly (for me it&#8217;s &#8220;localhost&#8221;, my server&#8217;s IP, and the &#8220;subdomain&#8221; URL I&#8217;d like to use in my own environment), the error was gone.</p>
-
-
-
-<p>6. Other issues and thoughts that emerged during the troubleshooting process.</p>
-
-
-
-<ol>
-<li>Some mentioned that Chrome versions played a role in accepting self-signed certs. But my issues were resolved without dealing with Chrome versions.</li>
-
-
-
-<li>I&#8217;ve seen posts mentioning the <code>chrome://flags/#allow-insecure-localhost</code> flag, but it didn&#8217;t apply to my scenario.</li>
-
-
-
-<li>Some articles say that self-signed certs won&#8217;t be deemed secure and valid by browsers/OSs/Chrome, which is not true if the certs are generated imported and generated correctly.</li>
-</ol>
-
-
-
-<p>7. Security hardening &#8211; forcing HTTPS, Strict-Transport-Security, and URL redirections. See <a href="https://github.com/jameswsullivan/blog-file-share/blob/main/sample.nextcloud.conf" data-type="URL" data-id="https://drive.google.com/file/d/1QQRGrROpZhrnDc-ET8mDUfj2EjtHzAnK/view?usp=sharing" target="_blank" rel="noreferrer noopener">sample.nextcloud.conf</a> and its comments for details.</p>
-
-
-
-<p>8. Apache&#8217;s SSL config files, which to use?</p>
-
-
-
-<p>Assuming your installation is very similar to mine, you&#8217;d now have 3 files under /etc/apache2/sites-available : 000-default.conf, default-ssl.conf, and nextcloud.conf . </p>
-
-
-
-<ul>
-<li>000-default.conf is a template for you to start with, not a live file to use.</li>
-
-
-
-<li>default-ssl.conf is the default Apache SSL config file.</li>
-
-
-
-<li>nextcloud.conf is the config file for Nextcloud.</li>
-</ul>
-
-
-
-<p>You can choose either to use default-ssl.conf or nextcloud.conf, or a combination of both and use them for different purposes. I disabled default-ssl.conf by renaming it to default-ssl.conf.bak, and left nextcloud.conf active which has all my configs.</p>
 ]]></content:encoded>
 					
 		
