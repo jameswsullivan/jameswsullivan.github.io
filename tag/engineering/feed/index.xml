@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/engineering/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Tue, 22 Aug 2023 15:46:02 +0000</lastBuildDate>
+	<lastBuildDate>Fri, 29 Dec 2023 05:20:02 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -30,9 +30,11 @@
 		<category><![CDATA[Engineering]]></category>
 		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2351</guid>
 
-					<description><![CDATA[Silencing the Cisco 2951 router by replacing its stock high speed fans with Noctua quiet fans and adding active CPU cooler.]]></description>
+					<description><![CDATA[Silence the Cisco 2951 router by replacing its stock high speed fans with Noctua quiet fans and adding an active CPU cooler.]]></description>
 										<content:encoded><![CDATA[
+<blockquote class="wp-block-quote">
 <p>Recently I came to the need for a quieter environment for audiovisual production and my Cisco 2951 router is producing noticeable background noise in my recordings, so I decided to do some surgery on it and make it quieter. <a href="https://www.mattmillman.com/silencing-a-cisco-2951-for-where-ever-silence-may-be-required/" target="_blank" rel="noreferrer noopener">This article</a> gave me a lot of insights and I highly recommend using it as a reference, my method is slightly modified and improved to fit my needs.</p>
+</blockquote>
 
 
 
@@ -99,7 +101,7 @@
 
 
 <ul>
-<li>The active CPU cooler will have to be disassembled and have the mounting screws removed and replaced with the mounting clips from the original passive heatsink, and you&#8217;ll need a 3mm drill bit to enlarge the mounting holes on the heatsink of the active cooler for the original mounting clips to fit. The copper heatsink is very soft so you should be able to hand drill it with very little efforts.</li>
+<li>The active CPU cooler will have to be disassembled and have the mounting screws removed and replaced with the mounting clips from the original passive heatsink, and you&#8217;ll need a 3mm drill bit to enlarge the mounting holes on the heatsink of the active cooler for the original mounting clips to fit. The copper heatsink is very soft so you should be able to hand drill it with minimal efforts.</li>
 
 
 
@@ -121,7 +123,7 @@
 
 
 <ul>
-<li>If your room is well air conditioned and your server rack/cabinet well ventilated, you probably won&#8217;t need the active CPU cooler. Although the four Noctua fans are significantly weaker than the original ones, if your router is not under heavy load and your rack/cabinet has enough air flow, the four fans are probably enough to keep the router cool. My room is not always air conditioned and has other equipment producing heat and I see the CPU temperature slowly creep up to around 75 degrees Celsius, which was why I added the active cooler.</li>
+<li>If your room is well air conditioned and your server rack/cabinet is well ventilated, you probably won&#8217;t need the active CPU cooler. Although the four Noctua fans are significantly weaker than the original ones, if your router is not under heavy load and your rack/cabinet has enough air flow, the four fans are probably enough to keep the router cool. My room is not always air conditioned and has other equipment producing heat and I see the CPU temperature slowly creep up to around 75 degrees Celsius, which was why I added the active cooler.</li>
 
 
 

@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/mail-server/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Tue, 23 May 2023 03:10:45 +0000</lastBuildDate>
+	<lastBuildDate>Fri, 29 Dec 2023 18:18:35 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -20,8 +20,8 @@
 	1	</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=6.4.2</generator>
 	<item>
-		<title>Self-host iredmail</title>
-		<link>https://jameswsullivan.github.io/self-host-iredmail/</link>
+		<title>Docker Administration: set up an email server with iredmail</title>
+		<link>https://jameswsullivan.github.io/docker-administration-set-up-an-email-server-with-iredmail/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Tue, 23 May 2023 03:04:02 +0000</pubDate>
@@ -34,14 +34,22 @@
 		<category><![CDATA[Web Hosting]]></category>
 		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2549</guid>
 
-					<description><![CDATA[Set up self hosted iredmail mail server.]]></description>
+					<description><![CDATA[Set up iredmail email server using Docker.]]></description>
 										<content:encoded><![CDATA[
 <h2 class="wp-block-heading">Environment:</h2>
 
 
 
 <ul>
-<li>Docker host running Ubuntu Server 22.04 LTS</li>
+<li>Docker host running Ubuntu Server 22.04 LTS
+<ul>
+<li><a href="https://jameswsullivan.github.io/linux-administration-install-docker-on-ubuntu-server/">Linux Administration: Install Docker on Ubuntu Server</a></li>
+
+
+
+<li><a href="https://jameswsullivan.github.io/linux-administration-install-docker-on-ubuntu-server-and-mount-disks/">Linux Administration: Install Docker on Ubuntu Server and mount disks</a></li>
+</ul>
+</li>
 
 
 
@@ -50,11 +58,11 @@
 
 
 
-<h2 class="wp-block-heading">Set up:</h2>
+<h2 class="wp-block-heading">Configurations:</h2>
 
 
 
-<p>Follow <a href="https://hub.docker.com/r/iredmail/mariadb" target="_blank" rel="noreferrer noopener">this instruction</a> and create the necessary folders and the default config file.</p>
+<p>1. Follow <a href="https://hub.docker.com/r/iredmail/mariadb" target="_blank" rel="noreferrer noopener">this instruction</a> and create the necessary folders and a default config file.</p>
 
 
 
@@ -70,16 +78,16 @@ mkdir -p data/{backup-mysql,clamav,custom,imapsieve_copy,mailboxes,mlmmj,mlmmj-a
 nano iredmail-docker.conf
 
 # Paste the following content into iredmail-docker.conf
-HOSTNAME=&lt;YOUR_HOSTNAME>
-FIRST_MAIL_DOMAIN=&lt;YOUR_DOMAIN>
-FIRST_MAIL_DOMAIN_ADMIN_PASSWORD=&lt;YOUR_ADMIN_PASSWORD>
+HOSTNAME=&lt;YOUR_HOSTNAME&gt;
+FIRST_MAIL_DOMAIN=&lt;YOUR_DOMAIN&gt;
+FIRST_MAIL_DOMAIN_ADMIN_PASSWORD=&lt;YOUR_ADMIN_PASSWORD&gt;
 MLMMJADMIN_API_TOKEN=$(openssl rand -base64 32)
 ROUNDCUBE_DES_KEY=$(openssl rand -base64 24)
-MYSQL_ROOT_PASSWORD=&lt;YOUR_MYSQL_ROOT_PASSWORD></code></pre>
+MYSQL_ROOT_PASSWORD=&lt;YOUR_MYSQL_ROOT_PASSWORD&gt;</code></pre>
 
 
 
-<p>docker run command:</p>
+<p>2. Start the iredmail container:</p>
 
 
 
@@ -104,26 +112,26 @@ MYSQL_ROOT_PASSWORD=&lt;YOUR_MYSQL_ROOT_PASSWORD></code></pre>
 
 
 
-<h2 class="wp-block-heading">Issues:</h2>
+<h2 class="wp-block-heading">Troubleshooting:</h2>
 
 
 
 <ul>
-<li>Container first time startup takes some time, if the server is not responding after the container&#8217;s been started, wait for a few a minutes and try again.</li>
+<li>The container&#8217;s first-time startup will take some time, if the server is not responding after the container&#8217;s been started, wait for a few a minutes and try again.</li>
 
 
 
-<li>For some reason there is no &#8220;latest&#8221; tag, thus the <code>docker pull iredmail/mariadb</code> doesn&#8217;t work. You&#8217;ll have to use either <code>docker pull iredmail/mariadb:nightly</code> or <code>docker pull iredmail/mariadb:stable</code> .</li>
+<li>There is no &#8220;latest&#8221; tag for the <code>iredmail/mariadb</code> image, you&#8217;ll need to use either <code>docker pull iredmail/mariadb:nightly</code> or <code>docker pull iredmail/mariadb:stable</code> instead.</li>
 
 
 
 <li>Default admin login:
 <ul>
-<li>username: postmaster@&lt;YOUR_DOMAIN></li>
+<li>username: postmaster@&lt;YOUR_DOMAIN&gt;</li>
 
 
 
-<li>password: your password specified in iredmail-docker.conf file. <code>FIRST_MAIL_DOMAIN_ADMIN_PASSWORD=&lt;YOUR_ADMIN_PASSWORD></code></li>
+<li>password: your password specified in iredmail-docker.conf file. <code>FIRST_MAIL_DOMAIN_ADMIN_PASSWORD=&lt;YOUR_ADMIN_PASSWORD&gt;</code></li>
 </ul>
 </li>
 </ul>

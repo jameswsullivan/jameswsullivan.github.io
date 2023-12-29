@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/docker/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Thu, 28 Dec 2023 23:33:22 +0000</lastBuildDate>
+	<lastBuildDate>Fri, 29 Dec 2023 19:29:51 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -20,8 +20,8 @@
 	1	</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=6.4.2</generator>
 	<item>
-		<title>Expand LVM in Ubuntu (22.04 LTS)</title>
-		<link>https://jameswsullivan.github.io/expand-lvm-in-ubuntu-22-04-lts/</link>
+		<title>Linux Administration: Expand LVM</title>
+		<link>https://jameswsullivan.github.io/linux-administration-expand-lvm/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sat, 05 Aug 2023 16:06:41 +0000</pubDate>
@@ -34,7 +34,21 @@
 
 					<description><![CDATA[Expand LVM in Ubuntu 22.04 LTS.]]></description>
 										<content:encoded><![CDATA[
+<h2 class="wp-block-heading">Background:</h2>
+
+
+
 <p>This Ubuntu server (Hyper-V VM) in question is a Docker host that was partitioned using the default layout (50/50 split of available disk space) when Ubuntu was installed. After a few month one of the logic volumes <code>/dev/mapper/ubuntu--vg-ubuntu--lv</code> ran out of space. Since there is no GUI for partition management, a few steps will be needed to properly expand the volume size.</p>
+
+
+
+<p>Related article:</p>
+
+
+
+<ul>
+<li><a href="https://jameswsullivan.github.io/linux-administration-install-docker-on-ubuntu-server-and-mount-disks/">Linux Administration: Install Docker on Ubuntu Server and mount disks</a></li>
+</ul>
 
 
 
@@ -50,7 +64,7 @@
 
 
 
-<p>3. Run <code>parted /dev/sdf print</code> to view partition layout. You&#8217;ll probably get a warning message like this. Which one you choose doesn&#8217;t really matter because we&#8217;re doing the process manually.</p>
+<p>3. Run <code>parted /dev/sdf print</code> to view partition layout. You&#8217;ll probably get a warning message like the following. Which one you choose doesn&#8217;t really matter because we&#8217;ll be doing the process manually.</p>
 
 
 
@@ -86,8 +100,8 @@ Fix/Ignore?</code></pre>
 		
 			</item>
 		<item>
-		<title>Self-host iredmail</title>
-		<link>https://jameswsullivan.github.io/self-host-iredmail/</link>
+		<title>Docker Administration: set up an email server with iredmail</title>
+		<link>https://jameswsullivan.github.io/docker-administration-set-up-an-email-server-with-iredmail/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Tue, 23 May 2023 03:04:02 +0000</pubDate>
@@ -100,14 +114,22 @@ Fix/Ignore?</code></pre>
 		<category><![CDATA[Web Hosting]]></category>
 		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2549</guid>
 
-					<description><![CDATA[Set up self hosted iredmail mail server.]]></description>
+					<description><![CDATA[Set up iredmail email server using Docker.]]></description>
 										<content:encoded><![CDATA[
 <h2 class="wp-block-heading">Environment:</h2>
 
 
 
 <ul>
-<li>Docker host running Ubuntu Server 22.04 LTS</li>
+<li>Docker host running Ubuntu Server 22.04 LTS
+<ul>
+<li><a href="https://jameswsullivan.github.io/linux-administration-install-docker-on-ubuntu-server/">Linux Administration: Install Docker on Ubuntu Server</a></li>
+
+
+
+<li><a href="https://jameswsullivan.github.io/linux-administration-install-docker-on-ubuntu-server-and-mount-disks/">Linux Administration: Install Docker on Ubuntu Server and mount disks</a></li>
+</ul>
+</li>
 
 
 
@@ -116,11 +138,11 @@ Fix/Ignore?</code></pre>
 
 
 
-<h2 class="wp-block-heading">Set up:</h2>
+<h2 class="wp-block-heading">Configurations:</h2>
 
 
 
-<p>Follow <a href="https://hub.docker.com/r/iredmail/mariadb" target="_blank" rel="noreferrer noopener">this instruction</a> and create the necessary folders and the default config file.</p>
+<p>1. Follow <a href="https://hub.docker.com/r/iredmail/mariadb" target="_blank" rel="noreferrer noopener">this instruction</a> and create the necessary folders and a default config file.</p>
 
 
 
@@ -136,16 +158,16 @@ mkdir -p data/{backup-mysql,clamav,custom,imapsieve_copy,mailboxes,mlmmj,mlmmj-a
 nano iredmail-docker.conf
 
 # Paste the following content into iredmail-docker.conf
-HOSTNAME=&lt;YOUR_HOSTNAME>
-FIRST_MAIL_DOMAIN=&lt;YOUR_DOMAIN>
-FIRST_MAIL_DOMAIN_ADMIN_PASSWORD=&lt;YOUR_ADMIN_PASSWORD>
+HOSTNAME=&lt;YOUR_HOSTNAME&gt;
+FIRST_MAIL_DOMAIN=&lt;YOUR_DOMAIN&gt;
+FIRST_MAIL_DOMAIN_ADMIN_PASSWORD=&lt;YOUR_ADMIN_PASSWORD&gt;
 MLMMJADMIN_API_TOKEN=$(openssl rand -base64 32)
 ROUNDCUBE_DES_KEY=$(openssl rand -base64 24)
-MYSQL_ROOT_PASSWORD=&lt;YOUR_MYSQL_ROOT_PASSWORD></code></pre>
+MYSQL_ROOT_PASSWORD=&lt;YOUR_MYSQL_ROOT_PASSWORD&gt;</code></pre>
 
 
 
-<p>docker run command:</p>
+<p>2. Start the iredmail container:</p>
 
 
 
@@ -170,26 +192,26 @@ MYSQL_ROOT_PASSWORD=&lt;YOUR_MYSQL_ROOT_PASSWORD></code></pre>
 
 
 
-<h2 class="wp-block-heading">Issues:</h2>
+<h2 class="wp-block-heading">Troubleshooting:</h2>
 
 
 
 <ul>
-<li>Container first time startup takes some time, if the server is not responding after the container&#8217;s been started, wait for a few a minutes and try again.</li>
+<li>The container&#8217;s first-time startup will take some time, if the server is not responding after the container&#8217;s been started, wait for a few a minutes and try again.</li>
 
 
 
-<li>For some reason there is no &#8220;latest&#8221; tag, thus the <code>docker pull iredmail/mariadb</code> doesn&#8217;t work. You&#8217;ll have to use either <code>docker pull iredmail/mariadb:nightly</code> or <code>docker pull iredmail/mariadb:stable</code> .</li>
+<li>There is no &#8220;latest&#8221; tag for the <code>iredmail/mariadb</code> image, you&#8217;ll need to use either <code>docker pull iredmail/mariadb:nightly</code> or <code>docker pull iredmail/mariadb:stable</code> instead.</li>
 
 
 
 <li>Default admin login:
 <ul>
-<li>username: postmaster@&lt;YOUR_DOMAIN></li>
+<li>username: postmaster@&lt;YOUR_DOMAIN&gt;</li>
 
 
 
-<li>password: your password specified in iredmail-docker.conf file. <code>FIRST_MAIL_DOMAIN_ADMIN_PASSWORD=&lt;YOUR_ADMIN_PASSWORD></code></li>
+<li>password: your password specified in iredmail-docker.conf file. <code>FIRST_MAIL_DOMAIN_ADMIN_PASSWORD=&lt;YOUR_ADMIN_PASSWORD&gt;</code></li>
 </ul>
 </li>
 </ul>
@@ -199,677 +221,78 @@ MYSQL_ROOT_PASSWORD=&lt;YOUR_MYSQL_ROOT_PASSWORD></code></pre>
 		
 			</item>
 		<item>
-		<title>Self-host Bitwarden</title>
-		<link>https://jameswsullivan.github.io/self-host-bitwarden/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Wed, 10 May 2023 02:16:01 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[Bitwarden]]></category>
-		<category><![CDATA[Docker]]></category>
-		<category><![CDATA[Hosting]]></category>
-		<category><![CDATA[MSSQL]]></category>
-		<category><![CDATA[Password Manager]]></category>
-		<category><![CDATA[Self-Hosting]]></category>
-		<category><![CDATA[Ubuntu]]></category>
-		<category><![CDATA[Web Hosting]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2436</guid>
-
-					<description><![CDATA[Self-host Bitwarden using self-signed certificate and "hack" the database to manually verify emails without a live SMTP server.]]></description>
-										<content:encoded><![CDATA[
-<h2 class="wp-block-heading">Background:</h2>
-
-
-
-<p>I chose Bitwarden over Passbolt because Bitwarden stores a cached copy of your vault to allow offline access (read-only) on mobile devices while I&#8217;m away from my home lab or don&#8217;t have internet connection. I&#8217;m also using KeePass so it would be sufficient for my need.</p>
-
-
-
-<p>My Bitwarden instance runs on a Hyper-V VM running Ubuntu Server 22.04 LTS.</p>
-
-
-
-<h2 class="wp-block-heading">Project:</h2>
-
-
-
-<ul>
-<li>This project is documented on <a rel="noreferrer noopener" href="https://github.com/jameswsullivan/selfhosted" target="_blank">my GitHub</a>. (<a href="https://github.com/jameswsullivan/selfhosted/blob/main/bitwarden.md" target="_blank" rel="noreferrer noopener">instruction</a>, <a href="https://github.com/jameswsullivan/selfhosted/blob/main/bitwarden.sh" data-type="URL" data-id="https://github.com/jameswsullivan/selfhosted/blob/main/bitwarden.sh" target="_blank" rel="noreferrer noopener">installation script</a>)</li>
-
-
-
-<li>Bitwarden&#8217;s <a rel="noreferrer noopener" href="https://bitwarden.com/help/install-on-premise-linux/" data-type="URL" data-id="https://bitwarden.com/help/install-on-premise-linux/" target="_blank">official installation guide</a>.</li>
-
-
-
-<li><a href="https://frdmtoplay.com/self-hosting-bitwarden-without-smtp/" target="_blank" rel="noreferrer noopener">Reference article</a>.</li>
-</ul>
-
-
-
-<h2 class="wp-block-heading">Customization:</h2>
-
-
-
-<h4 class="wp-block-heading"><strong>Manually &#8220;verify&#8221; emails without an SMTP server.</strong></h4>
-
-
-
-<pre class="wp-block-code"><code># On the bitwarden host machine: (assuming that you're using the bitwarden user and in the /opt/bitwarden directory)
-
-
-# Retrieve the database password:
-cat bwdata/env/mssql.override.env
-
-
-# You'll get:
-SA_PASSWORD=YOUR_DB_PASS
-
-# Connect to the bitwarden-mssql container:
-docker exec -it bitwarden-mssql bash
-
-# While in the bitwarden-mssql container, do the following:
-# Connect to the DB instance:
-cd /opt/mssql-tools/bin
-./sqlcmd -S 127.0.0.1 -U sa -P YOUR_DB_PASS
-
-# List all databases:
-SELECT name, database_id, create_date  
-FROM sys.databases;  
-GO
-
-# Find the database name (your database name was specified during this installation step: Enter the database name for your Bitwarden instance (ex. vault): YOUR_DB_NAME):
-USE YOUR_DB_NAME
-GO
-SELECT Name, Email, EmailVerified FROM &#91;User]
-GO
-
-# Change "admin" to the user that you need to modify.
-UPDATE &#91;User] SET EmailVerified = 1 WHERE &#91;User].Name="admin";
-GO
-
-# The EmailVerified field (0 = not verified, 1 = verified) is what you need to change.</code></pre>
-
-
-
-<h4 class="wp-block-heading"><strong>Self-signed certificate:</strong></h4>
-
-
-
-<p>If you use a self-signed certificate, refer to the <em>Install the certificates:</em> section <a rel="noreferrer noopener" href="https://jameswsullivan.github.io/self-host-passbolt/" target="_blank">in this article</a>.</p>
-
-
-
-<p>Fun fact: Bitwarden&#8217;s self-signed certificate is valid for 100 years.</p>
-
-
-
-<p></p>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Self-host Passbolt</title>
-		<link>https://jameswsullivan.github.io/self-host-passbolt/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Mon, 08 May 2023 02:57:53 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[Docker]]></category>
-		<category><![CDATA[Hosting]]></category>
-		<category><![CDATA[Linux]]></category>
-		<category><![CDATA[Nginx]]></category>
-		<category><![CDATA[Passbolt]]></category>
-		<category><![CDATA[Password Manager]]></category>
-		<category><![CDATA[Self-Hosting]]></category>
-		<category><![CDATA[Web Hosting]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2427</guid>
-
-					<description><![CDATA[Self-host the Passbolt password manager using self-signed certificate.]]></description>
-										<content:encoded><![CDATA[
-<h2 class="wp-block-heading">Background:</h2>
-
-
-
-<ul>
-<li>The Passbolt instance is locally hosted and only available in my homelab&#8217;s LAN environment. It&#8217;s not exposed to the internet.</li>
-
-
-
-<li>The instance uses a self-signed certificate. See <a href="https://help.passbolt.com/faq/hosting/mobile-faq" target="_blank" rel="noreferrer noopener">official FAQ here</a>.</li>
-
-
-
-<li>My test environment: Windows, Ubuntu Server 22.04 LTS, Pixel 5 phone with the Passbolt app. (<a href="https://help.passbolt.com/faq/hosting/how-to-import-ssl-certificate-on-mobile" target="_blank" rel="noreferrer noopener">Install self-signed certificate on Android</a>.)</li>
-</ul>
-
-
-
-<h2 class="wp-block-heading">Setup:</h2>
-
-
-
-<pre class="wp-block-code"><code># Passbolt Docker image.
-
-pull passbolt/passbolt
-
-
-# Start the container.
-
-docker run -dit \
-    --name=YOUR_CONTAINER_NAME \
-    --ip IP_ADDRESS --network YOUR_DOCKER_NETWORK \
-    --hostname=YOUR_PASSBOLT_HOSTNAME \
-    --restart=unless-stopped \
-    -e DATASOURCES_DEFAULT_HOST=YOUR_DATABASE_SERVER \
-    -e DATASOURCES_DEFAULT_PASSWORD=YOUR_DB_PASSWORD \
-    -e DATASOURCES_DEFAULT_USERNAME=YOUR_DB_USER \
-    -e DATASOURCES_DEFAULT_DATABASE=YOUR_PASSBOLT_DB_NAME \
-    -e APP_FULL_BASE_URL=https://YOUR_PASSBOLT_APP_URL/ \
-    passbolt/passbolt
-
-
-# Generate self-signed certificate
-
-openssl req -x509 \
-    -newkey rsa:4096 \
-    -days SPECIFY_YOUR_OWN \
-    -subj "/C=YOUR_COUNTRY/ST=YOUR_STATE/L=YOUR_CITY/O=YOUR_ORG/OU=YOUR_OU/CN=YOUR_PASSBOLT_APP_URL/" \
-    -nodes \
-    -addext "subjectAltName = DNS:YOUR_PASSBOLT_APP_URL" \
-    -keyout passbolt_self_signed_key.pem \
-    -out passbolt_self_signed_cert.pem
-
-
-# Create your first admin user
-
-docker exec -it YOUR_CONTAINER_NAME bash
-
-su -m -c "/usr/share/php/passbolt/bin/cake passbolt register_user -u YOUR_ADMIN_USER@YOUR_DOMAIN.COM -f YOUR_FIRSTNAME -l YOUR_LASTNAME -r admin" -s /bin/sh www-data
-
-
-# Edit <em><strong>/etc/nginx/snippets/passbolt-ssl.conf</strong></em> to point to your self-generated certificates.
-
-apt-get install nano -y
-nano /etc/nginx/snippets/passbolt-ssl.conf
-
-
-# Restart nginx
-
-service nginx restart</code></pre>
-
-
-
-<h2 class="wp-block-heading">Install the certificates:</h2>
-
-
-
-<ul>
-<li>Import the <code>passbolt_self_signed_cert.pem</code> certificate into Windows&#8217; <code>Trusted Root Certification Authorities</code>.</li>
-
-
-
-<li>On Android devices, go to<br><code>Security &amp; privacy - Encryption &amp; credentials - Install a certificate - CA certificate - Install anyway</code><br>Browse to the passbolt_self_signed_cert.pem cert file and install it.</li>
-
-
-
-<li><a href="https://help.passbolt.com/faq/hosting/mobile-faq">Official FAQ on generating self-signed cert.</a></li>
-
-
-
-<li><a href="https://help.passbolt.com/faq/hosting/how-to-import-ssl-certificate-on-mobile">Official FAQ on installing cert on Android devices.</a></li>
-
-
-
-<li>Browser&#8217;s cache &amp; cookies might need to be cleared for the new cert to take effect.</li>
-</ul>
-
-
-
-<h2 class="wp-block-heading">Troubleshooting:</h2>
-
-
-
-<p>When generating the self-signed certificate, the <code>subjectAltName</code> must be specified, otherwise you&#8217;ll likely encounter this error when scanning the QR code. (<a href="https://community.passbolt.com/t/error-setting-up-mobile-app/5875" target="_blank" rel="noreferrer noopener">See this post.</a>)</p>
-
-
-
-<pre class="wp-block-code"><code>There was an error during transfer update(Something went wrong!)</code></pre>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Docker Containerization of Koha ILS Software</title>
-		<link>https://jameswsullivan.github.io/docker-containerization-of-koha-ils-software/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Sun, 07 May 2023 20:30:25 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[Apache]]></category>
-		<category><![CDATA[Containerization]]></category>
-		<category><![CDATA[Docker]]></category>
-		<category><![CDATA[Dockerizing]]></category>
-		<category><![CDATA[Hosting]]></category>
-		<category><![CDATA[KOHA]]></category>
-		<category><![CDATA[KOHA ILS]]></category>
-		<category><![CDATA[Linux]]></category>
-		<category><![CDATA[Self-Hosting]]></category>
-		<category><![CDATA[Ubuntu]]></category>
-		<category><![CDATA[Web Hosting]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2389</guid>
-
-					<description><![CDATA[Docker Containerization of the Koha ILS Software using the latest Ubuntu 22.04 LTS image.]]></description>
-										<content:encoded><![CDATA[
-<h2 class="wp-block-heading">Background:</h2>
-
-
-
-<p>The majority of instructions I found so far have been installing Koha instances on VMs or standalone servers, <a rel="noreferrer noopener" href="https://bywatersolutions.com/education/koha-testing-docker" target="_blank">ByWater Solution&#8217;s solution</a> (<a rel="noreferrer noopener" href="https://gitlab.com/koha-community/koha-testing-docker" target="_blank">gitlab repo</a>) seem to be the only one out there that&#8217;s a decent attempt. I have been setting things up in my home lab recently and this was one of the test projects.</p>
-
-
-
-<h2 class="wp-block-heading">Environment:</h2>
-
-
-
-<ul>
-<li>My homelab uses a <code>.local</code> domain. The Koha DNS entries look like this: <code>koha-opac.example.local</code> and <code>koha-staff.example.local</code> .</li>
-
-
-
-<li>My containers have IP addresses statically assigned.</li>
-
-
-
-<li>An <code>ipvlan</code> Docker network named the same as my homelab&#8217;s domain. ( <code>example.local</code> )</li>
-
-
-
-<li>DNS resolution is done on both my core router (Cisco 2951) and on the two Domain Controllers.</li>
-</ul>
-
-
-
-<h2 class="wp-block-heading">Containerization</h2>
-
-
-
-<p>This project is documented on <a rel="noreferrer noopener" href="https://github.com/jameswsullivan/KohaContainerization" target="_blank">my GitHub</a>. This is only the first iteration and still has some improvements that I want to make in the future, such as setting it to use a remote MySQL server instead of a local MySQL/MariaDB instance and mounting some volumes for persistent data.</p>
-
-
-
-<h2 class="wp-block-heading">Troubleshooting</h2>
-
-
-
-<p>Since a Ubuntu container is slightly different than a standalone Ubuntu installation, Koha&#8217;s automatic configurations won&#8217;t work straight out of the box and I needed to make some tweaks.</p>
-
-
-
-<h4 class="wp-block-heading"><strong>Issue 1: MPM ITK Apache module warning</strong></h4>
-
-
-
-<p>The container has to be run with the <code>--cap-add=SYS_NICE --cap-add=DAC_READ_SEARCH</code> flags added, otherwise you&#8217;ll get this error in the <code>/var/log/apache2/error.log</code> and a 500 server error. (See full <a rel="noreferrer noopener" href="https://github.com/jameswsullivan/KohaContainerization" target="_blank">docker run</a> command.)</p>
-
-
-
-<pre class="wp-block-code"><code>&#91;mpm_itk:warn] &#91;pid 746] (itkmpm: pid=746 uid=33, gid=33) itk_post_perdir_config(): setgid(1000): Operation not permitted</code></pre>
-
-
-
-<h4 class="wp-block-heading"><strong>Issue 2: MySQL database connection problem.</strong></h4>
-
-
-
-<p><strong>In the Koha config file</strong>, <code>/etc/koha/sites/koha/koha-conf.xml</code>, change <code>&lt;hostname&gt;localhost&lt;/hostname&gt;</code> to <code>&lt;hostname&gt;YOUR_CONTAINERS_HOSTNAME&lt;/hostname&gt;</code>. For example, in my <code>docker run</code> command I specified the hostname to be <code>--hostname=koha-opac.YOURDOMAIN.COM</code> , then I&#8217;ll change my <code>&lt;hostname&gt;</code> element to <code>&lt;hostname&gt;koha-opac.YOURDOMAIN.COM&lt;/hostname&gt;</code> or <code>&lt;hostname&gt;<code>koha-opac</code>&lt;/hostname&gt;</code> .</p>
-
-
-
-<p><strong>In the MySQL config file</strong>, <code>/etc/mysql/mysql.conf.d/mysqld.cnf</code>, change the <code>bind-address</code> IP from 127.0.0.1 to 0.0.0.0 .</p>
-
-
-
-<p>You can manually change these configs or <a rel="noreferrer noopener" href="https://github.com/jameswsullivan/KohaContainerization/blob/main/docker-entrypoint.sh" target="_blank">use a script to programmatically change it</a> with Docker ENTRYPOINT.</p>
-
-
-
-<pre class="wp-block-code"><code>sed -i 's/^bind-address.*=.*/bind-address = 0.0.0.0/' /etc/mysql/mysql.conf.d/mysqld.cnf
-
-sed -i "s|&lt;hostname&gt;localhost&lt;/hostname&gt;|&lt;hostname&gt;${current_hostname}&lt;/hostname&gt;|" /etc/koha/sites/koha/koha-conf.xml</code></pre>
-
-
-
-<p><strong>Issue 3: Modify the database user.</strong></p>
-
-
-
-<p>I named my instance <strong>koha</strong>, so both of the database and the database user automatically created by Koha are named as <strong>koha_koha</strong> . By default, when running inside a container the Koha application can&#8217;t use the <code>'koha_koha'@'localhost'</code> user to connect to the database. A simple workaround is to create a user and use the wildcard as its host and grant all privileges to this user for the koha database.</p>
-
-
-
-<pre class="wp-block-code"><code>DROP USER 'koha_koha'@'localhost';
-
-CREATE USER 'koha_koha'@'%' IDENTIFIED WITH mysql_native_password BY 'YOUR_KOHA_USER_PASSWORD';
-
-GRANT ALL PRIVILEGES ON koha_koha.* TO 'koha_koha'@'%' WITH GRANT OPTION;
-
-FLUSH PRIVILEGES;
-
-SHOW GRANTS FOR 'koha_koha'@'%';</code></pre>
-
-
-
-<p>Pay attention to the <code>WITH mysql_native_password</code> option here, without it you&#8217;ll get the an <code>Authentication plugin 'caching_sha2_password' reported error: Authentication requires secure connection.</code> error like the one below.</p>
-
-
-
-<pre class="wp-block-code"><code>&#91;Sat May 06 15:08:46.361945 2023] &#91;cgi:error] &#91;pid 22303] &#91;client SOME_IP:4761] AH01215: DBIx::Class::Storage::DBI::catch {…} (): DBI Connection failed: DBI connect('database=koha_koha;host=YOUR_HOSTNAME;port=3306','koha_koha',…) failed: Authentication plugin 'caching_sha2_password' reported error: Authentication requires secure connection. at /usr/share/koha/lib/Koha/Database.pm line 91. at /usr/share/koha/lib/Koha/Database.pm line 139: /usr/share/koha/intranet/cgi-bin/errors/500.pl</code></pre>
-
-
-
-<p>Again, to do this automatically and programmatically with the <a href="https://github.com/jameswsullivan/KohaContainerization/blob/main/docker-entrypoint.sh" target="_blank" rel="noreferrer noopener">docker-entrypoint.sh</a> script, add the following:</p>
-
-
-
-<pre class="wp-block-code"><code>mysql -e "
-DROP USER 'koha_koha'@'localhost';
-CREATE USER 'koha_koha'@'%' IDENTIFIED WITH mysql_native_password BY '$koha_password';
-GRANT ALL PRIVILEGES ON koha_koha.* TO 'koha_koha'@'%' WITH GRANT OPTION;
-FLUSH PRIVILEGES;"</code></pre>
-
-
-
-<h4 class="wp-block-heading"><strong>Issue 4: Retrieve the auto generated Koha password.</strong></h4>
-
-
-
-<p>By default, with a manual installation you&#8217;d use the <code>koha-passwd koha</code> command to retrieve your initial password, but since we&#8217;re automating things with <a href="https://github.com/jameswsullivan/KohaContainerization/blob/main/koha_mysql_localhost.dockerfile" target="_blank" rel="noreferrer noopener">Dockerfile</a> and the <a href="https://github.com/jameswsullivan/KohaContainerization/blob/main/docker-entrypoint.sh">docker-entrypoint.sh</a> script, it would make sense to automate this one too.</p>
-
-
-
-<p>Since the password is stored in the<code> /etc/koha/sites/koha/koha-conf.xml</code> file in plain text, we can use a script to retrieve it and print it out to the container&#8217;s logs. (<strong>Danger, Will Robinson!</strong> &#8211; You should never do this on a production, publicly accessible container.)</p>
-
-
-
-<pre class="wp-block-code"><code>koha_password=$(grep "&lt;pass&gt;" /etc/koha/sites/koha/koha-conf.xml | awk -F'&#91;&lt;&gt;]' '{print $3}')
-
-echo -e "\n\nKoha Password: $koha_password"</code></pre>
-
-
-
-<p>Note that I also used this <code>$koha_password</code> variable in the SQL statements when creating the database user.</p>
-
-
-
-<p>The password can be viewed using the <code>docker logs YOUR_CONTAINER_NAME</code> command.</p>
-
-
-
-<h2 class="wp-block-heading">Conclusion</h2>
-
-
-
-<p>This project is designed to be used as a turnkey testing or dev environment to quickly spin up a Koha instance. As you might have noticed my configurations practically bear no security practices in mind, its use in production environment is strongly discouraged.</p>
-
-
-
-<p>Keywords: Install Koha ILS on Ubuntu 22.04 LTS, Install Koha ILS on Docker, Dockerizing Koha ILS, Containerizing Koha ILS</p>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Set up self-hosted BookStack</title>
-		<link>https://jameswsullivan.github.io/set-up-self-hosted-bookstack/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Mon, 01 May 2023 00:23:40 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[BookStack]]></category>
-		<category><![CDATA[Docker]]></category>
-		<category><![CDATA[Hosting]]></category>
-		<category><![CDATA[Linux]]></category>
-		<category><![CDATA[Self-Hosting]]></category>
-		<category><![CDATA[Ubuntu]]></category>
-		<category><![CDATA[Web Hosting]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2353</guid>
-
-					<description><![CDATA[Self-host BookStack with Docker.]]></description>
-										<content:encoded><![CDATA[
-<p>As I venture more and more into software development and homelab building, I found that I&#8217;m in need of a better way for my documentation because OneNote just doesn&#8217;t natively support all my needs. After a bit research I found BookStack to be a good choice. Since <a href="https://github.com/jameswsullivan/selfhosted/tree/main/BookStack">this project</a> is on GitHub as part of my <a href="https://github.com/jameswsullivan/selfhosted">self-hosted application suite</a>, this article only serves as a documentation.</p>
-
-
-
-<h2 class="wp-block-heading">Dockerfile:</h2>
-
-
-
-<pre class="wp-block-code"><code>FROM ubuntu
-
-ARG APACHE_DIR=/var/www
-ARG BOOKSTACK_DIR=/var/www/bookstack
-ARG DEBIAN_FRONTEND=noninteractive
-
-ENV LC_ALL en_US.UTF-8
-ENV LANG en_US.UTF-8
-
-RUN apt-get update -y &amp;&amp; \
-    apt-get upgrade -y &amp;&amp; \
-    apt-get install wget -y &amp;&amp; \
-    apt-get install iproute2 -y &amp;&amp; \
-    apt-get install nano -y &amp;&amp; \
-    apt-get install tzdata -y &amp;&amp; \
-    ln -fs /usr/share/zoneinfo/US/Central /etc/localtime &amp;&amp; \
-    dpkg-reconfigure -f noninteractive tzdata &amp;&amp; \
-    apt-get install locales -y &amp;&amp; \
-    locale-gen en_US.UTF-8 &amp;&amp; \
-    update-locale LANG=en_US.UTF-8 &amp;&amp; \
-    apt-get install -y git unzip apache2 php8.1 curl php8.1-curl \
-    php8.1-mbstring php8.1-ldap php8.1-xml php8.1-zip php8.1-gd \
-    php8.1-mysql libapache2-mod-php8.1 &amp;&amp; \
-    curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
-WORKDIR $APACHE_DIR
-
-RUN git clone https://github.com/BookStackApp/BookStack.git --branch release --single-branch &amp;&amp; \       
-    mv BookStack/ bookstack/ &amp;&amp; \
-    chown -R www-data:www-data $BOOKSTACK_DIR
-
-WORKDIR $BOOKSTACK_DIR
-
-COPY ./config.sh ./config.sh
-
-RUN composer install --no-dev &amp;&amp; \
-    mv $BOOKSTACK_DIR/public/.htaccess $BOOKSTACK_DIR/public/.htaccess.bk &amp;&amp; \
-    mv /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/000-default.conf.bk &amp;&amp; \
-    mv /etc/apache2/sites-available/default-ssl.conf /etc/apache2/sites-available/default-ssl.conf.bk &amp;&amp; \
-    chmod +x config.sh
-
-ENTRYPOINT &#91;"/var/www/bookstack/config.sh"]</code></pre>
-
-
-
-<h2 class="wp-block-heading">Post-setup configuration script:</h2>
-
-
-
-<pre class="wp-block-code"><code>#!/bin/bash
-BOOKSTACK_DIR="/var/www/bookstack"
-
-service apache2 start
-a2ensite bookstack.conf
-a2enmod rewrite
-a2enmod headers
-
-cd "$BOOKSTACK_DIR"
-
-php artisan key:generate --no-interaction --force
-php artisan migrate --no-interaction --force
-
-service apache2 restart
-
-exec "$@"
-tail -f /var/log/apache2/access.log</code></pre>
-
-
-
-<h2 class="wp-block-heading">BookStack Virtual Host file:</h2>
-
-
-
-<pre class="wp-block-code"><code>&lt;VirtualHost *:80&gt;
-
-        ServerName bookstack.example.com
-        DocumentRoot /var/www/bookstack/public/
-
-        &lt;Directory /var/www/bookstack/public/&gt;
-                Options Indexes FollowSymLinks
-                AllowOverride None
-                Require all granted
-                &lt;IfModule mod_rewrite.c&gt;
-                        &lt;IfModule mod_negotiation.c&gt;
-                                Options -MultiViews -Indexes
-                        &lt;/IfModule&gt;
-
-                        RewriteEngine On
-
-                        # Handle Authorization Header
-                        RewriteCond %{HTTP:Authorization} .
-                        RewriteRule .* - &#91;E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
-
-                        # Redirect Trailing Slashes If Not A Folder...
-                        RewriteCond %{REQUEST_FILENAME} !-d
-                        RewriteCond %{REQUEST_URI} (.+)/$
-                        RewriteRule ^ %1 &#91;L,R=301]
-
-                        # Handle Front Controller...
-                        RewriteCond %{REQUEST_FILENAME} !-d
-                        RewriteCond %{REQUEST_FILENAME} !-f
-                        RewriteRule ^ index.php &#91;L]
-                &lt;/IfModule&gt;
-        &lt;/Directory&gt;
-
-        ErrorLog ${APACHE_LOG_DIR}/error.log
-        CustomLog ${APACHE_LOG_DIR}/access.log combined
-
-&lt;/VirtualHost&gt;</code></pre>
-
-
-
-<p>BookStack .env file:</p>
-
-
-
-<pre class="wp-block-code"><code>APP_KEY=SomeRandomString
-
-APP_URL=http://example.com/
-
-# Database details
-DB_HOST=YOUR_DB_URL
-DB_DATABASE=YOUR_DB_NAME
-DB_USERNAME=YOUR_DB_USER
-DB_PASSWORD=YOUR_DB_PASS
-
-# Mail system to use
-# Can be 'smtp' or 'sendmail'
-MAIL_DRIVER=smtp
-
-# Mail sender details
-MAIL_FROM_NAME="BookStack"
-MAIL_FROM=bookstack@example.com
-
-# SMTP mail options
-# These settings can be checked using the "Send a Test Email"
-# feature found in the "Settings &gt; Maintenance" area of the system.
-MAIL_HOST=localhost
-MAIL_PORT=1025
-MAIL_USERNAME=null
-MAIL_PASSWORD=null
-MAIL_ENCRYPTION=null</code></pre>
-
-
-
-<h2 class="wp-block-heading"><em>docker image build</em> and <em>docker run</em> commands:</h2>
-
-
-
-<pre class="wp-block-code"><code># Linux build:
-docker image build --file bookstack.dockerfile --tag bookstack:1.0 --progress plain --no-cache . 2&gt;&amp;1 | tee bookstack_build.log
-
-# Windows build using PowerShell
-docker image build --file bookstack.dockerfile --tag bookstack:1.0 --progress plain --no-cache . 2&gt;&amp;1 | Tee-Object bookstack_build.log
-
-# Start a container:
-docker run -dit \
-    --name MY_BOOKSTACK_CONTAINER_NAME \
-    --ip IP_ADDRESS --network DOCKER_NETWORK \
-    --hostname=MY_HOSTNAME \
-    --restart=unless-stopped \
-    --mount type=bind,source=SOURCE_DIRECTORY/.env,target=/var/www/bookstack/.env \
-    --mount type=bind,source=SOURCE_DIRECTORY/bookstack.conf,target=/etc/apache2/sites-available/bookstack.conf \
-    -v SOURCE_DIRECTORY:/var/www/bookstack/public/uploads \
-    -v SOURCE_DIRECTORY:/var/www/bookstack/storage/uploads \
-    bookstack:1.0</code></pre>
-
-
-
-<h2 class="wp-block-heading">Default login:</h2>
-
-
-
-<pre class="wp-block-code"><code>Default login email: admin@admin.com
-Default login password: password</code></pre>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Set up Docker host with Ubuntu Server and mount disks</title>
-		<link>https://jameswsullivan.github.io/set-up-docker-host-with-ubuntu-server-and-mount-disks/</link>
+		<title>Linux Administration: Install Docker on Ubuntu Server and mount disks</title>
+		<link>https://jameswsullivan.github.io/linux-administration-install-docker-on-ubuntu-server-and-mount-disks/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Tue, 11 Apr 2023 02:19:44 +0000</pubDate>
 				<category><![CDATA[blog]]></category>
 		<category><![CDATA[Docker]]></category>
 		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[Linux]]></category>
 		<category><![CDATA[Self-Hosting]]></category>
 		<category><![CDATA[System Administration]]></category>
 		<category><![CDATA[Ubuntu]]></category>
 		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2307</guid>
 
-					<description><![CDATA[Install Docker on Ubuntu Server, attach disks to the Docker host VM and configure mounts.]]></description>
+					<description><![CDATA[Install Docker on a Ubuntu Server, attach disks to the Docker host VM and configure mounts.]]></description>
 										<content:encoded><![CDATA[
-<p>In order to run and test things I set up multiple Hyper-V VMs as Docker hosts to run my containers. This blog documents the Docker installation and disk mounting on Ubuntu Server.</p>
+<h2 class="wp-block-heading">Environment:</h2>
 
 
 
-<p>First, if you have installed Docker or any packages along with Ubuntu Server, it&#8217;s likely installed via snap. There is nothing wrong with using snap, but most of the directory paths will be different and it makes it harder to tweak certain configs in the future, so it&#8217;s recommended to remove them before the rest of the steps.</p>
+<ul>
+<li>Windows Server 2019 with Hyper-V for running VMs.</li>
 
 
 
-<pre class="wp-block-code"><code>sudo snap remove docker
-sudo reboot 
-
-# Reboot is needed, otherwise you'll get "bash: /snap/bin/docker: No such file or directory" error.</code></pre>
+<li>Ubuntu Server 20.04.3 LTS.</li>
 
 
 
-<p>Second, install Docker:</p>
+<li>Physical or virtual disks that you want to mount to the Ubuntu Server.</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading">Configurations:</h2>
+
+
+
+<h2 class="wp-block-heading">Install Docker:</h2>
+
+
+
+<blockquote class="wp-block-quote">
+<p>Related article: <a href="https://jameswsullivan.github.io/linux-administration-install-docker-on-ubuntu-server/">Linux Administration: Install Docker on Ubuntu Server</a></p>
+</blockquote>
+
+
+
+<p>First, if you have installed Docker or any packages along during the installation process of the Ubuntu Server OS, they&#8217;re likely installed using <code>snap</code>. There is nothing wrong with using snap, but most of the directory paths will be different and it makes it harder to tweak certain configs in the future, so it&#8217;s recommended to remove them before the rest of the steps.</p>
+
+
+
+<pre class="wp-block-code"><code># Remove docker that was installed via snap:
+
+snap remove docker
+reboot 
+
+# NOTE: A reboot is needed after uninstallation, otherwise you'll get a "bash: /snap/bin/docker: No such file or directory" error.</code></pre>
+
+
+
+<p>Install Docker using <code>apt-get</code> :</p>
 
 
 
 <pre class="wp-block-code"><code># Install using the apt repository:
 # https://docs.docker.com/engine/install/ubuntu/
-apt-get update -y
+
+apt-get update -y
 apt-get upgrade -y
 apt-get install ca-certificates curl gnupg lsb-release -y
+
 mkdir -m 0755 -p /etc/apt/keyrings
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
     | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
@@ -879,10 +302,9 @@ echo "deb &#91;arch=$(dpkg --print-architecture) \
     https://download.docker.com/linux/ubuntu \
     $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
 
-apt-get update -y
+apt-get update -y
 apt-get upgrade -y
-apt-get install docker-ce \
-        docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
 # After installing docker-ce, other dependencies are usually automatically installed.
 
@@ -892,43 +314,66 @@ apt list --installed</code></pre>
 
 
 
-<p>Third, mount physical or virtual disks one by one to the VM so that you can identify the disks by UUID and configure the mount one at a time, especially when you have multiple disks of the same size, because the devices are usually not attached in order when booting, the only way to quickly and accurately identify the disks is by UUID. Use the following commands to format and configure the mounts.</p>
+<h2 class="wp-block-heading">Mount disks:</h2>
 
 
 
-<pre class="wp-block-code"><code># List devices.
+<p>It&#8217;s recommended to mount the physical or virtual disks one by one to the Docker host VM so that it&#8217;s easier to identify the disks by their UUID and get the mounts configured correctly one at a time, especially when you have multiple disks of the same size (because the devices are usually not attached in order when booting/rebooting).</p>
+
+
+
+<pre class="wp-block-code"><code># List devices:
+
 fdisk -l
 
+
 # Cross reference with:
+
 blkid
 blkid | grep /dev/sd
 
-# Use lsscsi if needed.
+
+# Use lsscsi if needed:
+
 apt-get install lsscsi -y
 
+
 # Create partition:
+
 gdisk /dev/sda
 
 # Enter ? for help. Enter n and accept all default parameters to use the entire disk capacity.
 # Enter w to write changes to disk.
 
+
 # Format disk to ext4 file system.
+
 mkfs.ext4 /dev/sda
 
+
 # Then run:
+
 fdisk -l
 blkid | grep /dev/sd
+
 # again to grab the device name and UUID.
 
+
 # Create mount locations:
+
 mkdir /mnt/directory_name
 mount /dev/sda /mnt/directory_name
 
+
 # Copy the UUID and add entries in /etc/fstab to configure mounts at boot time.
+
 nano /etc/fstab
 
+
 # Add entries, e.g., mount 100GB to /mnt/my_folder:
+
 UUID="dcd8c5ac-db76-435e-ab3c-48570190c7d8" /mnt/my_folder ext4 defaults 0 1
+
 
 # Verify the mounts after a reboot.</code></pre>
 ]]></content:encoded>
@@ -937,22 +382,54 @@ UUID="dcd8c5ac-db76-435e-ab3c-48570190c7d8" /mnt/my_folder ext4 defaults 0 1
 		
 			</item>
 		<item>
-		<title>Self-hosted Nextcloud with Docker</title>
-		<link>https://jameswsullivan.github.io/self-hosted-nextcloud-with-docker/</link>
+		<title>Self-host Nextcloud – Part 4 – Use Docker</title>
+		<link>https://jameswsullivan.github.io/self-host-nextcloud-part-4-use-docker/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Tue, 11 Apr 2023 01:24:00 +0000</pubDate>
 				<category><![CDATA[blog]]></category>
 		<category><![CDATA[Docker]]></category>
 		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[Linux]]></category>
 		<category><![CDATA[Nextcloud]]></category>
 		<category><![CDATA[Self-Hosting]]></category>
+		<category><![CDATA[Ubuntu]]></category>
 		<category><![CDATA[Web Hosting]]></category>
 		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2303</guid>
 
 					<description><![CDATA[Spin up self-hosted Nextcloud with MySQL using Docker.]]></description>
 										<content:encoded><![CDATA[
-<p>My <a href="https://jameswsullivan.github.io/self-host-nextcloud/">previous attempt</a> to spin up a self-hosted Nextcloud was directly on a Ubuntu VM, but its virtual disks were not configured in a way that&#8217;s easily expandable as data grows. This time I&#8217;m using Docker and have addressed the issues.</p>
+<p>My previous attempt with self-hosting Nextcloud involved using VMs and a lot of manual installation and configurations, it works fine but: 1. its virtual disks were not configured in a way that&#8217;s easily expandable as data grows; 2. the entire setup is not very portable and convenient to manage and update. Using Docker effectively solves the issues.</p>
+
+
+
+<p>Related articles:</p>
+
+
+
+<ul>
+<li><a href="https://jameswsullivan.github.io/self-host-nextcloud-part-1-installation/">Self-host Nextcloud – Part 1 – Installation</a></li>
+
+
+
+<li><a href="https://jameswsullivan.github.io/self-host-nextcloud-part-2-self-signed-ssl-certificate/">Self-host Nextcloud – Part 2 – Self-signed SSL Certificate</a></li>
+
+
+
+<li><a href="https://jameswsullivan.github.io/self-host-nextcloud-part-3-performance/">Self-host Nextcloud – Part 3 – Performance</a></li>
+
+
+
+<li><a href="https://jameswsullivan.github.io/linux-administration-install-docker-on-ubuntu-server/">Linux Administration: Install Docker on Ubuntu Server</a></li>
+
+
+
+<li><a href="https://jameswsullivan.github.io/configure-docker-mysql-server/">Docker Administration: MySQL Server</a></li>
+
+
+
+<li><a href="https://jameswsullivan.github.io/create-storage-pools-and-virtual-disks-via-powershell/">Create Storage Pools and Virtual Disks via PowerShell</a></li>
+</ul>
 
 
 
@@ -973,136 +450,44 @@ UUID="dcd8c5ac-db76-435e-ab3c-48570190c7d8" /mnt/my_folder ext4 defaults 0 1
 
 
 
-<li>A storage pool consisting of 6 x 500GB 2.5&#8221; HDDs and a virtual disk in Parity mode with 2 disks set as redundant, bringing total capacity to 1.35TB. This virtual disk will be mounted to Nextcloud&#8217;s <code>/var/www/html</code> path to store persistent data.</li>
+<li>A storage pool consisting of 6 x 500GB 2.5&#8221; HDDs and a virtual disk in Parity mode with 2 disks set as redundant, bringing its total capacity to 1.35TB. This virtual disk will be mounted to Nextcloud&#8217;s <code>/var/www/html</code> path to store persistent data.</li>
 
 
 
 <li>An 100GB virtual disk for MySQL persistent data (<code>/var/lib/mysql</code>).</li>
+
+
+
+<li>[Optional] <a href="https://github.com/jameswsullivan/selfhosted/blob/main/nextcloud.dockerfile" target="_blank" rel="noreferrer noopener">My custom Dockerfile</a>.</li>
+
+
+
+<li>[Optional] <a href="https://github.com/jameswsullivan/selfhosted/blob/main/mysql.dockerfile">My custom MySQL Dockerfile</a>.</li>
 </ul>
 
 
 
-<h2 class="wp-block-heading">Nextcloud Dockerfile:</h2>
-
-
-
-<pre class="wp-block-code"><code>FROM nextcloud
-
-# Configure PHP parameters via environment variables.
-ENV PHP_MEMORY_LIMIT=4096M
-ENV PHP_UPLOAD_LIMIT=4096M
-
-# Install packages and configure timezone.
-RUN apt-get update -y &amp;&amp; \
-    apt-get upgrade -y &amp;&amp; \
-    apt-get install nano -y &amp;&amp; \
-    apt-get install tzdata -y &amp;&amp; \
-    ln -fs /usr/share/zoneinfo/US/Central /etc/localtime &amp;&amp; \
-    dpkg-reconfigure -f noninteractive tzdata
-
-EXPOSE 80 443</code></pre>
-
-
-
-<h2 class="wp-block-heading">Containers:</h2>
+<h2 class="wp-block-heading">Configurations:</h2>
 
 
 
 <pre class="wp-block-code"><code># Build Nextcloud image
-docker image build --tag nextcloud:1.0 --progress plain --no-cache . 2&gt;&amp;1 | tee build.log
 
-# Start Nextcloud container.
+docker build --file nextcloud.dockerfile --tag nextcloud:1.0 --progress plain --no-cache . 2&gt;&amp;1 | tee build.log
+
+# Start the Nextcloud container.
 # The drive for Nextcloud's persistent data is mounted to /mnt/nextcloud_data .
-docker run -dit --name MY-NEXTCLOUD-CONTAINER --ip IP-ADDRESS --network DOCKER-NETWORK --restart=unless-stopped --hostname=MY_NEXTCLOUD_CONTAINER_HOSTNAME -v /mnt/nextcloud_data:/var/www/html nextcloud:1.0
+
+docker run -dit --name MY-NEXTCLOUD-CONTAINER --ip IP-ADDRESS --network NAME-OF-DOCKER-NETWORK --restart=unless-stopped --hostname=MY-NEXTCLOUD-CONTAINER-HOSTNAME -v /mnt/nextcloud_data:/var/www/html nextcloud:1.0
 
 # Start a MySQL container for Nextcloud.
 # The virtual disk for MySQL's persistent data is mounted to /mnt/nextcloud_db .
-docker run -dit --name MY-NEXTCLOUD-DB-CONTAINER --ip IP-ADDRESS --network DOCKER-NETWORK --hostname=MY_NEXTCLOUD_DB_CONTAINER_HOSTNAME --restart=unless-stopped -v /mnt/nextcloud_db:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=MY-ROOT-PASSWORD ubuntu/mysql</code></pre>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Docker Commands</title>
-		<link>https://jameswsullivan.github.io/docker-commands/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Wed, 29 Mar 2023 02:18:34 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[Docker]]></category>
-		<category><![CDATA[Software Development]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2249</guid>
 
-					<description><![CDATA[Docker commands study note.]]></description>
-										<content:encoded><![CDATA[
-<pre class="wp-block-code"><code># Docker Swarm
-docker swarm init
-docker service create --name webapp1 --replicas=6 nginx
-docker swarm update --autolock=true
-docker swarm unlock-key
-docker node update --availability drain &lt;NODE&gt;
-
-docker service ls
-docker swarm visualizer
-docker inspect
-
-# Docker Stack
-docker stack deploy --compose-file docker-stack.yml NAME_OF_STACK
-docker stack ls
-docker stack ps
-docker stack services NAME_OF_STACK
-docker service update 
-docker service update --publish-add published=8080,target-8080 SERVICE_NAME
-docker service update --mount-add type=volume, source=web-vol,target=/web-vol-dir SERVICE_NAME
-docker service create --mode global --name global-service nginx
-docker node update --label-add LABEL_NAME NODE_NAME
-docker node inspect NODE_NAME
-
-# MISC Commands
-docker image inspect
-docker image history
-
-docker build --squash -f dockerfile_name .
-docker container run -d nginx
-docker container export CONTAINER_NAME &gt; nginx.tar
-docker image import nginx.tar
-
-docker save 
-docker image prune
-docker system prune
-
-docker commit CONTAINER_ID repo:tag
-
-docker attach CONTAINER_NAME
-docker logs CONTAINER_NAME
-docker kill CONTAINER_ID or CONTAINER_NAME
-docker stop CONTAINER_ID or CONTAINER_NAME
-docker run --memory MAXIMUM_ALLOWED_MEMORY
-docker run --cpu-shares
-
-docker run -it -p HOST_PORT_NUMBER:CONTAINER_PORT_NUMBER/PROTOCOL --name CONTAINER_NAME IMAGE_NAME
-
-docker port CONTAINER_NAME
-
-docker rmi IMAGE_NAME:TAG
-docker rmi IMAGE_ID
-
-docker run -it -v PATH_ON_HOST:MOUNT_POINT_IN_CONTAINER IMAGE_NAME bash
-
-docker search IMAGE_NAME
-docker login
-docker tag
-docker push
-
-docker inspect --format '{{.State.Pid}}' CONTAINER_NAME
-docker run -it --rm --priviledged=true --pid=host ubuntu bash
-
-docker run -d -p 5000:5000 --restart=always --name registry registry:2
+docker run -dit --name MY-NEXTCLOUD-DB-CONTAINER --ip IP-ADDRESS --network DOCKER-NETWORK --hostname=MY-NEXTCLOUD-DB-CONTAINER-HOSTNAME --restart=unless-stopped -v /mnt/nextcloud_db:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=MY-ROOT-PASSWORD ubuntu/mysql</code></pre>
 
 
-docker exec -it MySQL mysql --local-infile=1 -u root -p
-</code></pre>
+
+<p></p>
 ]]></content:encoded>
 					
 		
@@ -1311,6 +696,640 @@ service restart apache2</code></pre>
 
 
 <p>This also resolves Simply Static&#8217;s <code><em>"Checking if WordPress can make requests to itself from your_IP"</em> FAIL</code> issue.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Linux Administration: Configure Apache Web Server and Name-based Virtual Hosting</title>
+		<link>https://jameswsullivan.github.io/linux-administration-configure-apache-web-server-and-name-based-virtual-hosting/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Fri, 03 Feb 2023 20:19:00 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Apache]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[Self-Hosting]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+		<category><![CDATA[Web Hosting]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=18</guid>
+
+					<description><![CDATA[Configure]]></description>
+										<content:encoded><![CDATA[
+<blockquote class="wp-block-quote">
+<p>Update: this project has been optimized and containerized. See this <a href="https://github.com/jameswsullivan/selfhosted/tree/main/UbuntuLAMP" target="_blank" rel="noreferrer noopener">UbuntuLAMP project</a> on my github.</p>
+</blockquote>
+
+
+
+<p>Related Articles:</p>
+
+
+
+<ul>
+<li><a href="https://jameswsullivan.github.io/linux-administration-install-docker-on-ubuntu-server/">A Docker host</a>.</li>
+
+
+
+<li><a href="https://jameswsullivan.github.io/docker-administration-docker-networking-ipvlan/">An ipvlan docker network</a>.</li>
+
+
+
+<li>[Optional] <a href="https://jameswsullivan.github.io/docker-administration-smb-share-and-docker-volumes/">SMB shares and Docker volumes</a> for persistent files (<code>/var/www/html</code>).</li>
+
+
+
+<li>[Troubleshooting] <a href="https://jameswsullivan.github.io/linux-administration-troubleshooting-apache-web-server-and-name-based-virtual-hosting-with-wordpress/">Linux Administration: Troubleshooting Apache Web Server and Name-based Virtual Hosting with WordPress</a></li>
+</ul>
+
+
+
+<h2 class="wp-block-heading">Configure the web server:</h2>
+
+
+
+<pre class="wp-block-code"><code># Start a Ubuntu container:
+docker run -dit --name web-server --network docker_dev_net --ip 192.168.1.103 --mount source=my_smb_vol,destination=/var/www/html ubuntu
+
+# NOTE: Originally, I used underscores in my container names and hostnames, but it was causing issues in some scenarios where underscores are considered invalid or get misinterpreted. So hyphens are used instead.
+
+# Enter the container's shell prompt:
+docker exec -it web-server bash
+
+# Install network utilities for troubleshooting:
+apt-get install iputils-ping iproute2 traceroute -y
+
+# Install SSH:
+apt-get install openssh-client openssh-server -y
+
+# Install sudo and other utilities:
+apt-get install sudo nano -y
+
+# Install apache, php, and php-mysql:
+apt-get install apache2 php8.1 php-mysql libapache2-mod-php -y</code></pre>
+
+
+
+<p>Verify that the services are running and start the them if not:</p>
+
+
+
+<pre class="wp-block-code"><code># ssh and apache2 service status
+service ssh status
+service apache2 status
+
+# start the services:
+service ssh start
+service apache2 start</code></pre>
+
+
+
+<p>Configure hostname and name server (optional):</p>
+
+
+
+<pre class="wp-block-code"><code># Depending on your setup, you might need to specify the --hostname when creating your container:
+
+--hostname=&lt;your-hostname&gt;</code></pre>
+
+
+
+<p>Verify PHP version:</p>
+
+
+
+<pre class="wp-block-code"><code># Create a info.php file under the /var/www/html directory with the following content:
+
+&lt;?php phpinfo();?&gt;</code></pre>
+
+
+
+<p>Now that you should be able to visit the Apache server&#8217;s default landing page to verify that the Apache server is running and the info.php page to view your PHP version.</p>
+
+
+
+<h2 class="wp-block-heading">Configure name-based virtual hosting:</h2>
+
+
+
+<pre class="wp-block-code"><code># The example websites I'm using are: example.mydomain.com, example1.mydomain.com, example2.mydomain.com.
+
+# Create directories:
+
+mkdir /var/www/html/example1.mydomain.com
+mkdir /var/www/html/example2.mydomain.com
+
+# example.mydomain.com will reside under /var/www/html as the "main" website.
+
+# Change ownership of the directories accordingly. Here I changed the entire html directory and its subdirectories' ownership to www-data for convenience.
+
+chown -R www-data:www-data /var/www/html
+
+# Create Virtual Host configuration files for your sites.
+
+touch /etc/apache2/sites-available/example.mydomain.com.conf
+touch /etc/apache2/sites-available/example1.mydomain.com.conf
+touch /etc/apache2/sites-available/example2.mydomain.com.conf
+
+# example.mydomain.com.conf or use the 000-default.conf:
+&lt;VirtualHost *:80&gt;
+    ServerAdmin webmaster@example.mydomain
+    ServerName example.mydomain.com
+    DocumentRoot /var/www/html
+    DirectoryIndex index.html
+    ErrorLog ${APACHE_LOG_DIR}/example.mydomain.com_error.log
+    CustomLog ${APACHE_LOG_DIR}/example.mydomain.com_access.log combined
+&lt;/VirtualHost&gt;
+
+# example1.mydomain.com.conf and example2.mydomain.com.conf:
+&lt;VirtualHost *:80&gt;
+    ServerAdmin webmaster@example1.mydomain.com
+    ServerName example1.mydomain.com
+    DocumentRoot /var/www/html/example1.mydomain.com
+    DirectoryIndex index.php
+    ErrorLog ${APACHE_LOG_DIR}/example1.mydomain.com_error.log
+    CustomLog ${APACHE_LOG_DIR}/example1.mydomain.com_access.log combined
+&lt;/VirtualHost&gt;
+
+&lt;VirtualHost *:80&gt;
+    ServerAdmin webmaster@example2.mydomain.com
+    ServerName example2.mydomain.com
+    DocumentRoot /var/www/html/example2.mydomain.com
+    DirectoryIndex index.php
+    ErrorLog ${APACHE_LOG_DIR}/example2.mydomain.com_error.log
+    CustomLog ${APACHE_LOG_DIR}/example2.mydomain.com_access.log combined
+&lt;/VirtualHost&gt;
+
+# Enable the configuration files for the sites:
+
+a2ensite example1.mydomain.com
+a2ensite example2.mydomain.com
+
+# Restart apache2 service and verify that apache2 is running:
+
+service apache2 reload
+service apache2 status
+
+# Of course, you will need to add your own index.html or index.php file under the sites' directories.</code></pre>
+
+
+
+<h2 class="wp-block-heading">Configure DNS records:</h2>
+
+
+
+<pre class="wp-block-code"><code># I'm using my Cisco router as an example:
+
+ip host example.mydomain.com 192.168.1.103
+ip host example1.mydomain.com 192.168.1.103
+ip host example2.mydomain.com 192.168.1.103</code></pre>
+
+
+
+<p>Now that you should be able to visit the sites by going to:</p>
+
+
+
+<pre class="wp-block-code"><code>http:&#47;&#47;example.mydomain.com
+http://example1.mydomain.com/
+http://example2.mydomain.com/</code></pre>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Docker Administration: MySQL Server</title>
+		<link>https://jameswsullivan.github.io/configure-docker-mysql-server/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Fri, 03 Feb 2023 17:14:00 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Apache]]></category>
+		<category><![CDATA[Database Administration]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[MySQL]]></category>
+		<category><![CDATA[Self-Hosting]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+		<guid isPermaLink="false">https://www.alexchen.net/?p=2124</guid>
+
+					<description><![CDATA[Set up a Docker MySQL server with ipvlan, SMB share and Docker volume for persistent data.]]></description>
+										<content:encoded><![CDATA[
+<h2 class="wp-block-heading">Prerequisites:</h2>
+
+
+
+<ul>
+<li><a href="https://jameswsullivan.github.io/linux-administration-install-docker-on-ubuntu-server/">A Docker host</a>.</li>
+
+
+
+<li><a href="https://jameswsullivan.github.io/docker-networking-ipvlan/">An ipvlan Docker network</a>.</li>
+
+
+
+<li><a href="https://jameswsullivan.github.io/docker-administration-smb-share-and-docker-volumes/">Docker volumes configured with SMB share</a>.</li>
+
+
+
+<li><a href="https://hub.docker.com/r/ubuntu/mysql" target="_blank" rel="noreferrer noopener">ubuntu/mysql</a> image.</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading">Configurations:</h2>
+
+
+
+<p>Create a ubuntu/mysql container:</p>
+
+
+
+<pre class="wp-block-code"><code>docker run -dit --name MySQL_DEV --network docker_dev_net --ip 192.168.1.101 --mount source=my_smb_vol,destination=/SharedVolume -p 3306:3306 -p 22:22 -e MYSQL_ROOT_PASSWORD=password ubuntu/mysql</code></pre>
+
+
+
+<p>Create users and databases:</p>
+
+
+
+<pre class="wp-block-code"><code># Connect to mysql instance:
+mysql -u root -p
+
+# Show databases:
+SHOW DATABASES;
+
+# Describe a table:
+USE mysql;
+DESC user;
+
+# Show all the users:
+SELECT user, host FROM mysql.user;
+
+# Create databases (assuming that we'll be creating the databases for some WordPress sites):
+CREATE DATABASE my_wordpress_db;
+
+# Create users:
+CREATE USER 'wordpress_user'@'192.168.1.103' IDENTIFIED BY 'password';
+CREATE USER 'wordpress_user'@'localhost' IDENTIFIED BY 'password';
+
+# Grant privileges to the user:
+GRANT ALL ON my_wordpress_db.* TO 'wordpress_user'@'192.168.1.103' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+
+# Verify privileges:
+SHOW GRANTS FOR 'wordpress_user'@'192.168.1.103';</code></pre>
+
+
+
+<p>Allow remote connection to the MySQL server:</p>
+
+
+
+<pre class="wp-block-code"><code># You will have to modify one of the .cnf files to allow remote connection to your mysql instance, if you list the files under /etc/mysql/, you'll find the following files and directories listed:
+
+ls -al /etc/mysql/
+
+conf.d
+my.cnf
+my.cnf.fallback
+
+# View the content of my.cnf:
+cat /etc/mysql/my.cnf
+
+# On the last two lines of the output, you should see:
+
+# Custom config should go here
+!includedir /etc/mysql/conf.d/
+
+# List files under the conf.d directory:
+ls -al /etc/mysql/conf.d/
+
+docker.cnf
+mysql.cnf
+mysqldump.cnf
+
+# The mysql.cnf is what you're going to edit:
+nano /etc/mysql/conf.d/mysql.cnf
+
+# By default, the mysql.cnf file might only contain one line: &#91;mysql]. Add a new line below it so it looks like the following:
+
+&#91;mysql]
+bind-address = 0.0.0.0</code></pre>
+
+
+
+<p>Test connection to the mysql instance from the remote machine/container using the newly created <em>wordpress_user</em> user.</p>
+
+
+
+<pre class="wp-block-code"><code># I'm performing these steps on the Ubuntu Apache web server, 192.168.1.103:
+# Install the mysql-client package if it's not been installed.
+
+apt-get install -y mysql-client
+
+# Connect to the mysql instance at 192.168.1.101:
+mysql -h 192.168.1.101 -u wordpress_user -p</code></pre>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Docker Administration: SMB share and Docker volumes</title>
+		<link>https://jameswsullivan.github.io/docker-administration-smb-share-and-docker-volumes/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Fri, 03 Feb 2023 16:52:00 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[Linux]]></category>
+		<category><![CDATA[Self-Hosting]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+		<category><![CDATA[Web Hosting]]></category>
+		<guid isPermaLink="false">https://www.alexchen.net/?p=2122</guid>
+
+					<description><![CDATA[Use SMB shares with Docker volumes.]]></description>
+										<content:encoded><![CDATA[
+<h2 class="wp-block-heading">Background:</h2>
+
+
+
+<p>Recently I&#8217;ve been setting up a Docker lab environment to run some applications and needed some data to persist and be shared across my lab network. Since most of the computers run Windows, using SMB shares seems to be the easiest solution.</p>
+
+
+
+<p>Related articles:</p>
+
+
+
+<ul>
+<li><a href="https://jameswsullivan.github.io/linux-administration-install-docker-on-ubuntu-server/">Docker host</a>.</li>
+
+
+
+<li><a href="https://jameswsullivan.github.io/docker-administration-docker-networking-ipvlan/">ipvlan Docker network</a>.</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading">Configurations:</h2>
+
+
+
+<p>Create a <a href="https://docs.docker.com/storage/volumes/#create-cifssamba-volumes" target="_blank" rel="noreferrer noopener">Docker CIFS/Samba volume</a>:</p>
+
+
+
+<pre class="wp-block-code"><code># Assuming that the network share is at:
+\\main_server\DockerShare
+
+# Create a docker volume:
+docker volume create --driver local --opt type=cifs --opt device=//main_server/DockerShare --opt o=addr=main_server,username=your_username,password=your_password,file_mode=0777,dir_mode=0777 --name my_smb_vol</code></pre>
+
+
+
+<p>Run a container with a volume mount:</p>
+
+
+
+<pre class="wp-block-code"><code># List all volumes
+docker volume ls
+
+# Run a container with the volume that's been created:
+docker run -dit --name WEB_SERVER --network docker_dev_net --ip 192.168.1.103 --mount source=my_smb_vol,destination=/SharedVolume -p 443:443 -p 80:80 -p 22:22 ubuntu</code></pre>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Docker Administration: Docker Networking (ipvlan)</title>
+		<link>https://jameswsullivan.github.io/docker-administration-docker-networking-ipvlan/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Fri, 03 Feb 2023 04:19:00 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[IPVLAN]]></category>
+		<category><![CDATA[Linux]]></category>
+		<category><![CDATA[Network Administration]]></category>
+		<category><![CDATA[Networking]]></category>
+		<category><![CDATA[Self-Hosting]]></category>
+		<category><![CDATA[Web Hosting]]></category>
+		<guid isPermaLink="false">https://www.alexchen.net/?p=2115</guid>
+
+					<description><![CDATA[Create ipvlan docker networks.]]></description>
+										<content:encoded><![CDATA[
+<h2 class="wp-block-heading">Background:</h2>
+
+
+
+<p>My home lab&#8217;s network is organized and controlled by IPs, access-lists, etc., via Cisco routers and switches, so I wanted my Docker host and containers to have static IP addresses and be within the same IP segment and add custom DNS records to my DNS servers to resolve to them. The Docker networking part is fairly straightforward, but what&#8217;s inconvenient is how Docker Desktop for Windows and WSL2 handle their networking part behind the scene. WSL2 gets its own vEthernet adapter with an IP in the 172.0.0.0 range and the containers get placed in a different 172.0.0.0 network segment and assigned with dynamic IPs and depending on how the Hyper-V and WSL2 backend handles the routing and switching, it&#8217;s rather difficult (if not impossible) to easily assign static IPs to the containers within the same IP segment as the host machine and make them part of the same subnet for easy access. After a couple of hours fiddling around with different solutions I basically gave up on it as it&#8217;s really not worth the time and efforts doing so, I opted to have a dedicated <a href="https://jameswsullivan.github.io/linux-administration-install-docker-on-ubuntu-server/">Hyper-V VM running Ubuntu Server as the Docker host</a>.</p>
+
+
+
+<h2 class="wp-block-heading">Solution:</h2>
+
+
+
+<p>On an Ubuntu Server the networking part becomes straightforward.</p>
+
+
+
+<p>Assuming that the Docker host VM has the IP address of 192.168.1.100/24 (this is the IP assigned to interface <strong>eth0</strong>). To find out what IP the <code>eth0</code> interface is using, run:</p>
+
+
+
+<pre class="wp-block-code"><code>ip address show eth0</code></pre>
+
+
+
+<p>Create an <strong><a href="https://docs.docker.com/network/ipvlan/" target="_blank" rel="noreferrer noopener">ipvlan</a></strong> network:</p>
+
+
+
+<pre class="wp-block-code"><code>docker network create --driver ipvlan --subnet=192.168.1.0/24 --gateway=192.168.1.1 -o ipvlan_mode=l2 -o parent=eth0 docker_dev_net</code></pre>
+
+
+
+<p>And then we can create containers using this network and assign static IPs to them:</p>
+
+
+
+<pre class="wp-block-code"><code># Let's use ubuntu/mysql Docker image as an example:
+
+docker run -dit --name MySQL_DEV --network docker_dev_net --ip 192.168.1.101 -p 3306:3306 -p 22:22 -e MYSQL_ROOT_PASSWORD=password ubuntu/mysql
+
+# Make sure you add the corresponding DNS entries to your DNS server or router. e.g., on my Cisco router:
+
+ip host MySQL_DEV.mydomain 192.168.1.101</code></pre>
+
+
+
+<p>After the containers are running, test the connection with PowerShell:</p>
+
+
+
+<pre class="wp-block-code"><code>Test-NetConnection -ComputerName MySQL_DEV.mydomain -Port 3306</code></pre>
+
+
+
+<p></p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Linux Administration: Install Docker on Ubuntu Server</title>
+		<link>https://jameswsullivan.github.io/linux-administration-install-docker-on-ubuntu-server/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Tue, 21 Sep 2021 06:14:07 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[Linux]]></category>
+		<category><![CDATA[Self-Hosting]]></category>
+		<category><![CDATA[Standard Notes]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+		<guid isPermaLink="false">https://www.alexchen.net/?p=1638</guid>
+
+					<description><![CDATA[Setting up Ubuntu Server, SSH, UFW, Nginx, and Docker.]]></description>
+										<content:encoded><![CDATA[
+<h2 class="wp-block-heading">Environment:</h2>
+
+
+
+<ul>
+<li>Windows Server 2019</li>
+
+
+
+<li>Hyper-V</li>
+
+
+
+<li>Ubuntu Server 20.04.3 LTS.</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading">Configurations:</h2>
+
+
+
+<p>1. After Ubuntu Server is installed on a VM (with a clean and minimum installation without any preloaded packages), set up Docker and OpenSSH.</p>
+
+
+
+<pre class="wp-block-code"><code># Install OpenSSH
+apt update -y
+apt upgrade -y
+apt install openssh-server -y
+
+# Check SSH Status
+systemctl status ssh
+
+# Allow ssh over UFW firewall
+ufw allow ssh</code></pre>
+
+
+
+<p>2. Enable UFW, check status, and configure rules.</p>
+
+
+
+<pre class="wp-block-code"><code># Enable UFW
+ufw enable
+
+# Check status and rules
+ufw status
+
+# Check status and make results numbered
+ufw status numbered
+
+# Disable UFW
+ufw disable
+
+# Block IP
+ufw deny from IP-Address
+
+# Block by subnet
+ufw deny from IP/CIDR
+
+# Block connections on interface
+ufw deny in on eth0 from IP-Address
+
+# Allow commands:
+ufw allow from IP-Address
+ufw allow in on eth0 from IP-Address
+
+# Delete rule
+ufw status numbered
+ufw delete &#91;number]
+
+# Allow by protocol
+ufw allow from IP-Address proto tcp to any port 22
+ufw allow from IP/CIDR proto tcp to any port 22
+ufw allow proto tcp from any to any port 80,443</code></pre>
+
+
+
+<p>3. Disable ipv6 on Ubuntu Server.</p>
+
+
+
+<pre class="wp-block-code"><code># Add
+net.ipv6.conf.all.disable_ipv6=1
+net.ipv6.conf.default.disable_ipv6=1
+net.ipv6.conf.lo.disable_ipv6=1
+# to file /etc/sysctl.conf</code></pre>
+
+
+
+<p>4. Reduce Ubuntu shutdown time.</p>
+
+
+
+<pre class="wp-block-code"><code># Edit /etc/systemd/system.conf and uncomment DefaultTimeoutStopSec=90s and set it to a desired value
+
+DefaultTimeoutStopSec=15s</code></pre>
+
+
+
+<p>5. Install Docker</p>
+
+
+
+<pre class="wp-block-code"><code># Remove existing Docker installations, if any
+apt remove docker docker-engine docker.io containerd runc
+
+# Install using the repository
+apt update -y
+apt install -y apt-transport-https ca-certificates curl gnupg lsb-release
+
+# Add Docker's official GPG key
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+
+# Set up stable repository
+echo \
+"deb &#91;arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+$(lsb_release -cs) stable" \
+| sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+# Install Docker engine
+apt update -y
+apt install -y docker-ce docker-ce-cli containerd.io
+
+# Verify that Docker Engine is correctly installed
+docker version</code></pre>
 ]]></content:encoded>
 					
 		

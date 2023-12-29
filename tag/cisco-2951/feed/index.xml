@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/cisco-2951/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Sat, 05 Aug 2023 21:32:38 +0000</lastBuildDate>
+	<lastBuildDate>Fri, 29 Dec 2023 19:08:30 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -20,8 +20,8 @@
 	1	</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=6.4.2</generator>
 	<item>
-		<title>Configure VLAN and InterVLAN Routing on Cisco Router and Switch</title>
-		<link>https://jameswsullivan.github.io/configure-vlan-and-intervlan-routing-on-cisco-router-and-switch/</link>
+		<title>Network Administration: Configure VLAN and InterVLAN Routing</title>
+		<link>https://jameswsullivan.github.io/network-administration-configure-vlan-and-intervlan-routing/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Tue, 20 Jun 2023 15:25:19 +0000</pubDate>
@@ -33,11 +33,13 @@
 		<category><![CDATA[Network Administration]]></category>
 		<category><![CDATA[Networking]]></category>
 		<category><![CDATA[router-on-a-stick]]></category>
+		<category><![CDATA[SVI]]></category>
+		<category><![CDATA[Switch Virtual Interface]]></category>
 		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2574</guid>
 
 					<description><![CDATA[Configure VLAN and InterVLAN routing on Cisco router and switch using router-on-a-stick and SVI.]]></description>
 										<content:encoded><![CDATA[
-<h2 class="wp-block-heading">Environment &amp; Requirement</h2>
+<h2 class="wp-block-heading">Lab Environment:</h2>
 
 
 
@@ -134,7 +136,7 @@ C3750G(config-if)#exit</code></pre>
 
 
 
-<pre class="wp-block-code"><code># Configure GigabitEthernet 0/0 (connected to cable modem from ISP) to use DHCP.
+<pre class="wp-block-code"><code># Configure GigabitEthernet 0/0 (connected to ISP's device for internet access) to use DHCP.
 CISCO2951(config)#interface GigabitEthernet 0/0
 CISCO2951(config-if)#ip address dhcp
 CISCO2951(config-if)#ip nat outside
@@ -157,15 +159,16 @@ CISCO2951(config-if)#exit
 
 # Configure ACL and NAT.
 CISCO2951(config)#ip dns server
+CISCO2951(config)#ip name-server 1.1.1.1
 CISCO2951(config)#ip access-list extended NAT_ACL
-CISCO2951-K9(config-ext-nacl)#permit ip 192.168.0.0 0.255.255.255 any
+CISCO2951-K9(config-ext-nacl)#permit ip 192.168.0.0 0.0.0.255 any
 CISCO2951-K9(config-ext-nacl)#exit
 CISCO2951(config)#ip nat inside source list NAT_ACL interface GigabitEthernet0/0 overload
 
 # Enable routing and configure EIGRP (optional, depending on your configs)
 CISCO2951(config)#ip routing
 CISCO2951(config)#router eigrp 100
-CISCO2951(config-router)#network 192.168.0.0 0.255.255.255</code></pre>
+CISCO2951(config-router)#network 192.168.0.0 0.0.0.255</code></pre>
 
 
 
@@ -173,14 +176,20 @@ CISCO2951(config-router)#network 192.168.0.0 0.255.255.255</code></pre>
 
 
 
-<pre class="wp-block-code"><code># Enable routing.
+<pre class="wp-block-code"><code># Enable routing:
 C3750G(config)#ip routing
-# Disable "ip cef optimize neighbor resolution" to get rid of excessive warning/error logs.
-C3750G(config)#no ip cef optimize neighbor resolution
-C3750G(config)#no ip domain-lookup
+
+# Configure cef (Cisco Express Forwarding
+) for better performance:
+C3750G(config)#ip cef distributed
+C3750G(config)#ip cef optimize neighbor resolution
+
+#Configure DNS
+C3750G(config)#ip domain-lookup
+C3750G(config)#ip name-server 192.168.0.1
 
 # Enable spanning-tree protocol.
-C3750G(config)#spanning-tree mode pvst
+C3750G(config)#spanning-tree mode rapid-pvst
 
 # Configure VLANs
 C3750G(config)#vlan 10
@@ -210,14 +219,14 @@ C3750G(config)#ip route 0.0.0.0 0.0.0.0 GigabitEthernet 3/0/1
 
 # Assign ports to VLANs
 C3750G(config)#interface range GigabitEthernet 3/0/2 - 5
-C3750G(config-if-range)#switch port access vlan 10
+C3750G(config-if-range)#switchport access vlan 10
 C3750G(config-if-range)#switchport mode access
 C3750G(config-if-range)#speed 1000
 C3750G(config-if-range)#duplex full
 C3750G(config-if-range)#no shut
 
 C3750G(config)#interface range GigabitEthernet 3/0/6 - 12
-C3750G(config-if-range)#switch port access vlan 20
+C3750G(config-if-range)#switchport access vlan 20
 C3750G(config-if-range)#switchport mode access
 C3750G(config-if-range)#speed 1000
 C3750G(config-if-range)#duplex full
@@ -228,8 +237,8 @@ C3750G(config-if-range)#no shut</code></pre>
 		
 			</item>
 		<item>
-		<title>SSH: no matching cipher found</title>
-		<link>https://jameswsullivan.github.io/ssh-no-matching-cipher-found/</link>
+		<title>Network Administration: SSH connection errors when connecting to older Cisco devices</title>
+		<link>https://jameswsullivan.github.io/network-administration-ssh-connection-errors-when-connecting-to-older-cisco-devices/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Tue, 23 May 2023 03:20:43 +0000</pubDate>
@@ -237,21 +246,44 @@ C3750G(config-if-range)#no shut</code></pre>
 		<category><![CDATA[Cisco]]></category>
 		<category><![CDATA[Cisco 2951]]></category>
 		<category><![CDATA[Cisco IOS]]></category>
+		<category><![CDATA[Network Administration]]></category>
 		<category><![CDATA[Networking]]></category>
 		<category><![CDATA[System Administration]]></category>
 		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2555</guid>
 
 					<description><![CDATA[SSH: no matching cipher found]]></description>
 										<content:encoded><![CDATA[
-<p>When connecting to older Cisco routers and switches (e.g. Cisco 2951, Cisco C3750G), it&#8217;s likely that you&#8217;ll encounter this error when initiating an SSH connection: <code>SSH: no matching cipher found</code> and the device will display a list of offered ciphers. e.g. <code>Their offer: aes128-cbc,3des-cbc,aes192-cbc,aes256-cbc</code></p>
+<h2 class="wp-block-heading">Background:</h2>
 
 
 
-<p>To connect, run the SSH command with the -c flag plus one of the offered ciphers:</p>
+<p>When connecting to older Cisco routers and switches (e.g. Cisco 2951, C3750G, C4948-10GE, etc.), it&#8217;s likely that you&#8217;ll encounter one or a combination of the following errors:</p>
 
 
 
-<pre class="wp-block-code"><code>ssh -c aes256-cbc USERNAME@IP</code></pre>
+<pre class="wp-block-code"><code>Unable to negotiate with &lt;ip-address-of-the-device> port 22: no matching key exchange method found. Their offer: diffie-hellman-group1-sha1</code></pre>
+
+
+
+<pre class="wp-block-code"><code>Unable to negotiate with &lt;ip-address-of-the-device> port 22: no matching cipher found. Their offer: aes128-cbc,3des-cbc,aes192-cbc,aes256-cbc</code></pre>
+
+
+
+<h2 class="wp-block-heading">Solution:</h2>
+
+
+
+<pre class="wp-block-code"><code>For the first error, run:
+
+ssh -c aes256-cbc username@&lt;ip-address-of-the-device></code></pre>
+
+
+
+<p>For the second error, run:</p>
+
+
+
+<pre class="wp-block-code"><code>ssh -oKexAlgorithms=+diffie-hellman-group1-sha1 -c aes256-cbc username@&lt;ip-address-of-the-device></code></pre>
 ]]></content:encoded>
 					
 		
@@ -268,9 +300,11 @@ C3750G(config-if-range)#no shut</code></pre>
 		<category><![CDATA[Engineering]]></category>
 		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2351</guid>
 
-					<description><![CDATA[Silencing the Cisco 2951 router by replacing its stock high speed fans with Noctua quiet fans and adding active CPU cooler.]]></description>
+					<description><![CDATA[Silence the Cisco 2951 router by replacing its stock high speed fans with Noctua quiet fans and adding an active CPU cooler.]]></description>
 										<content:encoded><![CDATA[
+<blockquote class="wp-block-quote">
 <p>Recently I came to the need for a quieter environment for audiovisual production and my Cisco 2951 router is producing noticeable background noise in my recordings, so I decided to do some surgery on it and make it quieter. <a href="https://www.mattmillman.com/silencing-a-cisco-2951-for-where-ever-silence-may-be-required/" target="_blank" rel="noreferrer noopener">This article</a> gave me a lot of insights and I highly recommend using it as a reference, my method is slightly modified and improved to fit my needs.</p>
+</blockquote>
 
 
 
@@ -337,7 +371,7 @@ C3750G(config-if-range)#no shut</code></pre>
 
 
 <ul>
-<li>The active CPU cooler will have to be disassembled and have the mounting screws removed and replaced with the mounting clips from the original passive heatsink, and you&#8217;ll need a 3mm drill bit to enlarge the mounting holes on the heatsink of the active cooler for the original mounting clips to fit. The copper heatsink is very soft so you should be able to hand drill it with very little efforts.</li>
+<li>The active CPU cooler will have to be disassembled and have the mounting screws removed and replaced with the mounting clips from the original passive heatsink, and you&#8217;ll need a 3mm drill bit to enlarge the mounting holes on the heatsink of the active cooler for the original mounting clips to fit. The copper heatsink is very soft so you should be able to hand drill it with minimal efforts.</li>
 
 
 
@@ -359,7 +393,7 @@ C3750G(config-if-range)#no shut</code></pre>
 
 
 <ul>
-<li>If your room is well air conditioned and your server rack/cabinet well ventilated, you probably won&#8217;t need the active CPU cooler. Although the four Noctua fans are significantly weaker than the original ones, if your router is not under heavy load and your rack/cabinet has enough air flow, the four fans are probably enough to keep the router cool. My room is not always air conditioned and has other equipment producing heat and I see the CPU temperature slowly creep up to around 75 degrees Celsius, which was why I added the active cooler.</li>
+<li>If your room is well air conditioned and your server rack/cabinet is well ventilated, you probably won&#8217;t need the active CPU cooler. Although the four Noctua fans are significantly weaker than the original ones, if your router is not under heavy load and your rack/cabinet has enough air flow, the four fans are probably enough to keep the router cool. My room is not always air conditioned and has other equipment producing heat and I see the CPU temperature slowly creep up to around 75 degrees Celsius, which was why I added the active cooler.</li>
 
 
 

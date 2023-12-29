@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Wed, 22 Nov 2023 01:22:27 +0000</lastBuildDate>
+	<lastBuildDate>Fri, 29 Dec 2023 20:21:40 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -759,140 +759,6 @@ net start msiserver</code></pre>
 		
 			</item>
 		<item>
-		<title>Migrate Windows 10 from SATA to USB</title>
-		<link>https://jameswsullivan.github.io/migrate-windows-10-from-sata-to-usb/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Wed, 16 Aug 2023 03:46:27 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[Hardware]]></category>
-		<category><![CDATA[System Administration]]></category>
-		<category><![CDATA[Windows Customization]]></category>
-		<category><![CDATA[Windows Systems Administration]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2766</guid>
-
-					<description><![CDATA[Use Hasleo WinToUSB to migrate Windows 10 from a SATA installation onto a USB connected drive.]]></description>
-										<content:encoded><![CDATA[
-<h2 class="wp-block-heading">Background:</h2>
-
-
-
-<p>I have an older Lenovo M93p Tiny computer that I use for some file sharing work, it&#8217;s been running fine until I recently noticed some degradation of file transfer speed between this machine and my file server. It turned out that the PoE switch was the main culprit, probably due to exhausted RAM/buffer or high CPU usage, and a reboot resolved the network performance issue. However, the file transfer speed was still not ideal &#8211; under perfect condition, file transfer between two computers should hover around 100 &#8211; 113 MB/s, but I was only getting around 40 MB/s max.</p>
-
-
-
-<p>For better illustration, here are how the two drives are connected:</p>
-
-
-
-<ul>
-<li>a 120GB SSD is directly installed inside the unit, connected via the SATA (SATA 2, 3.0Gb/s) port. </li>
-
-
-
-<li>a 1TB old Apple HDD connected using the <a href="https://www.google.com/search?sca_esv=557322196&amp;rlz=1C1GCEA_enUS1010US1010&amp;q=12.7mm+DVD-ROM+Hard+Drive+Caddy&amp;tbm=shop&amp;source=lnms&amp;sa=X&amp;ved=2ahUKEwiAibG6mOCAAxVFlGoFHZUkDpcQ0pQJegQICxAB&amp;biw=1285&amp;bih=648&amp;dpr=1.88" data-type="link" data-id="https://www.google.com/search?sca_esv=557322196&amp;rlz=1C1GCEA_enUS1010US1010&amp;q=12.7mm+DVD-ROM+Hard+Drive+Caddy&amp;tbm=shop&amp;source=lnms&amp;sa=X&amp;ved=2ahUKEwiAibG6mOCAAxVFlGoFHZUkDpcQ0pQJegQICxAB&amp;biw=1285&amp;bih=648&amp;dpr=1.88" target="_blank" rel="noreferrer noopener">12.7mm DVD-ROM Hard Drive Caddy</a>, and connected to the computer via USB (with Lenovo&#8217;s optical drive VESA expansion bracket).</li>
-</ul>
-
-
-
-<p>After some experimentation, it appears that the drive caddy might be the bottleneck, so I decided to switch the two drives.</p>
-
-
-
-<p>However, since the OS was initially installed onto the SATA drive, switching to USB will cause boot issues and also due to driver mismatch, a simple BCD rebuild won&#8217;t work. But I managed to make it work with <a href="https://www.easyuefi.com/" target="_blank" rel="noreferrer noopener">Hasleo WinToUSB</a>, <strong>here are the steps</strong>:</p>
-
-
-
-<ol>
-<li>Clone the 120GB drive to another temporary drive, install (use the SATA port) and boot into Windows using the temporary drive (rebuild BCD if needed).</li>
-
-
-
-<li>Connect the 120GB drive to the optical drive caddy (USB).</li>
-
-
-
-<li>Use Hasleo WinToUSB&#8217;s <code>Windows To Go USB</code> function to clone your <code>Current Windows OS</code> to the 120GB drive that&#8217;s connected via USB.</li>
-
-
-
-<li>Remove the temporary drive, connect the 1TB HDD via SATA, boot into BIOS and change boot device to the USB device accordingly (mine shows as USB FDD).</li>
-</ol>
-
-
-
-<p>A second reboot might be needed for the machine to pickup the USB bootable device.</p>
-
-
-
-<h2 class="wp-block-heading">How to rebuild BCD (Windows 10 UEFI):</h2>
-
-
-
-<ul>
-<li>Use a WinPE or Windows installation USB to boot into a command prompt (or if you are able to enter command prompt using F8 or Advanced Boot Options).</li>
-
-
-
-<li>Use diskpart to assign a letter to the EFI partition:</li>
-</ul>
-
-
-
-<pre class="wp-block-code"><code>diskpart
-list disk
-sel disk X
-
-# X is your disk number
-
-list vol
-
-# find the volume that's FAT32 (the EFI partition).
-
-sel vol X
-assign letter=Z
-
-exit</code></pre>
-
-
-
-<ul>
-<li>Now switch to the Z drive, and run the following commands:</li>
-</ul>
-
-
-
-<pre class="wp-block-code"><code>cd EFI\Microsoft\Boot
-del BCD
-# or: ren BCD BCD.bk if you want to be safe.
-
-bootrec /rebuildbcd
-
-# if bootrec doesn't work, try
-bcdboot X:\windows /s Z: /f UEFI
-# where X is your windows installation's location.</code></pre>
-
-
-
-<h2 class="wp-block-heading">Afterthought:</h2>
-
-
-
-<p>There might be a way to inject/change the correct drivers (from SATA to USB) so that Windows can boot correctly, but I wasn&#8217;t successful with it.</p>
-
-
-
-<p>The reason a Windows To Go clone was needed is that after switching the drive directly from SATA to USB and try to boot, the drive would still be recognized as a SATA drive in BIOS, and attempting a normal boot (with or without BCD rebuild) would result in a blue screen with INACCESSIBLE_BOOT_DEVICE error. However, Windows was able to boot into Safe Mode, which indicates the driver mismatch being the culprit.</p>
-
-
-
-<p>Using Hasleo WinToUSB was a quicker solution, I might decided to experiment with the driver sometime in the future with a spare machine.</p>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
 		<title>Flash LSI SAS Adapters to HBA IT MODE</title>
 		<link>https://jameswsullivan.github.io/flash-lsi-sas-adapters-to-hba-it-mode/</link>
 		
@@ -950,7 +816,7 @@ bcdboot X:\windows /s Z: /f UEFI
 
 
 
-<li>Optional: If you want to be able to boot into the card&#8217;s BIOS utility, you can flash the <code>mptsas2.rom</code> as well (not provided), but if you only want your adapter to function like extra SATA ports in passthrough mode, you can ignore this one.</li>
+<li>[Optional]: If you want to be able to boot into the card&#8217;s BIOS utility, you can flash the <code>mptsas2.rom</code> as well (not provided), but if you only want your adapter to function like extra SATA ports in passthrough mode, you can ignore this one.</li>
 </ul>
 
 
@@ -995,8 +861,8 @@ sas2flash.efi -c 0 -list
 
 # You can pipe your output to a text file if you want to keep a record of it, and you can use the "edit" command in the EFI shell to view/edit the files, very much like how you use "nano" on Linux. e.g.:
 
-sas2flash.efi -listall > myadapters.txt
-sas2flash.efi -c 0 -list > adapter0info.txt
+sas2flash.efi -listall &gt; myadapters.txt
+sas2flash.efi -c 0 -list &gt; adapter0info.txt
 edit adapter0info.txt</code></pre>
 
 
@@ -1095,8 +961,8 @@ MegaRec -writesbr &lt;n&gt; &lt;image&gt; &lt;-i2o/-fusion&gt;    : Write contro
 		
 			</item>
 		<item>
-		<title>Expand LVM in Ubuntu (22.04 LTS)</title>
-		<link>https://jameswsullivan.github.io/expand-lvm-in-ubuntu-22-04-lts/</link>
+		<title>Linux Administration: Expand LVM</title>
+		<link>https://jameswsullivan.github.io/linux-administration-expand-lvm/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sat, 05 Aug 2023 16:06:41 +0000</pubDate>
@@ -1109,7 +975,21 @@ MegaRec -writesbr &lt;n&gt; &lt;image&gt; &lt;-i2o/-fusion&gt;    : Write contro
 
 					<description><![CDATA[Expand LVM in Ubuntu 22.04 LTS.]]></description>
 										<content:encoded><![CDATA[
+<h2 class="wp-block-heading">Background:</h2>
+
+
+
 <p>This Ubuntu server (Hyper-V VM) in question is a Docker host that was partitioned using the default layout (50/50 split of available disk space) when Ubuntu was installed. After a few month one of the logic volumes <code>/dev/mapper/ubuntu--vg-ubuntu--lv</code> ran out of space. Since there is no GUI for partition management, a few steps will be needed to properly expand the volume size.</p>
+
+
+
+<p>Related article:</p>
+
+
+
+<ul>
+<li><a href="https://jameswsullivan.github.io/linux-administration-install-docker-on-ubuntu-server-and-mount-disks/">Linux Administration: Install Docker on Ubuntu Server and mount disks</a></li>
+</ul>
 
 
 
@@ -1125,7 +1005,7 @@ MegaRec -writesbr &lt;n&gt; &lt;image&gt; &lt;-i2o/-fusion&gt;    : Write contro
 
 
 
-<p>3. Run <code>parted /dev/sdf print</code> to view partition layout. You&#8217;ll probably get a warning message like this. Which one you choose doesn&#8217;t really matter because we&#8217;re doing the process manually.</p>
+<p>3. Run <code>parted /dev/sdf print</code> to view partition layout. You&#8217;ll probably get a warning message like the following. Which one you choose doesn&#8217;t really matter because we&#8217;ll be doing the process manually.</p>
 
 
 
@@ -1173,7 +1053,7 @@ Fix/Ignore?</code></pre>
 
 					<description><![CDATA[Repair ProForm 505 CST Treadmill.]]></description>
 										<content:encoded><![CDATA[
-<p>I recently picked up a used, broken ProForm 505 CST Treadmill from someone at a really cheap price and decided to experiment with a repair myself, because the symptoms didn&#8217;t sound like it&#8217;s irreparable.</p>
+<p>I recently picked up a used, broken ProForm 505 CST Treadmill from someone at a really good price and decided to experiment with a repair myself, because the symptoms didn&#8217;t sound like it&#8217;s irreparable.</p>
 
 
 
@@ -1196,28 +1076,28 @@ Fix/Ignore?</code></pre>
 
 
 <ul>
-<li>Put the multimeter in continuity or diode testing mode, you should see a voltage drop between the pins on a good MOSFET and the pins shouldn&#8217;t be directly connected to each other.</li>
+<li>Put the multimeter in continuity or diode testing mode, you should see a voltage drop between the pins on a good MOSFET and the pins shouldn&#8217;t have continuity between each other.</li>
 
 
 
-<li>On the bad one, all three pins were directly connected and the multimeter beeps in continuity mode (meaning the MOSFET is shot).</li>
+<li>On the bad one, the multimeter beeps in continuity mode on all three pins, meaning the MOSFET is completely shot.</li>
 </ul>
 
 
 
-<figure class="wp-block-image size-large is-resized"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-scaled.jpg"><img loading="lazy" decoding="async" src="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-1024x576.jpg" alt="Motor Control Board" class="wp-image-2639" width="768" height="432" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-1024x576.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-1536x864.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-2048x1152.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-700x394.jpg 700w" sizes="(max-width: 768px) 100vw, 768px" /></a></figure>
+<figure class="wp-block-image size-large is-resized"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-scaled.jpg"><img loading="lazy" decoding="async" width="1024" height="576" src="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-1024x576.jpg" alt="Motor Control Board" class="wp-image-2639" style="width:768px;height:432px" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-1024x576.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-1536x864.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-2048x1152.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-01-700x394.jpg 700w" sizes="(max-width: 1024px) 100vw, 1024px" /></a></figure>
 
 
 
-<figure class="wp-block-image size-large is-resized"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-scaled.jpg"><img loading="lazy" decoding="async" src="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-1024x576.jpg" alt="IRFP250 MOSFET" class="wp-image-2641" width="768" height="432" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-1024x576.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-1536x864.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-2048x1152.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-700x394.jpg 700w" sizes="(max-width: 768px) 100vw, 768px" /></a></figure>
+<figure class="wp-block-image size-large is-resized"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-scaled.jpg"><img loading="lazy" decoding="async" width="1024" height="576" src="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-1024x576.jpg" alt="IRFP250 MOSFET" class="wp-image-2641" style="width:768px;height:432px" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-1024x576.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-1536x864.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-2048x1152.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-700x394.jpg 700w" sizes="(max-width: 1024px) 100vw, 1024px" /></a></figure>
 ]]></content:encoded>
 					
 		
 		
 			</item>
 		<item>
-		<title>Configure VLAN and InterVLAN Routing on Cisco Router and Switch</title>
-		<link>https://jameswsullivan.github.io/configure-vlan-and-intervlan-routing-on-cisco-router-and-switch/</link>
+		<title>Network Administration: Configure VLAN and InterVLAN Routing</title>
+		<link>https://jameswsullivan.github.io/network-administration-configure-vlan-and-intervlan-routing/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Tue, 20 Jun 2023 15:25:19 +0000</pubDate>
@@ -1229,11 +1109,13 @@ Fix/Ignore?</code></pre>
 		<category><![CDATA[Network Administration]]></category>
 		<category><![CDATA[Networking]]></category>
 		<category><![CDATA[router-on-a-stick]]></category>
+		<category><![CDATA[SVI]]></category>
+		<category><![CDATA[Switch Virtual Interface]]></category>
 		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2574</guid>
 
 					<description><![CDATA[Configure VLAN and InterVLAN routing on Cisco router and switch using router-on-a-stick and SVI.]]></description>
 										<content:encoded><![CDATA[
-<h2 class="wp-block-heading">Environment &amp; Requirement</h2>
+<h2 class="wp-block-heading">Lab Environment:</h2>
 
 
 
@@ -1330,7 +1212,7 @@ C3750G(config-if)#exit</code></pre>
 
 
 
-<pre class="wp-block-code"><code># Configure GigabitEthernet 0/0 (connected to cable modem from ISP) to use DHCP.
+<pre class="wp-block-code"><code># Configure GigabitEthernet 0/0 (connected to ISP's device for internet access) to use DHCP.
 CISCO2951(config)#interface GigabitEthernet 0/0
 CISCO2951(config-if)#ip address dhcp
 CISCO2951(config-if)#ip nat outside
@@ -1353,15 +1235,16 @@ CISCO2951(config-if)#exit
 
 # Configure ACL and NAT.
 CISCO2951(config)#ip dns server
+CISCO2951(config)#ip name-server 1.1.1.1
 CISCO2951(config)#ip access-list extended NAT_ACL
-CISCO2951-K9(config-ext-nacl)#permit ip 192.168.0.0 0.255.255.255 any
+CISCO2951-K9(config-ext-nacl)#permit ip 192.168.0.0 0.0.0.255 any
 CISCO2951-K9(config-ext-nacl)#exit
 CISCO2951(config)#ip nat inside source list NAT_ACL interface GigabitEthernet0/0 overload
 
 # Enable routing and configure EIGRP (optional, depending on your configs)
 CISCO2951(config)#ip routing
 CISCO2951(config)#router eigrp 100
-CISCO2951(config-router)#network 192.168.0.0 0.255.255.255</code></pre>
+CISCO2951(config-router)#network 192.168.0.0 0.0.0.255</code></pre>
 
 
 
@@ -1369,14 +1252,20 @@ CISCO2951(config-router)#network 192.168.0.0 0.255.255.255</code></pre>
 
 
 
-<pre class="wp-block-code"><code># Enable routing.
+<pre class="wp-block-code"><code># Enable routing:
 C3750G(config)#ip routing
-# Disable "ip cef optimize neighbor resolution" to get rid of excessive warning/error logs.
-C3750G(config)#no ip cef optimize neighbor resolution
-C3750G(config)#no ip domain-lookup
+
+# Configure cef (Cisco Express Forwarding
+) for better performance:
+C3750G(config)#ip cef distributed
+C3750G(config)#ip cef optimize neighbor resolution
+
+#Configure DNS
+C3750G(config)#ip domain-lookup
+C3750G(config)#ip name-server 192.168.0.1
 
 # Enable spanning-tree protocol.
-C3750G(config)#spanning-tree mode pvst
+C3750G(config)#spanning-tree mode rapid-pvst
 
 # Configure VLANs
 C3750G(config)#vlan 10
@@ -1406,18 +1295,93 @@ C3750G(config)#ip route 0.0.0.0 0.0.0.0 GigabitEthernet 3/0/1
 
 # Assign ports to VLANs
 C3750G(config)#interface range GigabitEthernet 3/0/2 - 5
-C3750G(config-if-range)#switch port access vlan 10
+C3750G(config-if-range)#switchport access vlan 10
 C3750G(config-if-range)#switchport mode access
 C3750G(config-if-range)#speed 1000
 C3750G(config-if-range)#duplex full
 C3750G(config-if-range)#no shut
 
 C3750G(config)#interface range GigabitEthernet 3/0/6 - 12
-C3750G(config-if-range)#switch port access vlan 20
+C3750G(config-if-range)#switchport access vlan 20
 C3750G(config-if-range)#switchport mode access
 C3750G(config-if-range)#speed 1000
 C3750G(config-if-range)#duplex full
 C3750G(config-if-range)#no shut</code></pre>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Network Administration: Update Cisco IOS on C3750G</title>
+		<link>https://jameswsullivan.github.io/network-administration-flash-cisco-ios-on-c3750g/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sun, 18 Jun 2023 00:01:28 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Cisco]]></category>
+		<category><![CDATA[Cisco C3750G]]></category>
+		<category><![CDATA[Cisco IOS]]></category>
+		<category><![CDATA[Network Administration]]></category>
+		<category><![CDATA[Networking]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2570</guid>
+
+					<description><![CDATA[Flash Cisco IOS firmware on C3750G switch.]]></description>
+										<content:encoded><![CDATA[
+<h2 class="wp-block-heading">Prerequisites:</h2>
+
+
+
+<ul>
+<li>Switch Model: WS-C3750G-24PS-S</li>
+
+
+
+<li>Old firmware: c3750-advipservicesk9-mz.122-44.SE4.bin</li>
+
+
+
+<li>New firmware: c3750-ipservicesk9-mz.150-2.SE11.bin</li>
+
+
+
+<li>A TFTP Server at 192.168.0.100 . (I used SolarWinds TFTP Server here.)</li>
+</ul>
+
+
+
+<p>Related article: <a href="https://jameswsullivan.github.io/network-administration-ssh-connection-errors-when-connecting-to-older-cisco-devices/">Network Administration: SSH connection errors when connecting to older Cisco devices</a></p>
+
+
+
+<h2 class="wp-block-heading">IOS Commands:</h2>
+
+
+
+<pre class="wp-block-code"><code># Verify current IOS version, view current IOS bin file.
+show version
+show switch
+dir flash:
+# Assuming that your switch only have one flash.
+
+# Delete old IOS firmware file.
+delete /f /r flash:c3750-advipservicesk9-mz.122-44.SE4.bin
+
+# Copy new IOS firmware from TFTP server.
+copy tftp flash
+# Follow the prompts and provide server IP and file name.
+
+# Configure and verify boot file.
+show boot
+
+config t
+boot system switch all flash:/c3750-ipservicesk9-mz.150-2.SE11.bin
+exit
+show boot
+
+# Apply changes and reload switch.
+write memory
+reload</code></pre>
 ]]></content:encoded>
 					
 		

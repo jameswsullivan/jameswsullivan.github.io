@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/windows-systems-administration/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Thu, 28 Dec 2023 21:57:03 +0000</lastBuildDate>
+	<lastBuildDate>Fri, 29 Dec 2023 04:21:33 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -250,207 +250,6 @@ net start msiserver</code></pre>
 		
 			</item>
 		<item>
-		<title>Migrate Windows 10 from SATA to USB</title>
-		<link>https://jameswsullivan.github.io/migrate-windows-10-from-sata-to-usb/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Wed, 16 Aug 2023 03:46:27 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[Hardware]]></category>
-		<category><![CDATA[System Administration]]></category>
-		<category><![CDATA[Windows Customization]]></category>
-		<category><![CDATA[Windows Systems Administration]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2766</guid>
-
-					<description><![CDATA[Use Hasleo WinToUSB to migrate Windows 10 from a SATA installation onto a USB connected drive.]]></description>
-										<content:encoded><![CDATA[
-<h2 class="wp-block-heading">Background:</h2>
-
-
-
-<p>I have an older Lenovo M93p Tiny computer that I use for some file sharing work, it&#8217;s been running fine until I recently noticed some degradation of file transfer speed between this machine and my file server. It turned out that the PoE switch was the main culprit, probably due to exhausted RAM/buffer or high CPU usage, and a reboot resolved the network performance issue. However, the file transfer speed was still not ideal &#8211; under perfect condition, file transfer between two computers should hover around 100 &#8211; 113 MB/s, but I was only getting around 40 MB/s max.</p>
-
-
-
-<p>For better illustration, here are how the two drives are connected:</p>
-
-
-
-<ul>
-<li>a 120GB SSD is directly installed inside the unit, connected via the SATA (SATA 2, 3.0Gb/s) port. </li>
-
-
-
-<li>a 1TB old Apple HDD connected using the <a href="https://www.google.com/search?sca_esv=557322196&amp;rlz=1C1GCEA_enUS1010US1010&amp;q=12.7mm+DVD-ROM+Hard+Drive+Caddy&amp;tbm=shop&amp;source=lnms&amp;sa=X&amp;ved=2ahUKEwiAibG6mOCAAxVFlGoFHZUkDpcQ0pQJegQICxAB&amp;biw=1285&amp;bih=648&amp;dpr=1.88" data-type="link" data-id="https://www.google.com/search?sca_esv=557322196&amp;rlz=1C1GCEA_enUS1010US1010&amp;q=12.7mm+DVD-ROM+Hard+Drive+Caddy&amp;tbm=shop&amp;source=lnms&amp;sa=X&amp;ved=2ahUKEwiAibG6mOCAAxVFlGoFHZUkDpcQ0pQJegQICxAB&amp;biw=1285&amp;bih=648&amp;dpr=1.88" target="_blank" rel="noreferrer noopener">12.7mm DVD-ROM Hard Drive Caddy</a>, and connected to the computer via USB (with Lenovo&#8217;s optical drive VESA expansion bracket).</li>
-</ul>
-
-
-
-<p>After some experimentation, it appears that the drive caddy might be the bottleneck, so I decided to switch the two drives.</p>
-
-
-
-<p>However, since the OS was initially installed onto the SATA drive, switching to USB will cause boot issues and also due to driver mismatch, a simple BCD rebuild won&#8217;t work. But I managed to make it work with <a href="https://www.easyuefi.com/" target="_blank" rel="noreferrer noopener">Hasleo WinToUSB</a>, <strong>here are the steps</strong>:</p>
-
-
-
-<ol>
-<li>Clone the 120GB drive to another temporary drive, install (use the SATA port) and boot into Windows using the temporary drive (rebuild BCD if needed).</li>
-
-
-
-<li>Connect the 120GB drive to the optical drive caddy (USB).</li>
-
-
-
-<li>Use Hasleo WinToUSB&#8217;s <code>Windows To Go USB</code> function to clone your <code>Current Windows OS</code> to the 120GB drive that&#8217;s connected via USB.</li>
-
-
-
-<li>Remove the temporary drive, connect the 1TB HDD via SATA, boot into BIOS and change boot device to the USB device accordingly (mine shows as USB FDD).</li>
-</ol>
-
-
-
-<p>A second reboot might be needed for the machine to pickup the USB bootable device.</p>
-
-
-
-<h2 class="wp-block-heading">How to rebuild BCD (Windows 10 UEFI):</h2>
-
-
-
-<ul>
-<li>Use a WinPE or Windows installation USB to boot into a command prompt (or if you are able to enter command prompt using F8 or Advanced Boot Options).</li>
-
-
-
-<li>Use diskpart to assign a letter to the EFI partition:</li>
-</ul>
-
-
-
-<pre class="wp-block-code"><code>diskpart
-list disk
-sel disk X
-
-# X is your disk number
-
-list vol
-
-# find the volume that's FAT32 (the EFI partition).
-
-sel vol X
-assign letter=Z
-
-exit</code></pre>
-
-
-
-<ul>
-<li>Now switch to the Z drive, and run the following commands:</li>
-</ul>
-
-
-
-<pre class="wp-block-code"><code>cd EFI\Microsoft\Boot
-del BCD
-# or: ren BCD BCD.bk if you want to be safe.
-
-bootrec /rebuildbcd
-
-# if bootrec doesn't work, try
-bcdboot X:\windows /s Z: /f UEFI
-# where X is your windows installation's location.</code></pre>
-
-
-
-<h2 class="wp-block-heading">Afterthought:</h2>
-
-
-
-<p>There might be a way to inject/change the correct drivers (from SATA to USB) so that Windows can boot correctly, but I wasn&#8217;t successful with it.</p>
-
-
-
-<p>The reason a Windows To Go clone was needed is that after switching the drive directly from SATA to USB and try to boot, the drive would still be recognized as a SATA drive in BIOS, and attempting a normal boot (with or without BCD rebuild) would result in a blue screen with INACCESSIBLE_BOOT_DEVICE error. However, Windows was able to boot into Safe Mode, which indicates the driver mismatch being the culprit.</p>
-
-
-
-<p>Using Hasleo WinToUSB was a quicker solution, I might decided to experiment with the driver sometime in the future with a spare machine.</p>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Network Administration</title>
-		<link>https://jameswsullivan.github.io/network-administration/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Sat, 17 Jun 2023 19:51:05 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[Network Administration]]></category>
-		<category><![CDATA[Networking]]></category>
-		<category><![CDATA[System Administration]]></category>
-		<category><![CDATA[Windows Systems Administration]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2567</guid>
-
-					<description><![CDATA[Common network administration tools, commands, and notes.]]></description>
-										<content:encoded><![CDATA[
-<blockquote class="wp-block-quote">
-<p>In Construction</p>
-</blockquote>
-
-
-
-<pre class="wp-block-code"><code>Command requires cmd with administrative privilege.
-
-netsh wlan show wlanreport
-</code></pre>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Cleanly Remove User Profiles from Windows OS</title>
-		<link>https://jameswsullivan.github.io/cleanly-remove-user-profiles-from-windows-os/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Sun, 26 Mar 2023 19:40:25 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[Desktop Support]]></category>
-		<category><![CDATA[Registry]]></category>
-		<category><![CDATA[System Administration]]></category>
-		<category><![CDATA[Windows Systems Administration]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2230</guid>
-
-					<description><![CDATA[Cleanly Remove User Profiles from Windows OS]]></description>
-										<content:encoded><![CDATA[
-<ol>
-<li>Delete profile account using <code>lusrmgr.msc</code>.</li>
-
-
-
-<li>Delete profile folder under <code>Users</code>.</li>
-
-
-
-<li>Delete registry keys:</li>
-</ol>
-
-
-
-<pre class="wp-block-code"><code>HKLM\Software\Microsoft\WindowsNT\CurrentVersion\ProfileList
-
-HKLM\Software\Microsoft\WindowsNT\CurrentVersion\ProfileGuid</code></pre>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
 		<title>Invalid Time error and Unable to Change Time Zone</title>
 		<link>https://jameswsullivan.github.io/invalid-time-error-and-unable-to-change-time-zone/</link>
 		
@@ -463,7 +262,25 @@ HKLM\Software\Microsoft\WindowsNT\CurrentVersion\ProfileGuid</code></pre>
 
 					<description><![CDATA[Fix the Invalid Time error and the Time Zone setting greyed out issue on Windows.]]></description>
 										<content:encoded><![CDATA[
-<p>If your applications are encountering an Invalid Time error, check the following settings:</p>
+<h2 class="wp-block-heading">Problems:</h2>
+
+
+
+<ul>
+<li>For some reason the <code>time.windows.com</code> occasionally has issues with certain programs and produce the Invalid Time error.</li>
+
+
+
+<li>Sometimes the <code>Time zone</code> setting is greyed out in Windows Settings (Windows 10).</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading">Solutions:</h2>
+
+
+
+<p>To solve the Invalid Time error, configure the NTP server to use <code>time.nist.gov</code> instead:</p>
 
 
 
@@ -471,23 +288,24 @@ HKLM\Software\Microsoft\WindowsNT\CurrentVersion\ProfileGuid</code></pre>
 
 
 
-<p>For some reason the <code>time.windows.com</code> occasionally has issues with certain programs.</p>
-
-
-
-<p>If your <code>Time zone</code> setting is greyed out in Windows Settings, use <a href="https://learn.microsoft.com/en-us/troubleshoot/windows-client/shell-experience/cannot-set-timezone-automatically">this guide</a> to fix it:</p>
+<p>If your <code>Time zone</code> setting is greyed out in Windows Settings, use <a href="https://learn.microsoft.com/en-us/troubleshoot/windows-client/shell-experience/cannot-set-timezone-automatically">this guide</a> to fix:</p>
 
 
 
 <pre class="wp-block-code"><code>1. Change the Set time zone automatically setting and set the data value of the registry entry
+
 HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\tzautoupdate\Start
+
 as follows:
 
 3	Enable Set time zone automatically
 4	Disable Set time zone automatically
 
+
 2. Change the location setting and set the value of the registry entry
+
 HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location\Value
+
 as follows:
 
 Allow	On
@@ -514,6 +332,10 @@ Deny	Off</code></pre>
 
 					<description><![CDATA[Create Storage Pools and Virtual Disks via PowerShell when New Virtual Disk Wizard GUI emits error.]]></description>
 										<content:encoded><![CDATA[
+<h2 class="wp-block-heading">Issue:</h2>
+
+
+
 <p>If creating New Virtual Disk using the New Virtual Disk Wizard GUI emits this error:</p>
 
 
@@ -531,7 +353,15 @@ Activity ID:</code></pre>
 
 
 
-<p>use PowerShell might work. <a href="https://www.petenetlive.com/KB/Article/0001562">Ref</a>. This might happen when you have multiple SSDs/HDDs connected to the host via an HBA Adapter.</p>
+<h2 class="wp-block-heading">Solution:</h2>
+
+
+
+<p>Try using PowerShell to create the Storage Pool (<a href="https://www.petenetlive.com/KB/Article/0001562">Reference article</a>). You might encounter this problem if you have multiple SSDs/HDDs connected to the host via an HBA Adapter.</p>
+
+
+
+<p>Reference articles:</p>
 
 
 
@@ -552,65 +382,14 @@ Activity ID:</code></pre>
 <pre class="wp-block-code"><code>New-StoragePool
 
 New-VirtualDisk -StoragePoolFriendlyName STORAGE_POOL_NAME `
-                -FriendlyName VIRTUAL_DISK_NAME -UseMaximumSize `
-                -ResiliencySettingName "Parity" -PhysicalDiskRedundancy 1 `
-                -ProvisioningType Fixed -MediaType SSD
+                -FriendlyName VIRTUAL_DISK_NAME `
+                -UseMaximumSize `
+                -ResiliencySettingName "Parity" `
+                -PhysicalDiskRedundancy 1 `
+                -ProvisioningType Fixed `
+                -MediaType SSD
 
 Get-VirtualDisk</code></pre>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>SLMGR Commands</title>
-		<link>https://jameswsullivan.github.io/slmgr-commands/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Sun, 26 Mar 2023 15:39:05 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[KMS]]></category>
-		<category><![CDATA[System Administration]]></category>
-		<category><![CDATA[Windows Server]]></category>
-		<category><![CDATA[Windows Systems Administration]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2200</guid>
-
-					<description><![CDATA[SLMGR.vbs Options for Volume Activation]]></description>
-										<content:encoded><![CDATA[
-<p>Useful Refs:</p>
-
-
-
-<ul>
-<li><a href="https://learn.microsoft.com/en-us/windows-server/get-started/kms-client-activation-keys">Key Management Services (KMS) client activation and product keys</a></li>
-
-
-
-<li><a href="https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-r2-and-2012/dn502540(v=ws.11)">Slmgr.vbs Options for Volume Activation</a></li>
-
-
-
-<li><a href="https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-r2-and-2012/dn502529(v=ws.11)">Volume Activation Technical Reference</a></li>
-
-
-
-<li><a href="https://learn.microsoft.com/en-us/previous-versions/tn-archive/ee939272(v=technet.10)">How to troubleshoot the Key Management Service (KMS)</a></li>
-</ul>
-
-
-
-<p>Common Commands to use on clients:</p>
-
-
-
-<pre class="wp-block-code"><code># Example activating Windows Server 2022 Standard
-slmgr /upk
-slmgr /ipk VDYBN-27WPP-V4HQT-9VMD4-VMK7H
-slmgr /skms KMS_SERVER_IP_ADDR
-slmgr /ato
-
-# Show current activation status.
-slmgr /dlv</code></pre>
 ]]></content:encoded>
 					
 		
@@ -747,6 +526,197 @@ DFSRDIAG POLLAD</code></pre>
 
 
 <p>Depending on your environment, you might need to give it a bit time for the replication to finish, though for me the fix was instant.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>RDP CredSSP Error</title>
+		<link>https://jameswsullivan.github.io/rdp-credssp-error/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Thu, 20 Aug 2020 22:41:04 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Remote Desktop]]></category>
+		<category><![CDATA[System Administration]]></category>
+		<category><![CDATA[Windows Systems Administration]]></category>
+		<guid isPermaLink="false">https://www.alexchen.net/?p=941</guid>
+
+					<description><![CDATA[Fix RDP CredSSP Error.]]></description>
+										<content:encoded><![CDATA[
+<h2 class="wp-block-heading">Issue:</h2>
+
+
+
+<p>RDP Error:</p>
+
+
+
+<pre class="wp-block-code"><code>An authentication error has occured. The function requested is not supported. This could be due to CredSSP encryption oracle remediation. For more information, see https://go.microsoft.com/fwlink/?linkid=866660</code></pre>
+
+
+
+<h2 class="wp-block-heading">Workaround:</h2>
+
+
+
+<pre class="wp-block-code"><code>gpedit.msc - Computer Configuration - Administrative Templates - System - Credentials Delegation - change Encryption Oracle Remediation policy to Enabled, and Protection Level to Vulnerable.</code></pre>
+
+
+
+<h2 class="wp-block-heading">Permanent Solution:</h2>
+
+
+
+<p>Ensure both client &amp; server side have latest patch installed so that RDP can be established in a secure way. You can find the list of the corresponding KB number for each operating system here: https://portal.msrc.microsoft.com/en-us/security-guidance/advisory/CVE-2018-0886</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>WSUS Post-setup Troubleshooting</title>
+		<link>https://jameswsullivan.github.io/wsus-post-setup-troubleshooting/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Mon, 06 Jul 2020 00:16:59 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[System Administration]]></category>
+		<category><![CDATA[Windows Server]]></category>
+		<category><![CDATA[Windows Systems Administration]]></category>
+		<category><![CDATA[WSUS]]></category>
+		<guid isPermaLink="false">http://www.alexchen.net/?p=867</guid>
+
+					<description><![CDATA[Fix clients who are not reporting to WSUS server after installation.]]></description>
+										<content:encoded><![CDATA[
+<p>I recently set up a WSUS Server at work to deploy updates to client workstations and ran into some common issues which I assume every IT administrator must have come across, such as clients not reporting, updates report errors, etc.</p>
+
+
+
+<p>For me, the client not reporting issue was fairly simple to resolve &#8211; going to each client and manually click &#8220;check for updates&#8221;, and then the client would show up in WSUS console right away. The rest of the clients did show up eventually, it just took them sometime. And for me the <code>wuauclt /detectnow, /reportnow, /updatenow</code> didn&#8217;t work as fast as going to the clients and clicking &#8220;check for updates&#8221;.</p>
+
+
+
+<p>Here is a very useful article that helped me along the way, highly recommended.</p>
+
+
+
+<p><a href="https://www.renanrodrigues.com/post/how-to-fix-clients-not-showing-up-in-wsus-console-step-by-step" target="_blank" rel="noreferrer noopener">https://www.renanrodrigues.com/post/how-to-fix-clients-not-showing-up-in-wsus-console-step-by-step</a></p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>WSUS Reset Server Node Error</title>
+		<link>https://jameswsullivan.github.io/wsus-reset-server-node-error/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sun, 05 Jul 2020 04:54:00 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[System Administration]]></category>
+		<category><![CDATA[Windows Systems Administration]]></category>
+		<category><![CDATA[WSUS]]></category>
+		<guid isPermaLink="false">http://www.alexchen.net/?p=841</guid>
+
+					<description><![CDATA[WSUS Server's Reset Server Node error.]]></description>
+										<content:encoded><![CDATA[
+<h2 class="wp-block-heading">Issue:</h2>
+
+
+
+<p>When attempting to bring up the synchronization history, the window would freeze at <code>Loading synchronization history: 0% complete.</code> and eventually prompted <code>Reset Server Node</code>.</p>
+
+
+
+<h2 class="wp-block-heading">Solution:</h2>
+
+
+
+<p>1. During the initial synchronization, make sure that your server has sufficient memory. I set my VM to 64GB RAM just in case, and eventually found that the RAM usage climbed up all the way to over 13GB to finish. After the initial synchronization is finished, the subsequent synchronizations wouldn&#8217;t use that much RAM anymore, so it&#8217;s safe to tune down the VM&#8217;s RAM.</p>
+
+
+
+<p>2. You&#8217;ll also need to set the following values in IIS Manager for the initial synchronization to finish without errors.</p>
+
+
+
+<pre class="wp-block-code"><code>Go to IIS Manager - Application Pools - WsusPool - Advanced Settings and modify the following fields:
+
+Queue Length: 25000
+Limit Interval (minutes): 15
+"Service Unavailable" Response: TcpLevel
+Failure Interval (minutes): 30
+Maximum Failures: 60
+Private Memory Limit (KB): 0</code></pre>
+
+
+
+<p>3. I also needed to delete the synchronization history from the SUSDB to be able to sync again, I think it was because my initial sync failed due to insufficient RAM. To delete the sync history from SUSDB, you will need <code>Microsoft SSMS</code> (Run As Administrator) and connect to</p>
+
+
+
+<pre class="wp-block-code"><code><code>\\.\pipe\MICROSOFT##WID\tsql\query</code>
+and run the following commands:
+
+USE SUSDB
+GO
+DELETE FROM tbEventInstance WHERE EventNamespaceID= '2' AND EVENTID IN ('381','382','384','386','387','389')</code></pre>
+
+
+
+<p>4. The <code>Microsoft ReportViewer</code> and <code>Microsoft System CLR Types for SQL Server 2012</code> will need to be installed to view update error logs.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>White Screen When Presenting in Skype for Business</title>
+		<link>https://jameswsullivan.github.io/white-screen-when-presenting-in-skype-for-business/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Thu, 02 Jul 2020 07:23:00 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Skype]]></category>
+		<category><![CDATA[System Administration]]></category>
+		<category><![CDATA[Windows Systems Administration]]></category>
+		<guid isPermaLink="false">http://www.alexchen.net/?p=839</guid>
+
+					<description><![CDATA[Skype for Business user unable to see what others were presenting in a Skype meeting. The "Stage" area showed blank white screen when other participants "Present Programs …".]]></description>
+										<content:encoded><![CDATA[
+<h2 class="wp-block-heading">Issue:</h2>
+
+
+
+<p>Recently a Skype for Business user was unable to see what others were presenting during a Skype meeting. The user&#8217;s &#8220;Stage&#8221; area showed blank white screen when other participants &#8220;Present Programs …&#8221;.</p>
+
+
+
+<h2 class="wp-block-heading">Solution:</h2>
+
+
+
+<p>The fix is easy &#8211; deleting a registry folder that&#8217;s related to ActiveX control.</p>
+
+
+
+<ol>
+<li>Open regedit and navigate to HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Internet Explorer\ActiveX Compatibility</li>
+
+
+
+<li>Delete the folder: {00000000-0000-0000-000000000000}</li>
+
+
+
+<li>Restart Skype for Business.</li>
+</ol>
+
+
+
+<p>Reference: <a href="http://communicationsknowledge.blogspot.com/2015/11/getting-blank-screen-when-trying-to.html">http://communicationsknowledge.blogspot.com/2015/11/getting-blank-screen-when-trying-to.html</a></p>
 ]]></content:encoded>
 					
 		

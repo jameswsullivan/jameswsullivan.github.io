@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/firmware/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Sun, 06 Aug 2023 18:24:00 +0000</lastBuildDate>
+	<lastBuildDate>Fri, 29 Dec 2023 20:21:40 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -77,7 +77,7 @@
 
 
 
-<li>Optional: If you want to be able to boot into the card&#8217;s BIOS utility, you can flash the <code>mptsas2.rom</code> as well (not provided), but if you only want your adapter to function like extra SATA ports in passthrough mode, you can ignore this one.</li>
+<li>[Optional]: If you want to be able to boot into the card&#8217;s BIOS utility, you can flash the <code>mptsas2.rom</code> as well (not provided), but if you only want your adapter to function like extra SATA ports in passthrough mode, you can ignore this one.</li>
 </ul>
 
 
@@ -122,8 +122,8 @@ sas2flash.efi -c 0 -list
 
 # You can pipe your output to a text file if you want to keep a record of it, and you can use the "edit" command in the EFI shell to view/edit the files, very much like how you use "nano" on Linux. e.g.:
 
-sas2flash.efi -listall > myadapters.txt
-sas2flash.efi -c 0 -list > adapter0info.txt
+sas2flash.efi -listall &gt; myadapters.txt
+sas2flash.efi -c 0 -list &gt; adapter0info.txt
 edit adapter0info.txt</code></pre>
 
 

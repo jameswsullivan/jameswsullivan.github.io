@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/android/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Sat, 05 Aug 2023 21:33:17 +0000</lastBuildDate>
+	<lastBuildDate>Fri, 29 Dec 2023 05:02:09 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -20,8 +20,8 @@
 	1	</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=6.4.2</generator>
 	<item>
-		<title>Use LineageOS on Pixel 3a XL</title>
-		<link>https://jameswsullivan.github.io/use-lineageos-on-pixel-3a-xl/</link>
+		<title>Flash LineageOS on Pixel 3a XL</title>
+		<link>https://jameswsullivan.github.io/flash-lineageos-on-pixel-3a-xl/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sat, 22 Apr 2023 16:31:17 +0000</pubDate>
@@ -34,13 +34,15 @@
 		<category><![CDATA[LineageOS]]></category>
 		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2326</guid>
 
-					<description><![CDATA[Install LineageOS 19.1 on Pixel 3a XL.]]></description>
+					<description><![CDATA[Flash LineageOS on Pixel 3a XL.]]></description>
 										<content:encoded><![CDATA[
+<blockquote class="wp-block-quote">
 <p>It&#8217;s been a while since I flashed a custom ROM on an Android phone a few years back. Recently I needed to get an old Pixel 3a XL to work for a project and I have to say that installing custom ROMs has become much easier than before.</p>
+</blockquote>
 
 
 
-<h2 class="wp-block-heading">Steps</h2>
+<h2 class="wp-block-heading">Steps:</h2>
 
 
 
@@ -54,7 +56,7 @@
 
 
 
-<h2 class="wp-block-heading">Common Issues</h2>
+<h2 class="wp-block-heading">Common Issues:</h2>
 
 
 
@@ -82,7 +84,7 @@ adb start-server</code></pre>
 
 
 
-<h2 class="wp-block-heading">ADB Commands</h2>
+<h2 class="wp-block-heading">ADB Command Reference:</h2>
 
 
 

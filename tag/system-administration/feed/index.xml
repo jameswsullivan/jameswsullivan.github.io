@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/system-administration/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Mon, 02 Oct 2023 03:35:20 +0000</lastBuildDate>
+	<lastBuildDate>Fri, 29 Dec 2023 19:29:51 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -63,142 +63,8 @@
 		
 			</item>
 		<item>
-		<title>Migrate Windows 10 from SATA to USB</title>
-		<link>https://jameswsullivan.github.io/migrate-windows-10-from-sata-to-usb/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Wed, 16 Aug 2023 03:46:27 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[Hardware]]></category>
-		<category><![CDATA[System Administration]]></category>
-		<category><![CDATA[Windows Customization]]></category>
-		<category><![CDATA[Windows Systems Administration]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2766</guid>
-
-					<description><![CDATA[Use Hasleo WinToUSB to migrate Windows 10 from a SATA installation onto a USB connected drive.]]></description>
-										<content:encoded><![CDATA[
-<h2 class="wp-block-heading">Background:</h2>
-
-
-
-<p>I have an older Lenovo M93p Tiny computer that I use for some file sharing work, it&#8217;s been running fine until I recently noticed some degradation of file transfer speed between this machine and my file server. It turned out that the PoE switch was the main culprit, probably due to exhausted RAM/buffer or high CPU usage, and a reboot resolved the network performance issue. However, the file transfer speed was still not ideal &#8211; under perfect condition, file transfer between two computers should hover around 100 &#8211; 113 MB/s, but I was only getting around 40 MB/s max.</p>
-
-
-
-<p>For better illustration, here are how the two drives are connected:</p>
-
-
-
-<ul>
-<li>a 120GB SSD is directly installed inside the unit, connected via the SATA (SATA 2, 3.0Gb/s) port. </li>
-
-
-
-<li>a 1TB old Apple HDD connected using the <a href="https://www.google.com/search?sca_esv=557322196&amp;rlz=1C1GCEA_enUS1010US1010&amp;q=12.7mm+DVD-ROM+Hard+Drive+Caddy&amp;tbm=shop&amp;source=lnms&amp;sa=X&amp;ved=2ahUKEwiAibG6mOCAAxVFlGoFHZUkDpcQ0pQJegQICxAB&amp;biw=1285&amp;bih=648&amp;dpr=1.88" data-type="link" data-id="https://www.google.com/search?sca_esv=557322196&amp;rlz=1C1GCEA_enUS1010US1010&amp;q=12.7mm+DVD-ROM+Hard+Drive+Caddy&amp;tbm=shop&amp;source=lnms&amp;sa=X&amp;ved=2ahUKEwiAibG6mOCAAxVFlGoFHZUkDpcQ0pQJegQICxAB&amp;biw=1285&amp;bih=648&amp;dpr=1.88" target="_blank" rel="noreferrer noopener">12.7mm DVD-ROM Hard Drive Caddy</a>, and connected to the computer via USB (with Lenovo&#8217;s optical drive VESA expansion bracket).</li>
-</ul>
-
-
-
-<p>After some experimentation, it appears that the drive caddy might be the bottleneck, so I decided to switch the two drives.</p>
-
-
-
-<p>However, since the OS was initially installed onto the SATA drive, switching to USB will cause boot issues and also due to driver mismatch, a simple BCD rebuild won&#8217;t work. But I managed to make it work with <a href="https://www.easyuefi.com/" target="_blank" rel="noreferrer noopener">Hasleo WinToUSB</a>, <strong>here are the steps</strong>:</p>
-
-
-
-<ol>
-<li>Clone the 120GB drive to another temporary drive, install (use the SATA port) and boot into Windows using the temporary drive (rebuild BCD if needed).</li>
-
-
-
-<li>Connect the 120GB drive to the optical drive caddy (USB).</li>
-
-
-
-<li>Use Hasleo WinToUSB&#8217;s <code>Windows To Go USB</code> function to clone your <code>Current Windows OS</code> to the 120GB drive that&#8217;s connected via USB.</li>
-
-
-
-<li>Remove the temporary drive, connect the 1TB HDD via SATA, boot into BIOS and change boot device to the USB device accordingly (mine shows as USB FDD).</li>
-</ol>
-
-
-
-<p>A second reboot might be needed for the machine to pickup the USB bootable device.</p>
-
-
-
-<h2 class="wp-block-heading">How to rebuild BCD (Windows 10 UEFI):</h2>
-
-
-
-<ul>
-<li>Use a WinPE or Windows installation USB to boot into a command prompt (or if you are able to enter command prompt using F8 or Advanced Boot Options).</li>
-
-
-
-<li>Use diskpart to assign a letter to the EFI partition:</li>
-</ul>
-
-
-
-<pre class="wp-block-code"><code>diskpart
-list disk
-sel disk X
-
-# X is your disk number
-
-list vol
-
-# find the volume that's FAT32 (the EFI partition).
-
-sel vol X
-assign letter=Z
-
-exit</code></pre>
-
-
-
-<ul>
-<li>Now switch to the Z drive, and run the following commands:</li>
-</ul>
-
-
-
-<pre class="wp-block-code"><code>cd EFI\Microsoft\Boot
-del BCD
-# or: ren BCD BCD.bk if you want to be safe.
-
-bootrec /rebuildbcd
-
-# if bootrec doesn't work, try
-bcdboot X:\windows /s Z: /f UEFI
-# where X is your windows installation's location.</code></pre>
-
-
-
-<h2 class="wp-block-heading">Afterthought:</h2>
-
-
-
-<p>There might be a way to inject/change the correct drivers (from SATA to USB) so that Windows can boot correctly, but I wasn&#8217;t successful with it.</p>
-
-
-
-<p>The reason a Windows To Go clone was needed is that after switching the drive directly from SATA to USB and try to boot, the drive would still be recognized as a SATA drive in BIOS, and attempting a normal boot (with or without BCD rebuild) would result in a blue screen with INACCESSIBLE_BOOT_DEVICE error. However, Windows was able to boot into Safe Mode, which indicates the driver mismatch being the culprit.</p>
-
-
-
-<p>Using Hasleo WinToUSB was a quicker solution, I might decided to experiment with the driver sometime in the future with a spare machine.</p>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Expand LVM in Ubuntu (22.04 LTS)</title>
-		<link>https://jameswsullivan.github.io/expand-lvm-in-ubuntu-22-04-lts/</link>
+		<title>Linux Administration: Expand LVM</title>
+		<link>https://jameswsullivan.github.io/linux-administration-expand-lvm/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sat, 05 Aug 2023 16:06:41 +0000</pubDate>
@@ -211,7 +77,21 @@ bcdboot X:\windows /s Z: /f UEFI
 
 					<description><![CDATA[Expand LVM in Ubuntu 22.04 LTS.]]></description>
 										<content:encoded><![CDATA[
+<h2 class="wp-block-heading">Background:</h2>
+
+
+
 <p>This Ubuntu server (Hyper-V VM) in question is a Docker host that was partitioned using the default layout (50/50 split of available disk space) when Ubuntu was installed. After a few month one of the logic volumes <code>/dev/mapper/ubuntu--vg-ubuntu--lv</code> ran out of space. Since there is no GUI for partition management, a few steps will be needed to properly expand the volume size.</p>
+
+
+
+<p>Related article:</p>
+
+
+
+<ul>
+<li><a href="https://jameswsullivan.github.io/linux-administration-install-docker-on-ubuntu-server-and-mount-disks/">Linux Administration: Install Docker on Ubuntu Server and mount disks</a></li>
+</ul>
 
 
 
@@ -227,7 +107,7 @@ bcdboot X:\windows /s Z: /f UEFI
 
 
 
-<p>3. Run <code>parted /dev/sdf print</code> to view partition layout. You&#8217;ll probably get a warning message like this. Which one you choose doesn&#8217;t really matter because we&#8217;re doing the process manually.</p>
+<p>3. Run <code>parted /dev/sdf print</code> to view partition layout. You&#8217;ll probably get a warning message like the following. Which one you choose doesn&#8217;t really matter because we&#8217;ll be doing the process manually.</p>
 
 
 
@@ -263,38 +143,8 @@ Fix/Ignore?</code></pre>
 		
 			</item>
 		<item>
-		<title>Network Administration</title>
-		<link>https://jameswsullivan.github.io/network-administration/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Sat, 17 Jun 2023 19:51:05 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[Network Administration]]></category>
-		<category><![CDATA[Networking]]></category>
-		<category><![CDATA[System Administration]]></category>
-		<category><![CDATA[Windows Systems Administration]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2567</guid>
-
-					<description><![CDATA[Common network administration tools, commands, and notes.]]></description>
-										<content:encoded><![CDATA[
-<blockquote class="wp-block-quote">
-<p>In Construction</p>
-</blockquote>
-
-
-
-<pre class="wp-block-code"><code>Command requires cmd with administrative privilege.
-
-netsh wlan show wlanreport
-</code></pre>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>SSH: no matching cipher found</title>
-		<link>https://jameswsullivan.github.io/ssh-no-matching-cipher-found/</link>
+		<title>Network Administration: SSH connection errors when connecting to older Cisco devices</title>
+		<link>https://jameswsullivan.github.io/network-administration-ssh-connection-errors-when-connecting-to-older-cisco-devices/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Tue, 23 May 2023 03:20:43 +0000</pubDate>
@@ -302,66 +152,122 @@ netsh wlan show wlanreport
 		<category><![CDATA[Cisco]]></category>
 		<category><![CDATA[Cisco 2951]]></category>
 		<category><![CDATA[Cisco IOS]]></category>
+		<category><![CDATA[Network Administration]]></category>
 		<category><![CDATA[Networking]]></category>
 		<category><![CDATA[System Administration]]></category>
 		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2555</guid>
 
 					<description><![CDATA[SSH: no matching cipher found]]></description>
 										<content:encoded><![CDATA[
-<p>When connecting to older Cisco routers and switches (e.g. Cisco 2951, Cisco C3750G), it&#8217;s likely that you&#8217;ll encounter this error when initiating an SSH connection: <code>SSH: no matching cipher found</code> and the device will display a list of offered ciphers. e.g. <code>Their offer: aes128-cbc,3des-cbc,aes192-cbc,aes256-cbc</code></p>
+<h2 class="wp-block-heading">Background:</h2>
 
 
 
-<p>To connect, run the SSH command with the -c flag plus one of the offered ciphers:</p>
+<p>When connecting to older Cisco routers and switches (e.g. Cisco 2951, C3750G, C4948-10GE, etc.), it&#8217;s likely that you&#8217;ll encounter one or a combination of the following errors:</p>
 
 
 
-<pre class="wp-block-code"><code>ssh -c aes256-cbc USERNAME@IP</code></pre>
+<pre class="wp-block-code"><code>Unable to negotiate with &lt;ip-address-of-the-device> port 22: no matching key exchange method found. Their offer: diffie-hellman-group1-sha1</code></pre>
+
+
+
+<pre class="wp-block-code"><code>Unable to negotiate with &lt;ip-address-of-the-device> port 22: no matching cipher found. Their offer: aes128-cbc,3des-cbc,aes192-cbc,aes256-cbc</code></pre>
+
+
+
+<h2 class="wp-block-heading">Solution:</h2>
+
+
+
+<pre class="wp-block-code"><code>For the first error, run:
+
+ssh -c aes256-cbc username@&lt;ip-address-of-the-device></code></pre>
+
+
+
+<p>For the second error, run:</p>
+
+
+
+<pre class="wp-block-code"><code>ssh -oKexAlgorithms=+diffie-hellman-group1-sha1 -c aes256-cbc username@&lt;ip-address-of-the-device></code></pre>
 ]]></content:encoded>
 					
 		
 		
 			</item>
 		<item>
-		<title>Set up Docker host with Ubuntu Server and mount disks</title>
-		<link>https://jameswsullivan.github.io/set-up-docker-host-with-ubuntu-server-and-mount-disks/</link>
+		<title>Linux Administration: Install Docker on Ubuntu Server and mount disks</title>
+		<link>https://jameswsullivan.github.io/linux-administration-install-docker-on-ubuntu-server-and-mount-disks/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Tue, 11 Apr 2023 02:19:44 +0000</pubDate>
 				<category><![CDATA[blog]]></category>
 		<category><![CDATA[Docker]]></category>
 		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[Linux]]></category>
 		<category><![CDATA[Self-Hosting]]></category>
 		<category><![CDATA[System Administration]]></category>
 		<category><![CDATA[Ubuntu]]></category>
 		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2307</guid>
 
-					<description><![CDATA[Install Docker on Ubuntu Server, attach disks to the Docker host VM and configure mounts.]]></description>
+					<description><![CDATA[Install Docker on a Ubuntu Server, attach disks to the Docker host VM and configure mounts.]]></description>
 										<content:encoded><![CDATA[
-<p>In order to run and test things I set up multiple Hyper-V VMs as Docker hosts to run my containers. This blog documents the Docker installation and disk mounting on Ubuntu Server.</p>
+<h2 class="wp-block-heading">Environment:</h2>
 
 
 
-<p>First, if you have installed Docker or any packages along with Ubuntu Server, it&#8217;s likely installed via snap. There is nothing wrong with using snap, but most of the directory paths will be different and it makes it harder to tweak certain configs in the future, so it&#8217;s recommended to remove them before the rest of the steps.</p>
+<ul>
+<li>Windows Server 2019 with Hyper-V for running VMs.</li>
 
 
 
-<pre class="wp-block-code"><code>sudo snap remove docker
-sudo reboot 
-
-# Reboot is needed, otherwise you'll get "bash: /snap/bin/docker: No such file or directory" error.</code></pre>
+<li>Ubuntu Server 20.04.3 LTS.</li>
 
 
 
-<p>Second, install Docker:</p>
+<li>Physical or virtual disks that you want to mount to the Ubuntu Server.</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading">Configurations:</h2>
+
+
+
+<h2 class="wp-block-heading">Install Docker:</h2>
+
+
+
+<blockquote class="wp-block-quote">
+<p>Related article: <a href="https://jameswsullivan.github.io/linux-administration-install-docker-on-ubuntu-server/">Linux Administration: Install Docker on Ubuntu Server</a></p>
+</blockquote>
+
+
+
+<p>First, if you have installed Docker or any packages along during the installation process of the Ubuntu Server OS, they&#8217;re likely installed using <code>snap</code>. There is nothing wrong with using snap, but most of the directory paths will be different and it makes it harder to tweak certain configs in the future, so it&#8217;s recommended to remove them before the rest of the steps.</p>
+
+
+
+<pre class="wp-block-code"><code># Remove docker that was installed via snap:
+
+snap remove docker
+reboot 
+
+# NOTE: A reboot is needed after uninstallation, otherwise you'll get a "bash: /snap/bin/docker: No such file or directory" error.</code></pre>
+
+
+
+<p>Install Docker using <code>apt-get</code> :</p>
 
 
 
 <pre class="wp-block-code"><code># Install using the apt repository:
 # https://docs.docker.com/engine/install/ubuntu/
-apt-get update -y
+
+apt-get update -y
 apt-get upgrade -y
 apt-get install ca-certificates curl gnupg lsb-release -y
+
 mkdir -m 0755 -p /etc/apt/keyrings
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
     | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
@@ -371,10 +277,9 @@ echo "deb &#91;arch=$(dpkg --print-architecture) \
     https://download.docker.com/linux/ubuntu \
     $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
 
-apt-get update -y
+apt-get update -y
 apt-get upgrade -y
-apt-get install docker-ce \
-        docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
 # After installing docker-ce, other dependencies are usually automatically installed.
 
@@ -384,82 +289,68 @@ apt list --installed</code></pre>
 
 
 
-<p>Third, mount physical or virtual disks one by one to the VM so that you can identify the disks by UUID and configure the mount one at a time, especially when you have multiple disks of the same size, because the devices are usually not attached in order when booting, the only way to quickly and accurately identify the disks is by UUID. Use the following commands to format and configure the mounts.</p>
+<h2 class="wp-block-heading">Mount disks:</h2>
 
 
 
-<pre class="wp-block-code"><code># List devices.
+<p>It&#8217;s recommended to mount the physical or virtual disks one by one to the Docker host VM so that it&#8217;s easier to identify the disks by their UUID and get the mounts configured correctly one at a time, especially when you have multiple disks of the same size (because the devices are usually not attached in order when booting/rebooting).</p>
+
+
+
+<pre class="wp-block-code"><code># List devices:
+
 fdisk -l
 
+
 # Cross reference with:
+
 blkid
 blkid | grep /dev/sd
 
-# Use lsscsi if needed.
+
+# Use lsscsi if needed:
+
 apt-get install lsscsi -y
 
+
 # Create partition:
+
 gdisk /dev/sda
 
 # Enter ? for help. Enter n and accept all default parameters to use the entire disk capacity.
 # Enter w to write changes to disk.
 
+
 # Format disk to ext4 file system.
+
 mkfs.ext4 /dev/sda
 
+
 # Then run:
+
 fdisk -l
 blkid | grep /dev/sd
+
 # again to grab the device name and UUID.
 
+
 # Create mount locations:
+
 mkdir /mnt/directory_name
 mount /dev/sda /mnt/directory_name
 
+
 # Copy the UUID and add entries in /etc/fstab to configure mounts at boot time.
+
 nano /etc/fstab
 
+
 # Add entries, e.g., mount 100GB to /mnt/my_folder:
+
 UUID="dcd8c5ac-db76-435e-ab3c-48570190c7d8" /mnt/my_folder ext4 defaults 0 1
 
+
 # Verify the mounts after a reboot.</code></pre>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Cleanly Remove User Profiles from Windows OS</title>
-		<link>https://jameswsullivan.github.io/cleanly-remove-user-profiles-from-windows-os/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Sun, 26 Mar 2023 19:40:25 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[Desktop Support]]></category>
-		<category><![CDATA[Registry]]></category>
-		<category><![CDATA[System Administration]]></category>
-		<category><![CDATA[Windows Systems Administration]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2230</guid>
-
-					<description><![CDATA[Cleanly Remove User Profiles from Windows OS]]></description>
-										<content:encoded><![CDATA[
-<ol>
-<li>Delete profile account using <code>lusrmgr.msc</code>.</li>
-
-
-
-<li>Delete profile folder under <code>Users</code>.</li>
-
-
-
-<li>Delete registry keys:</li>
-</ol>
-
-
-
-<pre class="wp-block-code"><code>HKLM\Software\Microsoft\WindowsNT\CurrentVersion\ProfileList
-
-HKLM\Software\Microsoft\WindowsNT\CurrentVersion\ProfileGuid</code></pre>
 ]]></content:encoded>
 					
 		
@@ -478,7 +369,25 @@ HKLM\Software\Microsoft\WindowsNT\CurrentVersion\ProfileGuid</code></pre>
 
 					<description><![CDATA[Fix the Invalid Time error and the Time Zone setting greyed out issue on Windows.]]></description>
 										<content:encoded><![CDATA[
-<p>If your applications are encountering an Invalid Time error, check the following settings:</p>
+<h2 class="wp-block-heading">Problems:</h2>
+
+
+
+<ul>
+<li>For some reason the <code>time.windows.com</code> occasionally has issues with certain programs and produce the Invalid Time error.</li>
+
+
+
+<li>Sometimes the <code>Time zone</code> setting is greyed out in Windows Settings (Windows 10).</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading">Solutions:</h2>
+
+
+
+<p>To solve the Invalid Time error, configure the NTP server to use <code>time.nist.gov</code> instead:</p>
 
 
 
@@ -486,23 +395,24 @@ HKLM\Software\Microsoft\WindowsNT\CurrentVersion\ProfileGuid</code></pre>
 
 
 
-<p>For some reason the <code>time.windows.com</code> occasionally has issues with certain programs.</p>
-
-
-
-<p>If your <code>Time zone</code> setting is greyed out in Windows Settings, use <a href="https://learn.microsoft.com/en-us/troubleshoot/windows-client/shell-experience/cannot-set-timezone-automatically">this guide</a> to fix it:</p>
+<p>If your <code>Time zone</code> setting is greyed out in Windows Settings, use <a href="https://learn.microsoft.com/en-us/troubleshoot/windows-client/shell-experience/cannot-set-timezone-automatically">this guide</a> to fix:</p>
 
 
 
 <pre class="wp-block-code"><code>1. Change the Set time zone automatically setting and set the data value of the registry entry
+
 HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\tzautoupdate\Start
+
 as follows:
 
 3	Enable Set time zone automatically
 4	Disable Set time zone automatically
 
+
 2. Change the location setting and set the value of the registry entry
+
 HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location\Value
+
 as follows:
 
 Allow	On
@@ -529,6 +439,10 @@ Deny	Off</code></pre>
 
 					<description><![CDATA[Create Storage Pools and Virtual Disks via PowerShell when New Virtual Disk Wizard GUI emits error.]]></description>
 										<content:encoded><![CDATA[
+<h2 class="wp-block-heading">Issue:</h2>
+
+
+
 <p>If creating New Virtual Disk using the New Virtual Disk Wizard GUI emits this error:</p>
 
 
@@ -546,7 +460,15 @@ Activity ID:</code></pre>
 
 
 
-<p>use PowerShell might work. <a href="https://www.petenetlive.com/KB/Article/0001562">Ref</a>. This might happen when you have multiple SSDs/HDDs connected to the host via an HBA Adapter.</p>
+<h2 class="wp-block-heading">Solution:</h2>
+
+
+
+<p>Try using PowerShell to create the Storage Pool (<a href="https://www.petenetlive.com/KB/Article/0001562">Reference article</a>). You might encounter this problem if you have multiple SSDs/HDDs connected to the host via an HBA Adapter.</p>
+
+
+
+<p>Reference articles:</p>
 
 
 
@@ -567,9 +489,12 @@ Activity ID:</code></pre>
 <pre class="wp-block-code"><code>New-StoragePool
 
 New-VirtualDisk -StoragePoolFriendlyName STORAGE_POOL_NAME `
-                -FriendlyName VIRTUAL_DISK_NAME -UseMaximumSize `
-                -ResiliencySettingName "Parity" -PhysicalDiskRedundancy 1 `
-                -ProvisioningType Fixed -MediaType SSD
+                -FriendlyName VIRTUAL_DISK_NAME `
+                -UseMaximumSize `
+                -ResiliencySettingName "Parity" `
+                -PhysicalDiskRedundancy 1 `
+                -ProvisioningType Fixed `
+                -MediaType SSD
 
 Get-VirtualDisk</code></pre>
 ]]></content:encoded>
@@ -578,54 +503,280 @@ Get-VirtualDisk</code></pre>
 		
 			</item>
 		<item>
-		<title>SLMGR Commands</title>
-		<link>https://jameswsullivan.github.io/slmgr-commands/</link>
+		<title>Repair Corrupt System Files in Windows 10</title>
+		<link>https://jameswsullivan.github.io/corrupt-windows-10-system-files-repair/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Sun, 26 Mar 2023 15:39:05 +0000</pubDate>
+		<pubDate>Mon, 21 Mar 2022 02:24:48 +0000</pubDate>
 				<category><![CDATA[blog]]></category>
-		<category><![CDATA[KMS]]></category>
 		<category><![CDATA[System Administration]]></category>
-		<category><![CDATA[Windows Server]]></category>
 		<category><![CDATA[Windows Systems Administration]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2200</guid>
+		<guid isPermaLink="false">https://www.alexchen.net/?p=2023</guid>
 
-					<description><![CDATA[SLMGR.vbs Options for Volume Activation]]></description>
+					<description><![CDATA[Repair Windows Explorer crash with SFC /SCANNOW and DISM after Windows Update's reboot caused system file damage.]]></description>
 										<content:encoded><![CDATA[
-<p>Useful Refs:</p>
+<h2 class="wp-block-heading">Background:</h2>
+
+
+
+<p>The initial file corruption seems to have happened after an automated reboot by Windows Update while some disc scanning operations were still ongoing. The sudden reboot probably damaged some system files and resulted in Windows Explorer crashing immediately after opening. Windows Explorer would also crash immediate when your right click on any drives as well as on the recycle bin.</p>
+
+
+
+<h2 class="wp-block-heading">Solution:</h2>
+
+
+
+<p>The repair process was fairly straightforward using <code>SFC</code> and <code>DISM</code>. However, <code>SFC /SCANNOW</code> was not able to perform the repair at first and gave the <code>Windows Resource Protection could not perform the requested operation.</code> message. This usually points to corrupted files that would require a disk scan. <code>CHKDSK C: /R</code> was issued and system drive was checked and repaired upon next reboot.</p>
+
+
+
+<p>After <code>CHKDSK</code> finished and all disk errors were repaired, <code>SFC /SCANNOW</code> was still not successful due to some files&#8217; <code>hash mismatch</code> (logs can be checked under <code>WINDIR\LOGS\CBS\CBS.log</code>), so I resorted to using <code>DISM /Online /Cleanup-Image /RestoreHealth</code> . However, after issuing this command, it was still unable to perform the repair with another error message <code>The source files could not be found</code>. This indicates that you&#8217;ll need a healthy Windows installation ISO file to be the source file, usually you can use the <code>Windows Media Creation Tool</code> to create an installation media, but when I performed the repair in <code>Safe Mode</code> , the Media Creation Tool was failing with the error code <strong>0x8007043C &#8211; 0x90018</strong> every time it ran. As a workaround, I used <a href="https://tb.rg-adguard.net/public.php"><strong>this</strong></a> link to manually download a Windows 10 ISO file. When the ISO file is ready, extract the content into a folder and check under the &#8220;sources&#8221; directory to see whether you have the file <code>install.wim</code> or <code>install.esd</code>, as the following commands will be slight different.</p>
+
+
+
+<pre class="wp-block-code"><code># Assume the extracted installation files are under E:\Win10\sources\install.wim .
+
+DISM /Online /Cleanup-Image /RestoreHealth /Source:wim:E:\Win10\sources\install.wim:6 /LimitAccess
+
+# Use this command instead if your image contains install.esd file.
+
+DISM /Online /Cleanup-Image /RestoreHealth /Source:ESD:E:\Win10\sources\install.ESD:6 /LimitAccess
+
+# This command eventually did the trick for me and successfully finished the repair. If you need to find out the index number of the right Windows version to use (the index number might be different if you're using a different installation image), the following command can help identify, and then just replace the number 6 in the commands above with the right Windows version that fits your needs.
+
+DISM /get-wiminfo /wimfile:E:\Win10\sources\install.wim</code></pre>
+
+
+
+<p>For more comprehensive instructions, refer to <a href="https://www.windowscentral.com/how-use-dism-command-line-utility-repair-windows-10-image">this</a> article.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Force Authoritative and Non-Authoritative DFSR Replication</title>
+		<link>https://jameswsullivan.github.io/force-authoritative-and-non-authoritative-dfsr-replication/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sat, 25 Sep 2021 01:17:22 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[System Administration]]></category>
+		<category><![CDATA[Windows Systems Administration]]></category>
+		<guid isPermaLink="false">https://www.alexchen.net/?p=2000</guid>
+
+					<description><![CDATA[NETLONGON and SYSVOL not shared and "The system cannot find the file specified." error when editing group policy.]]></description>
+										<content:encoded><![CDATA[
+<h2 class="wp-block-heading">Background:</h2>
+
+
+
+<p>After some migration work done on the Domain Controllers, I started to get the following errors on the new DC when editing group policies.</p>
 
 
 
 <ul>
-<li><a href="https://learn.microsoft.com/en-us/windows-server/get-started/kms-client-activation-keys">Key Management Services (KMS) client activation and product keys</a></li>
+<li>NETLONGON and SYSVOL are not shared.</li>
 
 
 
-<li><a href="https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-r2-and-2012/dn502540(v=ws.11)">Slmgr.vbs Options for Volume Activation</a></li>
-
-
-
-<li><a href="https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-r2-and-2012/dn502529(v=ws.11)">Volume Activation Technical Reference</a></li>
-
-
-
-<li><a href="https://learn.microsoft.com/en-us/previous-versions/tn-archive/ee939272(v=technet.10)">How to troubleshoot the Key Management Service (KMS)</a></li>
+<li>When editing a group policy object (which used to work just fine), the new DC now prompts a &#8220;The system cannot find the file specified.&#8221; error.</li>
 </ul>
 
 
 
-<p>Common Commands to use on clients:</p>
+<h2 class="wp-block-heading">Solution:</h2>
 
 
 
-<pre class="wp-block-code"><code># Example activating Windows Server 2022 Standard
-slmgr /upk
-slmgr /ipk VDYBN-27WPP-V4HQT-9VMD4-VMK7H
-slmgr /skms KMS_SERVER_IP_ADDR
-slmgr /ato
+<p>I haven&#8217;t come across this issue before but experience tells me that this might be something related to syncing/replication. After some research, I found <a href="https://docs.microsoft.com/en-US/troubleshoot/windows-server/group-policy/force-authoritative-non-authoritative-synchronization" data-type="URL" data-id="https://docs.microsoft.com/en-US/troubleshoot/windows-server/group-policy/force-authoritative-non-authoritative-synchronization" target="_blank" rel="noreferrer noopener">this Microsoft documentation</a> and <a href="https://www.youtube.com/watch?v=ja53C2Mz1EQ" data-type="URL" data-id="https://www.youtube.com/watch?v=ja53C2Mz1EQ" target="_blank" rel="noreferrer noopener">this YouTube video</a> that resolved my issue. </p>
 
-# Show current activation status.
-slmgr /dlv</code></pre>
+
+
+<pre class="wp-block-code"><code>1. Open adsiedit.msc, expand all the way to:
+
+OU=Domain Controllers --> CN=NameOfDC --> CN=DFSR-LocalSettings --> CN=Domain System Volume --> CN=SYSVOL Subscription
+
+2. Change <strong>the good one</strong> (here uses DC01 as an example)'s msDFSR-Enabled to False, and msDFSR-Options to 1. (Authoritative)
+
+3. Change <strong>the bad one</strong> (here uses DC02 as an example)'s msDFSR-Enabled to False, only. (You can repeat this step for all the other DCs that are not syncing correctly.) (Non-Authoritative)
+
+4. On DC01, run an elevated powershell window, run
+repadmin /syncall /AdeP
+stop-service dfsr
+
+5. Now hop on to DC02, run an elevated powershell window and run
+stop-service dfsr
+
+6. Now back on DC01, run
+start-service dfsr
+
+Now that in Event Viewer under Applications and Services Logs --> DFS Replication, you should find a 4114 event.
+
+7. Go back to ADSI Edit, change DC01's msDFSR-Enabled back to True.
+
+8. On DC01, in powershell, run
+repadmin /syncall /AdeP
+DFSRDIAG POLLAD
+
+In Event Viewer, a 4602 event should now be seen.
+
+9. Now go to DC02, run
+start-service dfsr
+
+10. Go back to ADSI Edit, change DC02's msDFSR-Enabled back to True.
+
+11. Still on DC02, run
+DFSRDIAG POLLAD</code></pre>
+
+
+
+<p>Depending on your environment, you might need to give it a bit time for the replication to finish, though for me the fix was instant.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Self-host Nextcloud &#8211; Part 3 &#8211; Performance</title>
+		<link>https://jameswsullivan.github.io/self-host-nextcloud-part-3-performance/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Mon, 20 Sep 2021 07:28:07 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Apache]]></category>
+		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[Linux]]></category>
+		<category><![CDATA[Nextcloud]]></category>
+		<category><![CDATA[Self-Hosting]]></category>
+		<category><![CDATA[System Administration]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+		<category><![CDATA[Web Hosting]]></category>
+		<guid isPermaLink="false">https://www.alexchen.net/?p=1633</guid>
+
+					<description><![CDATA[Nextcloud performance optimization.]]></description>
+										<content:encoded><![CDATA[
+<h2 class="wp-block-heading">Background:</h2>
+
+
+
+<p>After about two days&#8217; troubleshooting and and testing, Nextcloud is successfully running in my homelab. This article documents a few performance tweaking.</p>
+
+
+
+<h2 class="wp-block-heading">Issues:</h2>
+
+
+
+<ul>
+<li>504 Gateway Timeout when uploading larger files.</li>
+
+
+
+<li>Disable file locking.</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading">Solutions:</h2>
+
+
+
+<p>1. Modify PHP <code>max_input_time</code> and <code>max_execution_time</code> to get rid of the 504 Gateway Timeout error when uploading large files.</p>
+
+
+
+<pre class="wp-block-code"><code># Modify php.ini under /etc/php/8.0/fpm/ and /etc/php/8.0/apache2/
+max_input_time 86400
+max_execution_time 86400
+
+upload_max_filesize 50G
+post_max_size 50G
+
+# Restart PHP and Apache
+service apache2 restart
+service php8.0-fpm restart</code></pre>
+
+
+
+<p>2. Disable file locking.</p>
+
+
+
+<p>This might cause potential problems when you have multiple users collaborating on file editing/syncing, but in my single-user setup this was not a concern. I needed to do this when I was syncing some large files and the client froze, and after a force restart/resync, the Nextcloud client reported <code>423 Locked</code> errors to <code>PUT https://...../</code> .</p>
+
+
+
+<pre class="wp-block-code"><code># Add
+'filelocking.enabled' =&gt; false,
+# to nextcloud's config.php, and clear the locked files.
+
+# Add
+'maintenance' =&gt; true,
+# to config.php
+
+# Get into MariaDB and run the following
+DELETE FROM oc_file_locks WHERE 1;
+
+# Revert maintenance mode
+'maintenance' =&gt; false,
+
+# Restart PHP and Apache
+service apache2 restart
+service php8.0-fpm restart</code></pre>
+
+
+
+<h4 class="wp-block-heading">Overall performance.</h4>
+
+
+
+<p>Nextcloud&#8217;s overall syncing speed has a lot to do with your Nextcloud server&#8217;s performance, the more smooth your server runs the better syncing performance you&#8217;ll get (more RAM, use SSD instead of HDD, etc.). I was able to get roughly 25MB upload speed and 65MB download speed with a Hyper-V VM running Ubuntu Desktop.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>RDP CredSSP Error</title>
+		<link>https://jameswsullivan.github.io/rdp-credssp-error/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Thu, 20 Aug 2020 22:41:04 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Remote Desktop]]></category>
+		<category><![CDATA[System Administration]]></category>
+		<category><![CDATA[Windows Systems Administration]]></category>
+		<guid isPermaLink="false">https://www.alexchen.net/?p=941</guid>
+
+					<description><![CDATA[Fix RDP CredSSP Error.]]></description>
+										<content:encoded><![CDATA[
+<h2 class="wp-block-heading">Issue:</h2>
+
+
+
+<p>RDP Error:</p>
+
+
+
+<pre class="wp-block-code"><code>An authentication error has occured. The function requested is not supported. This could be due to CredSSP encryption oracle remediation. For more information, see https://go.microsoft.com/fwlink/?linkid=866660</code></pre>
+
+
+
+<h2 class="wp-block-heading">Workaround:</h2>
+
+
+
+<pre class="wp-block-code"><code>gpedit.msc - Computer Configuration - Administrative Templates - System - Credentials Delegation - change Encryption Oracle Remediation policy to Enabled, and Protection Level to Vulnerable.</code></pre>
+
+
+
+<h2 class="wp-block-heading">Permanent Solution:</h2>
+
+
+
+<p>Ensure both client &amp; server side have latest patch installed so that RDP can be established in a secure way. You can find the list of the corresponding KB number for each operating system here: https://portal.msrc.microsoft.com/en-us/security-guidance/advisory/CVE-2018-0886</p>
 ]]></content:encoded>
 					
 		

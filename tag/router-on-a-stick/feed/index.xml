@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/router-on-a-stick/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Sat, 05 Aug 2023 21:32:38 +0000</lastBuildDate>
+	<lastBuildDate>Fri, 29 Dec 2023 19:08:30 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -20,8 +20,8 @@
 	1	</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=6.4.2</generator>
 	<item>
-		<title>Configure VLAN and InterVLAN Routing on Cisco Router and Switch</title>
-		<link>https://jameswsullivan.github.io/configure-vlan-and-intervlan-routing-on-cisco-router-and-switch/</link>
+		<title>Network Administration: Configure VLAN and InterVLAN Routing</title>
+		<link>https://jameswsullivan.github.io/network-administration-configure-vlan-and-intervlan-routing/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Tue, 20 Jun 2023 15:25:19 +0000</pubDate>
@@ -33,11 +33,13 @@
 		<category><![CDATA[Network Administration]]></category>
 		<category><![CDATA[Networking]]></category>
 		<category><![CDATA[router-on-a-stick]]></category>
+		<category><![CDATA[SVI]]></category>
+		<category><![CDATA[Switch Virtual Interface]]></category>
 		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2574</guid>
 
 					<description><![CDATA[Configure VLAN and InterVLAN routing on Cisco router and switch using router-on-a-stick and SVI.]]></description>
 										<content:encoded><![CDATA[
-<h2 class="wp-block-heading">Environment &amp; Requirement</h2>
+<h2 class="wp-block-heading">Lab Environment:</h2>
 
 
 
@@ -134,7 +136,7 @@ C3750G(config-if)#exit</code></pre>
 
 
 
-<pre class="wp-block-code"><code># Configure GigabitEthernet 0/0 (connected to cable modem from ISP) to use DHCP.
+<pre class="wp-block-code"><code># Configure GigabitEthernet 0/0 (connected to ISP's device for internet access) to use DHCP.
 CISCO2951(config)#interface GigabitEthernet 0/0
 CISCO2951(config-if)#ip address dhcp
 CISCO2951(config-if)#ip nat outside
@@ -157,15 +159,16 @@ CISCO2951(config-if)#exit
 
 # Configure ACL and NAT.
 CISCO2951(config)#ip dns server
+CISCO2951(config)#ip name-server 1.1.1.1
 CISCO2951(config)#ip access-list extended NAT_ACL
-CISCO2951-K9(config-ext-nacl)#permit ip 192.168.0.0 0.255.255.255 any
+CISCO2951-K9(config-ext-nacl)#permit ip 192.168.0.0 0.0.0.255 any
 CISCO2951-K9(config-ext-nacl)#exit
 CISCO2951(config)#ip nat inside source list NAT_ACL interface GigabitEthernet0/0 overload
 
 # Enable routing and configure EIGRP (optional, depending on your configs)
 CISCO2951(config)#ip routing
 CISCO2951(config)#router eigrp 100
-CISCO2951(config-router)#network 192.168.0.0 0.255.255.255</code></pre>
+CISCO2951(config-router)#network 192.168.0.0 0.0.0.255</code></pre>
 
 
 
@@ -173,14 +176,20 @@ CISCO2951(config-router)#network 192.168.0.0 0.255.255.255</code></pre>
 
 
 
-<pre class="wp-block-code"><code># Enable routing.
+<pre class="wp-block-code"><code># Enable routing:
 C3750G(config)#ip routing
-# Disable "ip cef optimize neighbor resolution" to get rid of excessive warning/error logs.
-C3750G(config)#no ip cef optimize neighbor resolution
-C3750G(config)#no ip domain-lookup
+
+# Configure cef (Cisco Express Forwarding
+) for better performance:
+C3750G(config)#ip cef distributed
+C3750G(config)#ip cef optimize neighbor resolution
+
+#Configure DNS
+C3750G(config)#ip domain-lookup
+C3750G(config)#ip name-server 192.168.0.1
 
 # Enable spanning-tree protocol.
-C3750G(config)#spanning-tree mode pvst
+C3750G(config)#spanning-tree mode rapid-pvst
 
 # Configure VLANs
 C3750G(config)#vlan 10
@@ -210,14 +219,14 @@ C3750G(config)#ip route 0.0.0.0 0.0.0.0 GigabitEthernet 3/0/1
 
 # Assign ports to VLANs
 C3750G(config)#interface range GigabitEthernet 3/0/2 - 5
-C3750G(config-if-range)#switch port access vlan 10
+C3750G(config-if-range)#switchport access vlan 10
 C3750G(config-if-range)#switchport mode access
 C3750G(config-if-range)#speed 1000
 C3750G(config-if-range)#duplex full
 C3750G(config-if-range)#no shut
 
 C3750G(config)#interface range GigabitEthernet 3/0/6 - 12
-C3750G(config-if-range)#switch port access vlan 20
+C3750G(config-if-range)#switchport access vlan 20
 C3750G(config-if-range)#switchport mode access
 C3750G(config-if-range)#speed 1000
 C3750G(config-if-range)#duplex full
