@@ -12,16 +12,16 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/standard-notes/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Sat, 01 Apr 2023 02:10:35 +0000</lastBuildDate>
+	<lastBuildDate>Thu, 28 Dec 2023 21:28:58 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
 	<sy:updateFrequency>
 	1	</sy:updateFrequency>
-	<generator>https://wordpress.org/?v=6.4.1</generator>
+	<generator>https://wordpress.org/?v=6.4.2</generator>
 	<item>
-		<title>Set up Docker on Ubuntu Server</title>
-		<link>https://jameswsullivan.github.io/set-up-docker-on-ubuntu-server/</link>
+		<title>Linux Administration: Install Docker on Ubuntu Server</title>
+		<link>https://jameswsullivan.github.io/linux-administration-install-docker-on-ubuntu-server/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Tue, 21 Sep 2021 06:14:07 +0000</pubDate>
@@ -36,7 +36,25 @@
 
 					<description><![CDATA[Setting up Ubuntu Server, SSH, UFW, Nginx, and Docker.]]></description>
 										<content:encoded><![CDATA[
-<h2 class="wp-block-heading">Environment: Windows Server 2019, Hyper-V, Ubuntu Server 20.04.3 LTS.</h2>
+<h2 class="wp-block-heading">Environment:</h2>
+
+
+
+<ul>
+<li>Windows Server 2019</li>
+
+
+
+<li>Hyper-V</li>
+
+
+
+<li>Ubuntu Server 20.04.3 LTS.</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading">Configurations:</h2>
 
 
 
@@ -45,9 +63,9 @@
 
 
 <pre class="wp-block-code"><code># Install OpenSSH
-apt upgrade
-apt update
-apt install openssh-server
+apt update -y
+apt upgrade -y
+apt install openssh-server -y
 
 # Check SSH Status
 systemctl status ssh
@@ -127,8 +145,8 @@ DefaultTimeoutStopSec=15s</code></pre>
 apt remove docker docker-engine docker.io containerd runc
 
 # Install using the repository
-apt update
-apt install apt-transport-https ca-certificates curl gnupg lsb-release
+apt update -y
+apt install -y apt-transport-https ca-certificates curl gnupg lsb-release
 
 # Add Docker's official GPG key
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
@@ -140,8 +158,8 @@ $(lsb_release -cs) stable" \
 | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
 # Install Docker engine
-apt update
-apt install docker-ce docker-ce-cli containerd.io
+apt update -y
+apt install -y docker-ce docker-ce-cli containerd.io
 
 # Verify that Docker Engine is correctly installed
 docker version</code></pre>

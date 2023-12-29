@@ -12,16 +12,16 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/ssl/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Sat, 01 Apr 2023 01:57:59 +0000</lastBuildDate>
+	<lastBuildDate>Thu, 28 Dec 2023 21:17:30 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
 	<sy:updateFrequency>
 	1	</sy:updateFrequency>
-	<generator>https://wordpress.org/?v=6.4.1</generator>
+	<generator>https://wordpress.org/?v=6.4.2</generator>
 	<item>
-		<title>Self-signed SSL Certificate, Apache, and Nextcloud</title>
-		<link>https://jameswsullivan.github.io/self-signed-ssl-certificate-apache-and-nextcloud/</link>
+		<title>Self-host Nextcloud &#8211; Part 2 &#8211; Self-signed SSL Certificate</title>
+		<link>https://jameswsullivan.github.io/self-host-nextcloud-part-2-self-signed-ssl-certificate/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sun, 19 Sep 2021 20:58:07 +0000</pubDate>
@@ -38,7 +38,11 @@
 
 					<description><![CDATA[Perfecting SSL configuration on Nextcloud server.]]></description>
 										<content:encoded><![CDATA[
-<p>In my last blog post about bringing up a self-hosted Nextcloud setup, everything went well until it reached the SSL cert and configuration part. The instructions I found were all somehow missing some pieces or doing things a little bit differently than what I had expected, plus my own lack of in-depth understanding of SSL, I finally had my issues resolved with the help of these resources: <a rel="noreferrer noopener" href="https://stackoverflow.com/questions/46349459/chrome-neterr-cert-authority-invalid-error-on-self-signing-certificate-at-loca?rq=1" data-type="URL" data-id="https://stackoverflow.com/questions/46349459/chrome-neterr-cert-authority-invalid-error-on-self-signing-certificate-at-loca?rq=1" target="_blank">article 1</a>, <a rel="noreferrer noopener" href="https://alexanderzeitler.com/articles/Fixing-Chrome-missing_subjectAltName-selfsigned-cert-openssl/" data-type="URL" data-id="https://alexanderzeitler.com/articles/Fixing-Chrome-missing_subjectAltName-selfsigned-cert-openssl/" target="_blank">article 2</a>, <a rel="noreferrer noopener" href="https://superuser.com/questions/1631692/why-is-chrome-not-trusting-imported-self-signed-root-ca" data-type="URL" data-id="https://superuser.com/questions/1631692/why-is-chrome-not-trusting-imported-self-signed-root-ca" target="_blank">article 3</a>, <a rel="noreferrer noopener" href="https://www.youtube.com/watch?v=e8vMTlobW3c" data-type="URL" data-id="https://www.youtube.com/watch?v=e8vMTlobW3c" target="_blank">video</a>.</p>
+<h2 class="wp-block-heading">Background:</h2>
+
+
+
+<p>In <a href="https://jameswsullivan.github.io/self-host-nextcloud-part-1-installation/">Part 1 of the Nextcloud series</a> we&#8217;ve discussed how to bring up a self-hosted Nextcloud instance. In this article I&#8217;d like to discuss the SSL troubleshooting process. Reference articles: <a href="https://stackoverflow.com/questions/46349459/chrome-neterr-cert-authority-invalid-error-on-self-signing-certificate-at-loca?rq=1" data-type="URL" data-id="https://stackoverflow.com/questions/46349459/chrome-neterr-cert-authority-invalid-error-on-self-signing-certificate-at-loca?rq=1" target="_blank" rel="noreferrer noopener">article 1</a>, <a href="https://alexanderzeitler.com/articles/Fixing-Chrome-missing_subjectAltName-selfsigned-cert-openssl/" data-type="URL" data-id="https://alexanderzeitler.com/articles/Fixing-Chrome-missing_subjectAltName-selfsigned-cert-openssl/" target="_blank" rel="noreferrer noopener">article 2</a>, <a href="https://superuser.com/questions/1631692/why-is-chrome-not-trusting-imported-self-signed-root-ca" data-type="URL" data-id="https://superuser.com/questions/1631692/why-is-chrome-not-trusting-imported-self-signed-root-ca" target="_blank" rel="noreferrer noopener">article 3</a>, <a href="https://www.youtube.com/watch?v=e8vMTlobW3c" data-type="URL" data-id="https://www.youtube.com/watch?v=e8vMTlobW3c" target="_blank" rel="noreferrer noopener">video</a>.</p>
 
 
 
@@ -139,23 +143,31 @@ SSLCertificateKeyFile Your-Cert-Key-File-Path</code></pre>
 
 
 
-<p>5. Explanation about the &#8220;NET::ERR_CERT_AUTHORITY_INVALID&#8221; and &#8220;NET::ERR_CERT_COMMON_NAME_INVALID&#8221; errors.</p>
+<h2 class="wp-block-heading">Explanation about the certificate errors:</h2>
 
 
 
-<p>&#8220;NET::ERR_CERT_AUTHORITY_INVALID&#8221; is due to how the certs were generated, when using <a rel="noreferrer noopener" href="https://betterprogramming.pub/how-to-create-trusted-ssl-certificates-for-your-local-development-13fd5aad29c6" data-type="URL" data-id="https://betterprogramming.pub/how-to-create-trusted-ssl-certificates-for-your-local-development-13fd5aad29c6" target="_blank">this method</a> to generate, I always got the error, but after I switched to the method written in #1 and the certs were properly imported, this error was gone.</p>
+<p>&#8220;NET::ERR_CERT_AUTHORITY_INVALID&#8221;</p>
 
 
 
-<p>&#8220;NET::ERR_CERT_COMMON_NAME_INVALID&#8221; . Assuming you already put in the Common Name (which is your FQDN, e.g. nextcloud.mydomain.com) correctly when generating the certs and it still gave this error, check the @alt_names section above, make sure all the DNS.x and IP.x entries cover all your alt_name variants. Once I added stuff under the alt_names section correctly (for me it&#8217;s &#8220;localhost&#8221;, my server&#8217;s IP, and the &#8220;subdomain&#8221; URL I&#8217;d like to use in my own environment), the error was gone.</p>
+<p>This is due to how the certs were generated, when using <a href="https://betterprogramming.pub/how-to-create-trusted-ssl-certificates-for-your-local-development-13fd5aad29c6" data-type="URL" data-id="https://betterprogramming.pub/how-to-create-trusted-ssl-certificates-for-your-local-development-13fd5aad29c6" target="_blank" rel="noreferrer noopener">this method</a> to generate, I always got the error, but after I switched to the method written in step #1 and the certs were properly imported, this error was gone.</p>
 
 
 
-<p>6. Other issues and thoughts that emerged during the troubleshooting process.</p>
+<p>&#8220;NET::ERR_CERT_COMMON_NAME_INVALID&#8221;</p>
 
 
 
-<ol>
+<p>Assuming you already put in the Common Name (which is your FQDN, e.g. nextcloud.mydomain.com) correctly when generating the certs and it still gave this error, check the <code>alt_names</code> section above, make sure all the DNS.x and IP.x entries cover all your <code>alt_name</code> variants. Once I configured all the stuff under the <code>alt_names</code> section correctly (for me it&#8217;s &#8220;localhost&#8221;, my server&#8217;s IP, and the &#8220;subdomain&#8221; URL I&#8217;m using), the error was gone.</p>
+
+
+
+<h2 class="wp-block-heading">Other:</h2>
+
+
+
+<ul>
 <li>Some mentioned that Chrome versions played a role in accepting self-signed certs. But my issues were resolved without dealing with Chrome versions.</li>
 
 
@@ -164,38 +176,12 @@ SSLCertificateKeyFile Your-Cert-Key-File-Path</code></pre>
 
 
 
-<li>Some articles say that self-signed certs won&#8217;t be deemed secure and valid by browsers/OSs/Chrome, which is not true if the certs are generated imported and generated correctly.</li>
-</ol>
+<li>Some articles say that self-signed certs won&#8217;t be deemed secure and valid by browsers/OSs/Chrome, which is not true if the certs are generated and imported correctly.</li>
 
 
 
-<p>7. Security hardening &#8211; forcing HTTPS, Strict-Transport-Security, and URL redirections. See <a href="https://github.com/jameswsullivan/blog-file-share/blob/main/sample.nextcloud.conf" data-type="URL" data-id="https://drive.google.com/file/d/1QQRGrROpZhrnDc-ET8mDUfj2EjtHzAnK/view?usp=sharing" target="_blank" rel="noreferrer noopener">sample.nextcloud.conf</a> and its comments for details.</p>
-
-
-
-<p>8. Apache&#8217;s SSL config files, which to use?</p>
-
-
-
-<p>Assuming your installation is very similar to mine, you&#8217;d now have 3 files under /etc/apache2/sites-available : 000-default.conf, default-ssl.conf, and nextcloud.conf . </p>
-
-
-
-<ul>
-<li>000-default.conf is a template for you to start with, not a live file to use.</li>
-
-
-
-<li>default-ssl.conf is the default Apache SSL config file.</li>
-
-
-
-<li>nextcloud.conf is the config file for Nextcloud.</li>
+<li>Security hardening &#8211; forcing HTTPS, Strict-Transport-Security, and URL redirections. See <a href="https://github.com/jameswsullivan/blog-file-share/blob/main/sample.nextcloud.conf" data-type="URL" data-id="https://drive.google.com/file/d/1QQRGrROpZhrnDc-ET8mDUfj2EjtHzAnK/view?usp=sharing" target="_blank" rel="noreferrer noopener">sample.nextcloud.conf</a> and its comments for details.</li>
 </ul>
-
-
-
-<p>You can choose either to use default-ssl.conf or nextcloud.conf, or a combination of both and use them for different purposes. I disabled default-ssl.conf by renaming it to default-ssl.conf.bak, and left nextcloud.conf active which has all my configs.</p>
 ]]></content:encoded>
 					
 		

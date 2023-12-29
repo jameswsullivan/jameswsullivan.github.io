@@ -1,167 +1,23 @@
-<?xml version='1.0' encoding='UTF-8'?><?xml-stylesheet type='text/xsl' href='https://jameswsullivan.github.io/wp-content/plugins/google-sitemap-generator/sitemap.xsl'?><!-- sitemap-generator-url='http://www.arnebrachhold.de/' sitemap-generator-version='4.1.13' -->
-<!-- generated-on='2023-11-22 01:22' -->
+<?xml version='1.0' encoding='UTF-8'?><?xml-stylesheet type='text/xsl' href='https://jameswsullivan.github.io/wp-content/plugins/google-sitemap-generator/sitemap.xsl'?><!-- sitemap-generator-url='http://www.arnebrachhold.de/' sitemap-generator-version='4.1.16' -->
+<!-- generated-on='2023-12-28 23:34' -->
 <sitemapindex xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/siteindex.xsd' xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>	<sitemap>
 		<loc>https://jameswsullivan.github.io/sitemap-misc.xml</loc>
-		<lastmod>2023-11-22T01:22:27+00:00</lastmod>
+		<lastmod>2023-12-28T23:33:22+00:00</lastmod>
 	</sitemap>
 	<sitemap>
-		<loc>https://jameswsullivan.github.io/sitemap-tax-post_tag-1.xml</loc>
-		<lastmod>2023-11-22T01:22:27+00:00</lastmod>
+		<loc>https://jameswsullivan.github.io/post_tag-sitemap.xml</loc>
+		<lastmod>2023-12-28T23:33:22+00:00</lastmod>
 	</sitemap>
 	<sitemap>
-		<loc>https://jameswsullivan.github.io/sitemap-tax-post_tag-2.xml</loc>
-		<lastmod>2023-11-22T01:22:27+00:00</lastmod>
+		<loc>https://jameswsullivan.github.io/category-sitemap.xml</loc>
+		<lastmod>2023-12-28T23:33:22+00:00</lastmod>
 	</sitemap>
 	<sitemap>
-		<loc>https://jameswsullivan.github.io/sitemap-tax-post_tag-3.xml</loc>
-		<lastmod>2023-11-22T01:22:27+00:00</lastmod>
+		<loc>https://jameswsullivan.github.io/post-sitemap.xml</loc>
+		<lastmod>2023-12-28T23:33:22+00:00</lastmod>
 	</sitemap>
 	<sitemap>
-		<loc>https://jameswsullivan.github.io/sitemap-tax-post_tag-4.xml</loc>
-		<lastmod>2023-11-22T01:22:27+00:00</lastmod>
+		<loc>https://jameswsullivan.github.io/archives-sitemap.xml</loc>
+		<lastmod>2023-12-28T23:33:22+00:00</lastmod>
 	</sitemap>
-	<sitemap>
-		<loc>https://jameswsullivan.github.io/sitemap-tax-post_tag-5.xml</loc>
-		<lastmod>2023-11-22T01:22:27+00:00</lastmod>
-	</sitemap>
-	<sitemap>
-		<loc>https://jameswsullivan.github.io/sitemap-tax-post_tag-6.xml</loc>
-		<lastmod>2023-11-22T01:22:27+00:00</lastmod>
-	</sitemap>
-	<sitemap>
-		<loc>https://jameswsullivan.github.io/sitemap-tax-post_tag-7.xml</loc>
-		<lastmod>2023-11-22T01:22:27+00:00</lastmod>
-	</sitemap>
-	<sitemap>
-		<loc>https://jameswsullivan.github.io/sitemap-tax-post_tag-8.xml</loc>
-		<lastmod>2023-11-22T01:22:27+00:00</lastmod>
-	</sitemap>
-	<sitemap>
-		<loc>https://jameswsullivan.github.io/sitemap-tax-post_tag-9.xml</loc>
-		<lastmod>2023-11-22T01:22:27+00:00</lastmod>
-	</sitemap>
-	<sitemap>
-		<loc>https://jameswsullivan.github.io/sitemap-tax-post_tag-10.xml</loc>
-		<lastmod>2023-11-22T01:22:27+00:00</lastmod>
-	</sitemap>
-	<sitemap>
-		<loc>https://jameswsullivan.github.io/sitemap-tax-post_tag-11.xml</loc>
-		<lastmod>2023-11-22T01:22:27+00:00</lastmod>
-	</sitemap>
-	<sitemap>
-		<loc>https://jameswsullivan.github.io/sitemap-tax-post_tag-12.xml</loc>
-		<lastmod>2023-11-22T01:22:27+00:00</lastmod>
-	</sitemap>
-	<sitemap>
-		<loc>https://jameswsullivan.github.io/sitemap-tax-category-1.xml</loc>
-		<lastmod>2023-11-22T01:22:27+00:00</lastmod>
-	</sitemap>
-	<sitemap>
-		<loc>https://jameswsullivan.github.io/sitemap-pt-post-p1-2023-11.xml</loc>
-		<lastmod>2023-11-22T01:22:27+00:00</lastmod>
-	</sitemap>
-	<sitemap>
-		<loc>https://jameswsullivan.github.io/sitemap-pt-post-p1-2023-10.xml</loc>
-		<lastmod>2023-10-03T19:14:45+00:00</lastmod>
-	</sitemap>
-	<sitemap>
-		<loc>https://jameswsullivan.github.io/sitemap-pt-post-p1-2023-08.xml</loc>
-		<lastmod>2023-10-02T03:35:20+00:00</lastmod>
-	</sitemap>
-	<sitemap>
-		<loc>https://jameswsullivan.github.io/sitemap-pt-post-p1-2023-07.xml</loc>
-		<lastmod>2023-07-16T21:12:23+00:00</lastmod>
-	</sitemap>
-	<sitemap>
-		<loc>https://jameswsullivan.github.io/sitemap-pt-post-p1-2023-06.xml</loc>
-		<lastmod>2023-08-05T21:32:44+00:00</lastmod>
-	</sitemap>
-	<sitemap>
-		<loc>https://jameswsullivan.github.io/sitemap-pt-post-p1-2023-05.xml</loc>
-		<lastmod>2023-08-05T21:33:13+00:00</lastmod>
-	</sitemap>
-	<sitemap>
-		<loc>https://jameswsullivan.github.io/sitemap-pt-post-p1-2023-04.xml</loc>
-		<lastmod>2023-08-05T21:33:17+00:00</lastmod>
-	</sitemap>
-	<sitemap>
-		<loc>https://jameswsullivan.github.io/sitemap-pt-post-p1-2023-03.xml</loc>
-		<lastmod>2023-08-05T21:33:41+00:00</lastmod>
-	</sitemap>
-	<sitemap>
-		<loc>https://jameswsullivan.github.io/sitemap-pt-post-p1-2023-02.xml</loc>
-		<lastmod>2023-05-21T22:18:24+00:00</lastmod>
-	</sitemap>
-	<sitemap>
-		<loc>https://jameswsullivan.github.io/sitemap-pt-post-p1-2022-03.xml</loc>
-		<lastmod>2023-04-03T03:46:04+00:00</lastmod>
-	</sitemap>
-	<sitemap>
-		<loc>https://jameswsullivan.github.io/sitemap-pt-post-p1-2021-10.xml</loc>
-		<lastmod>2023-04-14T02:49:34+00:00</lastmod>
-	</sitemap>
-	<sitemap>
-		<loc>https://jameswsullivan.github.io/sitemap-pt-post-p1-2021-09.xml</loc>
-		<lastmod>2023-08-06T18:34:11+00:00</lastmod>
-	</sitemap>
-	<sitemap>
-		<loc>https://jameswsullivan.github.io/sitemap-pt-post-p1-2020-08.xml</loc>
-		<lastmod>2023-04-13T01:09:42+00:00</lastmod>
-	</sitemap>
-	<sitemap>
-		<loc>https://jameswsullivan.github.io/sitemap-pt-post-p1-2020-07.xml</loc>
-		<lastmod>2023-08-05T21:33:53+00:00</lastmod>
-	</sitemap>
-	<sitemap>
-		<loc>https://jameswsullivan.github.io/sitemap-pt-post-p1-2020-06.xml</loc>
-		<lastmod>2023-04-03T03:26:52+00:00</lastmod>
-	</sitemap>
-	<sitemap>
-		<loc>https://jameswsullivan.github.io/sitemap-pt-post-p1-2012-01.xml</loc>
-		<lastmod>2023-08-01T20:18:22+00:00</lastmod>
-	</sitemap>
-	<sitemap>
-		<loc>https://jameswsullivan.github.io/sitemap-pt-post-p1-2011-03.xml</loc>
-		<lastmod>2023-08-01T20:08:59+00:00</lastmod>
-	</sitemap>
-	<sitemap>
-		<loc>https://jameswsullivan.github.io/sitemap-pt-post-p1-2010-08.xml</loc>
-		<lastmod>2023-08-22T15:46:02+00:00</lastmod>
-	</sitemap>
-	<sitemap>
-		<loc>https://jameswsullivan.github.io/sitemap-pt-post-p1-2010-06.xml</loc>
-		<lastmod>2023-07-05T00:43:30+00:00</lastmod>
-	</sitemap>
-	<sitemap>
-		<loc>https://jameswsullivan.github.io/sitemap-pt-post-p1-2010-02.xml</loc>
-		<lastmod>2023-03-27T02:52:06+00:00</lastmod>
-	</sitemap>
-	<sitemap>
-		<loc>https://jameswsullivan.github.io/sitemap-pt-post-p1-2009-11.xml</loc>
-		<lastmod>2023-08-01T20:44:12+00:00</lastmod>
-	</sitemap>
-	<sitemap>
-		<loc>https://jameswsullivan.github.io/sitemap-pt-post-p1-2009-08.xml</loc>
-		<lastmod>2023-06-18T14:37:27+00:00</lastmod>
-	</sitemap>
-	<sitemap>
-		<loc>https://jameswsullivan.github.io/sitemap-pt-post-p1-2009-07.xml</loc>
-		<lastmod>2023-08-05T21:31:27+00:00</lastmod>
-	</sitemap>
-	<sitemap>
-		<loc>https://jameswsullivan.github.io/sitemap-pt-post-p1-2009-05.xml</loc>
-		<lastmod>2023-05-07T21:03:16+00:00</lastmod>
-	</sitemap>
-	<sitemap>
-		<loc>https://jameswsullivan.github.io/sitemap-pt-post-p1-2009-04.xml</loc>
-		<lastmod>2023-06-18T14:43:26+00:00</lastmod>
-	</sitemap>
-	<sitemap>
-		<loc>https://jameswsullivan.github.io/sitemap-pt-post-p1-2008-11.xml</loc>
-		<lastmod>2023-06-20T17:01:42+00:00</lastmod>
-	</sitemap>
-	<sitemap>
-		<loc>https://jameswsullivan.github.io/sitemap-archives.xml</loc>
-		<lastmod>2023-11-22T01:22:27+00:00</lastmod>
-	</sitemap>
-</sitemapindex><!-- Request ID: 194c77ea70ce6fb9e57aacce386d9777; Queries for sitemap: 10; Total queries: 24; Seconds: $end_time; Memory for sitemap: 0MB; Total memory: 4MB -->
+</sitemapindex><!-- Request ID: 1b1e795249ff8ac90a2b535a3b577c4b; Queries for sitemap: 10; Total queries: 24; Seconds: $end_time; Memory for sitemap: 0MB; Total memory: 4MB -->

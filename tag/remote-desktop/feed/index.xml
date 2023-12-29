@@ -12,13 +12,13 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/remote-desktop/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Thu, 13 Apr 2023 01:09:42 +0000</lastBuildDate>
+	<lastBuildDate>Thu, 28 Dec 2023 20:05:33 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
 	<sy:updateFrequency>
 	1	</sy:updateFrequency>
-	<generator>https://wordpress.org/?v=6.4.1</generator>
+	<generator>https://wordpress.org/?v=6.4.2</generator>
 	<item>
 		<title>RDP CredSSP Error</title>
 		<link>https://jameswsullivan.github.io/rdp-credssp-error/</link>
@@ -33,7 +33,11 @@
 
 					<description><![CDATA[Fix RDP CredSSP Error.]]></description>
 										<content:encoded><![CDATA[
-<p>This blog documents how to fix the following RDP Error:</p>
+<h2 class="wp-block-heading">Issue:</h2>
+
+
+
+<p>RDP Error:</p>
 
 
 

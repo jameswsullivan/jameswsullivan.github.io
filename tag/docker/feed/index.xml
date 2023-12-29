@@ -12,13 +12,13 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/docker/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Mon, 02 Oct 2023 03:35:20 +0000</lastBuildDate>
+	<lastBuildDate>Thu, 28 Dec 2023 23:33:22 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
 	<sy:updateFrequency>
 	1	</sy:updateFrequency>
-	<generator>https://wordpress.org/?v=6.4.1</generator>
+	<generator>https://wordpress.org/?v=6.4.2</generator>
 	<item>
 		<title>Expand LVM in Ubuntu (22.04 LTS)</title>
 		<link>https://jameswsullivan.github.io/expand-lvm-in-ubuntu-22-04-lts/</link>
@@ -1109,8 +1109,8 @@ docker exec -it MySQL mysql --local-infile=1 -u root -p
 		
 			</item>
 		<item>
-		<title>Troubleshooting Apache Web Server and Name-based Virtual Hosting</title>
-		<link>https://jameswsullivan.github.io/troubleshooting-apache-web-server-and-name-based-virtual-hosting/</link>
+		<title>Linux Administration: Troubleshooting Apache Web Server and Name-based Virtual Hosting with WordPress</title>
+		<link>https://jameswsullivan.github.io/linux-administration-troubleshooting-apache-web-server-and-name-based-virtual-hosting-with-wordpress/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sat, 25 Mar 2023 23:26:42 +0000</pubDate>
@@ -1126,15 +1126,11 @@ docker exec -it MySQL mysql --local-infile=1 -u root -p
 
 					<description><![CDATA[This troubleshooting note wraps up the Name-based Virtual Hosting Series.]]></description>
 										<content:encoded><![CDATA[
-<p>During the process of setting up name-based virtual hosting with Apache, I ran into a few issues with the WordPress container, this post documents the steps taken to address them.</p>
-
-
-
 <h2 class="wp-block-heading">Background:</h2>
 
 
 
-<p>I use the locally hosted WordPress site to write documentation and blog posts and then use Simply Static to convert and get it ready for GitHub Pages. During the process I ran into the following issues:</p>
+<p>I use a locally hosted WordPress site draft my GitHub pages articles and then convert to static pages using Simply Static. During the process I ran into the following issues with WordPress:</p>
 
 
 
@@ -1172,22 +1168,30 @@ docker exec -it MySQL mysql --local-infile=1 -u root -p
 
 
 
+<p>Related article: <a href="https://jameswsullivan.github.io/linux-administration-configure-apache-web-server-and-name-based-virtual-hosting/">Linux Administration: Configure Apache Web Server and Name-based Virtual Hosting</a></p>
+
+
+
+<h2 class="wp-block-heading">Solutions:</h2>
+
+
+
 <h2 class="wp-block-heading">Issue 1: Updating failed. The response is not a valid JSON response.</h2>
 
 
 
-<p>I get this error only after I&#8217;ve set the <strong>Permalinks</strong> setting to anything else other than the default <strong>Plain</strong> setting. When <strong>Permalinks</strong> is not set to <strong>Plain</strong>, the URLs need to be rewritten, and that&#8217;s when this error will occur. In my case, it turned out to be that I forgot to add the &lt;Directory&gt; tag in the virtual host configuration file. As you can see in <a href="https://jameswsullivan.github.io/configure-apache-web-server-and-name-based-virtual-hosting-with-ubuntu/">this post</a>, my configuration file looks like this:</p>
+<p>I started getting this error only after setting the <strong>Permalinks</strong> setting to anything else other than the default setting <strong>Plain</strong>. When <strong>Permalinks</strong> is not set to <strong>Plain</strong>, the URLs need to be rewritten, and that&#8217;s when this error occurs. It turned out to be that I forgot to add the &lt;Directory> tag in the virtual host configuration file. As you can see in <a href="https://jameswsullivan.github.io/linux-administration-configure-apache-web-server-and-name-based-virtual-hosting/">this post</a>, my original configuration file looks like this:</p>
 
 
 
-<pre class="wp-block-code"><code>&lt;VirtualHost *:80&gt;
-    ServerAdmin webmaster@example1.mydomain
-    ServerName example1.mydomain
-    DocumentRoot /var/www/html/example1.mydomain
+<pre class="wp-block-code"><code>&lt;VirtualHost *:80>
+    ServerAdmin webmaster@example1.mydomain.com
+    ServerName example1.mydomain.com
+    DocumentRoot /var/www/html/example1.mydomain.com
     DirectoryIndex index.php
-    ErrorLog ${APACHE_LOG_DIR}/example1.mydomain_error.log
-    CustomLog ${APACHE_LOG_DIR}/example1.mydomain_access.log combined
-&lt;/VirtualHost&gt;</code></pre>
+    ErrorLog ${APACHE_LOG_DIR}/example1.mydomain.com_error.log
+    CustomLog ${APACHE_LOG_DIR}/example1.mydomain.com_access.log combined
+&lt;/VirtualHost></code></pre>
 
 
 
@@ -1195,21 +1199,21 @@ docker exec -it MySQL mysql --local-infile=1 -u root -p
 
 
 
-<pre class="wp-block-code"><code>&lt;VirtualHost *:80&gt;
-    ServerAdmin webmaster@example1.mydomain
-    ServerName example1.mydomain
-    DocumentRoot /var/www/html/example1.mydomain
+<pre class="wp-block-code"><code>&lt;VirtualHost *:80>
+    ServerAdmin webmaster@example1.mydomain.com
+    ServerName example1.mydomain.com
+    DocumentRoot /var/www/html/example1.mydomain.com
 
-        &lt;Directory /var/www/html/example1.mydomain&gt;
+        &lt;Directory /var/www/html/example1.mydomain.com>
                 Options Indexes FollowSymLinks
                 AllowOverride All
                 Require all granted
                 DirectoryIndex index.php
-        &lt;/Directory&gt;
+        &lt;/Directory>
 
-    ErrorLog ${APACHE_LOG_DIR}/example1.mydomain_error.log
-    CustomLog ${APACHE_LOG_DIR}/example1.mydomain_access.log combined
-&lt;/VirtualHost&gt;</code></pre>
+    ErrorLog ${APACHE_LOG_DIR}/example1.mydomain.com_error.log
+    CustomLog ${APACHE_LOG_DIR}/example1.mydomain.com_access.log combined
+&lt;/VirtualHost></code></pre>
 
 
 
@@ -1221,17 +1225,18 @@ docker exec -it MySQL mysql --local-infile=1 -u root -p
 
 
 
-<p><strong>The required module, gd, is not installed, or has been disabled.</strong></p>
+<p><strong>1. The required module, gd, is not installed, or has been disabled.</strong></p>
 
 
 
 <pre class="wp-block-code"><code># Install the php8.1-gd module
+
 apt-get install php8.1-gd -y
 service apache2 restart</code></pre>
 
 
 
-<p><strong>The REST API encountered an error.</strong></p>
+<p><strong>2. The REST API encountered an error.</strong></p>
 
 
 
@@ -1239,8 +1244,8 @@ service apache2 restart</code></pre>
 
 When testing the REST API, an error was encountered:
 
-REST API Endpoint: http://example1.mydomain/wp-json/wp/v2/types/post?context=edit
-REST API Response: (http_request_failed) cURL error 6: Could not resolve host: example1.mydomain</code></pre>
+REST API Endpoint: http://example1.mydomain.com/wp-json/wp/v2/types/post?context=edit
+REST API Response: (http_request_failed) cURL error 6: Could not resolve host: example1.mydomain.com</code></pre>
 
 
 
@@ -1252,12 +1257,12 @@ REST API Response: (http_request_failed) cURL error 6: Could not resolve host: e
 
 When testing the REST API, an unexpected result was returned:
 
-REST API Endpoint: http://example1.mydomain/wp-json/wp/v2/types/post?context=edit
+REST API Endpoint: http://example1.mydomain.com/wp-json/wp/v2/types/post?context=edit
 REST API Response: (404) Not Found</code></pre>
 
 
 
-<p><strong>Your site could not complete a loopback request.</strong></p>
+<p><strong>3. Your site could not complete a loopback request.</strong></p>
 
 
 
@@ -1268,7 +1273,7 @@ Error: cURL error 6: Could not resolve host: example1.mydomain (http_request_fai
 
 
 
-<p>Edit the <strong>/etc/hosts</strong> file:</p>
+<p><strong>To resolve issues 2 and 3, edit the /etc/hosts file:</strong></p>
 
 
 
@@ -1282,24 +1287,30 @@ Error: cURL error 6: Could not resolve host: example1.mydomain (http_request_fai
 
 
 
-<pre class="wp-block-code"><code>apt-get install php8.1-curl curl -y
+<pre class="wp-block-code"><code># Install curl:
+
+apt-get install php8.1-curl curl -y
 
 # Verify curl version:
+
 curl --version
 
 # Verify curl is enabled in php.ini
+
 nano /etc/php/8.1/apache2/php.ini
 
 # Uncomment this line:
+
 extension=curl
 
 # Enable the rewrite module.
+
 a2enmod rewrite
 service restart apache2</code></pre>
 
 
 
-<p>Adding this entry in <strong>/etc/hosts</strong> file also resolves Simply Static&#8217;s <em>&#8220;Checking if WordPress can make requests to itself from your_IP&#8221;</em> FAIL issue.</p>
+<p>This also resolves Simply Static&#8217;s <code><em>"Checking if WordPress can make requests to itself from your_IP"</em> FAIL</code> issue.</p>
 ]]></content:encoded>
 					
 		

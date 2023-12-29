@@ -12,13 +12,13 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/ubuntu/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Mon, 02 Oct 2023 03:35:20 +0000</lastBuildDate>
+	<lastBuildDate>Thu, 28 Dec 2023 23:33:22 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
 	<sy:updateFrequency>
 	1	</sy:updateFrequency>
-	<generator>https://wordpress.org/?v=6.4.1</generator>
+	<generator>https://wordpress.org/?v=6.4.2</generator>
 	<item>
 		<title>Expand LVM in Ubuntu (22.04 LTS)</title>
 		<link>https://jameswsullivan.github.io/expand-lvm-in-ubuntu-22-04-lts/</link>
@@ -692,8 +692,8 @@ UUID="dcd8c5ac-db76-435e-ab3c-48570190c7d8" /mnt/my_folder ext4 defaults 0 1
 		
 			</item>
 		<item>
-		<title>Troubleshooting Apache Web Server and Name-based Virtual Hosting</title>
-		<link>https://jameswsullivan.github.io/troubleshooting-apache-web-server-and-name-based-virtual-hosting/</link>
+		<title>Linux Administration: Troubleshooting Apache Web Server and Name-based Virtual Hosting with WordPress</title>
+		<link>https://jameswsullivan.github.io/linux-administration-troubleshooting-apache-web-server-and-name-based-virtual-hosting-with-wordpress/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sat, 25 Mar 2023 23:26:42 +0000</pubDate>
@@ -709,15 +709,11 @@ UUID="dcd8c5ac-db76-435e-ab3c-48570190c7d8" /mnt/my_folder ext4 defaults 0 1
 
 					<description><![CDATA[This troubleshooting note wraps up the Name-based Virtual Hosting Series.]]></description>
 										<content:encoded><![CDATA[
-<p>During the process of setting up name-based virtual hosting with Apache, I ran into a few issues with the WordPress container, this post documents the steps taken to address them.</p>
-
-
-
 <h2 class="wp-block-heading">Background:</h2>
 
 
 
-<p>I use the locally hosted WordPress site to write documentation and blog posts and then use Simply Static to convert and get it ready for GitHub Pages. During the process I ran into the following issues:</p>
+<p>I use a locally hosted WordPress site draft my GitHub pages articles and then convert to static pages using Simply Static. During the process I ran into the following issues with WordPress:</p>
 
 
 
@@ -755,22 +751,30 @@ UUID="dcd8c5ac-db76-435e-ab3c-48570190c7d8" /mnt/my_folder ext4 defaults 0 1
 
 
 
+<p>Related article: <a href="https://jameswsullivan.github.io/linux-administration-configure-apache-web-server-and-name-based-virtual-hosting/">Linux Administration: Configure Apache Web Server and Name-based Virtual Hosting</a></p>
+
+
+
+<h2 class="wp-block-heading">Solutions:</h2>
+
+
+
 <h2 class="wp-block-heading">Issue 1: Updating failed. The response is not a valid JSON response.</h2>
 
 
 
-<p>I get this error only after I&#8217;ve set the <strong>Permalinks</strong> setting to anything else other than the default <strong>Plain</strong> setting. When <strong>Permalinks</strong> is not set to <strong>Plain</strong>, the URLs need to be rewritten, and that&#8217;s when this error will occur. In my case, it turned out to be that I forgot to add the &lt;Directory&gt; tag in the virtual host configuration file. As you can see in <a href="https://jameswsullivan.github.io/configure-apache-web-server-and-name-based-virtual-hosting-with-ubuntu/">this post</a>, my configuration file looks like this:</p>
+<p>I started getting this error only after setting the <strong>Permalinks</strong> setting to anything else other than the default setting <strong>Plain</strong>. When <strong>Permalinks</strong> is not set to <strong>Plain</strong>, the URLs need to be rewritten, and that&#8217;s when this error occurs. It turned out to be that I forgot to add the &lt;Directory> tag in the virtual host configuration file. As you can see in <a href="https://jameswsullivan.github.io/linux-administration-configure-apache-web-server-and-name-based-virtual-hosting/">this post</a>, my original configuration file looks like this:</p>
 
 
 
-<pre class="wp-block-code"><code>&lt;VirtualHost *:80&gt;
-    ServerAdmin webmaster@example1.mydomain
-    ServerName example1.mydomain
-    DocumentRoot /var/www/html/example1.mydomain
+<pre class="wp-block-code"><code>&lt;VirtualHost *:80>
+    ServerAdmin webmaster@example1.mydomain.com
+    ServerName example1.mydomain.com
+    DocumentRoot /var/www/html/example1.mydomain.com
     DirectoryIndex index.php
-    ErrorLog ${APACHE_LOG_DIR}/example1.mydomain_error.log
-    CustomLog ${APACHE_LOG_DIR}/example1.mydomain_access.log combined
-&lt;/VirtualHost&gt;</code></pre>
+    ErrorLog ${APACHE_LOG_DIR}/example1.mydomain.com_error.log
+    CustomLog ${APACHE_LOG_DIR}/example1.mydomain.com_access.log combined
+&lt;/VirtualHost></code></pre>
 
 
 
@@ -778,21 +782,21 @@ UUID="dcd8c5ac-db76-435e-ab3c-48570190c7d8" /mnt/my_folder ext4 defaults 0 1
 
 
 
-<pre class="wp-block-code"><code>&lt;VirtualHost *:80&gt;
-    ServerAdmin webmaster@example1.mydomain
-    ServerName example1.mydomain
-    DocumentRoot /var/www/html/example1.mydomain
+<pre class="wp-block-code"><code>&lt;VirtualHost *:80>
+    ServerAdmin webmaster@example1.mydomain.com
+    ServerName example1.mydomain.com
+    DocumentRoot /var/www/html/example1.mydomain.com
 
-        &lt;Directory /var/www/html/example1.mydomain&gt;
+        &lt;Directory /var/www/html/example1.mydomain.com>
                 Options Indexes FollowSymLinks
                 AllowOverride All
                 Require all granted
                 DirectoryIndex index.php
-        &lt;/Directory&gt;
+        &lt;/Directory>
 
-    ErrorLog ${APACHE_LOG_DIR}/example1.mydomain_error.log
-    CustomLog ${APACHE_LOG_DIR}/example1.mydomain_access.log combined
-&lt;/VirtualHost&gt;</code></pre>
+    ErrorLog ${APACHE_LOG_DIR}/example1.mydomain.com_error.log
+    CustomLog ${APACHE_LOG_DIR}/example1.mydomain.com_access.log combined
+&lt;/VirtualHost></code></pre>
 
 
 
@@ -804,17 +808,18 @@ UUID="dcd8c5ac-db76-435e-ab3c-48570190c7d8" /mnt/my_folder ext4 defaults 0 1
 
 
 
-<p><strong>The required module, gd, is not installed, or has been disabled.</strong></p>
+<p><strong>1. The required module, gd, is not installed, or has been disabled.</strong></p>
 
 
 
 <pre class="wp-block-code"><code># Install the php8.1-gd module
+
 apt-get install php8.1-gd -y
 service apache2 restart</code></pre>
 
 
 
-<p><strong>The REST API encountered an error.</strong></p>
+<p><strong>2. The REST API encountered an error.</strong></p>
 
 
 
@@ -822,8 +827,8 @@ service apache2 restart</code></pre>
 
 When testing the REST API, an error was encountered:
 
-REST API Endpoint: http://example1.mydomain/wp-json/wp/v2/types/post?context=edit
-REST API Response: (http_request_failed) cURL error 6: Could not resolve host: example1.mydomain</code></pre>
+REST API Endpoint: http://example1.mydomain.com/wp-json/wp/v2/types/post?context=edit
+REST API Response: (http_request_failed) cURL error 6: Could not resolve host: example1.mydomain.com</code></pre>
 
 
 
@@ -835,12 +840,12 @@ REST API Response: (http_request_failed) cURL error 6: Could not resolve host: e
 
 When testing the REST API, an unexpected result was returned:
 
-REST API Endpoint: http://example1.mydomain/wp-json/wp/v2/types/post?context=edit
+REST API Endpoint: http://example1.mydomain.com/wp-json/wp/v2/types/post?context=edit
 REST API Response: (404) Not Found</code></pre>
 
 
 
-<p><strong>Your site could not complete a loopback request.</strong></p>
+<p><strong>3. Your site could not complete a loopback request.</strong></p>
 
 
 
@@ -851,7 +856,7 @@ Error: cURL error 6: Could not resolve host: example1.mydomain (http_request_fai
 
 
 
-<p>Edit the <strong>/etc/hosts</strong> file:</p>
+<p><strong>To resolve issues 2 and 3, edit the /etc/hosts file:</strong></p>
 
 
 
@@ -865,32 +870,38 @@ Error: cURL error 6: Could not resolve host: example1.mydomain (http_request_fai
 
 
 
-<pre class="wp-block-code"><code>apt-get install php8.1-curl curl -y
+<pre class="wp-block-code"><code># Install curl:
+
+apt-get install php8.1-curl curl -y
 
 # Verify curl version:
+
 curl --version
 
 # Verify curl is enabled in php.ini
+
 nano /etc/php/8.1/apache2/php.ini
 
 # Uncomment this line:
+
 extension=curl
 
 # Enable the rewrite module.
+
 a2enmod rewrite
 service restart apache2</code></pre>
 
 
 
-<p>Adding this entry in <strong>/etc/hosts</strong> file also resolves Simply Static&#8217;s <em>&#8220;Checking if WordPress can make requests to itself from your_IP&#8221;</em> FAIL issue.</p>
+<p>This also resolves Simply Static&#8217;s <code><em>"Checking if WordPress can make requests to itself from your_IP"</em> FAIL</code> issue.</p>
 ]]></content:encoded>
 					
 		
 		
 			</item>
 		<item>
-		<title>Configure Apache Web Server and Name-based Virtual Hosting with Ubuntu</title>
-		<link>https://jameswsullivan.github.io/configure-apache-web-server-and-name-based-virtual-hosting-with-ubuntu/</link>
+		<title>Linux Administration: Configure Apache Web Server and Name-based Virtual Hosting</title>
+		<link>https://jameswsullivan.github.io/linux-administration-configure-apache-web-server-and-name-based-virtual-hosting/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Fri, 03 Feb 2023 20:19:00 +0000</pubDate>
@@ -900,61 +911,66 @@ service restart apache2</code></pre>
 		<category><![CDATA[Hosting]]></category>
 		<category><![CDATA[Self-Hosting]]></category>
 		<category><![CDATA[Ubuntu]]></category>
+		<category><![CDATA[Web Hosting]]></category>
 		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=18</guid>
 
-					<description><![CDATA[This is the fourth installment of the Name-based Virtual Hosting Series.]]></description>
+					<description><![CDATA[Configure]]></description>
 										<content:encoded><![CDATA[
 <blockquote class="wp-block-quote">
-<p>2023-05-21 UPDATE:</p>
-
-
-
-<p>This project has been optimized and containerized. See this <a href="https://github.com/jameswsullivan/selfhosted/tree/main/UbuntuLAMP" target="_blank" rel="noreferrer noopener">UbuntuLAMP project</a> on my github.</p>
+<p>Update: this project has been optimized and containerized. See this <a href="https://github.com/jameswsullivan/selfhosted/tree/main/UbuntuLAMP" target="_blank" rel="noreferrer noopener">UbuntuLAMP project</a> on my github.</p>
 </blockquote>
 
 
 
-<p>This is the final installment of my dev environment setup which documents the process of setting up Apache web server and name-based virtual hosting. My setup has CIFS/Samba volume <em>my_smb_vol</em> and an ipvlan network <em>docker_dev_net</em>.</p>
+<p>Related Articles:</p>
 
 
 
-<h2 class="wp-block-heading">Spin up a Ubuntu Docker container:</h2>
+<ul>
+<li><a href="https://jameswsullivan.github.io/linux-administration-install-docker-on-ubuntu-server/">A Docker host</a>.</li>
 
 
 
-<pre class="wp-block-code"><code>docker run -dit --name WEB_SERVER --network docker_dev_net --ip 192.168.1.103 --mount source=my_smb_vol,destination=/SharedVolume ubuntu
-
-# -p 443:443 -p 80:80 -p 22:22
-# Port exposure is optional because the containers will be part of the same network that my other machines are in.</code></pre>
+<li><a href="https://jameswsullivan.github.io/docker-administration-docker-networking-ipvlan/">An ipvlan docker network</a>.</li>
 
 
 
-<p>Install necessary packages:</p>
+<li>[Optional] <a href="https://jameswsullivan.github.io/docker-administration-smb-share-and-docker-volumes/">SMB shares and Docker volumes</a> for persistent files (<code>/var/www/html</code>).</li>
 
 
 
-<pre class="wp-block-code"><code># Install network utilities for troubleshooting:
-apt-get install iputils-ping -y
-apt-get install iproute2 -y
-apt-get install traceroute -y
+<li>[Troubleshooting] <a href="https://jameswsullivan.github.io/linux-administration-troubleshooting-apache-web-server-and-name-based-virtual-hosting-with-wordpress/">Linux Administration: Troubleshooting Apache Web Server and Name-based Virtual Hosting with WordPress</a></li>
+</ul>
+
+
+
+<h2 class="wp-block-heading">Configure the web server:</h2>
+
+
+
+<pre class="wp-block-code"><code># Start a Ubuntu container:
+docker run -dit --name web-server --network docker_dev_net --ip 192.168.1.103 --mount source=my_smb_vol,destination=/var/www/html ubuntu
+
+# NOTE: Originally, I used underscores in my container names and hostnames, but it was causing issues in some scenarios where underscores are considered invalid or get misinterpreted. So hyphens are used instead.
+
+# Enter the container's shell prompt:
+docker exec -it web-server bash
+
+# Install network utilities for troubleshooting:
+apt-get install iputils-ping iproute2 traceroute -y
 
 # Install SSH:
-apt-get install openssh-client -y
-apt-get install openssh-server -y
+apt-get install openssh-client openssh-server -y
 
 # Install sudo and other utilities:
-apt-get install sudo -y
-apt-get install nano -y
+apt-get install sudo nano -y
 
 # Install apache, php, and php-mysql:
-apt-get install apache2 -y
-apt-get install php8.1 -y
-apt-get install php-mysql -y
-apt-get install libapache2-mod-php -y</code></pre>
+apt-get install apache2 php8.1 php-mysql libapache2-mod-php -y</code></pre>
 
 
 
-<p>Verify services are running and start the them if not:</p>
+<p>Verify that the services are running and start the them if not:</p>
 
 
 
@@ -968,17 +984,17 @@ service apache2 start</code></pre>
 
 
 
-<p>Hostname and name server (optional):</p>
+<p>Configure hostname and name server (optional):</p>
 
 
 
 <pre class="wp-block-code"><code># Depending on your setup, you might need to specify the --hostname when creating your container:
 
---hostname=your_hostname</code></pre>
+--hostname=&lt;your-hostname&gt;</code></pre>
 
 
 
-<p>Verify php version:</p>
+<p>Verify PHP version:</p>
 
 
 
@@ -988,74 +1004,85 @@ service apache2 start</code></pre>
 
 
 
-<p>Now that you should be able to visit the Apache server&#8217;s default landing page and the info.php page to verify that the Apache server is running and view your php version.</p>
+<p>Now that you should be able to visit the Apache server&#8217;s default landing page to verify that the Apache server is running and the info.php page to view your PHP version.</p>
 
 
 
-<h2 class="wp-block-heading">Set up name-based virtual hosting:</h2>
+<h2 class="wp-block-heading">Configure name-based virtual hosting:</h2>
 
 
 
-<pre class="wp-block-code"><code># The example websites I'm using are: example.mydomain, example1.mydomain, example2.mydomain.
+<pre class="wp-block-code"><code># The example websites I'm using are: example.mydomain.com, example1.mydomain.com, example2.mydomain.com.
 
 # Create directories:
-# example.mydomain will reside under /var/www/html as the "main" website.
 
-mkdir /var/www/html/example1.mydomain
-mkdir /var/www/html/example2.mydomain
+mkdir /var/www/html/example1.mydomain.com
+mkdir /var/www/html/example2.mydomain.com
 
-# Change ownership of the directories. I simply changed the entire html directory and its subdirectories' ownership to www-data for my convenience.
+# example.mydomain.com will reside under /var/www/html as the "main" website.
+
+# Change ownership of the directories accordingly. Here I changed the entire html directory and its subdirectories' ownership to www-data for convenience.
 
 chown -R www-data:www-data /var/www/html
 
 # Create Virtual Host configuration files for your sites.
-touch /etc/apache2/sites-available/example.mydomain.conf
-touch /etc/apache2/sites-available/example1.mydomain.conf
-touch /etc/apache2/sites-available/example2.mydomain.conf
 
-# Use nano to add the corresponding content to your site config files. Edit the ServerName and DocumentRoot as needed to point to the your domains and directories:
+touch /etc/apache2/sites-available/example.mydomain.com.conf
+touch /etc/apache2/sites-available/example1.mydomain.com.conf
+touch /etc/apache2/sites-available/example2.mydomain.com.conf
 
-# example.mydomain.conf or use the 000-default.conf:
+# example.mydomain.com.conf or use the 000-default.conf:
 &lt;VirtualHost *:80&gt;
     ServerAdmin webmaster@example.mydomain
-    ServerName example.mydomain
+    ServerName example.mydomain.com
     DocumentRoot /var/www/html
     DirectoryIndex index.html
-    ErrorLog ${APACHE_LOG_DIR}/example.mydomain_error.log
-    CustomLog ${APACHE_LOG_DIR}/example.mydomain_access.log combined
+    ErrorLog ${APACHE_LOG_DIR}/example.mydomain.com_error.log
+    CustomLog ${APACHE_LOG_DIR}/example.mydomain.com_access.log combined
 &lt;/VirtualHost&gt;
 
-# example1.mydomain.conf:
+# example1.mydomain.com.conf and example2.mydomain.com.conf:
 &lt;VirtualHost *:80&gt;
-    ServerAdmin webmaster@example1.mydomain
-    ServerName example1.mydomain
-    DocumentRoot /var/www/html/example1.mydomain
+    ServerAdmin webmaster@example1.mydomain.com
+    ServerName example1.mydomain.com
+    DocumentRoot /var/www/html/example1.mydomain.com
     DirectoryIndex index.php
-    ErrorLog ${APACHE_LOG_DIR}/example1.mydomain_error.log
-    CustomLog ${APACHE_LOG_DIR}/example1.mydomain_access.log combined
+    ErrorLog ${APACHE_LOG_DIR}/example1.mydomain.com_error.log
+    CustomLog ${APACHE_LOG_DIR}/example1.mydomain.com_access.log combined
+&lt;/VirtualHost&gt;
+
+&lt;VirtualHost *:80&gt;
+    ServerAdmin webmaster@example2.mydomain.com
+    ServerName example2.mydomain.com
+    DocumentRoot /var/www/html/example2.mydomain.com
+    DirectoryIndex index.php
+    ErrorLog ${APACHE_LOG_DIR}/example2.mydomain.com_error.log
+    CustomLog ${APACHE_LOG_DIR}/example2.mydomain.com_access.log combined
 &lt;/VirtualHost&gt;
 
 # Enable the configuration files for the sites:
-a2ensite example1.mydomain
-a2ensite example2.mydomain
+
+a2ensite example1.mydomain.com
+a2ensite example2.mydomain.com
 
 # Restart apache2 service and verify that apache2 is running:
+
 service apache2 reload
 service apache2 status
 
-# Of course, you will need to add your own index.html or index.php files under the sites' directories.</code></pre>
+# Of course, you will need to add your own index.html or index.php file under the sites' directories.</code></pre>
 
 
 
-<p>Configure your router or DNS server records:</p>
+<h2 class="wp-block-heading">Configure DNS records:</h2>
 
 
 
 <pre class="wp-block-code"><code># I'm using my Cisco router as an example:
 
-ip host example.mydomain 192.168.1.103
-ip host example1.mydomain 192.168.1.103
-ip host example2.mydomain 192.168.1.103</code></pre>
+ip host example.mydomain.com 192.168.1.103
+ip host example1.mydomain.com 192.168.1.103
+ip host example2.mydomain.com 192.168.1.103</code></pre>
 
 
 
@@ -1063,22 +1090,23 @@ ip host example2.mydomain 192.168.1.103</code></pre>
 
 
 
-<pre class="wp-block-code"><code>http:&#47;&#47;example.mydomain
-http://example1.mydomain/
-http://example2.mydomain/</code></pre>
+<pre class="wp-block-code"><code>http:&#47;&#47;example.mydomain.com
+http://example1.mydomain.com/
+http://example2.mydomain.com/</code></pre>
 ]]></content:encoded>
 					
 		
 		
 			</item>
 		<item>
-		<title>Configure Docker MySQL Server</title>
+		<title>Docker Administration: MySQL Server</title>
 		<link>https://jameswsullivan.github.io/configure-docker-mysql-server/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Fri, 03 Feb 2023 17:14:00 +0000</pubDate>
 				<category><![CDATA[blog]]></category>
 		<category><![CDATA[Apache]]></category>
+		<category><![CDATA[Database Administration]]></category>
 		<category><![CDATA[Docker]]></category>
 		<category><![CDATA[Hosting]]></category>
 		<category><![CDATA[MySQL]]></category>
@@ -1086,17 +1114,31 @@ http://example2.mydomain/</code></pre>
 		<category><![CDATA[Ubuntu]]></category>
 		<guid isPermaLink="false">https://www.alexchen.net/?p=2124</guid>
 
-					<description><![CDATA[This is the third installment of the Name-based Virtual Hosting Series.]]></description>
+					<description><![CDATA[Set up a Docker MySQL server with ipvlan, SMB share and Docker volume for persistent data.]]></description>
 										<content:encoded><![CDATA[
-<p>Background:</p>
+<h2 class="wp-block-heading">Prerequisites:</h2>
 
 
 
-<p>I set up this MySQL server using the <strong><a rel="noreferrer noopener" href="https://hub.docker.com/r/ubuntu/mysql" target="_blank">ubuntu/mysql</a></strong> Docker image and it&#8217;s part of my dev environment setup. My setup has <a href="https://jameswsullivan.github.io/docker-volumes-and-smb-share/">CIFS/Samba volume</a> <em>my_smb_vol</em> and an <a href="https://jameswsullivan.github.io/ubuntu-server-docker-host-and-docker-networking/">ipvlan network</a> <em>docker_dev_net</em>.</p>
+<ul>
+<li><a href="https://jameswsullivan.github.io/linux-administration-install-docker-on-ubuntu-server/">A Docker host</a>.</li>
 
 
 
-<p>Steps:</p>
+<li><a href="https://jameswsullivan.github.io/docker-networking-ipvlan/">An ipvlan Docker network</a>.</li>
+
+
+
+<li><a href="https://jameswsullivan.github.io/docker-administration-smb-share-and-docker-volumes/">Docker volumes configured with SMB share</a>.</li>
+
+
+
+<li><a href="https://hub.docker.com/r/ubuntu/mysql" target="_blank" rel="noreferrer noopener">ubuntu/mysql</a> image.</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading">Configurations:</h2>
 
 
 
@@ -1125,13 +1167,11 @@ DESC user;
 # Show all the users:
 SELECT user, host FROM mysql.user;
 
-# Create databases:
+# Create databases (assuming that we'll be creating the databases for some WordPress sites):
 CREATE DATABASE my_wordpress_db;
 
 # Create users:
 CREATE USER 'wordpress_user'@'192.168.1.103' IDENTIFIED BY 'password';
-
-# Explanation here: 192.168.1.103 is my other Ubuntu Apache web server container. If you are creating a local user use the following command:
 CREATE USER 'wordpress_user'@'localhost' IDENTIFIED BY 'password';
 
 # Grant privileges to the user:
@@ -1143,7 +1183,7 @@ SHOW GRANTS FOR 'wordpress_user'@'192.168.1.103';</code></pre>
 
 
 
-<p>Allow remote connection to this mysql instance:</p>
+<p>Allow remote connection to the MySQL server:</p>
 
 
 
@@ -1155,10 +1195,11 @@ conf.d
 my.cnf
 my.cnf.fallback
 
-# See the content of my.cnf:
+# View the content of my.cnf:
 cat /etc/mysql/my.cnf
 
 # On the last two lines of the output, you should see:
+
 # Custom config should go here
 !includedir /etc/mysql/conf.d/
 
@@ -1172,7 +1213,7 @@ mysqldump.cnf
 # The mysql.cnf is what you're going to edit:
 nano /etc/mysql/conf.d/mysql.cnf
 
-# By default, your mysql.cnf file should only contain one line: &#91;mysql]. Add a new line below it so it looks like the following:
+# By default, the mysql.cnf file might only contain one line: &#91;mysql]. Add a new line below it so it looks like the following:
 
 &#91;mysql]
 bind-address = 0.0.0.0</code></pre>
@@ -1186,7 +1227,7 @@ bind-address = 0.0.0.0</code></pre>
 <pre class="wp-block-code"><code># I'm performing these steps on the Ubuntu Apache web server, 192.168.1.103:
 # Install the mysql-client package if it's not been installed.
 
-apt-get install mysql-client
+apt-get install -y mysql-client
 
 # Connect to the mysql instance at 192.168.1.101:
 mysql -h 192.168.1.101 -u wordpress_user -p</code></pre>
@@ -1196,8 +1237,8 @@ mysql -h 192.168.1.101 -u wordpress_user -p</code></pre>
 		
 			</item>
 		<item>
-		<title>Docker volumes and SMB share</title>
-		<link>https://jameswsullivan.github.io/docker-volumes-and-smb-share/</link>
+		<title>Docker Administration: SMB share and Docker volumes</title>
+		<link>https://jameswsullivan.github.io/docker-administration-smb-share-and-docker-volumes/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Fri, 03 Feb 2023 16:52:00 +0000</pubDate>
@@ -1207,11 +1248,34 @@ mysql -h 192.168.1.101 -u wordpress_user -p</code></pre>
 		<category><![CDATA[Linux]]></category>
 		<category><![CDATA[Self-Hosting]]></category>
 		<category><![CDATA[Ubuntu]]></category>
+		<category><![CDATA[Web Hosting]]></category>
 		<guid isPermaLink="false">https://www.alexchen.net/?p=2122</guid>
 
-					<description><![CDATA[This is the second installment of the Name-based Virtual Hosting Series.]]></description>
+					<description><![CDATA[Use SMB shares with Docker volumes.]]></description>
 										<content:encoded><![CDATA[
-<p>I&#8217;m recently setting up a dev environment with different Docker containers running Ubuntu and database services and there are certain things I need them to persist and be shared between the containers, the host, and my other computers (mostly Windows) on the network. Since my home lab setup is a Windows house, SMB shares seem to be the most convenient solution.</p>
+<h2 class="wp-block-heading">Background:</h2>
+
+
+
+<p>Recently I&#8217;ve been setting up a Docker lab environment to run some applications and needed some data to persist and be shared across my lab network. Since most of the computers run Windows, using SMB shares seems to be the easiest solution.</p>
+
+
+
+<p>Related articles:</p>
+
+
+
+<ul>
+<li><a href="https://jameswsullivan.github.io/linux-administration-install-docker-on-ubuntu-server/">Docker host</a>.</li>
+
+
+
+<li><a href="https://jameswsullivan.github.io/docker-administration-docker-networking-ipvlan/">ipvlan Docker network</a>.</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading">Configurations:</h2>
 
 
 
@@ -1219,55 +1283,31 @@ mysql -h 192.168.1.101 -u wordpress_user -p</code></pre>
 
 
 
-<pre class="wp-block-code"><code># Of course, you need to create a network share first, mine is: \\main_server\DockerShare, and have a user &amp; password ready to access the share.
+<pre class="wp-block-code"><code># Assuming that the network share is at:
+\\main_server\DockerShare
 
+# Create a docker volume:
 docker volume create --driver local --opt type=cifs --opt device=//main_server/DockerShare --opt o=addr=main_server,username=your_username,password=your_password,file_mode=0777,dir_mode=0777 --name my_smb_vol</code></pre>
 
 
 
-<p>After the volume is created, you can start a container and mount the volume to it:</p>
+<p>Run a container with a volume mount:</p>
 
 
 
 <pre class="wp-block-code"><code># List all volumes
-
 docker volume ls
 
-# Start the WEB_SERVER container with the volume just created
-
+# Run a container with the volume that's been created:
 docker run -dit --name WEB_SERVER --network docker_dev_net --ip 192.168.1.103 --mount source=my_smb_vol,destination=/SharedVolume -p 443:443 -p 80:80 -p 22:22 ubuntu</code></pre>
-
-
-
-<p></p>
-
-
-
-<p></p>
-
-
-
-<p></p>
-
-
-
-<p></p>
-
-
-
-<p></p>
-
-
-
-<p></p>
 ]]></content:encoded>
 					
 		
 		
 			</item>
 		<item>
-		<title>Set up Docker on Ubuntu Server</title>
-		<link>https://jameswsullivan.github.io/set-up-docker-on-ubuntu-server/</link>
+		<title>Linux Administration: Install Docker on Ubuntu Server</title>
+		<link>https://jameswsullivan.github.io/linux-administration-install-docker-on-ubuntu-server/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Tue, 21 Sep 2021 06:14:07 +0000</pubDate>
@@ -1282,7 +1322,25 @@ docker run -dit --name WEB_SERVER --network docker_dev_net --ip 192.168.1.103 --
 
 					<description><![CDATA[Setting up Ubuntu Server, SSH, UFW, Nginx, and Docker.]]></description>
 										<content:encoded><![CDATA[
-<h2 class="wp-block-heading">Environment: Windows Server 2019, Hyper-V, Ubuntu Server 20.04.3 LTS.</h2>
+<h2 class="wp-block-heading">Environment:</h2>
+
+
+
+<ul>
+<li>Windows Server 2019</li>
+
+
+
+<li>Hyper-V</li>
+
+
+
+<li>Ubuntu Server 20.04.3 LTS.</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading">Configurations:</h2>
 
 
 
@@ -1291,9 +1349,9 @@ docker run -dit --name WEB_SERVER --network docker_dev_net --ip 192.168.1.103 --
 
 
 <pre class="wp-block-code"><code># Install OpenSSH
-apt upgrade
-apt update
-apt install openssh-server
+apt update -y
+apt upgrade -y
+apt install openssh-server -y
 
 # Check SSH Status
 systemctl status ssh
@@ -1373,8 +1431,8 @@ DefaultTimeoutStopSec=15s</code></pre>
 apt remove docker docker-engine docker.io containerd runc
 
 # Install using the repository
-apt update
-apt install apt-transport-https ca-certificates curl gnupg lsb-release
+apt update -y
+apt install -y apt-transport-https ca-certificates curl gnupg lsb-release
 
 # Add Docker's official GPG key
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
@@ -1386,8 +1444,8 @@ $(lsb_release -cs) stable" \
 | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
 # Install Docker engine
-apt update
-apt install docker-ce docker-ce-cli containerd.io
+apt update -y
+apt install -y docker-ce docker-ce-cli containerd.io
 
 # Verify that Docker Engine is correctly installed
 docker version</code></pre>

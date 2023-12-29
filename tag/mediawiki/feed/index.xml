@@ -12,13 +12,13 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/mediawiki/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Tue, 01 Aug 2023 20:18:22 +0000</lastBuildDate>
+	<lastBuildDate>Thu, 28 Dec 2023 20:04:19 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
 	<sy:updateFrequency>
 	1	</sy:updateFrequency>
-	<generator>https://wordpress.org/?v=6.4.1</generator>
+	<generator>https://wordpress.org/?v=6.4.2</generator>
 	<item>
 		<title>HTMLForm.php gets auto deleted</title>
 		<link>https://jameswsullivan.github.io/htmlform-php-gets-auto-deleted/</link>
@@ -33,7 +33,11 @@
 
 					<description><![CDATA[A piece of regular expression code in the HTMLForm.php file under MediaWiki's \includes\htmlform directory was flagged as "malicious" and the HTMLForm.php file gets automatically deleted by hosting server.]]></description>
 										<content:encoded><![CDATA[
-<p>This is by far the oddest issue I&#8217;ve ever experienced since I started using MediaWiki &#8211; the <code>HTMLForm.php</code> file under MediaWiki&#8217;s <code>\includes\htmlform</code> folder got automatically flagged for &#8220;having malicious code&#8221; by NameCheap&#8217;s hosting system, and was deleted shortly after being uploaded. I needed to contact their support to get this file whitelisted to be able to properly use MediaWiki.</p>
+<h2 class="wp-block-heading">Background:</h2>
+
+
+
+<p>This is by far the oddest issue I&#8217;ve ever experienced since I started using MediaWiki &#8211; the <code>HTMLForm.php</code> file under MediaWiki&#8217;s <code>\includes\htmlform</code> folder got automatically flagged for &#8220;having malicious code&#8221; by NameCheap&#8217;s hosting system and was deleted shortly after being uploaded. I needed to contact their support to get this file whitelisted to be able to properly use MediaWiki.</p>
 
 
 
@@ -51,7 +55,11 @@ Fatal error: require(): Failed opening required '/yourhostingpath/includes/htmlf
 
 
 
-<p>After some research and experimentation I saw that the <code>HTMLForm.php</code> was being removed automatically shortly after being uploaded, no matter what I changes I&#8217;ve made, the file wouldn&#8217;t persist, so I eventually contacted support. Tech support told me that the file was automatically deleted because it contains malicious code, which doesn&#8217;t make sense to me because this was not my first time setting up MediaWiki and I&#8217;ve been using it for the past 10 years since its very early versions and have never come across this issue before. According to their investigation, a regular expression was flagged by their filter, and they needed to whitelist the file for me. The line in question is:</p>
+<h2 class="wp-block-heading">Solution:</h2>
+
+
+
+<p>After some research and experimentation I saw that the <code>HTMLForm.php</code> was being removed automatically shortly after being uploaded. No matter what changes I make the file just wouldn&#8217;t persist, so I eventually contacted support. Tech support told me that the file was automatically deleted because it contains &#8220;malicious code&#8221;, which doesn&#8217;t make sense to me because I&#8217;ve been using it for more than 10 years since its early versions and have never come across this issue before. According to their investigation, a regular expression was flagged by their filter, and they needed to whitelist the file for me. The line in question is:</p>
 
 
 
@@ -59,7 +67,7 @@ Fatal error: require(): Failed opening required '/yourhostingpath/includes/htmlf
 
 
 
-<p>Honestly I still didn&#8217;t understand why this happened and didn&#8217;t do further research either, but maybe someone will come across a similar issue and this might save you some time trying to bird-dog the cause.</p>
+<p>I don&#8217;t understand why this line would get flagged as &#8220;malicious code&#8221; and didn&#8217;t do further research either, my guess is that they were probably flagging all/any regular expressions. But if someone comes across a similar issue,  this might save you some time trying to bird-dog the cause.</p>
 ]]></content:encoded>
 					
 		

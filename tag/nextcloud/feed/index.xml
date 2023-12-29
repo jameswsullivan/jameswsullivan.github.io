@@ -12,13 +12,13 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/nextcloud/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Sun, 06 Aug 2023 18:34:11 +0000</lastBuildDate>
+	<lastBuildDate>Thu, 28 Dec 2023 21:24:44 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
 	<sy:updateFrequency>
 	1	</sy:updateFrequency>
-	<generator>https://wordpress.org/?v=6.4.1</generator>
+	<generator>https://wordpress.org/?v=6.4.2</generator>
 	<item>
 		<title>Self-hosted Nextcloud with Docker</title>
 		<link>https://jameswsullivan.github.io/self-hosted-nextcloud-with-docker/</link>
@@ -107,8 +107,8 @@ docker run -dit --name MY-NEXTCLOUD-DB-CONTAINER --ip IP-ADDRESS --network DOCKE
 		
 			</item>
 		<item>
-		<title>Nextcloud Performance</title>
-		<link>https://jameswsullivan.github.io/nextcloud-performance/</link>
+		<title>Self-host Nextcloud &#8211; Part 3 &#8211; Performance</title>
+		<link>https://jameswsullivan.github.io/self-host-nextcloud-part-3-performance/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Mon, 20 Sep 2021 07:28:07 +0000</pubDate>
@@ -125,11 +125,33 @@ docker run -dit --name MY-NEXTCLOUD-DB-CONTAINER --ip IP-ADDRESS --network DOCKE
 
 					<description><![CDATA[Nextcloud performance optimization.]]></description>
 										<content:encoded><![CDATA[
+<h2 class="wp-block-heading">Background:</h2>
+
+
+
 <p>After about two days&#8217; troubleshooting and and testing, Nextcloud is successfully running in my homelab. This article documents a few performance tweaking.</p>
 
 
 
-<p>1. PHP <code>max_input_time</code> and <code>max_execution_time</code>. (I was getting 504 Gateway Timeout when uploading larger files.)</p>
+<h2 class="wp-block-heading">Issues:</h2>
+
+
+
+<ul>
+<li>504 Gateway Timeout when uploading larger files.</li>
+
+
+
+<li>Disable file locking.</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading">Solutions:</h2>
+
+
+
+<p>1. Modify PHP <code>max_input_time</code> and <code>max_execution_time</code> to get rid of the 504 Gateway Timeout error when uploading large files.</p>
 
 
 
@@ -138,7 +160,7 @@ max_input_time 86400
 max_execution_time 86400
 
 upload_max_filesize 50G
-post_max_size 51G
+post_max_size 50G
 
 # Restart PHP and Apache
 service apache2 restart
@@ -146,23 +168,27 @@ service php8.0-fpm restart</code></pre>
 
 
 
-<p>2. Disable file locking. This potentially will cause problems when you have multiple users collaborating on file editing/syncing, but in my single-user setup this was not a concern. I needed to do this when I synced some large files and the client froze, and after a force restart/resync, the Nextcloud client reported <code>423 Locked</code> to <code>PUT https://...../</code> .</p>
+<p>2. Disable file locking.</p>
+
+
+
+<p>This might cause potential problems when you have multiple users collaborating on file editing/syncing, but in my single-user setup this was not a concern. I needed to do this when I was syncing some large files and the client froze, and after a force restart/resync, the Nextcloud client reported <code>423 Locked</code> errors to <code>PUT https://...../</code> .</p>
 
 
 
 <pre class="wp-block-code"><code># Add
-'filelocking.enabled' => false,
+'filelocking.enabled' =&gt; false,
 # to nextcloud's config.php, and clear the locked files.
 
 # Add
-'maintenance' => true,
+'maintenance' =&gt; true,
 # to config.php
 
 # Get into MariaDB and run the following
 DELETE FROM oc_file_locks WHERE 1;
 
 # Revert maintenance mode
-'maintenance' => false,
+'maintenance' =&gt; false,
 
 # Restart PHP and Apache
 service apache2 restart
@@ -170,19 +196,19 @@ service php8.0-fpm restart</code></pre>
 
 
 
-<p>3. Overall performance.</p>
+<h4 class="wp-block-heading">Overall performance.</h4>
 
 
 
-<p>Nextcloud&#8217;s overall syncing speed has a lot to do with your Nextcloud server&#8217;s performance, the more smooth your server runs the better syncing performance you&#8217;ll get (more RAM, SSD, etc.). I was able to get roughly 25MB upload speed and 65MB download speed with a Hyper-V VM running Ubuntu Desktop.</p>
+<p>Nextcloud&#8217;s overall syncing speed has a lot to do with your Nextcloud server&#8217;s performance, the more smooth your server runs the better syncing performance you&#8217;ll get (more RAM, use SSD instead of HDD, etc.). I was able to get roughly 25MB upload speed and 65MB download speed with a Hyper-V VM running Ubuntu Desktop.</p>
 ]]></content:encoded>
 					
 		
 		
 			</item>
 		<item>
-		<title>Self-signed SSL Certificate, Apache, and Nextcloud</title>
-		<link>https://jameswsullivan.github.io/self-signed-ssl-certificate-apache-and-nextcloud/</link>
+		<title>Self-host Nextcloud &#8211; Part 2 &#8211; Self-signed SSL Certificate</title>
+		<link>https://jameswsullivan.github.io/self-host-nextcloud-part-2-self-signed-ssl-certificate/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sun, 19 Sep 2021 20:58:07 +0000</pubDate>
@@ -199,7 +225,11 @@ service php8.0-fpm restart</code></pre>
 
 					<description><![CDATA[Perfecting SSL configuration on Nextcloud server.]]></description>
 										<content:encoded><![CDATA[
-<p>In my last blog post about bringing up a self-hosted Nextcloud setup, everything went well until it reached the SSL cert and configuration part. The instructions I found were all somehow missing some pieces or doing things a little bit differently than what I had expected, plus my own lack of in-depth understanding of SSL, I finally had my issues resolved with the help of these resources: <a rel="noreferrer noopener" href="https://stackoverflow.com/questions/46349459/chrome-neterr-cert-authority-invalid-error-on-self-signing-certificate-at-loca?rq=1" data-type="URL" data-id="https://stackoverflow.com/questions/46349459/chrome-neterr-cert-authority-invalid-error-on-self-signing-certificate-at-loca?rq=1" target="_blank">article 1</a>, <a rel="noreferrer noopener" href="https://alexanderzeitler.com/articles/Fixing-Chrome-missing_subjectAltName-selfsigned-cert-openssl/" data-type="URL" data-id="https://alexanderzeitler.com/articles/Fixing-Chrome-missing_subjectAltName-selfsigned-cert-openssl/" target="_blank">article 2</a>, <a rel="noreferrer noopener" href="https://superuser.com/questions/1631692/why-is-chrome-not-trusting-imported-self-signed-root-ca" data-type="URL" data-id="https://superuser.com/questions/1631692/why-is-chrome-not-trusting-imported-self-signed-root-ca" target="_blank">article 3</a>, <a rel="noreferrer noopener" href="https://www.youtube.com/watch?v=e8vMTlobW3c" data-type="URL" data-id="https://www.youtube.com/watch?v=e8vMTlobW3c" target="_blank">video</a>.</p>
+<h2 class="wp-block-heading">Background:</h2>
+
+
+
+<p>In <a href="https://jameswsullivan.github.io/self-host-nextcloud-part-1-installation/">Part 1 of the Nextcloud series</a> we&#8217;ve discussed how to bring up a self-hosted Nextcloud instance. In this article I&#8217;d like to discuss the SSL troubleshooting process. Reference articles: <a href="https://stackoverflow.com/questions/46349459/chrome-neterr-cert-authority-invalid-error-on-self-signing-certificate-at-loca?rq=1" data-type="URL" data-id="https://stackoverflow.com/questions/46349459/chrome-neterr-cert-authority-invalid-error-on-self-signing-certificate-at-loca?rq=1" target="_blank" rel="noreferrer noopener">article 1</a>, <a href="https://alexanderzeitler.com/articles/Fixing-Chrome-missing_subjectAltName-selfsigned-cert-openssl/" data-type="URL" data-id="https://alexanderzeitler.com/articles/Fixing-Chrome-missing_subjectAltName-selfsigned-cert-openssl/" target="_blank" rel="noreferrer noopener">article 2</a>, <a href="https://superuser.com/questions/1631692/why-is-chrome-not-trusting-imported-self-signed-root-ca" data-type="URL" data-id="https://superuser.com/questions/1631692/why-is-chrome-not-trusting-imported-self-signed-root-ca" target="_blank" rel="noreferrer noopener">article 3</a>, <a href="https://www.youtube.com/watch?v=e8vMTlobW3c" data-type="URL" data-id="https://www.youtube.com/watch?v=e8vMTlobW3c" target="_blank" rel="noreferrer noopener">video</a>.</p>
 
 
 
@@ -300,23 +330,31 @@ SSLCertificateKeyFile Your-Cert-Key-File-Path</code></pre>
 
 
 
-<p>5. Explanation about the &#8220;NET::ERR_CERT_AUTHORITY_INVALID&#8221; and &#8220;NET::ERR_CERT_COMMON_NAME_INVALID&#8221; errors.</p>
+<h2 class="wp-block-heading">Explanation about the certificate errors:</h2>
 
 
 
-<p>&#8220;NET::ERR_CERT_AUTHORITY_INVALID&#8221; is due to how the certs were generated, when using <a rel="noreferrer noopener" href="https://betterprogramming.pub/how-to-create-trusted-ssl-certificates-for-your-local-development-13fd5aad29c6" data-type="URL" data-id="https://betterprogramming.pub/how-to-create-trusted-ssl-certificates-for-your-local-development-13fd5aad29c6" target="_blank">this method</a> to generate, I always got the error, but after I switched to the method written in #1 and the certs were properly imported, this error was gone.</p>
+<p>&#8220;NET::ERR_CERT_AUTHORITY_INVALID&#8221;</p>
 
 
 
-<p>&#8220;NET::ERR_CERT_COMMON_NAME_INVALID&#8221; . Assuming you already put in the Common Name (which is your FQDN, e.g. nextcloud.mydomain.com) correctly when generating the certs and it still gave this error, check the @alt_names section above, make sure all the DNS.x and IP.x entries cover all your alt_name variants. Once I added stuff under the alt_names section correctly (for me it&#8217;s &#8220;localhost&#8221;, my server&#8217;s IP, and the &#8220;subdomain&#8221; URL I&#8217;d like to use in my own environment), the error was gone.</p>
+<p>This is due to how the certs were generated, when using <a href="https://betterprogramming.pub/how-to-create-trusted-ssl-certificates-for-your-local-development-13fd5aad29c6" data-type="URL" data-id="https://betterprogramming.pub/how-to-create-trusted-ssl-certificates-for-your-local-development-13fd5aad29c6" target="_blank" rel="noreferrer noopener">this method</a> to generate, I always got the error, but after I switched to the method written in step #1 and the certs were properly imported, this error was gone.</p>
 
 
 
-<p>6. Other issues and thoughts that emerged during the troubleshooting process.</p>
+<p>&#8220;NET::ERR_CERT_COMMON_NAME_INVALID&#8221;</p>
 
 
 
-<ol>
+<p>Assuming you already put in the Common Name (which is your FQDN, e.g. nextcloud.mydomain.com) correctly when generating the certs and it still gave this error, check the <code>alt_names</code> section above, make sure all the DNS.x and IP.x entries cover all your <code>alt_name</code> variants. Once I configured all the stuff under the <code>alt_names</code> section correctly (for me it&#8217;s &#8220;localhost&#8221;, my server&#8217;s IP, and the &#8220;subdomain&#8221; URL I&#8217;m using), the error was gone.</p>
+
+
+
+<h2 class="wp-block-heading">Other:</h2>
+
+
+
+<ul>
 <li>Some mentioned that Chrome versions played a role in accepting self-signed certs. But my issues were resolved without dealing with Chrome versions.</li>
 
 
@@ -325,52 +363,25 @@ SSLCertificateKeyFile Your-Cert-Key-File-Path</code></pre>
 
 
 
-<li>Some articles say that self-signed certs won&#8217;t be deemed secure and valid by browsers/OSs/Chrome, which is not true if the certs are generated imported and generated correctly.</li>
-</ol>
+<li>Some articles say that self-signed certs won&#8217;t be deemed secure and valid by browsers/OSs/Chrome, which is not true if the certs are generated and imported correctly.</li>
 
 
 
-<p>7. Security hardening &#8211; forcing HTTPS, Strict-Transport-Security, and URL redirections. See <a href="https://github.com/jameswsullivan/blog-file-share/blob/main/sample.nextcloud.conf" data-type="URL" data-id="https://drive.google.com/file/d/1QQRGrROpZhrnDc-ET8mDUfj2EjtHzAnK/view?usp=sharing" target="_blank" rel="noreferrer noopener">sample.nextcloud.conf</a> and its comments for details.</p>
-
-
-
-<p>8. Apache&#8217;s SSL config files, which to use?</p>
-
-
-
-<p>Assuming your installation is very similar to mine, you&#8217;d now have 3 files under /etc/apache2/sites-available : 000-default.conf, default-ssl.conf, and nextcloud.conf . </p>
-
-
-
-<ul>
-<li>000-default.conf is a template for you to start with, not a live file to use.</li>
-
-
-
-<li>default-ssl.conf is the default Apache SSL config file.</li>
-
-
-
-<li>nextcloud.conf is the config file for Nextcloud.</li>
+<li>Security hardening &#8211; forcing HTTPS, Strict-Transport-Security, and URL redirections. See <a href="https://github.com/jameswsullivan/blog-file-share/blob/main/sample.nextcloud.conf" data-type="URL" data-id="https://drive.google.com/file/d/1QQRGrROpZhrnDc-ET8mDUfj2EjtHzAnK/view?usp=sharing" target="_blank" rel="noreferrer noopener">sample.nextcloud.conf</a> and its comments for details.</li>
 </ul>
-
-
-
-<p>You can choose either to use default-ssl.conf or nextcloud.conf, or a combination of both and use them for different purposes. I disabled default-ssl.conf by renaming it to default-ssl.conf.bak, and left nextcloud.conf active which has all my configs.</p>
 ]]></content:encoded>
 					
 		
 		
 			</item>
 		<item>
-		<title>Self-host Nextcloud</title>
-		<link>https://jameswsullivan.github.io/self-host-nextcloud/</link>
+		<title>Self-host Nextcloud &#8211; Part 1 &#8211; Installation</title>
+		<link>https://jameswsullivan.github.io/self-host-nextcloud-part-1-installation/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sat, 18 Sep 2021 11:43:43 +0000</pubDate>
 				<category><![CDATA[blog]]></category>
 		<category><![CDATA[Apache]]></category>
-		<category><![CDATA[Docker]]></category>
 		<category><![CDATA[Hosting]]></category>
 		<category><![CDATA[Linux]]></category>
 		<category><![CDATA[Nextcloud]]></category>
@@ -381,7 +392,9 @@ SSLCertificateKeyFile Your-Cert-Key-File-Path</code></pre>
 
 					<description><![CDATA[Take back control of your privacy with self-hosted Nextcloud.]]></description>
 										<content:encoded><![CDATA[
-<p><em>I used to trust Google more when they were under the leadership of Larry Page and Sergey Brin and held up their &#8220;Don&#8217;t Do Evil&#8221; motto, and I used to admire them more when they had the balls to stand up against China&#8217;s censorship. But nowadays Google has become more of a censorship giant itself by implementing the radical left&#8217;s communist political agenda, and its ever increasing intrusion to our privacy is just too concerning. Luckily, there are plenty open source alternatives.</em></p>
+<blockquote class="wp-block-quote">
+<p>I used to trust Google more when they were under the leadership of Larry Page and Sergey Brin and held up their &#8220;Don&#8217;t Do Evil&#8221; motto, and had the balls to not cave to China&#8217;s censorship and pulled their business out of mainland China and moved to Hong Kong. But nowadays Google has become more of a censorship giant itself implementing the radical left&#8217;s communist political agenda, and its ever increasing intrusion to our privacy has been too concerning. Luckily, there are plenty open source alternatives.</p>
+</blockquote>
 
 
 
@@ -389,19 +402,25 @@ SSLCertificateKeyFile Your-Cert-Key-File-Path</code></pre>
 
 
 
-<p><strong>Environment:</strong> Windows Server 2019 + Hyper-V</p>
+<ul>
+<li><strong>Environment:</strong> Windows Server 2019 + Hyper-V</li>
 
 
 
-<p><strong>Linux version:</strong> Ubuntu 20.04 LTS</p>
+<li><strong>Linux:</strong> Ubuntu 20.04 LTS</li>
 
 
 
-<p><strong>LAMP Stack:</strong> PHP8.0, MariaDB, Apache</p>
+<li><strong>LAMP Stack:</strong> PHP8.0, MariaDB, Apache</li>
+</ul>
 
 
 
-<p>My main reference sources are from <a rel="noreferrer noopener" href="https://docs.nextcloud.com/server/latest/admin_manual/installation/example_ubuntu.html" data-type="URL" data-id="https://docs.nextcloud.com/server/latest/admin_manual/installation/example_ubuntu.html" target="_blank">this article</a> and <a rel="noreferrer noopener" href="https://www.itzgeek.com/how-tos/linux/debian/how-to-install-apache-mariadb-php-lamp-stack-on-debian-11.html" data-type="URL" data-id="https://www.itzgeek.com/how-tos/linux/debian/how-to-install-apache-mariadb-php-lamp-stack-on-debian-11.html" target="_blank">this article</a>, however, some commands are slightly modified to fit my needs.</p>
+<p>My main reference sources are from <a href="https://docs.nextcloud.com/server/latest/admin_manual/installation/example_ubuntu.html" data-type="URL" data-id="https://docs.nextcloud.com/server/latest/admin_manual/installation/example_ubuntu.html" target="_blank" rel="noreferrer noopener">this article</a> and <a href="https://www.itzgeek.com/how-tos/linux/debian/how-to-install-apache-mariadb-php-lamp-stack-on-debian-11.html" data-type="URL" data-id="https://www.itzgeek.com/how-tos/linux/debian/how-to-install-apache-mariadb-php-lamp-stack-on-debian-11.html" target="_blank" rel="noreferrer noopener">this article</a>, however, some commands are slightly modified to fit my needs.</p>
+
+
+
+<h4 class="wp-block-heading">Server configuration:</h4>
 
 
 
@@ -436,14 +455,11 @@ systemctl restart apache2
 apt-get install -y php8.0-gd php8.0-mysql php8.0-curl php8.0-mbstring php8.0-intl
 apt-get install -y php8.0-gmp php8.0-bcmath php-imagick php8.0-xml php8.0-zip
 
-
 # Create MySQL database
 sudo /etc/init.d/mysql start
 mysql -u root -p
 
 CREATE USER 'username'@'localhost' IDENTIFIED BY 'password';
-
-# In the next query, you'll need to remove all the dashes because WordPress's code block editor has problems with the the charset portion of the query by giving a "Publishing failed. The response is not a valid JSON response." error.
 
 CREATE DATABASE IF NOT EXISTS nextcloud CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 
@@ -454,11 +470,16 @@ quit;</code></pre>
 
 
 
-<p>Download Nextcloud server package from <a rel="noreferrer noopener" href="https://nextcloud.com/install/" target="_blank" data-type="URL" data-id="https://nextcloud.com/install/">here</a>.</p>
+<h4 class="wp-block-heading">Install Nextcloud:</h4>
+
+
+
+<p>Download Nextcloud server package from <a href="https://nextcloud.com/install/" data-type="URL" data-id="https://nextcloud.com/install/" target="_blank" rel="noreferrer noopener">here</a>.</p>
 
 
 
 <pre class="wp-block-code"><code># My Downloads folder path is /home/*username*/Downloads, and the current version Nextcloud build I use is nextcloud-22.1.1.zip .
+
 cd /home/*username*/Downloads
 unzip nextcloud-22.1.1.zip
 
@@ -467,13 +488,13 @@ cp -r nextcloud /var/www/html</code></pre>
 
 
 
-<p>Next, configure the Apache web server. <a rel="noreferrer noopener" href="https://docs.nextcloud.com/server/latest/admin_manual/installation/source_installation.html#apache-configuration-label" data-type="URL" data-id="https://docs.nextcloud.com/server/latest/admin_manual/installation/source_installation.html#apache-configuration-label" target="_blank">Reference article</a>.</p>
+<h4 class="wp-block-heading">Configure Apache web server. <a href="https://docs.nextcloud.com/server/latest/admin_manual/installation/source_installation.html#apache-configuration-label" data-type="URL" data-id="https://docs.nextcloud.com/server/latest/admin_manual/installation/source_installation.html#apache-configuration-label" target="_blank" rel="noreferrer noopener">Reference article</a>.</h4>
 
 
 
 <pre class="wp-block-code"><code># Use your favorite text editor in Linux to create the nextcloud.conf file under /etc/apache2/sites-available/nextcloud.conf .
 
-# I used directory based installation, so I added the following in nextcloud.conf
+# I used directory based installation so the following was added to nextcloud.conf .
 
 Alias /nextcloud "/var/www/html/nextcloud/"
 
@@ -517,7 +538,7 @@ chown -R www-data:www-data /var/www/html/nextcloud/</code></pre>
 
 
 
-<ol>
+<ul>
 <li>Add Trusted Domain in Nextcloud&#8217;s config files. <a rel="noreferrer noopener" href="https://help.nextcloud.com/t/howto-add-a-new-trusted-domain/26" data-type="URL" data-id="https://help.nextcloud.com/t/howto-add-a-new-trusted-domain/26" target="_blank">Ref.</a></li>
 
 
@@ -527,7 +548,7 @@ chown -R www-data:www-data /var/www/html/nextcloud/</code></pre>
 
 
 <li>View phpinfo.</li>
-</ol>
+</ul>
 
 
 
@@ -562,10 +583,10 @@ touch info.php
 
 
 
-<pre class="wp-block-code"><code># Find out usernames, databases, ports
+<pre class="wp-block-code"><code># Find out usernames, databases and ports
 mysql -u root -p
 SELECT User FROM mysql.user;
-SHOW GLOBAL VARIABLES IKE 'PORT';
+SHOW GLOBAL VARIABLES LIKE 'PORT';
 SHOW DATABASES;</code></pre>
 
 

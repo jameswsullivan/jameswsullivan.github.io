@@ -1,9 +1,9 @@
-<?xml version='1.0' encoding='UTF-8'?><?xml-stylesheet type='text/xsl' href='https://jameswsullivan.github.io/wp-content/plugins/google-sitemap-generator/sitemap.xsl'?><!-- sitemap-generator-url='http://www.arnebrachhold.de/' sitemap-generator-version='4.1.13' -->
-<!-- generated-on='2023-11-22 01:22' -->
+<?xml version='1.0' encoding='UTF-8'?><?xml-stylesheet type='text/xsl' href='https://jameswsullivan.github.io/wp-content/plugins/google-sitemap-generator/sitemap.xsl'?><!-- sitemap-generator-url='http://www.arnebrachhold.de/' sitemap-generator-version='4.1.16' -->
+<!-- generated-on='2023-12-28 23:34' -->
 <urlset xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd' xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>	<url>
-		<loc>https://jameswsullivan.github.io/corrupt-windows-10-system-files-repair/</loc>
-		<lastmod>2023-04-03T03:46:04+00:00</lastmod>
+		<loc>https://jameswsullivan.github.io/</loc>
+		<lastmod>2023-12-28T23:33:22+00:00</lastmod>
 		<changefreq>daily</changefreq>
-		<priority>0.6</priority>
+		<priority>1.0</priority>
 	</url>
-</urlset><!-- Request ID: 8ccff96e132c42cb7df07712cc7bd791; Queries for sitemap: 2; Total queries: 16; Seconds: $end_time; Memory for sitemap: 0MB; Total memory: 4MB -->
+</urlset><!-- Request ID: adfa0f0fb7c9be3e2fd5c2541a3e5195; Queries for sitemap: 3; Total queries: 17; Seconds: $end_time; Memory for sitemap: 0MB; Total memory: 4MB -->

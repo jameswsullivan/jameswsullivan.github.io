@@ -12,13 +12,13 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/network-administration/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Sat, 05 Aug 2023 21:32:44 +0000</lastBuildDate>
+	<lastBuildDate>Thu, 28 Dec 2023 22:48:33 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
 	<sy:updateFrequency>
 	1	</sy:updateFrequency>
-	<generator>https://wordpress.org/?v=6.4.1</generator>
+	<generator>https://wordpress.org/?v=6.4.2</generator>
 	<item>
 		<title>Configure VLAN and InterVLAN Routing on Cisco Router and Switch</title>
 		<link>https://jameswsullivan.github.io/configure-vlan-and-intervlan-routing-on-cisco-router-and-switch/</link>
@@ -350,6 +350,85 @@ reload</code></pre>
 
 netsh wlan show wlanreport
 </code></pre>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Docker Administration: Docker Networking (ipvlan)</title>
+		<link>https://jameswsullivan.github.io/docker-administration-docker-networking-ipvlan/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Fri, 03 Feb 2023 04:19:00 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[IPVLAN]]></category>
+		<category><![CDATA[Linux]]></category>
+		<category><![CDATA[Network Administration]]></category>
+		<category><![CDATA[Networking]]></category>
+		<category><![CDATA[Self-Hosting]]></category>
+		<category><![CDATA[Web Hosting]]></category>
+		<guid isPermaLink="false">https://www.alexchen.net/?p=2115</guid>
+
+					<description><![CDATA[Create ipvlan docker networks.]]></description>
+										<content:encoded><![CDATA[
+<h2 class="wp-block-heading">Background:</h2>
+
+
+
+<p>My home lab&#8217;s network is organized and controlled by IPs, access-lists, etc., via Cisco routers and switches, so I wanted my Docker host and containers to have static IP addresses and be within the same IP segment and add custom DNS records to my DNS servers to resolve to them. The Docker networking part is fairly straightforward, but what&#8217;s inconvenient is how Docker Desktop for Windows and WSL2 handle their networking part behind the scene. WSL2 gets its own vEthernet adapter with an IP in the 172.0.0.0 range and the containers get placed in a different 172.0.0.0 network segment and assigned with dynamic IPs and depending on how the Hyper-V and WSL2 backend handles the routing and switching, it&#8217;s rather difficult (if not impossible) to easily assign static IPs to the containers within the same IP segment as the host machine and make them part of the same subnet for easy access. After a couple of hours fiddling around with different solutions I basically gave up on it as it&#8217;s really not worth the time and efforts doing so, I opted to have a dedicated <a href="https://jameswsullivan.github.io/linux-administration-install-docker-on-ubuntu-server/">Hyper-V VM running Ubuntu Server as the Docker host</a>.</p>
+
+
+
+<h2 class="wp-block-heading">Solution:</h2>
+
+
+
+<p>On an Ubuntu Server the networking part becomes straightforward.</p>
+
+
+
+<p>Assuming that the Docker host VM has the IP address of 192.168.1.100/24 (this is the IP assigned to interface <strong>eth0</strong>). To find out what IP the <code>eth0</code> interface is using, run:</p>
+
+
+
+<pre class="wp-block-code"><code>ip address show eth0</code></pre>
+
+
+
+<p>Create an <strong><a href="https://docs.docker.com/network/ipvlan/" target="_blank" rel="noreferrer noopener">ipvlan</a></strong> network:</p>
+
+
+
+<pre class="wp-block-code"><code>docker network create --driver ipvlan --subnet=192.168.1.0/24 --gateway=192.168.1.1 -o ipvlan_mode=l2 -o parent=eth0 docker_dev_net</code></pre>
+
+
+
+<p>And then we can create containers using this network and assign static IPs to them:</p>
+
+
+
+<pre class="wp-block-code"><code># Let's use ubuntu/mysql Docker image as an example:
+
+docker run -dit --name MySQL_DEV --network docker_dev_net --ip 192.168.1.101 -p 3306:3306 -p 22:22 -e MYSQL_ROOT_PASSWORD=password ubuntu/mysql
+
+# Make sure you add the corresponding DNS entries to your DNS server or router. e.g., on my Cisco router:
+
+ip host MySQL_DEV.mydomain 192.168.1.101</code></pre>
+
+
+
+<p>After the containers are running, test the connection with PowerShell:</p>
+
+
+
+<pre class="wp-block-code"><code>Test-NetConnection -ComputerName MySQL_DEV.mydomain -Port 3306</code></pre>
+
+
+
+<p></p>
 ]]></content:encoded>
 					
 		

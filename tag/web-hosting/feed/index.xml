@@ -12,13 +12,13 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/web-hosting/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Sun, 06 Aug 2023 18:34:11 +0000</lastBuildDate>
+	<lastBuildDate>Thu, 28 Dec 2023 23:33:22 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
 	<sy:updateFrequency>
 	1	</sy:updateFrequency>
-	<generator>https://wordpress.org/?v=6.4.1</generator>
+	<generator>https://wordpress.org/?v=6.4.2</generator>
 	<item>
 		<title>Self-host iredmail</title>
 		<link>https://jameswsullivan.github.io/self-host-iredmail/</link>
@@ -852,8 +852,8 @@ docker run -dit --name MY-NEXTCLOUD-DB-CONTAINER --ip IP-ADDRESS --network DOCKE
 		
 			</item>
 		<item>
-		<title>Troubleshooting Apache Web Server and Name-based Virtual Hosting</title>
-		<link>https://jameswsullivan.github.io/troubleshooting-apache-web-server-and-name-based-virtual-hosting/</link>
+		<title>Linux Administration: Troubleshooting Apache Web Server and Name-based Virtual Hosting with WordPress</title>
+		<link>https://jameswsullivan.github.io/linux-administration-troubleshooting-apache-web-server-and-name-based-virtual-hosting-with-wordpress/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Sat, 25 Mar 2023 23:26:42 +0000</pubDate>
@@ -869,15 +869,11 @@ docker run -dit --name MY-NEXTCLOUD-DB-CONTAINER --ip IP-ADDRESS --network DOCKE
 
 					<description><![CDATA[This troubleshooting note wraps up the Name-based Virtual Hosting Series.]]></description>
 										<content:encoded><![CDATA[
-<p>During the process of setting up name-based virtual hosting with Apache, I ran into a few issues with the WordPress container, this post documents the steps taken to address them.</p>
-
-
-
 <h2 class="wp-block-heading">Background:</h2>
 
 
 
-<p>I use the locally hosted WordPress site to write documentation and blog posts and then use Simply Static to convert and get it ready for GitHub Pages. During the process I ran into the following issues:</p>
+<p>I use a locally hosted WordPress site draft my GitHub pages articles and then convert to static pages using Simply Static. During the process I ran into the following issues with WordPress:</p>
 
 
 
@@ -915,22 +911,30 @@ docker run -dit --name MY-NEXTCLOUD-DB-CONTAINER --ip IP-ADDRESS --network DOCKE
 
 
 
+<p>Related article: <a href="https://jameswsullivan.github.io/linux-administration-configure-apache-web-server-and-name-based-virtual-hosting/">Linux Administration: Configure Apache Web Server and Name-based Virtual Hosting</a></p>
+
+
+
+<h2 class="wp-block-heading">Solutions:</h2>
+
+
+
 <h2 class="wp-block-heading">Issue 1: Updating failed. The response is not a valid JSON response.</h2>
 
 
 
-<p>I get this error only after I&#8217;ve set the <strong>Permalinks</strong> setting to anything else other than the default <strong>Plain</strong> setting. When <strong>Permalinks</strong> is not set to <strong>Plain</strong>, the URLs need to be rewritten, and that&#8217;s when this error will occur. In my case, it turned out to be that I forgot to add the &lt;Directory&gt; tag in the virtual host configuration file. As you can see in <a href="https://jameswsullivan.github.io/configure-apache-web-server-and-name-based-virtual-hosting-with-ubuntu/">this post</a>, my configuration file looks like this:</p>
+<p>I started getting this error only after setting the <strong>Permalinks</strong> setting to anything else other than the default setting <strong>Plain</strong>. When <strong>Permalinks</strong> is not set to <strong>Plain</strong>, the URLs need to be rewritten, and that&#8217;s when this error occurs. It turned out to be that I forgot to add the &lt;Directory> tag in the virtual host configuration file. As you can see in <a href="https://jameswsullivan.github.io/linux-administration-configure-apache-web-server-and-name-based-virtual-hosting/">this post</a>, my original configuration file looks like this:</p>
 
 
 
-<pre class="wp-block-code"><code>&lt;VirtualHost *:80&gt;
-    ServerAdmin webmaster@example1.mydomain
-    ServerName example1.mydomain
-    DocumentRoot /var/www/html/example1.mydomain
+<pre class="wp-block-code"><code>&lt;VirtualHost *:80>
+    ServerAdmin webmaster@example1.mydomain.com
+    ServerName example1.mydomain.com
+    DocumentRoot /var/www/html/example1.mydomain.com
     DirectoryIndex index.php
-    ErrorLog ${APACHE_LOG_DIR}/example1.mydomain_error.log
-    CustomLog ${APACHE_LOG_DIR}/example1.mydomain_access.log combined
-&lt;/VirtualHost&gt;</code></pre>
+    ErrorLog ${APACHE_LOG_DIR}/example1.mydomain.com_error.log
+    CustomLog ${APACHE_LOG_DIR}/example1.mydomain.com_access.log combined
+&lt;/VirtualHost></code></pre>
 
 
 
@@ -938,21 +942,21 @@ docker run -dit --name MY-NEXTCLOUD-DB-CONTAINER --ip IP-ADDRESS --network DOCKE
 
 
 
-<pre class="wp-block-code"><code>&lt;VirtualHost *:80&gt;
-    ServerAdmin webmaster@example1.mydomain
-    ServerName example1.mydomain
-    DocumentRoot /var/www/html/example1.mydomain
+<pre class="wp-block-code"><code>&lt;VirtualHost *:80>
+    ServerAdmin webmaster@example1.mydomain.com
+    ServerName example1.mydomain.com
+    DocumentRoot /var/www/html/example1.mydomain.com
 
-        &lt;Directory /var/www/html/example1.mydomain&gt;
+        &lt;Directory /var/www/html/example1.mydomain.com>
                 Options Indexes FollowSymLinks
                 AllowOverride All
                 Require all granted
                 DirectoryIndex index.php
-        &lt;/Directory&gt;
+        &lt;/Directory>
 
-    ErrorLog ${APACHE_LOG_DIR}/example1.mydomain_error.log
-    CustomLog ${APACHE_LOG_DIR}/example1.mydomain_access.log combined
-&lt;/VirtualHost&gt;</code></pre>
+    ErrorLog ${APACHE_LOG_DIR}/example1.mydomain.com_error.log
+    CustomLog ${APACHE_LOG_DIR}/example1.mydomain.com_access.log combined
+&lt;/VirtualHost></code></pre>
 
 
 
@@ -964,17 +968,18 @@ docker run -dit --name MY-NEXTCLOUD-DB-CONTAINER --ip IP-ADDRESS --network DOCKE
 
 
 
-<p><strong>The required module, gd, is not installed, or has been disabled.</strong></p>
+<p><strong>1. The required module, gd, is not installed, or has been disabled.</strong></p>
 
 
 
 <pre class="wp-block-code"><code># Install the php8.1-gd module
+
 apt-get install php8.1-gd -y
 service apache2 restart</code></pre>
 
 
 
-<p><strong>The REST API encountered an error.</strong></p>
+<p><strong>2. The REST API encountered an error.</strong></p>
 
 
 
@@ -982,8 +987,8 @@ service apache2 restart</code></pre>
 
 When testing the REST API, an error was encountered:
 
-REST API Endpoint: http://example1.mydomain/wp-json/wp/v2/types/post?context=edit
-REST API Response: (http_request_failed) cURL error 6: Could not resolve host: example1.mydomain</code></pre>
+REST API Endpoint: http://example1.mydomain.com/wp-json/wp/v2/types/post?context=edit
+REST API Response: (http_request_failed) cURL error 6: Could not resolve host: example1.mydomain.com</code></pre>
 
 
 
@@ -995,12 +1000,12 @@ REST API Response: (http_request_failed) cURL error 6: Could not resolve host: e
 
 When testing the REST API, an unexpected result was returned:
 
-REST API Endpoint: http://example1.mydomain/wp-json/wp/v2/types/post?context=edit
+REST API Endpoint: http://example1.mydomain.com/wp-json/wp/v2/types/post?context=edit
 REST API Response: (404) Not Found</code></pre>
 
 
 
-<p><strong>Your site could not complete a loopback request.</strong></p>
+<p><strong>3. Your site could not complete a loopback request.</strong></p>
 
 
 
@@ -1011,7 +1016,7 @@ Error: cURL error 6: Could not resolve host: example1.mydomain (http_request_fai
 
 
 
-<p>Edit the <strong>/etc/hosts</strong> file:</p>
+<p><strong>To resolve issues 2 and 3, edit the /etc/hosts file:</strong></p>
 
 
 
@@ -1025,58 +1030,339 @@ Error: cURL error 6: Could not resolve host: example1.mydomain (http_request_fai
 
 
 
-<pre class="wp-block-code"><code>apt-get install php8.1-curl curl -y
+<pre class="wp-block-code"><code># Install curl:
+
+apt-get install php8.1-curl curl -y
 
 # Verify curl version:
+
 curl --version
 
 # Verify curl is enabled in php.ini
+
 nano /etc/php/8.1/apache2/php.ini
 
 # Uncomment this line:
+
 extension=curl
 
 # Enable the rewrite module.
+
 a2enmod rewrite
 service restart apache2</code></pre>
 
 
 
-<p>Adding this entry in <strong>/etc/hosts</strong> file also resolves Simply Static&#8217;s <em>&#8220;Checking if WordPress can make requests to itself from your_IP&#8221;</em> FAIL issue.</p>
+<p>This also resolves Simply Static&#8217;s <code><em>"Checking if WordPress can make requests to itself from your_IP"</em> FAIL</code> issue.</p>
 ]]></content:encoded>
 					
 		
 		
 			</item>
 		<item>
-		<title>Ubuntu Server Docker Host and Docker Networking</title>
-		<link>https://jameswsullivan.github.io/ubuntu-server-docker-host-and-docker-networking/</link>
+		<title>Linux Administration: Configure Apache Web Server and Name-based Virtual Hosting</title>
+		<link>https://jameswsullivan.github.io/linux-administration-configure-apache-web-server-and-name-based-virtual-hosting/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Fri, 03 Feb 2023 20:19:00 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Apache]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[Self-Hosting]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+		<category><![CDATA[Web Hosting]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=18</guid>
+
+					<description><![CDATA[Configure]]></description>
+										<content:encoded><![CDATA[
+<blockquote class="wp-block-quote">
+<p>Update: this project has been optimized and containerized. See this <a href="https://github.com/jameswsullivan/selfhosted/tree/main/UbuntuLAMP" target="_blank" rel="noreferrer noopener">UbuntuLAMP project</a> on my github.</p>
+</blockquote>
+
+
+
+<p>Related Articles:</p>
+
+
+
+<ul>
+<li><a href="https://jameswsullivan.github.io/linux-administration-install-docker-on-ubuntu-server/">A Docker host</a>.</li>
+
+
+
+<li><a href="https://jameswsullivan.github.io/docker-administration-docker-networking-ipvlan/">An ipvlan docker network</a>.</li>
+
+
+
+<li>[Optional] <a href="https://jameswsullivan.github.io/docker-administration-smb-share-and-docker-volumes/">SMB shares and Docker volumes</a> for persistent files (<code>/var/www/html</code>).</li>
+
+
+
+<li>[Troubleshooting] <a href="https://jameswsullivan.github.io/linux-administration-troubleshooting-apache-web-server-and-name-based-virtual-hosting-with-wordpress/">Linux Administration: Troubleshooting Apache Web Server and Name-based Virtual Hosting with WordPress</a></li>
+</ul>
+
+
+
+<h2 class="wp-block-heading">Configure the web server:</h2>
+
+
+
+<pre class="wp-block-code"><code># Start a Ubuntu container:
+docker run -dit --name web-server --network docker_dev_net --ip 192.168.1.103 --mount source=my_smb_vol,destination=/var/www/html ubuntu
+
+# NOTE: Originally, I used underscores in my container names and hostnames, but it was causing issues in some scenarios where underscores are considered invalid or get misinterpreted. So hyphens are used instead.
+
+# Enter the container's shell prompt:
+docker exec -it web-server bash
+
+# Install network utilities for troubleshooting:
+apt-get install iputils-ping iproute2 traceroute -y
+
+# Install SSH:
+apt-get install openssh-client openssh-server -y
+
+# Install sudo and other utilities:
+apt-get install sudo nano -y
+
+# Install apache, php, and php-mysql:
+apt-get install apache2 php8.1 php-mysql libapache2-mod-php -y</code></pre>
+
+
+
+<p>Verify that the services are running and start the them if not:</p>
+
+
+
+<pre class="wp-block-code"><code># ssh and apache2 service status
+service ssh status
+service apache2 status
+
+# start the services:
+service ssh start
+service apache2 start</code></pre>
+
+
+
+<p>Configure hostname and name server (optional):</p>
+
+
+
+<pre class="wp-block-code"><code># Depending on your setup, you might need to specify the --hostname when creating your container:
+
+--hostname=&lt;your-hostname&gt;</code></pre>
+
+
+
+<p>Verify PHP version:</p>
+
+
+
+<pre class="wp-block-code"><code># Create a info.php file under the /var/www/html directory with the following content:
+
+&lt;?php phpinfo();?&gt;</code></pre>
+
+
+
+<p>Now that you should be able to visit the Apache server&#8217;s default landing page to verify that the Apache server is running and the info.php page to view your PHP version.</p>
+
+
+
+<h2 class="wp-block-heading">Configure name-based virtual hosting:</h2>
+
+
+
+<pre class="wp-block-code"><code># The example websites I'm using are: example.mydomain.com, example1.mydomain.com, example2.mydomain.com.
+
+# Create directories:
+
+mkdir /var/www/html/example1.mydomain.com
+mkdir /var/www/html/example2.mydomain.com
+
+# example.mydomain.com will reside under /var/www/html as the "main" website.
+
+# Change ownership of the directories accordingly. Here I changed the entire html directory and its subdirectories' ownership to www-data for convenience.
+
+chown -R www-data:www-data /var/www/html
+
+# Create Virtual Host configuration files for your sites.
+
+touch /etc/apache2/sites-available/example.mydomain.com.conf
+touch /etc/apache2/sites-available/example1.mydomain.com.conf
+touch /etc/apache2/sites-available/example2.mydomain.com.conf
+
+# example.mydomain.com.conf or use the 000-default.conf:
+&lt;VirtualHost *:80&gt;
+    ServerAdmin webmaster@example.mydomain
+    ServerName example.mydomain.com
+    DocumentRoot /var/www/html
+    DirectoryIndex index.html
+    ErrorLog ${APACHE_LOG_DIR}/example.mydomain.com_error.log
+    CustomLog ${APACHE_LOG_DIR}/example.mydomain.com_access.log combined
+&lt;/VirtualHost&gt;
+
+# example1.mydomain.com.conf and example2.mydomain.com.conf:
+&lt;VirtualHost *:80&gt;
+    ServerAdmin webmaster@example1.mydomain.com
+    ServerName example1.mydomain.com
+    DocumentRoot /var/www/html/example1.mydomain.com
+    DirectoryIndex index.php
+    ErrorLog ${APACHE_LOG_DIR}/example1.mydomain.com_error.log
+    CustomLog ${APACHE_LOG_DIR}/example1.mydomain.com_access.log combined
+&lt;/VirtualHost&gt;
+
+&lt;VirtualHost *:80&gt;
+    ServerAdmin webmaster@example2.mydomain.com
+    ServerName example2.mydomain.com
+    DocumentRoot /var/www/html/example2.mydomain.com
+    DirectoryIndex index.php
+    ErrorLog ${APACHE_LOG_DIR}/example2.mydomain.com_error.log
+    CustomLog ${APACHE_LOG_DIR}/example2.mydomain.com_access.log combined
+&lt;/VirtualHost&gt;
+
+# Enable the configuration files for the sites:
+
+a2ensite example1.mydomain.com
+a2ensite example2.mydomain.com
+
+# Restart apache2 service and verify that apache2 is running:
+
+service apache2 reload
+service apache2 status
+
+# Of course, you will need to add your own index.html or index.php file under the sites' directories.</code></pre>
+
+
+
+<h2 class="wp-block-heading">Configure DNS records:</h2>
+
+
+
+<pre class="wp-block-code"><code># I'm using my Cisco router as an example:
+
+ip host example.mydomain.com 192.168.1.103
+ip host example1.mydomain.com 192.168.1.103
+ip host example2.mydomain.com 192.168.1.103</code></pre>
+
+
+
+<p>Now that you should be able to visit the sites by going to:</p>
+
+
+
+<pre class="wp-block-code"><code>http:&#47;&#47;example.mydomain.com
+http://example1.mydomain.com/
+http://example2.mydomain.com/</code></pre>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Docker Administration: SMB share and Docker volumes</title>
+		<link>https://jameswsullivan.github.io/docker-administration-smb-share-and-docker-volumes/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Fri, 03 Feb 2023 16:52:00 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[Linux]]></category>
+		<category><![CDATA[Self-Hosting]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+		<category><![CDATA[Web Hosting]]></category>
+		<guid isPermaLink="false">https://www.alexchen.net/?p=2122</guid>
+
+					<description><![CDATA[Use SMB shares with Docker volumes.]]></description>
+										<content:encoded><![CDATA[
+<h2 class="wp-block-heading">Background:</h2>
+
+
+
+<p>Recently I&#8217;ve been setting up a Docker lab environment to run some applications and needed some data to persist and be shared across my lab network. Since most of the computers run Windows, using SMB shares seems to be the easiest solution.</p>
+
+
+
+<p>Related articles:</p>
+
+
+
+<ul>
+<li><a href="https://jameswsullivan.github.io/linux-administration-install-docker-on-ubuntu-server/">Docker host</a>.</li>
+
+
+
+<li><a href="https://jameswsullivan.github.io/docker-administration-docker-networking-ipvlan/">ipvlan Docker network</a>.</li>
+</ul>
+
+
+
+<h2 class="wp-block-heading">Configurations:</h2>
+
+
+
+<p>Create a <a href="https://docs.docker.com/storage/volumes/#create-cifssamba-volumes" target="_blank" rel="noreferrer noopener">Docker CIFS/Samba volume</a>:</p>
+
+
+
+<pre class="wp-block-code"><code># Assuming that the network share is at:
+\\main_server\DockerShare
+
+# Create a docker volume:
+docker volume create --driver local --opt type=cifs --opt device=//main_server/DockerShare --opt o=addr=main_server,username=your_username,password=your_password,file_mode=0777,dir_mode=0777 --name my_smb_vol</code></pre>
+
+
+
+<p>Run a container with a volume mount:</p>
+
+
+
+<pre class="wp-block-code"><code># List all volumes
+docker volume ls
+
+# Run a container with the volume that's been created:
+docker run -dit --name WEB_SERVER --network docker_dev_net --ip 192.168.1.103 --mount source=my_smb_vol,destination=/SharedVolume -p 443:443 -p 80:80 -p 22:22 ubuntu</code></pre>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Docker Administration: Docker Networking (ipvlan)</title>
+		<link>https://jameswsullivan.github.io/docker-administration-docker-networking-ipvlan/</link>
 		
 		<dc:creator><![CDATA[James]]></dc:creator>
 		<pubDate>Fri, 03 Feb 2023 04:19:00 +0000</pubDate>
 				<category><![CDATA[blog]]></category>
-		<category><![CDATA[Apache]]></category>
 		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Hosting]]></category>
+		<category><![CDATA[IPVLAN]]></category>
 		<category><![CDATA[Linux]]></category>
+		<category><![CDATA[Network Administration]]></category>
+		<category><![CDATA[Networking]]></category>
 		<category><![CDATA[Self-Hosting]]></category>
 		<category><![CDATA[Web Hosting]]></category>
 		<guid isPermaLink="false">https://www.alexchen.net/?p=2115</guid>
 
-					<description><![CDATA[This is the first installment of the Name-based Virtual Hosting Series.]]></description>
+					<description><![CDATA[Create ipvlan docker networks.]]></description>
 										<content:encoded><![CDATA[
-<p>Since I started with my new job late last year I have been dealing quite bit with Docker, the majority of the applications at work are hosted and developed in a Docker environment, and even for personal projects Docker has made hosting and development much easier compared to using traditional VMs. But recently I came across a rather inconvenient issue with Docker Desktop for Windows when it comes to networking.</p>
+<h2 class="wp-block-heading">Background:</h2>
 
 
 
-<p>The background is that my home lab&#8217;s network is well organized and controlled by IPs, access-lists, etc., via Cisco switches and routers, I needed my Docker host and dev containers to have static IP addresses and be within a specific IP range and add custom DNS records to my router to point to them. The Docker networking part is fairly straightforward, but what&#8217;s inconvenient is how Docker Desktop for Windows and WSL2 handle their networking part behind the scene. WSL2 gets its own vEthernet adapter with an IP in the 172.0.0.0 range and the containers get placed in a different 172.0.0.0 network segment and assigned with dynamic IPs and depending on how the Hyper-V and WSL2 backend handles the routing and switching, it&#8217;s rather difficult (if not impossible) to easily assign static IPs to the containers within the same IP segment as the host machine and make them part of the same subnet for easy access. After a couple of hours fiddling around with different solutions I basically gave up on it as it&#8217;s really not worth the time and efforts doing so, I opted to have a dedicated Hyper-V VM running Ubuntu Server as the Docker host on my home server.</p>
+<p>My home lab&#8217;s network is organized and controlled by IPs, access-lists, etc., via Cisco routers and switches, so I wanted my Docker host and containers to have static IP addresses and be within the same IP segment and add custom DNS records to my DNS servers to resolve to them. The Docker networking part is fairly straightforward, but what&#8217;s inconvenient is how Docker Desktop for Windows and WSL2 handle their networking part behind the scene. WSL2 gets its own vEthernet adapter with an IP in the 172.0.0.0 range and the containers get placed in a different 172.0.0.0 network segment and assigned with dynamic IPs and depending on how the Hyper-V and WSL2 backend handles the routing and switching, it&#8217;s rather difficult (if not impossible) to easily assign static IPs to the containers within the same IP segment as the host machine and make them part of the same subnet for easy access. After a couple of hours fiddling around with different solutions I basically gave up on it as it&#8217;s really not worth the time and efforts doing so, I opted to have a dedicated <a href="https://jameswsullivan.github.io/linux-administration-install-docker-on-ubuntu-server/">Hyper-V VM running Ubuntu Server as the Docker host</a>.</p>
 
 
 
-<p>Since it&#8217;s Ubuntu Server, the networking part becomes very straightforward:</p>
+<h2 class="wp-block-heading">Solution:</h2>
 
 
 
-<p>The Docker host VM has its own static IP, e.g. 192.168.1.100/24. (The IP is assigned to interface <strong>eth0</strong> in Ubuntu.)</p>
+<p>On an Ubuntu Server the networking part becomes straightforward.</p>
+
+
+
+<p>Assuming that the Docker host VM has the IP address of 192.168.1.100/24 (this is the IP assigned to interface <strong>eth0</strong>). To find out what IP the <code>eth0</code> interface is using, run:</p>
 
 
 
@@ -1084,7 +1370,7 @@ service restart apache2</code></pre>
 
 
 
-<p>Create an <strong><a href="https://docs.docker.com/network/ipvlan/" target="_blank" rel="noreferrer noopener">ipvlan</a></strong> network of the same subnet:</p>
+<p>Create an <strong><a href="https://docs.docker.com/network/ipvlan/" target="_blank" rel="noreferrer noopener">ipvlan</a></strong> network:</p>
 
 
 
@@ -1096,8 +1382,7 @@ service restart apache2</code></pre>
 
 
 
-<pre class="wp-block-code"><code># I'm using the ubuntu/mysql Docker Image here as an example.
-# The port 22 here is for being able to SSH into this container from my main windows computer.
+<pre class="wp-block-code"><code># Let's use ubuntu/mysql Docker image as an example:
 
 docker run -dit --name MySQL_DEV --network docker_dev_net --ip 192.168.1.101 -p 3306:3306 -p 22:22 -e MYSQL_ROOT_PASSWORD=password ubuntu/mysql
 
@@ -1115,333 +1400,7 @@ ip host MySQL_DEV.mydomain 192.168.1.101</code></pre>
 
 
 
-<p>To conclude, it&#8217;s much easier to create Docker networks and containers and tap them into your existing network infrastructure in this way, without having to mess with Docker Desktop for Windows and WSL2. The final results are that I started three containers running MySQL, PostgreSQL, and Ubuntu, respectively. (The Ubuntu container will serve as an Apache web server hosting my websites.)</p>
-
-
-
-<pre class="wp-block-code"><code>docker run -dit --name WEB_SERVER --network docker_dev_net --ip 192.168.1.103 -p 443:443 -p 80:80 -p 22:22 ubuntu
-
-docker run -dit --name MySQL_DEV --network docker_dev_net --ip 192.168.1.101 -p 3306:3306 -p 22:22 -e MYSQL_ROOT_PASSWORD=password ubuntu/mysql
-
-docker run -dit --name PostgreSQL_DEV --network docker_dev_net --ip 192.168.1.102 -p 5432:5432 -p 22:22 -e POSTGRES_PASSWORD=password postgres</code></pre>
-
-
-
 <p></p>
-
-
-
-<p></p>
-
-
-
-<p></p>
-
-
-
-<p></p>
-
-
-
-<p></p>
-
-
-
-<p></p>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Nextcloud Performance</title>
-		<link>https://jameswsullivan.github.io/nextcloud-performance/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Mon, 20 Sep 2021 07:28:07 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[Apache]]></category>
-		<category><![CDATA[Hosting]]></category>
-		<category><![CDATA[Linux]]></category>
-		<category><![CDATA[Nextcloud]]></category>
-		<category><![CDATA[Self-Hosting]]></category>
-		<category><![CDATA[System Administration]]></category>
-		<category><![CDATA[Ubuntu]]></category>
-		<category><![CDATA[Web Hosting]]></category>
-		<guid isPermaLink="false">https://www.alexchen.net/?p=1633</guid>
-
-					<description><![CDATA[Nextcloud performance optimization.]]></description>
-										<content:encoded><![CDATA[
-<p>After about two days&#8217; troubleshooting and and testing, Nextcloud is successfully running in my homelab. This article documents a few performance tweaking.</p>
-
-
-
-<p>1. PHP <code>max_input_time</code> and <code>max_execution_time</code>. (I was getting 504 Gateway Timeout when uploading larger files.)</p>
-
-
-
-<pre class="wp-block-code"><code># Modify php.ini under /etc/php/8.0/fpm/ and /etc/php/8.0/apache2/
-max_input_time 86400
-max_execution_time 86400
-
-upload_max_filesize 50G
-post_max_size 51G
-
-# Restart PHP and Apache
-service apache2 restart
-service php8.0-fpm restart</code></pre>
-
-
-
-<p>2. Disable file locking. This potentially will cause problems when you have multiple users collaborating on file editing/syncing, but in my single-user setup this was not a concern. I needed to do this when I synced some large files and the client froze, and after a force restart/resync, the Nextcloud client reported <code>423 Locked</code> to <code>PUT https://...../</code> .</p>
-
-
-
-<pre class="wp-block-code"><code># Add
-'filelocking.enabled' => false,
-# to nextcloud's config.php, and clear the locked files.
-
-# Add
-'maintenance' => true,
-# to config.php
-
-# Get into MariaDB and run the following
-DELETE FROM oc_file_locks WHERE 1;
-
-# Revert maintenance mode
-'maintenance' => false,
-
-# Restart PHP and Apache
-service apache2 restart
-service php8.0-fpm restart</code></pre>
-
-
-
-<p>3. Overall performance.</p>
-
-
-
-<p>Nextcloud&#8217;s overall syncing speed has a lot to do with your Nextcloud server&#8217;s performance, the more smooth your server runs the better syncing performance you&#8217;ll get (more RAM, SSD, etc.). I was able to get roughly 25MB upload speed and 65MB download speed with a Hyper-V VM running Ubuntu Desktop.</p>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Self-host Nextcloud</title>
-		<link>https://jameswsullivan.github.io/self-host-nextcloud/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Sat, 18 Sep 2021 11:43:43 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[Apache]]></category>
-		<category><![CDATA[Docker]]></category>
-		<category><![CDATA[Hosting]]></category>
-		<category><![CDATA[Linux]]></category>
-		<category><![CDATA[Nextcloud]]></category>
-		<category><![CDATA[Self-Hosting]]></category>
-		<category><![CDATA[Ubuntu]]></category>
-		<category><![CDATA[Web Hosting]]></category>
-		<guid isPermaLink="false">https://www.alexchen.net/?p=1597</guid>
-
-					<description><![CDATA[Take back control of your privacy with self-hosted Nextcloud.]]></description>
-										<content:encoded><![CDATA[
-<p><em>I used to trust Google more when they were under the leadership of Larry Page and Sergey Brin and held up their &#8220;Don&#8217;t Do Evil&#8221; motto, and I used to admire them more when they had the balls to stand up against China&#8217;s censorship. But nowadays Google has become more of a censorship giant itself by implementing the radical left&#8217;s communist political agenda, and its ever increasing intrusion to our privacy is just too concerning. Luckily, there are plenty open source alternatives.</em></p>
-
-
-
-<h2 class="wp-block-heading">Installation:</h2>
-
-
-
-<p><strong>Environment:</strong> Windows Server 2019 + Hyper-V</p>
-
-
-
-<p><strong>Linux version:</strong> Ubuntu 20.04 LTS</p>
-
-
-
-<p><strong>LAMP Stack:</strong> PHP8.0, MariaDB, Apache</p>
-
-
-
-<p>My main reference sources are from <a rel="noreferrer noopener" href="https://docs.nextcloud.com/server/latest/admin_manual/installation/example_ubuntu.html" data-type="URL" data-id="https://docs.nextcloud.com/server/latest/admin_manual/installation/example_ubuntu.html" target="_blank">this article</a> and <a rel="noreferrer noopener" href="https://www.itzgeek.com/how-tos/linux/debian/how-to-install-apache-mariadb-php-lamp-stack-on-debian-11.html" data-type="URL" data-id="https://www.itzgeek.com/how-tos/linux/debian/how-to-install-apache-mariadb-php-lamp-stack-on-debian-11.html" target="_blank">this article</a>, however, some commands are slightly modified to fit my needs.</p>
-
-
-
-<pre class="wp-block-code"><code># Become root
-sudo -i
-
-# Install Apache
-apt-get update -y
-apt-get install -y apache2 apache2-utils
-systemctl status apache2
-# After installation, visit http://localhost/ to verify that Apache is running.
-
-# Install MariaDB
-apt-get install -y mariadb-server mariadb-client
-systemctl status mariadb
-mysql_secure_installation
-
-# Install PHP8.0 (the default PHP version might be PHP7.4, I completely skipped what was in the original article and went with PHP8.0)
-apt-get install software-properties-common -y
-add-apt-repository ppa:ondrej/php
-apt-get update -y
-apt-get install php8.0 libapache2-mod-php8.0 -y
-systemctl restart apache2
-
-apt-get update -y
-apt-get install php8.0-fpm libapache2-mod-fcgid -y
-a2enmod proxy_fcgi setenvif
-a2enconf php8.0-fpm
-systemctl restart apache2
-
-# Install other modules for Nextcloud
-apt-get install -y php8.0-gd php8.0-mysql php8.0-curl php8.0-mbstring php8.0-intl
-apt-get install -y php8.0-gmp php8.0-bcmath php-imagick php8.0-xml php8.0-zip
-
-
-# Create MySQL database
-sudo /etc/init.d/mysql start
-mysql -u root -p
-
-CREATE USER 'username'@'localhost' IDENTIFIED BY 'password';
-
-# In the next query, you'll need to remove all the dashes because WordPress's code block editor has problems with the the charset portion of the query by giving a "Publishing failed. The response is not a valid JSON response." error.
-
-CREATE DATABASE IF NOT EXISTS nextcloud CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-
-GRANT ALL PRIVILEGES ON nextcloud.* TO 'username'@'localhost';
-FLUSH PRIVILEGES;
-
-quit;</code></pre>
-
-
-
-<p>Download Nextcloud server package from <a rel="noreferrer noopener" href="https://nextcloud.com/install/" target="_blank" data-type="URL" data-id="https://nextcloud.com/install/">here</a>.</p>
-
-
-
-<pre class="wp-block-code"><code># My Downloads folder path is /home/*username*/Downloads, and the current version Nextcloud build I use is nextcloud-22.1.1.zip .
-cd /home/*username*/Downloads
-unzip nextcloud-22.1.1.zip
-
-# Copy to Apache document root
-cp -r nextcloud /var/www/html</code></pre>
-
-
-
-<p>Next, configure the Apache web server. <a rel="noreferrer noopener" href="https://docs.nextcloud.com/server/latest/admin_manual/installation/source_installation.html#apache-configuration-label" data-type="URL" data-id="https://docs.nextcloud.com/server/latest/admin_manual/installation/source_installation.html#apache-configuration-label" target="_blank">Reference article</a>.</p>
-
-
-
-<pre class="wp-block-code"><code># Use your favorite text editor in Linux to create the nextcloud.conf file under /etc/apache2/sites-available/nextcloud.conf .
-
-# I used directory based installation, so I added the following in nextcloud.conf
-
-Alias /nextcloud "/var/www/html/nextcloud/"
-
-&lt;Directory /var/www/html/nextcloud/>
-  Require all granted
-  AllowOverride All
-  Options FollowSymLinks MultiViews
-
-  &lt;IfModule mod_dav.c>
-    Dav off
-  &lt;/IfModule>
-&lt;/Directory>
-
-
-# Enable modules and sites
-a2ensite nextcloud.conf
-a2enmod rewrite
-a2enmod headers
-a2enmod env
-a2enmod dir
-a2enmod mime
-a2enmod setenvif
-systemctl reload apache2
-
-
-# Enable SSL
-a2enmod ssl
-a2ensite default-ssl
-systemctl reload apache2
-
-# Change directory permission
-chown -R www-data:www-data /var/www/html/nextcloud/</code></pre>
-
-
-
-<p>Now, Nextcloud should be working, the next few steps are very straightforward through Nextcloud&#8217;s setup page.</p>
-
-
-
-<h2 class="wp-block-heading">Post-setup configs and troubleshooting:</h2>
-
-
-
-<ol>
-<li>Add Trusted Domain in Nextcloud&#8217;s config files. <a rel="noreferrer noopener" href="https://help.nextcloud.com/t/howto-add-a-new-trusted-domain/26" data-type="URL" data-id="https://help.nextcloud.com/t/howto-add-a-new-trusted-domain/26" target="_blank">Ref.</a></li>
-
-
-
-<li>Increase PHP memory_limit.</li>
-
-
-
-<li>View phpinfo.</li>
-</ol>
-
-
-
-<pre class="wp-block-code"><code># 1. In your nextcloud directory, /var/www/html/nextcloud/config , find the config.php file and edit the line with 'trusted_domain'. Assuming you'll access your nextcloud using 'localhost', '192.168.0.2', and 'my_nextcloud' , write the trusted_domain like below.
-
-  'trusted_domains' =&gt;
-  array (
-    0 =&gt; 'localhost',
-    1 =&gt; '192.168.0.29',
-    2 =&gt; 'my_nextcloud',
-  ),
-
-# 2. Change line memory_limit to a desired value in both /etc/php/8.0/fpm/php.ini and /etc/php/8.0/apache2/php.ini , e.g. memory_limit=512M, and then restart the services.
-
-service php8.0-fpm restart
-service apache2 restart
-
-# 3. Create a info.php file in document root to verify php info.
-
-cd /var/www/html/
-touch info.php
-
-# Add the following to info.php using your favorite text editor.
-
-&lt;?php phpinfo(); ?&gt;
-
-# Visit info.php in a browser to view phpinfo.</code></pre>
-
-
-
-<p>Useful MariaDB/MySQL commands:</p>
-
-
-
-<pre class="wp-block-code"><code># Find out usernames, databases, ports
-mysql -u root -p
-SELECT User FROM mysql.user;
-SHOW GLOBAL VARIABLES IKE 'PORT';
-SHOW DATABASES;</code></pre>
-
-
-
-<p>Disable (to not enforce) 2FA in Nextcloud:</p>
-
-
-
-<pre class="wp-block-code"><code># In file /var/www/html/nextcloud/config/config.php, change the following.
-
-‘twofactor_enforced’ =&gt; ‘false’</code></pre>
 ]]></content:encoded>
 					
 		
