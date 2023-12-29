@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/self-hosting/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Fri, 29 Dec 2023 18:18:35 +0000</lastBuildDate>
+	<lastBuildDate>Fri, 29 Dec 2023 21:00:18 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -636,7 +636,7 @@ service restart apache2</code></pre>
 		<category><![CDATA[Web Hosting]]></category>
 		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=18</guid>
 
-					<description><![CDATA[Configure]]></description>
+					<description><![CDATA[Configure Apache Web Server and Name-based Virtual Hosting]]></description>
 										<content:encoded><![CDATA[
 <blockquote class="wp-block-quote">
 <p>Update: this project has been optimized and containerized. See this <a href="https://github.com/jameswsullivan/selfhosted/tree/main/UbuntuLAMP" target="_blank" rel="noreferrer noopener">UbuntuLAMP project</a> on my github.</p>
