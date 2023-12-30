@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Split DNS &#8211; howdy</title>
+	<atom:link href="https://jameswsullivan.github.io/tag/split-dns/feed/" rel="self" type="application/rss+xml" />
+	<link>https://jameswsullivan.github.io/</link>
+	<description></description>
+	<lastBuildDate>Sat, 30 Dec 2023 17:44:24 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.4.2</generator>
+	<item>
+		<title>Network Administration: Split DNS</title>
+		<link>https://jameswsullivan.github.io/network-administration-split-dns/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sat, 30 Dec 2023 17:38:32 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Cisco]]></category>
+		<category><![CDATA[Cisco 2951]]></category>
+		<category><![CDATA[Cisco IOS]]></category>
+		<category><![CDATA[DNS]]></category>
+		<category><![CDATA[Network Administration]]></category>
+		<category><![CDATA[Networking]]></category>
+		<category><![CDATA[Self-Hosting]]></category>
+		<category><![CDATA[Split DNS]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2982</guid>
+
+					<description><![CDATA[Configure Split DNS on Cisco 2951 router for internal and external traffic.]]></description>
+										<content:encoded><![CDATA[
+<h2 class="wp-block-heading">Background:</h2>
+
+
+
+<p>Recently I experimented with Split DNS on a Cisco 2951 router using two DNS views to separately resolve DNS lookups to internal and external sites. The internal view will resolve DNS lookups to my self-hosted services within the lab using the Domain Controllers, and the external view will serve regular traffic to the Internet. The configuration works as intended, however for some unknown reason the DNS lookups for external traffic took quite a bit longer than usual, while internal traffic works fine. It could be due to some glitch with a specific IOS firmware version or the router itself, but before I have other devices to compare, it remains a mystery for now. (Note: I did experiment with different combinations of the configurations during the troubleshooting to try to narrow things down, but unfortunately it was always slower on the internet side.)</p>
+
+
+
+<p>Eventually, for better performance I reverted the changes back to using the basic single view DNS setting on the router and set it to use the DCs&#8217; IPs as the name servers, and then on the DCs I set CloudFlare&#8217;s 1.1.1.1 as the DNS forwarder. And there was no slow DNS lookups anymore.</p>
+
+
+
+<h2 class="wp-block-heading">Configure Split DNS:</h2>
+
+
+
+<pre class="wp-block-code"><code># Configure a separate DNS view for internal traffic:
+ip dns view internal-view
+domain name-server &lt;DC-01s-IP-Address&gt;
+domain name-server &lt;DC-02s-IP-Address&gt;
+exit
+
+# Configure the default view to use for general internet traffic:
+ip dns view default
+domain name-server 1.1.1.1
+domain name-server 8.8.8.8
+exit
+# or, use your ISP's DNS servers.
+
+# Define a DNS name-list for your internal network's domain (e.g. mydomain.local):
+ip dns name-list 100 permit .*.mydomain.local
+
+# Define a DNS view-list called SPLITDNS, and assign the views with their appropriate evaluation order (10 and 99):
+ip dns view-list SPLITDNS
+view internal-view 10
+restrict name-group 100
+view default 99
+
+# Enable DNS server:
+ip dns server
+ip dns server view-group SPLITDNS</code></pre>
+
+
+
+<h2 class="wp-block-heading">Troubleshooting:</h2>
+
+
+
+<p>To view debug messages and see if the correct views are being used for different traffic, enable the following debugging options accordingly:</p>
+
+
+
+<pre class="wp-block-code"><code>debug ip dns view
+debug ip dns view-list
+debug ip dns name-list
+
+terminal monitor</code></pre>
+
+
+
+<p>Test name resolution with <code>nslookup</code> :</p>
+
+
+
+<pre class="wp-block-code"><code>nslookup -type=ns myapp.mydomain.local
+nslookup -type=ns www.google.com</code></pre>
+
+
+
+<p>View configured DNS views:</p>
+
+
+
+<pre class="wp-block-code"><code>show ip dns view
+show ip dns view-list
+show ip dns name-list</code></pre>
+
+
+
+<p>Reference article: <a href="https://notalwaysthenetwork.com/2014/09/09/split-dns-with-cisco-routers/" target="_blank" rel="noreferrer noopener">Split DNS with Cisco Routers</a></p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+	</channel>
+</rss>
