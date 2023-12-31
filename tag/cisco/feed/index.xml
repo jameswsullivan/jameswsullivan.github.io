@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/cisco/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Sat, 30 Dec 2023 17:44:24 +0000</lastBuildDate>
+	<lastBuildDate>Sat, 30 Dec 2023 22:58:02 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -56,8 +56,9 @@
 
 <pre class="wp-block-code"><code># Configure a separate DNS view for internal traffic:
 ip dns view internal-view
-domain name-server &lt;DC-01s-IP-Address&gt;
-domain name-server &lt;DC-02s-IP-Address&gt;
+domain list mydomain.local
+domain name-server &lt;DC-01s-IP-Address>
+domain name-server &lt;DC-02s-IP-Address>
 exit
 
 # Configure the default view to use for general internet traffic:

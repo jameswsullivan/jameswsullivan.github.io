@@ -380,8 +380,9 @@ li code {
 
 <pre class="wp-block-code"><code># Configure a separate DNS view for internal traffic:
 ip dns view internal-view
-domain name-server &lt;DC-01s-IP-Address&gt;
-domain name-server &lt;DC-02s-IP-Address&gt;
+domain list mydomain.local
+domain name-server &lt;DC-01s-IP-Address>
+domain name-server &lt;DC-02s-IP-Address>
 exit
 
 # Configure the default view to use for general internet traffic:
