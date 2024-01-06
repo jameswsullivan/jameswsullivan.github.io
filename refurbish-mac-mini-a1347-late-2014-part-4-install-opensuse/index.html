@@ -218,7 +218,20 @@ li code {
         </svg>
     </button>
 		    <div class="c-sidebar__main">
-		            <article id="post-2982" class="c-post c-post--archive post-2982 post type-post status-publish format-standard hentry category-blog tag-cisco tag-cisco-2951 tag-cisco-ios tag-dns tag-network-administration tag-networking tag-self-hosting tag-split-dns">
+		            <article id="post-2991" class="c-post c-post--archive post-2991 post type-post status-publish format-standard hentry category-blog tag-cisco tag-cisco-ios tag-network-administration tag-networking tag-policy-based-routing tag-route-map">
+                <a href="https://jameswsullivan.github.io/network-administration-policy-based-routing/" class="c-post__link" aria-label="Network Administration: Policy Based Routing"></a>
+                <header class="c-post__header">
+					<h3 class="c-post__title h3">Network Administration: Policy Based Routing                </h3></header><!-- .entry-header -->
+				                    <div class="c-post__content">
+						Configure Policy Based Routing with Route Map on Cisco router.                    </div>
+<!-- .entry-content -->
+								                    <footer class="c-post__footer">
+                        <div class="c-post__footer__meta">
+							<span class="c-post__date__published"><time class="c-post__date entry-date" datetime="2024-01-06T16:59:43-06:00">2024-01-06</time></span>                        </div>
+<!-- .entry-meta -->
+                    </footer>
+				            </article><!-- #post-2991 -->
+			            <article id="post-2982" class="c-post c-post--archive post-2982 post type-post status-publish format-standard hentry category-blog tag-cisco tag-cisco-2951 tag-cisco-ios tag-dns tag-network-administration tag-networking tag-self-hosting tag-split-dns">
                 <a href="https://jameswsullivan.github.io/network-administration-split-dns/" class="c-post__link" aria-label="Network Administration: Split DNS"></a>
                 <header class="c-post__header">
 					<h3 class="c-post__title h3">Network Administration: Split DNS                </h3></header><!-- .entry-header -->
@@ -335,19 +348,6 @@ li code {
 <!-- .entry-meta -->
                     </footer>
 				            </article><!-- #post-2637 -->
-			            <article id="post-2574" class="c-post c-post--archive post-2574 post type-post status-publish format-standard hentry category-blog tag-cisco tag-cisco-2951 tag-cisco-c3750g tag-intervlan-routing tag-network-administration tag-networking tag-router-on-a-stick tag-svi tag-switch-virtual-interface">
-                <a href="https://jameswsullivan.github.io/network-administration-configure-vlan-and-intervlan-routing/" class="c-post__link" aria-label="Network Administration: Configure VLAN and InterVLAN Routing"></a>
-                <header class="c-post__header">
-					<h3 class="c-post__title h3">Network Administration: Configure VLAN and InterVLAN Routing                </h3></header><!-- .entry-header -->
-				                    <div class="c-post__content">
-						Configure VLAN and InterVLAN routing on Cisco router and switch using router-on-a-stick and SVI.                    </div>
-<!-- .entry-content -->
-								                    <footer class="c-post__footer">
-                        <div class="c-post__footer__meta">
-							<span class="c-post__date__published"><time class="c-post__date entry-date" datetime="2023-06-20T10:25:19-05:00">2023-06-20</time></span>                        </div>
-<!-- .entry-meta -->
-                    </footer>
-				            </article><!-- #post-2574 -->
 			    </div> <div class="c-sidebar__footer"><a class="c-btn c-btn--secondary c-btn--fw" href="https://jameswsullivan.github.io/">All Posts</a></div></aside>
 
     <main id="primary" class="c-main js-main">
@@ -366,7 +366,7 @@ li code {
 
 
 
-<p>One of the Mac Minis will be used for KubeSphere in a lab environment and I wanted to experiment with openSUSE. However, due to Macs handles the EFI slight differently, both openSUSE&#8217;s default GRUB2 for EFI and GRUB2 Boot Loader configs fail during installation. I&#8217;ve experimented with different combination of settings and openSUSE would not boot successfully once the USB drive is removed. Eventually, <a href="https://www.rodsbooks.com/refind/" target="_blank" rel="noreferrer noopener">rEFInd</a> resolved the problems.</p>
+<p>One of the Mac Minis will be used for KubeSphere in a lab environment and I wanted to experiment with openSUSE. However, due to Macs handles the EFI slight differently, both openSUSE&#8217;s default GRUB2 for EFI and GRUB2 Boot Loader configs fail during installation. I&#8217;ve experimented with different combination of settings and openSUSE would not boot successfully once the USB drive is removed. Eventually, <a href="https://www.rodsbooks.com/refind/" target="_blank" rel="noreferrer noopener">rEFInd</a> resolved the problem.</p>
 
 
 
@@ -379,7 +379,7 @@ li code {
 
 
 
-<li>openSUSE Leap 15.5, with &#8220;Server&#8221; System Role, (installed natively via USB, without macOS)
+<li>openSUSE Leap 15.5, with &#8220;Server&#8221; System Role (installed natively via USB, without macOS)
 <ul>
 <li>Partition layout:
 <ul>
@@ -416,7 +416,8 @@ li code {
 
 
 
-<pre class="wp-block-code"><code><strong>Error</strong>
+<pre class="wp-block-code"><code><strong>Error
+</strong>
 
 Execution of command "&#91;&#91;"/usr/sbin/grub2-install","--target=x86_64-efi","--force","--skip-fs-probe"]]" failed.
 Exit code: 1
@@ -499,7 +500,7 @@ Could not prepare Boot variable: invalid argument
 
 
 
-<pre class="wp-block-code"><code># become root first to make things easy.
+<pre class="wp-block-code"><code># become root first just to make things easy.
 
 cd /tmp
 
@@ -546,7 +547,7 @@ re-run this script or install manually before rEFInd will work.</code></pre>
 
 
 
-<p>If that&#8217;s the case, perform the following steps:</p>
+<p>If this is the case, perform the following steps:</p>
 
 
 

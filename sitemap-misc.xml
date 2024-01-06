@@ -1,9 +1,9 @@
-<?xml version='1.0' encoding='UTF-8'?><?xml-stylesheet type='text/xsl' href='https://jameswsullivan.github.io/wp-content/plugins/google-sitemap-generator/sitemap.xsl'?><!-- sitemap-generator-url='http://www.arnebrachhold.de/' sitemap-generator-version='4.1.16' -->
-<!-- generated-on='2023-12-30 22:58' -->
+<?xml version='1.0' encoding='UTF-8'?><?xml-stylesheet type='text/xsl' href='https://jameswsullivan.github.io/wp-content/plugins/google-sitemap-generator/sitemap.xsl'?><!-- sitemap-generator-url='http://www.arnebrachhold.de/' sitemap-generator-version='4.1.17' -->
+<!-- generated-on='2024-01-06 23:11' -->
 <urlset xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd' xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>	<url>
 		<loc>https://jameswsullivan.github.io/</loc>
-		<lastmod>2023-12-30T22:58:02+00:00</lastmod>
+		<lastmod>2024-01-06T23:09:41+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>1.0</priority>
 	</url>
-</urlset><!-- Request ID: d5799e057693c156bbdbf8c95fc2ba79; Queries for sitemap: 3; Total queries: 17; Seconds: $end_time; Memory for sitemap: 0MB; Total memory: 4MB -->
+</urlset><!-- Request ID: 491c30ac6a1f3faf09c4fcb6f363d022; Queries for sitemap: 3; Total queries: 17; Seconds: $end_time; Memory for sitemap: 0MB; Total memory: 4MB -->

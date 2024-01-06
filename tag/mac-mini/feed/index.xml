@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/tag/mac-mini/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Wed, 22 Nov 2023 01:22:27 +0000</lastBuildDate>
+	<lastBuildDate>Sat, 06 Jan 2024 23:09:41 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -43,7 +43,7 @@
 
 
 
-<p>One of the Mac Minis will be used for KubeSphere in a lab environment and I wanted to experiment with openSUSE. However, due to Macs handles the EFI slight differently, both openSUSE&#8217;s default GRUB2 for EFI and GRUB2 Boot Loader configs fail during installation. I&#8217;ve experimented with different combination of settings and openSUSE would not boot successfully once the USB drive is removed. Eventually, <a href="https://www.rodsbooks.com/refind/" target="_blank" rel="noreferrer noopener">rEFInd</a> resolved the problems.</p>
+<p>One of the Mac Minis will be used for KubeSphere in a lab environment and I wanted to experiment with openSUSE. However, due to Macs handles the EFI slight differently, both openSUSE&#8217;s default GRUB2 for EFI and GRUB2 Boot Loader configs fail during installation. I&#8217;ve experimented with different combination of settings and openSUSE would not boot successfully once the USB drive is removed. Eventually, <a href="https://www.rodsbooks.com/refind/" target="_blank" rel="noreferrer noopener">rEFInd</a> resolved the problem.</p>
 
 
 
@@ -56,7 +56,7 @@
 
 
 
-<li>openSUSE Leap 15.5, with &#8220;Server&#8221; System Role, (installed natively via USB, without macOS)
+<li>openSUSE Leap 15.5, with &#8220;Server&#8221; System Role (installed natively via USB, without macOS)
 <ul>
 <li>Partition layout:
 <ul>
@@ -93,7 +93,8 @@
 
 
 
-<pre class="wp-block-code"><code><strong>Error</strong>
+<pre class="wp-block-code"><code><strong>Error
+</strong>
 
 Execution of command "&#91;&#91;"/usr/sbin/grub2-install","--target=x86_64-efi","--force","--skip-fs-probe"]]" failed.
 Exit code: 1
@@ -171,7 +172,7 @@ Could not prepare Boot variable: invalid argument
 
 
 
-<pre class="wp-block-code"><code># become root first to make things easy.
+<pre class="wp-block-code"><code># become root first just to make things easy.
 
 cd /tmp
 
@@ -218,7 +219,7 @@ re-run this script or install manually before rEFInd will work.</code></pre>
 
 
 
-<p>If that&#8217;s the case, perform the following steps:</p>
+<p>If this is the case, perform the following steps:</p>
 
 
 
@@ -582,10 +583,6 @@ net start msiserver</code></pre>
 
 <figure class="wp-block-image size-large"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-06-scaled.jpg"><img loading="lazy" decoding="async" width="1024" height="1024" data-id="2818" src="https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-06-1024x1024.jpg" alt="" class="wp-image-2818" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-06-1024x1024.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-06-300x300.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-06-150x150.jpg 150w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-06-768x768.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-06-1536x1536.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-06-2048x2048.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-06-140x140.jpg 140w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-06-380x380.jpg 380w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-06-600x600.jpg 600w" sizes="(max-width: 1024px) 100vw, 1024px" /></a></figure>
 </figure>
-
-
-
-<p></p>
 ]]></content:encoded>
 					
 		

@@ -218,7 +218,20 @@ li code {
         </svg>
     </button>
 		    <div class="c-sidebar__main">
-		            <article id="post-2982" class="c-post c-post--archive is-selected-post post-2982 post type-post status-publish format-standard hentry category-blog tag-cisco tag-cisco-2951 tag-cisco-ios tag-dns tag-network-administration tag-networking tag-self-hosting tag-split-dns">
+		            <article id="post-2991" class="c-post c-post--archive post-2991 post type-post status-publish format-standard hentry category-blog tag-cisco tag-cisco-ios tag-network-administration tag-networking tag-policy-based-routing tag-route-map">
+                <a href="https://jameswsullivan.github.io/network-administration-policy-based-routing/" class="c-post__link" aria-label="Network Administration: Policy Based Routing"></a>
+                <header class="c-post__header">
+					<h3 class="c-post__title h3">Network Administration: Policy Based Routing                </h3></header><!-- .entry-header -->
+				                    <div class="c-post__content">
+						Configure Policy Based Routing with Route Map on Cisco router.                    </div>
+<!-- .entry-content -->
+								                    <footer class="c-post__footer">
+                        <div class="c-post__footer__meta">
+							<span class="c-post__date__published"><time class="c-post__date entry-date" datetime="2024-01-06T16:59:43-06:00">2024-01-06</time></span>                        </div>
+<!-- .entry-meta -->
+                    </footer>
+				            </article><!-- #post-2991 -->
+			            <article id="post-2982" class="c-post c-post--archive is-selected-post post-2982 post type-post status-publish format-standard hentry category-blog tag-cisco tag-cisco-2951 tag-cisco-ios tag-dns tag-network-administration tag-networking tag-self-hosting tag-split-dns">
                 <a href="https://jameswsullivan.github.io/network-administration-split-dns/" class="c-post__link" aria-label="Network Administration: Split DNS"></a>
                 <header class="c-post__header">
 					<h3 class="c-post__title h3">Network Administration: Split DNS                </h3></header><!-- .entry-header -->
@@ -335,19 +348,6 @@ li code {
 <!-- .entry-meta -->
                     </footer>
 				            </article><!-- #post-2637 -->
-			            <article id="post-2574" class="c-post c-post--archive post-2574 post type-post status-publish format-standard hentry category-blog tag-cisco tag-cisco-2951 tag-cisco-c3750g tag-intervlan-routing tag-network-administration tag-networking tag-router-on-a-stick tag-svi tag-switch-virtual-interface">
-                <a href="https://jameswsullivan.github.io/network-administration-configure-vlan-and-intervlan-routing/" class="c-post__link" aria-label="Network Administration: Configure VLAN and InterVLAN Routing"></a>
-                <header class="c-post__header">
-					<h3 class="c-post__title h3">Network Administration: Configure VLAN and InterVLAN Routing                </h3></header><!-- .entry-header -->
-				                    <div class="c-post__content">
-						Configure VLAN and InterVLAN routing on Cisco router and switch using router-on-a-stick and SVI.                    </div>
-<!-- .entry-content -->
-								                    <footer class="c-post__footer">
-                        <div class="c-post__footer__meta">
-							<span class="c-post__date__published"><time class="c-post__date entry-date" datetime="2023-06-20T10:25:19-05:00">2023-06-20</time></span>                        </div>
-<!-- .entry-meta -->
-                    </footer>
-				            </article><!-- #post-2574 -->
 			    </div> <div class="c-sidebar__footer"><a class="c-btn c-btn--secondary c-btn--fw" href="https://jameswsullivan.github.io/">All Posts</a></div></aside>
 
     <main id="primary" class="c-main js-main">
@@ -366,11 +366,11 @@ li code {
 
 
 
-<p>Recently I experimented with Split DNS on a Cisco 2951 router using two DNS views to separately resolve DNS lookups to internal and external sites. The internal view will resolve DNS lookups to my self-hosted services within the lab using the Domain Controllers, and the external view will serve regular traffic to the Internet. The configuration works as intended, however for some unknown reason the DNS lookups for external traffic took quite a bit longer than usual, while internal traffic works fine. It could be due to some glitch with a specific IOS firmware version or the router itself, but before I have other devices to compare, it remains a mystery for now. (Note: I did experiment with different combinations of the configurations during the troubleshooting to try to narrow things down, but unfortunately it was always slower on the internet side.)</p>
+<p>Recently I experimented with Split DNS on a Cisco 2951 router using two DNS views to separately resolve DNS lookups to internal and external sites. The internal view will resolve DNS lookups to my self-hosted services within the lab using the Domain Controllers, and the external view will serve regular traffic to the Internet. The configuration works as intended, however for some unknown reason the DNS lookups for external traffic took quite a bit longer than usual, while internal traffic works fine. It could be due to some glitch with a specific IOS firmware version or the router itself, but before I have other devices to compare, it remains a mystery for now. (Note: I did experiment with different combinations of the configurations when troubleshooting, hoping to narrow things down. But unfortunately traffic to the Internet was always slower than usual.)</p>
 
 
 
-<p>Eventually, for better performance I reverted the changes back to using the basic single view DNS setting on the router and set it to use the DCs&#8217; IPs as the name servers, and then on the DCs I set CloudFlare&#8217;s 1.1.1.1 as the DNS forwarder. And there was no slow DNS lookups anymore.</p>
+<p>Eventually, for better performance I reverted the changes back to using the basic single view DNS setting on the router and set it to use the DCs as the name servers, and then on the DCs I set CloudFlare&#8217;s 1.1.1.1 as the DNS forwarder. There was no slow DNS lookups anymore.</p>
 
 
 
@@ -381,8 +381,8 @@ li code {
 <pre class="wp-block-code"><code># Configure a separate DNS view for internal traffic:
 ip dns view internal-view
 domain list mydomain.local
-domain name-server &lt;DC-01s-IP-Address>
-domain name-server &lt;DC-02s-IP-Address>
+domain name-server &lt;DC-01s-IP-Address&gt;
+domain name-server &lt;DC-02s-IP-Address&gt;
 exit
 
 # Configure the default view to use for general internet traffic:
@@ -453,7 +453,10 @@ show ip dns name-list</code></pre>
 				
 	<nav class="navigation post-navigation" aria-label="Posts">
 		<h2 class="screen-reader-text">Post navigation</h2>
-		<div class="nav-links"><div class="nav-previous"><a href="https://jameswsullivan.github.io/refurbish-mac-mini-a1347-late-2014-part-4-install-opensuse/" rel="prev"><span class="nav-subtitle">Previous:</span> <span class="nav-title">Refurbish Mac Mini A1347 (Late 2014) &#8211; Part 5 &#8211; Install openSUSE</span></a></div></div>
+		<div class="nav-links">
+<div class="nav-previous"><a href="https://jameswsullivan.github.io/refurbish-mac-mini-a1347-late-2014-part-4-install-opensuse/" rel="prev"><span class="nav-subtitle">Previous:</span> <span class="nav-title">Refurbish Mac Mini A1347 (Late 2014) &#8211; Part 5 &#8211; Install openSUSE</span></a></div>
+<div class="nav-next"><a href="https://jameswsullivan.github.io/network-administration-policy-based-routing/" rel="next"><span class="nav-subtitle">Next:</span> <span class="nav-title">Network Administration: Policy Based Routing</span></a></div>
+</div>
 	</nav>            </div>
 			<script src="https://utteranc.es/client.js" repo="jameswsullivan/jameswsullivan.github.io" issue-term="url" label="comment" theme="github-dark" crossorigin="anonymous" async></script>
 

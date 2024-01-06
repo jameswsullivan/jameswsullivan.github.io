@@ -12,7 +12,7 @@
 	<atom:link href="https://jameswsullivan.github.io/feed/" rel="self" type="application/rss+xml" />
 	<link>https://jameswsullivan.github.io/</link>
 	<description></description>
-	<lastBuildDate>Sat, 30 Dec 2023 22:58:02 +0000</lastBuildDate>
+	<lastBuildDate>Sat, 06 Jan 2024 23:09:41 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -20,6 +20,116 @@
 	1	</sy:updateFrequency>
 	<generator>https://wordpress.org/?v=6.4.2</generator>
 	<item>
+		<title>Network Administration: Policy Based Routing</title>
+		<link>https://jameswsullivan.github.io/network-administration-policy-based-routing/</link>
+		
+		<dc:creator><![CDATA[James]]></dc:creator>
+		<pubDate>Sat, 06 Jan 2024 22:59:43 +0000</pubDate>
+				<category><![CDATA[blog]]></category>
+		<category><![CDATA[Cisco]]></category>
+		<category><![CDATA[Cisco IOS]]></category>
+		<category><![CDATA[Network Administration]]></category>
+		<category><![CDATA[Networking]]></category>
+		<category><![CDATA[Policy Based Routing]]></category>
+		<category><![CDATA[Route Map]]></category>
+		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2991</guid>
+
+					<description><![CDATA[Configure Policy Based Routing with Route Map on Cisco router.]]></description>
+										<content:encoded><![CDATA[
+<h2 class="wp-block-heading">Background:</h2>
+
+
+
+<p>I recently had a scenario where there are two Internet lines from two different ISPs that are connected to one Cisco router, and traffic from different VLANs will be routed to use different lines based on its origin.</p>
+
+
+
+<h2 class="wp-block-heading">Solution: Policy Based Routing</h2>
+
+
+
+<p>Topology:</p>
+
+
+
+<ul>
+<li>GigabitEthernet0/0 &#8212; ISP1</li>
+
+
+
+<li>GigabitEthernet0/1 &#8212; ISP2</li>
+
+
+
+<li>GigabitEthernet0/2 &#8212; connected to switch where VLANs are defined.</li>
+
+
+
+<li>VLAN 1: 10.0.0.0/16 &#8212; use ISP1</li>
+
+
+
+<li>VLAN 2:192.168.0.0/24 &#8212; use ISP2</li>
+</ul>
+
+
+
+<pre class="wp-block-code"><code># Configure NAT:
+config t
+ip access-list extended NAT_ISP1
+permit ip 10.0.0.0 0.0.255.255 any
+exit
+
+ip access-list extended NAT_ISP2
+permit ip 192.168.0.0 0.0.0.255 any
+exit
+
+# Configure Route Map:
+route-map PBR permit 1000
+match ip address NAT_ISP1
+set interface GigabitEthernet0/0
+exit
+
+route-map PBR permit 2000
+match ip address NAT_ISP2
+set interface GigabitEthernet0/1
+exit
+
+# Configure interfaces:
+interface GigabitEthernet0/0
+ip address dhcp
+ip nat outside
+ip virtual-reassembly in
+duplex full
+speed 1000
+exit
+
+interface GigabitEthernet0/1
+ip address dhcp
+ip nat outside
+ip virtual-reassembly in
+duplex full
+speed 1000
+exit
+
+interface GigabitEthernet0/2
+ip address &lt;your_ip_address&gt; &lt;your_subnet_mask&gt;
+ip nat inside
+ip virtual-reassembly in
+ip policy route-map PBR
+duplex full
+speed 1000
+exit
+
+# Enable NAT:
+ip nat inside source list NAT_ISP1 interface GigabitEthernet0/0 overload
+ip nat inside source list NAT_ISP2 interface GigabitEthernet0/1 overload</code></pre>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
 		<title>Network Administration: Split DNS</title>
 		<link>https://jameswsullivan.github.io/network-administration-split-dns/</link>
 		
@@ -42,11 +152,11 @@
 
 
 
-<p>Recently I experimented with Split DNS on a Cisco 2951 router using two DNS views to separately resolve DNS lookups to internal and external sites. The internal view will resolve DNS lookups to my self-hosted services within the lab using the Domain Controllers, and the external view will serve regular traffic to the Internet. The configuration works as intended, however for some unknown reason the DNS lookups for external traffic took quite a bit longer than usual, while internal traffic works fine. It could be due to some glitch with a specific IOS firmware version or the router itself, but before I have other devices to compare, it remains a mystery for now. (Note: I did experiment with different combinations of the configurations during the troubleshooting to try to narrow things down, but unfortunately it was always slower on the internet side.)</p>
+<p>Recently I experimented with Split DNS on a Cisco 2951 router using two DNS views to separately resolve DNS lookups to internal and external sites. The internal view will resolve DNS lookups to my self-hosted services within the lab using the Domain Controllers, and the external view will serve regular traffic to the Internet. The configuration works as intended, however for some unknown reason the DNS lookups for external traffic took quite a bit longer than usual, while internal traffic works fine. It could be due to some glitch with a specific IOS firmware version or the router itself, but before I have other devices to compare, it remains a mystery for now. (Note: I did experiment with different combinations of the configurations when troubleshooting, hoping to narrow things down. But unfortunately traffic to the Internet was always slower than usual.)</p>
 
 
 
-<p>Eventually, for better performance I reverted the changes back to using the basic single view DNS setting on the router and set it to use the DCs&#8217; IPs as the name servers, and then on the DCs I set CloudFlare&#8217;s 1.1.1.1 as the DNS forwarder. And there was no slow DNS lookups anymore.</p>
+<p>Eventually, for better performance I reverted the changes back to using the basic single view DNS setting on the router and set it to use the DCs as the name servers, and then on the DCs I set CloudFlare&#8217;s 1.1.1.1 as the DNS forwarder. There was no slow DNS lookups anymore.</p>
 
 
 
@@ -57,8 +167,8 @@
 <pre class="wp-block-code"><code># Configure a separate DNS view for internal traffic:
 ip dns view internal-view
 domain list mydomain.local
-domain name-server &lt;DC-01s-IP-Address>
-domain name-server &lt;DC-02s-IP-Address>
+domain name-server &lt;DC-01s-IP-Address&gt;
+domain name-server &lt;DC-02s-IP-Address&gt;
 exit
 
 # Configure the default view to use for general internet traffic:
@@ -148,7 +258,7 @@ show ip dns name-list</code></pre>
 
 
 
-<p>One of the Mac Minis will be used for KubeSphere in a lab environment and I wanted to experiment with openSUSE. However, due to Macs handles the EFI slight differently, both openSUSE&#8217;s default GRUB2 for EFI and GRUB2 Boot Loader configs fail during installation. I&#8217;ve experimented with different combination of settings and openSUSE would not boot successfully once the USB drive is removed. Eventually, <a href="https://www.rodsbooks.com/refind/" target="_blank" rel="noreferrer noopener">rEFInd</a> resolved the problems.</p>
+<p>One of the Mac Minis will be used for KubeSphere in a lab environment and I wanted to experiment with openSUSE. However, due to Macs handles the EFI slight differently, both openSUSE&#8217;s default GRUB2 for EFI and GRUB2 Boot Loader configs fail during installation. I&#8217;ve experimented with different combination of settings and openSUSE would not boot successfully once the USB drive is removed. Eventually, <a href="https://www.rodsbooks.com/refind/" target="_blank" rel="noreferrer noopener">rEFInd</a> resolved the problem.</p>
 
 
 
@@ -161,7 +271,7 @@ show ip dns name-list</code></pre>
 
 
 
-<li>openSUSE Leap 15.5, with &#8220;Server&#8221; System Role, (installed natively via USB, without macOS)
+<li>openSUSE Leap 15.5, with &#8220;Server&#8221; System Role (installed natively via USB, without macOS)
 <ul>
 <li>Partition layout:
 <ul>
@@ -198,7 +308,8 @@ show ip dns name-list</code></pre>
 
 
 
-<pre class="wp-block-code"><code><strong>Error</strong>
+<pre class="wp-block-code"><code><strong>Error
+</strong>
 
 Execution of command "&#91;&#91;"/usr/sbin/grub2-install","--target=x86_64-efi","--force","--skip-fs-probe"]]" failed.
 Exit code: 1
@@ -276,7 +387,7 @@ Could not prepare Boot variable: invalid argument
 
 
 
-<pre class="wp-block-code"><code># become root first to make things easy.
+<pre class="wp-block-code"><code># become root first just to make things easy.
 
 cd /tmp
 
@@ -323,7 +434,7 @@ re-run this script or install manually before rEFInd will work.</code></pre>
 
 
 
-<p>If that&#8217;s the case, perform the following steps:</p>
+<p>If this is the case, perform the following steps:</p>
 
 
 
@@ -687,10 +798,6 @@ net start msiserver</code></pre>
 
 <figure class="wp-block-image size-large"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-06-scaled.jpg"><img loading="lazy" decoding="async" width="1024" height="1024" data-id="2818" src="https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-06-1024x1024.jpg" alt="" class="wp-image-2818" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-06-1024x1024.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-06-300x300.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-06-150x150.jpg 150w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-06-768x768.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-06-1536x1536.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-06-2048x2048.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-06-140x140.jpg 140w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-06-380x380.jpg 380w, https://jameswsullivan.github.io/wp-content/uploads/2023/10/CH341A-MACMINI-06-600x600.jpg 600w" sizes="(max-width: 1024px) 100vw, 1024px" /></a></figure>
 </figure>
-
-
-
-<p></p>
 ]]></content:encoded>
 					
 		
@@ -1195,223 +1302,6 @@ Fix/Ignore?</code></pre>
 
 
 <figure class="wp-block-image size-large is-resized"><a href="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-scaled.jpg"><img loading="lazy" decoding="async" width="1024" height="576" src="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-1024x576.jpg" alt="IRFP250 MOSFET" class="wp-image-2641" style="width:768px;height:432px" srcset="https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-1024x576.jpg 1024w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-300x169.jpg 300w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-768x432.jpg 768w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-1536x864.jpg 1536w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-2048x1152.jpg 2048w, https://jameswsullivan.github.io/wp-content/uploads/2023/07/repair-treadmill-02-700x394.jpg 700w" sizes="(max-width: 1024px) 100vw, 1024px" /></a></figure>
-]]></content:encoded>
-					
-		
-		
-			</item>
-		<item>
-		<title>Network Administration: Configure VLAN and InterVLAN Routing</title>
-		<link>https://jameswsullivan.github.io/network-administration-configure-vlan-and-intervlan-routing/</link>
-		
-		<dc:creator><![CDATA[James]]></dc:creator>
-		<pubDate>Tue, 20 Jun 2023 15:25:19 +0000</pubDate>
-				<category><![CDATA[blog]]></category>
-		<category><![CDATA[Cisco]]></category>
-		<category><![CDATA[Cisco 2951]]></category>
-		<category><![CDATA[Cisco C3750G]]></category>
-		<category><![CDATA[InterVLAN Routing]]></category>
-		<category><![CDATA[Network Administration]]></category>
-		<category><![CDATA[Networking]]></category>
-		<category><![CDATA[router-on-a-stick]]></category>
-		<category><![CDATA[SVI]]></category>
-		<category><![CDATA[Switch Virtual Interface]]></category>
-		<guid isPermaLink="false">https://jameswsullivan.github.io/?p=2574</guid>
-
-					<description><![CDATA[Configure VLAN and InterVLAN routing on Cisco router and switch using router-on-a-stick and SVI.]]></description>
-										<content:encoded><![CDATA[
-<h2 class="wp-block-heading">Lab Environment:</h2>
-
-
-
-<ul>
-<li>Router: Cisco 2951</li>
-
-
-
-<li>Switch: Cisco C3750G PoE</li>
-
-
-
-<li>2 VLANs</li>
-</ul>
-
-
-
-<h2 class="wp-block-heading">Method 1: router-on-a-stick</h2>
-
-
-
-<pre class="wp-block-code"><code>Topology: C3750G (GigabitEthernet3/0/1) -- CISCO2951(GigabitEthernet0/1) -- INTERNET(GigabitEthernet0/0)</code></pre>
-
-
-
-<h4 class="wp-block-heading">On CISCO2951:</h4>
-
-
-
-<pre class="wp-block-code"><code>CISCO2951(config)#interface GigabitEthernet 0/0
-CISCO2951(config-if)#no shutdown
-CISCO2951(config-if)#speed 1000
-CISCO2951(config-if)#duplex full
-CISCO2951(config-if)#exit
-
-CISCO2951(config)#interface GigabitEthernet 0/0.10
-CISCO2951(config-subif)#encapsulation dot1Q 10
-CISCO2951(config-subif)#ip address 192.168.10.1 255.255.255.0
-CISCO2951(config-subif)#exit
-
-CISCO2951(config)#interface GigabitEthernet 0/0.20
-CISCO2951(config-subif)#encapsulation dot1Q 20                 
-CISCO2951(config-subif)#ip address 192.168.20.1 255.255.255.0</code></pre>
-
-
-
-<h4 class="wp-block-heading">On C3750G:</h4>
-
-
-
-<pre class="wp-block-code"><code>C3750G(config)#interface GigabitEthernet 3/0/1
-C3750G(config-if)#switchport mode trunk
-C3750G(config-if)#switchport trunk encapsulation dot1q
-C3750G(config-if)#no shutdown
-C3750G(config-if)#speed 1000
-C3750G(config-if)#duplex full
-C3750G(config-if)#exit
-
-C3750G(config)#vlan 10
-C3750G(config-vlan)#name VLAN10
-C3750G(config-vlan)#exit
-C3750G(config)#vlan 20
-C3750G(config-vlan)#name VLAN20
-C3750G(config-vlan)#exit
-
-# Assign ports to the VLANs as needed:
-C3750G(config)#interface GigabitEthernet 3/0/2
-C3750G(config-if)#switchport mode access
-C3750G(config-if)#switchport access vlan 10
-C3750G(config-if)#no shutdown
-C3750G(config-if)#speed 1000
-C3750G(config-if)#duplex full
-C3750G(config-if)#exit
-
-C3750G(config)#interface GigabitEthernet 3/0/3
-C3750G(config-if)#switchport mode access
-C3750G(config-if)#switchport access vlan 20
-C3750G(config-if)#no shutdown
-C3750G(config-if)#speed 1000
-C3750G(config-if)#duplex full
-C3750G(config-if)#exit</code></pre>
-
-
-
-<h2 class="wp-block-heading">Method 2: SVI (Switch Virtual Interface) and InterVLAN routing on C3750G switch.</h2>
-
-
-
-<pre class="wp-block-code"><code>Topology: C3750G (GigabitEthernet3/0/1) -- CISCO2951(GigabitEthernet0/1) -- INTERNET(GigabitEthernet0/0)</code></pre>
-
-
-
-<h4 class="wp-block-heading">CISCO2951 Configs:</h4>
-
-
-
-<pre class="wp-block-code"><code># Configure GigabitEthernet 0/0 (connected to ISP's device for internet access) to use DHCP.
-CISCO2951(config)#interface GigabitEthernet 0/0
-CISCO2951(config-if)#ip address dhcp
-CISCO2951(config-if)#ip nat outside
-CISCO2951(config-if)#ip virtual-reassembly in
-CISCO2951(config-if)#no shutdown
-CISCO2951(config-if)#speed 1000
-CISCO2951(config-if)#duplex full
-CISCO2951(config-if)#exit
-
-# Configure GigabitEthernet0/1 (connected to C3750G).
-CISCO2951(config)#interface GigabitEthernet 0/1
-CISCO2951(config-if)#ip address 192.168.0.1 255.255.255.0
-CISCO2951(config-if)#ip access-group NAT_ACL in
-CISCO2951(config-if)#ip nat inside
-CISCO2951(config-if)#ip virtual-reassembly in
-CISCO2951(config-if)#no shutdown
-CISCO2951(config-if)#speed 1000
-CISCO2951(config-if)#duplex full
-CISCO2951(config-if)#exit
-
-# Configure ACL and NAT.
-CISCO2951(config)#ip dns server
-CISCO2951(config)#ip name-server 1.1.1.1
-CISCO2951(config)#ip access-list extended NAT_ACL
-CISCO2951-K9(config-ext-nacl)#permit ip 192.168.0.0 0.0.0.255 any
-CISCO2951-K9(config-ext-nacl)#exit
-CISCO2951(config)#ip nat inside source list NAT_ACL interface GigabitEthernet0/0 overload
-
-# Enable routing and configure EIGRP (optional, depending on your configs)
-CISCO2951(config)#ip routing
-CISCO2951(config)#router eigrp 100
-CISCO2951(config-router)#network 192.168.0.0 0.0.0.255</code></pre>
-
-
-
-<h4 class="wp-block-heading">C3750G Configs:</h4>
-
-
-
-<pre class="wp-block-code"><code># Enable routing:
-C3750G(config)#ip routing
-
-# Configure cef (Cisco Express Forwarding
-) for better performance:
-C3750G(config)#ip cef distributed
-C3750G(config)#ip cef optimize neighbor resolution
-
-#Configure DNS
-C3750G(config)#ip domain-lookup
-C3750G(config)#ip name-server 192.168.0.1
-
-# Enable spanning-tree protocol.
-C3750G(config)#spanning-tree mode rapid-pvst
-
-# Configure VLANs
-C3750G(config)#vlan 10
-C3750G(config-vlan)#name VLAN10
-C3750G(config-vlan)#exit
-C3750G(config)#vlan 20
-C3750G(config-vlan)#name VLAN20
-C3750G(config-vlan)#exit
-
-C3750G(config)#interface vlan 10
-C3750G(config-if)#ip address 192.168.10.1 255.255.255.0
-C3750G(config-if)#ip helper-address 192.168.0.1
-C3750G(config)#interface vlan 20
-C3750G(config-if)#ip address 192.168.20.1 255.255.255.0
-C3750G(config-if)#ip helper-address 192.168.0.1
-
-# Configure trunk port
-C3750G(config)#interface GigabitEthernet 3/0/1
-C3750G(config-if)#no switchport
-C3750G(config-if)#ip address 192.168.0.2 255.255.255.0
-C3750G(config-if)#no shutdown
-C3750G(config-if)#speed 1000
-C3750G(config-if)#duplex full
-
-# Configure default route.
-C3750G(config)#ip route 0.0.0.0 0.0.0.0 GigabitEthernet 3/0/1
-
-# Assign ports to VLANs
-C3750G(config)#interface range GigabitEthernet 3/0/2 - 5
-C3750G(config-if-range)#switchport access vlan 10
-C3750G(config-if-range)#switchport mode access
-C3750G(config-if-range)#speed 1000
-C3750G(config-if-range)#duplex full
-C3750G(config-if-range)#no shut
-
-C3750G(config)#interface range GigabitEthernet 3/0/6 - 12
-C3750G(config-if-range)#switchport access vlan 20
-C3750G(config-if-range)#switchport mode access
-C3750G(config-if-range)#speed 1000
-C3750G(config-if-range)#duplex full
-C3750G(config-if-range)#no shut</code></pre>
 ]]></content:encoded>
 					
 		
