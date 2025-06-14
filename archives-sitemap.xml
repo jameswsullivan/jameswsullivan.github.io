@@ -1,171 +1,171 @@
-<?xml version='1.0' encoding='UTF-8'?><?xml-stylesheet type='text/xsl' href='https://jameswsullivan.github.io/wp-content/plugins/google-sitemap-generator/sitemap.xsl'?><!-- sitemap-generator-url='http://www.arnebrachhold.de/' sitemap-generator-version='4.1.17' -->
-<!-- generated-on='2024-01-07 01:25' -->
+<?xml version='1.0' encoding='UTF-8'?><?xml-stylesheet type='text/xsl' href='/wp-content/plugins/google-sitemap-generator/sitemap.xsl'?><!-- sitemap-generator-url='http://www.arnebrachhold.de/' sitemap-generator-version='4.1.21' -->
+<!-- generated-on='2025-06-14 21:55' -->
 <urlset xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd' xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>	<url>
-		<loc>https://jameswsullivan.github.io/2024/01/</loc>
+		<loc>/2024/01/</loc>
 		<lastmod>2024-01-06T22:59:43+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
 	</url>
 	<url>
-		<loc>https://jameswsullivan.github.io/2023/12/</loc>
+		<loc>/2023/12/</loc>
 		<lastmod>2023-12-30T17:38:32+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
 	</url>
 	<url>
-		<loc>https://jameswsullivan.github.io/2023/11/</loc>
+		<loc>/2023/11/</loc>
 		<lastmod>2023-11-21T22:21:20+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
 	</url>
 	<url>
-		<loc>https://jameswsullivan.github.io/2023/10/</loc>
+		<loc>/2023/10/</loc>
 		<lastmod>2023-10-03T18:33:47+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
 	</url>
 	<url>
-		<loc>https://jameswsullivan.github.io/2023/08/</loc>
+		<loc>/2023/08/</loc>
 		<lastmod>2023-08-05T23:33:28+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
 	</url>
 	<url>
-		<loc>https://jameswsullivan.github.io/2023/07/</loc>
+		<loc>/2023/07/</loc>
 		<lastmod>2023-07-16T21:08:14+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
 	</url>
 	<url>
-		<loc>https://jameswsullivan.github.io/2023/06/</loc>
+		<loc>/2023/06/</loc>
 		<lastmod>2023-06-20T15:25:19+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
 	</url>
 	<url>
-		<loc>https://jameswsullivan.github.io/2023/05/</loc>
+		<loc>/2023/05/</loc>
 		<lastmod>2023-05-23T03:20:43+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
 	</url>
 	<url>
-		<loc>https://jameswsullivan.github.io/2023/04/</loc>
+		<loc>/2023/04/</loc>
 		<lastmod>2023-04-22T16:31:17+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
 	</url>
 	<url>
-		<loc>https://jameswsullivan.github.io/2023/03/</loc>
+		<loc>/2023/03/</loc>
 		<lastmod>2023-03-26T16:52:31+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
 	</url>
 	<url>
-		<loc>https://jameswsullivan.github.io/2023/02/</loc>
+		<loc>/2023/02/</loc>
 		<lastmod>2023-02-03T20:19:00+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
 	</url>
 	<url>
-		<loc>https://jameswsullivan.github.io/2022/03/</loc>
+		<loc>/2022/03/</loc>
 		<lastmod>2022-03-21T02:24:48+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
 	</url>
 	<url>
-		<loc>https://jameswsullivan.github.io/2021/10/</loc>
+		<loc>/2021/10/</loc>
 		<lastmod>2021-10-10T09:25:43+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
 	</url>
 	<url>
-		<loc>https://jameswsullivan.github.io/2021/09/</loc>
+		<loc>/2021/09/</loc>
 		<lastmod>2021-09-25T01:17:22+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
 	</url>
 	<url>
-		<loc>https://jameswsullivan.github.io/2020/08/</loc>
+		<loc>/2020/08/</loc>
 		<lastmod>2020-08-20T22:41:04+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
 	</url>
 	<url>
-		<loc>https://jameswsullivan.github.io/2020/07/</loc>
+		<loc>/2020/07/</loc>
 		<lastmod>2020-07-06T00:16:59+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
 	</url>
 	<url>
-		<loc>https://jameswsullivan.github.io/2020/06/</loc>
+		<loc>/2020/06/</loc>
 		<lastmod>2020-06-25T06:23:00+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
 	</url>
 	<url>
-		<loc>https://jameswsullivan.github.io/2012/01/</loc>
+		<loc>/2012/01/</loc>
 		<lastmod>2012-01-08T04:57:00+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
 	</url>
 	<url>
-		<loc>https://jameswsullivan.github.io/2011/03/</loc>
+		<loc>/2011/03/</loc>
 		<lastmod>2011-03-03T23:31:00+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
 	</url>
 	<url>
-		<loc>https://jameswsullivan.github.io/2010/08/</loc>
+		<loc>/2010/08/</loc>
 		<lastmod>2010-08-24T23:20:00+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
 	</url>
 	<url>
-		<loc>https://jameswsullivan.github.io/2010/06/</loc>
+		<loc>/2010/06/</loc>
 		<lastmod>2010-06-17T21:22:00+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
 	</url>
 	<url>
-		<loc>https://jameswsullivan.github.io/2010/02/</loc>
+		<loc>/2010/02/</loc>
 		<lastmod>2010-02-25T16:16:00+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
 	</url>
 	<url>
-		<loc>https://jameswsullivan.github.io/2009/11/</loc>
+		<loc>/2009/11/</loc>
 		<lastmod>2009-11-26T18:31:00+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
 	</url>
 	<url>
-		<loc>https://jameswsullivan.github.io/2009/08/</loc>
+		<loc>/2009/08/</loc>
 		<lastmod>2009-08-02T17:56:00+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
 	</url>
 	<url>
-		<loc>https://jameswsullivan.github.io/2009/07/</loc>
+		<loc>/2009/07/</loc>
 		<lastmod>2009-07-30T14:34:00+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
 	</url>
 	<url>
-		<loc>https://jameswsullivan.github.io/2009/05/</loc>
+		<loc>/2009/05/</loc>
 		<lastmod>2009-05-06T22:02:00+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
 	</url>
 	<url>
-		<loc>https://jameswsullivan.github.io/2009/04/</loc>
+		<loc>/2009/04/</loc>
 		<lastmod>2009-04-21T15:10:00+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
 	</url>
 	<url>
-		<loc>https://jameswsullivan.github.io/2008/11/</loc>
+		<loc>/2008/11/</loc>
 		<lastmod>2008-11-08T01:41:00+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
 	</url>
-</urlset><!-- Request ID: 447a7fef9600a9a858fd067f64360912; Queries for sitemap: 2; Total queries: 16; Seconds: $end_time; Memory for sitemap: 0MB; Total memory: 4MB -->
+</urlset><!-- Request ID: 45c0aed0aede952637525d9ff89f25d7; Queries for sitemap: 2; Total queries: 15; Seconds: 0; Memory for sitemap: 1KB; Total memory: 4MB -->

@@ -1,15 +1,15 @@
-<?xml version='1.0' encoding='UTF-8'?><?xml-stylesheet type='text/xsl' href='https://jameswsullivan.github.io/wp-content/plugins/google-sitemap-generator/sitemap.xsl'?><!-- sitemap-generator-url='http://www.arnebrachhold.de/' sitemap-generator-version='4.1.17' -->
-<!-- generated-on='2024-01-07 01:25' -->
+<?xml version='1.0' encoding='UTF-8'?><?xml-stylesheet type='text/xsl' href='/wp-content/plugins/google-sitemap-generator/sitemap.xsl'?><!-- sitemap-generator-url='http://www.arnebrachhold.de/' sitemap-generator-version='4.1.21' -->
+<!-- generated-on='2025-06-14 21:55' -->
 <urlset xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd' xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>	<url>
-		<loc>https://jameswsullivan.github.io/category/archive/</loc>
+		<loc>/category/archive/</loc>
 		<lastmod>2012-01-07T22:57:00+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
 	</url>
 	<url>
-		<loc>https://jameswsullivan.github.io/category/blog/</loc>
+		<loc>/category/blog/</loc>
 		<lastmod>2024-01-06T16:59:43+00:00</lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.3</priority>
 	</url>
-</urlset><!-- Request ID: eedbc38d4459738a22caeeeedb18c9e0; Queries for sitemap: 7; Total queries: 21; Seconds: $end_time; Memory for sitemap: 0MB; Total memory: 4MB -->
+</urlset><!-- Request ID: cebe437acdb0eddcce5bef471153745f; Queries for sitemap: 5; Total queries: 18; Seconds: 0.01; Memory for sitemap: 1KB; Total memory: 4MB -->
